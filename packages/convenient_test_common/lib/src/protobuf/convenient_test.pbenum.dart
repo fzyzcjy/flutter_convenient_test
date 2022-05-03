@@ -10,15 +10,22 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class LogEntryType extends $pb.ProtobufEnum {
-  static const LogEntryType INVALID = LogEntryType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INVALID');
-  static const LogEntryType GENERAL_MESSAGE = LogEntryType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERAL_MESSAGE');
-  static const LogEntryType TEST_START = LogEntryType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEST_START');
-  static const LogEntryType TEST_BODY = LogEntryType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEST_BODY');
-  static const LogEntryType TEST_END = LogEntryType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEST_END');
-  static const LogEntryType ASSERT = LogEntryType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ASSERT');
-  static const LogEntryType ASSERT_FAIL = LogEntryType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ASSERT_FAIL');
+  static const LogEntryType INVALID =
+      LogEntryType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INVALID');
+  static const LogEntryType GENERAL_MESSAGE =
+      LogEntryType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERAL_MESSAGE');
+  static const LogEntryType TEST_START =
+      LogEntryType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEST_START');
+  static const LogEntryType TEST_BODY =
+      LogEntryType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEST_BODY');
+  static const LogEntryType TEST_END =
+      LogEntryType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEST_END');
+  static const LogEntryType ASSERT =
+      LogEntryType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ASSERT');
+  static const LogEntryType ASSERT_FAIL =
+      LogEntryType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ASSERT_FAIL');
 
-  static const $core.List<LogEntryType> values = <LogEntryType> [
+  static const $core.List<LogEntryType> values = <LogEntryType>[
     INVALID,
     GENERAL_MESSAGE,
     TEST_START,
@@ -33,4 +40,3 @@ class LogEntryType extends $pb.ProtobufEnum {
 
   const LogEntryType._($core.int v, $core.String n) : super(v, n);
 }
-
