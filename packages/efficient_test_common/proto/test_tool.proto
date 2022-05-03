@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-service TestToolManager {
+service EfficientTestManager {
   rpc ResetManagerCache (Empty) returns (Empty);
   rpc ReportLogEntry (LogEntry) returns (Empty);
   rpc ReportTestInfoPack (TestInfoPack) returns (Empty);
