@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:test_tool_common/test_tool_common.dart';
+import 'package:efficient_test_common/efficient_test_common.dart';
 
 class TestToolManagerToWorkerService {
   TestToolManagerToWorkerService() {

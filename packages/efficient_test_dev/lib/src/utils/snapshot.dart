@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:test_tool_worker/test_tool_worker.dart';
+import 'package:efficient_test/efficient_test.dart';
 
 Future<List<int>> takeSnapshot() async {
   final element = _findElement();

@@ -6,13 +6,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
-import 'package:test_tool_common/test_tool_common.dart';
-import 'package:test_tool_worker/test_tool_worker.dart';
-import 'package:test_tool_worker_dev/src/functions/log.dart';
-import 'package:test_tool_worker_dev/src/support/executor.dart';
-import 'package:test_tool_worker_dev/src/support/setup.dart';
-import 'package:test_tool_worker_dev/src/support/slot.dart';
-import 'package:test_tool_worker_dev/src/third_party/my_test_compat.dart';
+import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:efficient_test/efficient_test.dart';
+import 'package:efficient_test_dev/src/functions/log.dart';
+import 'package:efficient_test_dev/src/support/executor.dart';
+import 'package:efficient_test_dev/src/support/setup.dart';
+import 'package:efficient_test_dev/src/support/slot.dart';
+import 'package:efficient_test_dev/src/third_party/my_test_compat.dart';
 
 class TestTool {
   @internal

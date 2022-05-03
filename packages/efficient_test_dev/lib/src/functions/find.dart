@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:recase/recase.dart';
-import 'package:test_tool_common/test_tool_common.dart';
-import 'package:test_tool_worker/test_tool_worker.dart';
-import 'package:test_tool_worker_dev/src/functions/command.dart';
-import 'package:test_tool_worker_dev/src/functions/core.dart';
-import 'package:test_tool_worker_dev/src/functions/interaction.dart';
-import 'package:test_tool_worker_dev/src/functions/log.dart';
-import 'package:test_tool_worker_dev/src/support/slot.dart';
-import 'package:test_tool_worker_dev/src/utils/util.dart';
+import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:efficient_test/efficient_test.dart';
+import 'package:efficient_test_dev/src/functions/command.dart';
+import 'package:efficient_test_dev/src/functions/core.dart';
+import 'package:efficient_test_dev/src/functions/interaction.dart';
+import 'package:efficient_test_dev/src/functions/log.dart';
+import 'package:efficient_test_dev/src/support/slot.dart';
+import 'package:efficient_test_dev/src/utils/util.dart';
 
 extension TestToolFind on TestTool {
   TFinderCommand get(Object arg) => TFinderCommand(this, find.get(arg));

@@ -14,9 +14,9 @@ import 'package:test_api/src/backend/state.dart';
 import 'package:test_api/src/backend/suite.dart';
 import 'package:test_api/src/backend/suite_platform.dart';
 import 'package:test_api/src/backend/test.dart';
-import 'package:test_tool_common/test_tool_common.dart';
-import 'package:test_tool_worker_dev/src/functions/log.dart';
-import 'package:test_tool_worker_dev/src/utils/util.dart';
+import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:efficient_test_dev/src/functions/log.dart';
+import 'package:efficient_test_dev/src/utils/util.dart';
 
 Declarer collectIntoDeclarer(void Function() body) {
   return Declarer()..declare(body);

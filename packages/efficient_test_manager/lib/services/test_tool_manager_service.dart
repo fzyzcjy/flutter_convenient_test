@@ -5,9 +5,9 @@ import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:grpc/grpc.dart';
 import 'package:mobx/mobx.dart';
-import 'package:test_tool_common/test_tool_common.dart';
-import 'package:test_tool_manager/stores/log_store.dart';
-import 'package:test_tool_manager/stores/organization_store.dart';
+import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:efficient_test_manager/stores/log_store.dart';
+import 'package:efficient_test_manager/stores/organization_store.dart';
 
 const _kRegexMatchNothing = r'match-nothing^$';
 final _kRejectAllTestFilter = TestFilter(filterNameRegex: _kRegexMatchNothing);

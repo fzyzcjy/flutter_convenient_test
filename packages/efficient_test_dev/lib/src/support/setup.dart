@@ -1,9 +1,9 @@
 import 'package:get_it/get_it.dart';
-import 'package:test_tool_common/test_tool_common.dart';
-import 'package:test_tool_worker_dev/src/support/manager_to_worker_service.dart';
-import 'package:test_tool_worker_dev/src/support/rpc.dart';
-import 'package:test_tool_worker_dev/src/support/slot.dart';
-import 'package:test_tool_worker_dev/src/utils/errors.dart';
+import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:efficient_test_dev/src/support/manager_to_worker_service.dart';
+import 'package:efficient_test_dev/src/support/rpc.dart';
+import 'package:efficient_test_dev/src/support/slot.dart';
+import 'package:efficient_test_dev/src/utils/errors.dart';
 
 final getIt = GetIt.I;
 

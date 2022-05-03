@@ -5,9 +5,9 @@ import 'package:test_api/src/backend/declarer.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/group_entry.dart';
 import 'package:test_api/src/backend/test.dart';
-import 'package:test_tool_common/test_tool_common.dart';
-import 'package:test_tool_worker_dev/src/functions/log.dart';
-import 'package:test_tool_worker_dev/src/third_party/my_test_compat.dart';
+import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:efficient_test_dev/src/functions/log.dart';
+import 'package:efficient_test_dev/src/third_party/my_test_compat.dart';
 
 class TestToolExecutor {
   static const _kTag = 'TestToolExecutor';

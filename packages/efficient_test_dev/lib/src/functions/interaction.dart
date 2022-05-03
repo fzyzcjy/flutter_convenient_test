@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pedantic/pedantic.dart';
-import 'package:test_tool_worker_dev/src/functions/core.dart';
-import 'package:test_tool_worker_dev/src/functions/log.dart';
-import 'package:test_tool_worker_dev/src/support/slot.dart';
+import 'package:efficient_test_dev/src/functions/core.dart';
+import 'package:efficient_test_dev/src/functions/log.dart';
+import 'package:efficient_test_dev/src/support/slot.dart';
 
 extension TestToolInteraction on TestTool {
   Future<void> visit(String routeName, {Object? arguments}) async {

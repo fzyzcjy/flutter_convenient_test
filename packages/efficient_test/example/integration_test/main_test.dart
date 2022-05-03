@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:test_tool_worker_dev/test_tool_worker_dev.dart';
-import 'package:test_tool_worker_example/main.dart' as app;
-import 'package:test_tool_worker_example/main.dart';
+import 'package:efficient_test_dev/efficient_test_dev.dart';
+import 'package:efficient_test_example/main.dart' as app;
+import 'package:efficient_test_example/main.dart';
 
 void main() {
   testToolMain(MyTestToolSlot(), () {

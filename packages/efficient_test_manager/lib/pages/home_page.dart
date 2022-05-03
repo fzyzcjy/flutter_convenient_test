@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:test_tool_manager/components/home_page/command_info_panel.dart';
-import 'package:test_tool_manager/components/home_page/header_panel.dart';
-import 'package:test_tool_manager/components/home_page/input_key_handler.dart';
-import 'package:test_tool_manager/components/home_page/screenshot_panel.dart';
-import 'package:test_tool_manager/services/vm_service_wrapper_service.dart';
+import 'package:efficient_test_manager/components/home_page/command_info_panel.dart';
+import 'package:efficient_test_manager/components/home_page/header_panel.dart';
+import 'package:efficient_test_manager/components/home_page/input_key_handler.dart';
+import 'package:efficient_test_manager/components/home_page/screenshot_panel.dart';
+import 'package:efficient_test_manager/services/vm_service_wrapper_service.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

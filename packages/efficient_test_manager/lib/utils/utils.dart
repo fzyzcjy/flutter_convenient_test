@@ -1,5 +1,5 @@
 import 'package:test_api/src/backend/state.dart'; // ignore: implementation_imports
-import 'package:test_tool_common/test_tool_common.dart';
+import 'package:efficient_test_common/efficient_test_common.dart';
 
 extension ExtTestEntryState on TestEntryState {
   State toState() => State(Status.parse(status), Result.parse(result));

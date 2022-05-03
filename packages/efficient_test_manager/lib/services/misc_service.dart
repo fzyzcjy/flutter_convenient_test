@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:test_tool_common/test_tool_common.dart';
-import 'package:test_tool_manager/services/test_tool_manager_service.dart';
-import 'package:test_tool_manager/services/vm_service_wrapper_service.dart';
+import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:efficient_test_manager/services/efficient_test_manager_service.dart';
+import 'package:efficient_test_manager/services/vm_service_wrapper_service.dart';
 
 class MiscService {
   static const _kTag = 'MiscService';

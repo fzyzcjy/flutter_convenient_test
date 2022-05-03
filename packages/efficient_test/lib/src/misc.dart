@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:test_tool_worker/src/gesture_visualizer.dart';
+import 'package:efficient_test/src/gesture_visualizer.dart';
 
 class TestToolWrapperWidget extends StatelessWidget {
   final Widget child;

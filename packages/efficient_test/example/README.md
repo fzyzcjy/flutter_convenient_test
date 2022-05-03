@@ -1,6 +1,6 @@
-# test_tool_worker_example
+# efficient_test_example
 
-Demonstrates how to use the test_tool_worker plugin.
+Demonstrates how to use the efficient_test plugin.
 
 ## Getting Started
 

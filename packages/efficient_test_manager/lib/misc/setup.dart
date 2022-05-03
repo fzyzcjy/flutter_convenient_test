@@ -1,9 +1,9 @@
 import 'package:get_it/get_it.dart';
-import 'package:test_tool_manager/services/misc_service.dart';
-import 'package:test_tool_manager/services/test_tool_manager_service.dart';
-import 'package:test_tool_manager/services/vm_service_wrapper_service.dart';
-import 'package:test_tool_manager/stores/log_store.dart';
-import 'package:test_tool_manager/stores/organization_store.dart';
+import 'package:efficient_test_manager/services/misc_service.dart';
+import 'package:efficient_test_manager/services/efficient_test_manager_service.dart';
+import 'package:efficient_test_manager/services/vm_service_wrapper_service.dart';
+import 'package:efficient_test_manager/stores/log_store.dart';
+import 'package:efficient_test_manager/stores/organization_store.dart';
 
 final getIt = GetIt.instance;
 

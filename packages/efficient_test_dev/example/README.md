@@ -1,1 +1,1 @@
-Please see test_tool_worker/example
+Please see efficient_test/example

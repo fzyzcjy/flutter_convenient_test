@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:test_tool_manager/stores/log_store.dart';
+import 'package:efficient_test_manager/stores/log_store.dart';
 
 class HomePageScreenshotPanel extends StatelessWidget {
   const HomePageScreenshotPanel({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:test_tool_common/test_tool_common.dart';
-import 'package:test_tool_manager/components/misc/rotate_animation.dart';
-import 'package:test_tool_manager/stores/log_store.dart';
+import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:efficient_test_manager/components/misc/rotate_animation.dart';
+import 'package:efficient_test_manager/stores/log_store.dart';
 
 class HomePageLogEntryWidget extends StatelessWidget {
   final int order;

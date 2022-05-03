@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_tool_worker_dev/src/functions/core.dart';
+import 'package:efficient_test_dev/src/functions/core.dart';
 
 abstract class TestToolSlot {
   Future<void> startApp(TestTool t);

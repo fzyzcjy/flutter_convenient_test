@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_tool_manager/components/misc/rotate_animation.dart';
-import 'package:test_tool_manager/utils/utils.dart';
+import 'package:efficient_test_manager/components/misc/rotate_animation.dart';
+import 'package:efficient_test_manager/utils/utils.dart';
 
 class StateIndicatorWidget extends StatelessWidget {
   final SimplifiedStateEnum state;

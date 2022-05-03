@@ -1,5 +1,5 @@
 import 'package:grpc/grpc.dart';
-import 'package:test_tool_common/test_tool_common.dart';
+import 'package:efficient_test_common/efficient_test_common.dart';
 
 TestToolManagerClient createTestToolManagerClientStub({required String host, required int port}) {
   final channel =
