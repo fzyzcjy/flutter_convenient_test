@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         channel:
-          - beta
+          # - beta # too different from stable, thus analyzer will complain
           - stable
         package_name:
           - convenient_test
