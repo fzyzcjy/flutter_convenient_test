@@ -13,12 +13,10 @@ mixin _$OrganizationStore on _OrganizationStore, Store {
 
   @override
   List<int> get allTestEntryIds => (_$allTestEntryIdsComputed ??=
-          Computed<List<int>>(() => super.allTestEntryIds,
-              name: '_OrganizationStore.allTestEntryIds'))
+          Computed<List<int>>(() => super.allTestEntryIds, name: '_OrganizationStore.allTestEntryIds'))
       .value;
 
-  late final _$enableAutoExpandAtom =
-      Atom(name: '_OrganizationStore.enableAutoExpand', context: context);
+  late final _$enableAutoExpandAtom = Atom(name: '_OrganizationStore.enableAutoExpand', context: context);
 
   @override
   bool get enableAutoExpand {

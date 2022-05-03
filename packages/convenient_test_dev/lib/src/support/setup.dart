@@ -12,8 +12,8 @@ Future<void> setupConvenientTest(ConvenientTestSlot slot) async {
   setUpFlutterOnError();
 
   getIt.registerSingleton<ConvenientTestSlot>(slot);
-  getIt.registerSingleton<ConvenientTestManagerClient>(
-      createConvenientTestManagerClientStub(host: GetIt.I.get<ConvenientTestSlot>().managerHost, port: kConvenientTestManagerPort));
+  getIt.registerSingleton<ConvenientTestManagerClient>(createConvenientTestManagerClientStub(
+      host: GetIt.I.get<ConvenientTestSlot>().managerHost, port: kConvenientTestManagerPort));
 
   await GetIt.I.get<ConvenientTestManagerClient>().resetManagerCache(Empty());
 

@@ -16,7 +16,8 @@ extension ConvenientTestInteraction on ConvenientTest {
     await log.snapshot(name: 'before');
 
     // If await, will wait forever until the page is popped - surely we do not want that
-    unawaited(Navigator.pushNamed(GetIt.I.get<ConvenientTestSlot>().getNavContext(this)!, routeName, arguments: arguments));
+    unawaited(
+        Navigator.pushNamed(GetIt.I.get<ConvenientTestSlot>().getNavContext(this)!, routeName, arguments: arguments));
 
     await pumpAndSettle();
     await log.snapshot(name: 'after');
