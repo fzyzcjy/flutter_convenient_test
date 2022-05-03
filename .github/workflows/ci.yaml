@@ -30,16 +30,16 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-        working-directory: ${{ matrix.package_name }}
+        working-directory: packages/${{ matrix.package_name }}
 
       - name: Check format
         run: flutter format --set-exit-if-changed .
-        working-directory: ${{ matrix.package_name }}
+        working-directory: packages/${{ matrix.package_name }}
 
       - name: Analyze
         run: flutter analyze
-        working-directory: ${{ matrix.package_name }}
+        working-directory: packages/${{ matrix.package_name }}
 
       - name: Run tests
         run: flutter test
-        working-directory: ${{ matrix.package_name }}
+        working-directory: packages/${{ matrix.package_name }}
