@@ -7,13 +7,13 @@ repository:
   name: flutter_convenient_test
 
   # A short description of the repository that will show up on GitHub
-  description: TODO
+  description: TODO_description
 
   # A URL with more information about the repository
-  homepage: TODO
+  homepage: pub.dev/packages/convenient_test
 
   # A comma-separated list of topics to set on the repository
-  topics: dart, flutter, test
+  topics: dart, flutter, test, testing, framework
 
   # Either `true` to make the repository private, or `false` to make it public.
   private: false
