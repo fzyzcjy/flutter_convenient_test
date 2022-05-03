@@ -1,9 +1,9 @@
 import 'package:get_it/get_it.dart';
-import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
 
-class TestToolManagerToWorkerService {
-  TestToolManagerToWorkerService() {
-    final rpcClient = GetIt.I.get<TestToolManagerClient>();
+class ConvenientTestManagerToWorkerService {
+  ConvenientTestManagerToWorkerService() {
+    final rpcClient = GetIt.I.get<ConvenientTestManagerClient>();
     rpcClient.managerToWorkerActionStream(Empty()).listen(_handleAction);
   }
 

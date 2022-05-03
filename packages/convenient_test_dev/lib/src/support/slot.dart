@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:efficient_test_dev/src/functions/core.dart';
+import 'package:convenient_test_dev/src/functions/core.dart';
 
-abstract class TestToolSlot {
-  Future<void> startApp(TestTool t);
+abstract class ConvenientTestSlot {
+  Future<void> startApp(ConvenientTest t);
 
-  BuildContext? getNavContext(TestTool t);
+  BuildContext? getNavContext(ConvenientTest t);
 
   String get managerHost;
 }

@@ -1,1 +1,1 @@
-Please see efficient_test/example
+Please see convenient_test/example

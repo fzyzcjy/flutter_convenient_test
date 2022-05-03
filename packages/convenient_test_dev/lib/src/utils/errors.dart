@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:test_api/test_api.dart' as test_package; // ignore: deprecated_member_use
 
-void setUpTestToolExceptionReporter() {
+void setUpConvenientTestExceptionReporter() {
   // NOTE By reading comments of [reportTestException], we see its purpose is just what we want - customize error catching
-  reportTestException = _testToolTestExceptionReporter;
+  reportTestException = _convenientTestTestExceptionReporter;
 }
 
 void setUpFlutterOnError() {
@@ -17,7 +17,7 @@ void setUpFlutterOnError() {
 
 /// edited from flutter's `_defaultTestExceptionReporter`
 /// https://github.com/flutter/flutter/blob/e7b7ebc066c1b2a5aa5c19f8961307427e0142a6/packages/flutter_test/lib/src/test_exception_reporter.dart#L31
-void _testToolTestExceptionReporter(FlutterErrorDetails errorDetails, String testDescription) {
+void _convenientTestTestExceptionReporter(FlutterErrorDetails errorDetails, String testDescription) {
   FlutterError.dumpErrorToConsole(errorDetails, forceReport: true);
   test_package.registerException(_dumpErrorToString(errorDetails), errorDetails.stack ?? StackTrace.empty);
 }

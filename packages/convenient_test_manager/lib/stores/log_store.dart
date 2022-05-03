@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:mobx/mobx.dart';
-import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
 
 part 'log_store.g.dart';
 

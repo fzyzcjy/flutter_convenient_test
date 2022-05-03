@@ -1,4 +1,4 @@
-name: efficient_test_manager
+name: convenient_test_manager
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -23,7 +23,7 @@ environment:
 dependencies:
   collection: ^1.15.0-nullsafety.4
   cupertino_icons: ^1.0.2
-  efficient_test_common: ^1.0.0
+  convenient_test_common: ^1.0.0
   flutter:
     sdk: flutter
   flutter_mobx: ^2.0.5
@@ -38,8 +38,8 @@ dependencies:
   web_socket_channel: ^2.1.0
 
 dependency_overrides:
-  efficient_test_common:
-    path: ../efficient_test_common
+  convenient_test_common:
+    path: ../convenient_test_common
 
 dev_dependencies:
   analyzer: ^2.3.0

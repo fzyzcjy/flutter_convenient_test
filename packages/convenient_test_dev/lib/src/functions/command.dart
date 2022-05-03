@@ -1,14 +1,14 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:efficient_test_common/efficient_test_common.dart';
-import 'package:efficient_test_dev/src/functions/core.dart';
-import 'package:efficient_test_dev/src/functions/interaction.dart';
-import 'package:efficient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/functions/core.dart';
+import 'package:convenient_test_dev/src/functions/interaction.dart';
+import 'package:convenient_test_dev/src/functions/log.dart';
 
 abstract class TCommand {
   @protected
-  final TestTool t;
+  final ConvenientTest t;
 
   // NOTE *SHOULD NOT* *save* the `actual`, but *SHOULD* *dynamically* read it when needed
   //      This is because we need retry-ability. For example, suppose `actual` is a String. Then
@@ -47,7 +47,7 @@ String _formatActual(dynamic actual) {
 
 // NOTE "retry-ability" methodology, please see https://docs.cypress.io/guides/core-concepts/retry-ability
 Future<void> _expectWithRetry(
-  TestTool t,
+  ConvenientTest t,
   ValueGetter<Object?> actualGetter,
   dynamic matcher, {
   String? reason,

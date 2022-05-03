@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:efficient_test_common/efficient_test_common.dart';
-import 'package:efficient_test_manager/stores/log_store.dart';
-import 'package:efficient_test_manager/stores/organization_store.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_manager/stores/log_store.dart';
+import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:grpc/grpc.dart';
@@ -12,8 +12,8 @@ import 'package:mobx/mobx.dart';
 const _kRegexMatchNothing = r'match-nothing^$';
 final _kRejectAllTestFilter = TestFilter(filterNameRegex: _kRegexMatchNothing);
 
-class EfficientTestManagerService extends EfficientTestManagerServiceBase {
-  static const _kTag = 'EfficientTestManagerService';
+class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
+  static const _kTag = 'ConvenientTestManagerService';
 
   final managerToWorkerActionStreamController = StreamController<ManagerToWorkerAction>.broadcast();
   TestFilter? activeTestFilter;
@@ -27,7 +27,7 @@ class EfficientTestManagerService extends EfficientTestManagerServiceBase {
     );
     server.serve(
       address: '0.0.0.0',
-      port: kTestToolManagerPort,
+      port: kConvenientTestManagerPort,
     );
   }
 

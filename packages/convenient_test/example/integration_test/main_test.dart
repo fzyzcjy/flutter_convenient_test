@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:efficient_test_dev/efficient_test_dev.dart';
-import 'package:efficient_test_example/main.dart' as app;
-import 'package:efficient_test_example/main.dart';
+import 'package:convenient_test_dev/convenient_test_dev.dart';
+import 'package:convenient_test_example/main.dart' as app;
+import 'package:convenient_test_example/main.dart';
 
 void main() {
-  testToolMain(MyTestToolSlot(), () {
+  convenientTestMain(MyConvenientTestSlot(), () {
     group('sample group one', () {
       tTestWidgets('empty test', (t) async {
         // just an empty test
@@ -26,14 +26,14 @@ void main() {
   });
 }
 
-class MyTestToolSlot extends TestToolSlot {
+class MyConvenientTestSlot extends ConvenientTestSlot {
   @override
-  Future<void> startApp(TestTool t) async {
+  Future<void> startApp(ConvenientTest t) async {
     app.main();
   }
 
   @override
-  BuildContext? getNavContext(TestTool t) => MyApp.navigatorKey.currentContext;
+  BuildContext? getNavContext(ConvenientTest t) => MyApp.navigatorKey.currentContext;
 
   @override
   String get managerHost => '192.168.0.107'; // TODO

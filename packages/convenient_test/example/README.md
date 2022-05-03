@@ -1,6 +1,6 @@
-# efficient_test_example
+# convenient_test_example
 
-Demonstrates how to use the efficient_test plugin.
+Demonstrates how to use the convenient_test plugin.
 
 ## Getting Started
 

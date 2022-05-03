@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:efficient_test_manager/services/misc_service.dart';
-import 'package:efficient_test_manager/services/vm_service_wrapper_service.dart';
-import 'package:efficient_test_manager/stores/organization_store.dart';
+import 'package:convenient_test_manager/services/misc_service.dart';
+import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
+import 'package:convenient_test_manager/stores/organization_store.dart';
 
 class HomePageHeaderPanel extends StatelessWidget {
   const HomePageHeaderPanel({Key? key}) : super(key: key);

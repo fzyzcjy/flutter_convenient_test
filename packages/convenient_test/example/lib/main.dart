@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:efficient_test/efficient_test.dart';
+import 'package:convenient_test/convenient_test.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return TestToolWrapperWidget(
+    return ConvenientTestWrapperWidget(
       child: MaterialApp(
         title: 'Welcome',
         navigatorKey: MyApp.navigatorKey,

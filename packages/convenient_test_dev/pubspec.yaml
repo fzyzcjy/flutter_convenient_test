@@ -1,4 +1,4 @@
-name: efficient_test_dev
+name: convenient_test_dev
 description: A new flutter plugin project.
 version: 0.0.1
 homepage:
@@ -8,8 +8,8 @@ environment:
 
 dependencies:
   collection: ^1.15.0
-  efficient_test: ^1.0.0
-  efficient_test_common: ^1.0.0
+  convenient_test: ^1.0.0
+  convenient_test_common: ^1.0.0
   flutter:
     sdk: flutter
   flutter_test:
@@ -26,7 +26,7 @@ dependencies:
   web_socket_channel: ^2.1.0
 
 dependency_overrides:
-  efficient_test:
-    path: ../efficient_test
-  efficient_test_common:
-    path: ../efficient_test_common
+  convenient_test:
+    path: ../convenient_test
+  convenient_test_common:
+    path: ../convenient_test_common

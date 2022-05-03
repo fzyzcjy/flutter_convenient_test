@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
-import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
 
 part 'organization_store.g.dart';
 

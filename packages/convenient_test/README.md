@@ -1,4 +1,4 @@
-# test_tool
+# convenient_test
 
 A new flutter plugin project.
 

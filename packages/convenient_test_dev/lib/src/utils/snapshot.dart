@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:efficient_test/efficient_test.dart';
+import 'package:convenient_test/convenient_test.dart';
 
 Future<List<int>> takeSnapshot() async {
   final element = _findElement();
@@ -15,9 +15,9 @@ Future<List<int>> takeSnapshot() async {
 
 /// NOTE ref [flutter_test :: _matchers_io.dart :: MatchesGoldenFile :: matchAsync]
 Element _findElement() {
-  final finder = find.byType(TestToolImageCaptureWrapper);
+  final finder = find.byType(ConvenientTestImageCaptureWrapper);
   final element = finder.evaluate().singleOrNull;
-  if (element == null) throw Exception('Please put `TestToolWrapperWidget` in the widget tree near root');
+  if (element == null) throw Exception('Please put `ConvenientTestWrapperWidget` in the widget tree near root');
   return element;
 }
 

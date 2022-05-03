@@ -2,22 +2,22 @@ version: 2
 enable-beta-ecosystems: true
 updates:
 - package-ecosystem: "pub"
-  directory: "/packages/efficient_test"
+  directory: "/packages/convenient_test"
   schedule:
     interval: "daily"
   open-pull-requests-limit: 10
 - package-ecosystem: "pub"
-  directory: "/packages/efficient_test_common"
+  directory: "/packages/convenient_test_common"
   schedule:
     interval: "daily"
   open-pull-requests-limit: 10
 - package-ecosystem: "pub"
-  directory: "/packages/efficient_test_dev"
+  directory: "/packages/convenient_test_dev"
   schedule:
     interval: "daily"
   open-pull-requests-limit: 10
 - package-ecosystem: "pub"
-  directory: "/packages/efficient_test_manager"
+  directory: "/packages/convenient_test_manager"
   schedule:
     interval: "daily"
   open-pull-requests-limit: 10

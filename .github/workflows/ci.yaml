@@ -16,10 +16,10 @@ jobs:
           - beta
           - stable
         package_name:
-          - efficient_test
-          - efficient_test_common
-          - efficient_test_dev
-          - efficient_test_manager
+          - convenient_test
+          - convenient_test_common
+          - convenient_test_dev
+          - convenient_test_manager
 
     steps:
       - uses: actions/checkout@v2

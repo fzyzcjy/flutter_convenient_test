@@ -1,4 +1,4 @@
-include: package:efficient_test_common/src/my_analysis_options.yaml
+include: package:convenient_test_common/src/my_analysis_options.yaml
 
 analyzer:
   exclude:

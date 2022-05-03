@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:recase/recase.dart';
-import 'package:efficient_test_common/efficient_test_common.dart';
-import 'package:efficient_test/efficient_test.dart';
-import 'package:efficient_test_dev/src/functions/command.dart';
-import 'package:efficient_test_dev/src/functions/core.dart';
-import 'package:efficient_test_dev/src/functions/interaction.dart';
-import 'package:efficient_test_dev/src/functions/log.dart';
-import 'package:efficient_test_dev/src/support/slot.dart';
-import 'package:efficient_test_dev/src/utils/util.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test/convenient_test.dart';
+import 'package:convenient_test_dev/src/functions/command.dart';
+import 'package:convenient_test_dev/src/functions/core.dart';
+import 'package:convenient_test_dev/src/functions/interaction.dart';
+import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/slot.dart';
+import 'package:convenient_test_dev/src/utils/util.dart';
 
-extension TestToolFind on TestTool {
+extension ConvenientTestFind on ConvenientTest {
   TFinderCommand get(Object arg) => TFinderCommand(this, find.get(arg));
 
   TCommand routeName() => TRouteNameCommand(this);
@@ -76,7 +76,7 @@ class TFinderCommand extends TCommand {
   @protected
   final Finder finder;
 
-  TFinderCommand(TestTool t, this.finder) : super(t);
+  TFinderCommand(ConvenientTest t, this.finder) : super(t);
 
   @override
   Object? getCurrentActual() => finder;
@@ -136,11 +136,11 @@ class TFinderCommand extends TCommand {
 }
 
 class TRouteNameCommand extends TCommand {
-  TRouteNameCommand(TestTool t) : super(t);
+  TRouteNameCommand(ConvenientTest t) : super(t);
 
   @override
   Object? getCurrentActual() {
-    final context = GetIt.I.get<TestToolSlot>().getNavContext(t);
+    final context = GetIt.I.get<ConvenientTestSlot>().getNavContext(t);
     if (context == null) return null;
 
     // https://stackoverflow.com/questions/50817086/how-to-check-which-the-current-route-is?rq=1
@@ -156,7 +156,7 @@ class TRouteNameCommand extends TCommand {
 class TRawCommand extends TCommand {
   final Object? value;
 
-  TRawCommand(TestTool t, this.value) : super(t);
+  TRawCommand(ConvenientTest t, this.value) : super(t);
 
   @override
   Object? getCurrentActual() => value;

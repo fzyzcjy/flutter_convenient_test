@@ -1,4 +1,4 @@
-# test_tool_app
+# convenient_test_app
 
 A new Flutter project.
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:efficient_test_manager/misc/setup.dart';
-import 'package:efficient_test_manager/pages/home_page.dart';
+import 'package:convenient_test_manager/misc/setup.dart';
+import 'package:convenient_test_manager/pages/home_page.dart';
 
 void main() {
   setup();
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TestToolManager',
+      title: 'ConvenientTestManager',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),

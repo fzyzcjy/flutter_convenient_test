@@ -8,19 +8,19 @@ import 'package:meta/meta.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/invoker.dart';
 import 'package:test_api/src/backend/live_test.dart';
-import 'package:efficient_test_common/efficient_test_common.dart';
-import 'package:efficient_test_dev/src/functions/core.dart';
-import 'package:efficient_test_dev/src/utils/snapshot.dart';
-import 'package:efficient_test_dev/src/utils/util.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/functions/core.dart';
+import 'package:convenient_test_dev/src/utils/snapshot.dart';
+import 'package:convenient_test_dev/src/utils/util.dart';
 
-extension TestToolLog on TestTool {
+extension ConvenientTestLog on ConvenientTest {
   void section(String description) => log('SECTION', description);
 
   // p.s. can search emoji here - https://emojipedia.org
-  LogHandle log(String title, String message, {LogEntryType? type}) => testToolLog(title, message, type: type);
+  LogHandle log(String title, String message, {LogEntryType? type}) => convenientTestLog(title, message, type: type);
 }
 
-LogHandle testToolLog(
+LogHandle convenientTestLog(
   String title,
   String message, {
   LogEntryType? type,
@@ -32,7 +32,7 @@ LogHandle testToolLog(
   liveTest ??= Invoker.current!.liveTest;
 
   final log = LogHandle(
-    TestToolIdGen.nextId(),
+    ConvenientTestIdGen.nextId(),
     testGroupsToName(liveTest.groups),
     liveTest.test.name,
   );
@@ -78,7 +78,7 @@ class LogHandle {
     required LogEntryType type,
     bool printing = false,
   }) {
-    GetIt.I.get<TestToolManagerClient>().reportLogEntry(LogEntry(
+    GetIt.I.get<ConvenientTestManagerClient>().reportLogEntry(LogEntry(
           id: _id,
           testGroupName: _testGroupName,
           testEntryName: _testEntryName,
@@ -96,7 +96,7 @@ class LogHandle {
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
     image ??= await takeSnapshot();
-    await GetIt.I.get<TestToolManagerClient>().reportSnapshot(Snapshot(
+    await GetIt.I.get<ConvenientTestManagerClient>().reportSnapshot(Snapshot(
           logEntryId: _id,
           name: name,
           image: image,
@@ -131,9 +131,9 @@ String testGroupsToName(List<Group> testGroups) {
 @internal
 void setUpLogTestStartAndEnd() {
   setUp(() async {
-    testToolLog('START', '', type: LogEntryType.TEST_START);
+    convenientTestLog('START', '', type: LogEntryType.TEST_START);
   });
   tearDown(() async {
-    testToolLog('END', '', type: LogEntryType.TEST_END);
+    convenientTestLog('END', '', type: LogEntryType.TEST_END);
   });
 }

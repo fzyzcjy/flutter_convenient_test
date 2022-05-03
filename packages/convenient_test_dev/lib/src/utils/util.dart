@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide State;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:test_api/src/backend/state.dart'; // ignore_for_file: implementation_imports
-import 'package:efficient_test_common/efficient_test_common.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
 
 class DelegatingFinder implements Finder {
   final Finder target;
@@ -43,7 +43,7 @@ class DelegatingFinder implements Finder {
   String toString() => target.toString();
 }
 
-class TestToolIdGen {
+class ConvenientTestIdGen {
   static var _nextId = 10000;
 
   static int nextId() => _nextId++;

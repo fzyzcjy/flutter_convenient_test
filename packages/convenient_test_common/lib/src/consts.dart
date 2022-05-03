@@ -1,4 +1,4 @@
-const kTestToolManagerPort = 3579;
+const kConvenientTestManagerPort = 3579;
 
 const kWorkerVmServiceHost = '127.0.0.1';
 // TODO temporarily hardcode this

@@ -6,25 +6,25 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
-import 'package:efficient_test_common/efficient_test_common.dart';
-import 'package:efficient_test/efficient_test.dart';
-import 'package:efficient_test_dev/src/functions/log.dart';
-import 'package:efficient_test_dev/src/support/executor.dart';
-import 'package:efficient_test_dev/src/support/setup.dart';
-import 'package:efficient_test_dev/src/support/slot.dart';
-import 'package:efficient_test_dev/src/third_party/my_test_compat.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test/convenient_test.dart';
+import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/executor.dart';
+import 'package:convenient_test_dev/src/support/setup.dart';
+import 'package:convenient_test_dev/src/support/slot.dart';
+import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 
-class TestTool {
+class ConvenientTest {
   @internal
   final WidgetTester tester;
 
-  TestTool(this.tester);
+  ConvenientTest(this.tester);
 }
 
 /// Please make this the only method in your "main" method.
-void testToolMain(TestToolSlot slot, VoidCallback body) {
+void convenientTestMain(ConvenientTestSlot slot, VoidCallback body) {
   runZonedGuarded(() {
-    TestToolWrapperWidget.testToolActive = true;
+    ConvenientTestWrapperWidget.convenientTestActive = true;
 
     final declarer = collectIntoDeclarer(() {
       if (WidgetsBinding.instance != null) {
@@ -33,24 +33,24 @@ void testToolMain(TestToolSlot slot, VoidCallback body) {
         //     See https://docs.flutter.dev/testing/errors#errors-not-caught-by-flutter for details.
         // (2) [IntegrationTestWidgetsFlutterBinding] must be called *inside* `collectIntoDeclarer`,
         //     because it calls some logic inside it.
-        throw Exception('Please do *not* initialize `WidgetsBinding.instance` outside `testToolMain`.');
+        throw Exception('Please do *not* initialize `WidgetsBinding.instance` outside `convenientTestMain`.');
       }
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-      setupTestTool(slot);
+      setupConvenientTest(slot);
 
       setUpLogTestStartAndEnd();
       body();
     });
 
-    TestToolExecutor.execute(declarer);
+    ConvenientTestExecutor.execute(declarer);
   }, (e, s) {
-    Log.w('TestToolMain',
-        'TestTool captured error (via runZonedGuarded). type(e)=${e.runtimeType} exception=$e stackTrace=$s');
+    Log.w('ConvenientTestMain',
+        'ConvenientTest captured error (via runZonedGuarded). type(e)=${e.runtimeType} exception=$e stackTrace=$s');
   });
 }
 
-typedef TWidgetTesterCallback = Future<void> Function(TestTool t);
+typedef TWidgetTesterCallback = Future<void> Function(ConvenientTest t);
 
 @isTest
 void tTestWidgets(
@@ -62,11 +62,11 @@ void tTestWidgets(
   testWidgets(
     description,
     (tester) async {
-      testToolLog('BODY', '', type: LogEntryType.TEST_BODY);
+      convenientTestLog('BODY', '', type: LogEntryType.TEST_BODY);
 
-      final t = TestTool(tester);
+      final t = ConvenientTest(tester);
 
-      await GetIt.I.get<TestToolSlot>().startApp(t);
+      await GetIt.I.get<ConvenientTestSlot>().startApp(t);
 
       await callback(t);
 

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pedantic/pedantic.dart';
-import 'package:efficient_test_dev/src/functions/core.dart';
-import 'package:efficient_test_dev/src/functions/log.dart';
-import 'package:efficient_test_dev/src/support/slot.dart';
+import 'package:convenient_test_dev/src/functions/core.dart';
+import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/slot.dart';
 
-extension TestToolInteraction on TestTool {
+extension ConvenientTestInteraction on ConvenientTest {
   Future<void> visit(String routeName, {Object? arguments}) async {
     final log = this.log('VISIT', routeName + (arguments != null ? ' arg=${jsonEncode(arguments)}' : ''));
 
@@ -16,7 +16,7 @@ extension TestToolInteraction on TestTool {
     await log.snapshot(name: 'before');
 
     // If await, will wait forever until the page is popped - surely we do not want that
-    unawaited(Navigator.pushNamed(GetIt.I.get<TestToolSlot>().getNavContext(this)!, routeName, arguments: arguments));
+    unawaited(Navigator.pushNamed(GetIt.I.get<ConvenientTestSlot>().getNavContext(this)!, routeName, arguments: arguments));
 
     await pumpAndSettle();
     await log.snapshot(name: 'after');

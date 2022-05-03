@@ -14,9 +14,9 @@ import 'package:test_api/src/backend/state.dart';
 import 'package:test_api/src/backend/suite.dart';
 import 'package:test_api/src/backend/suite_platform.dart';
 import 'package:test_api/src/backend/test.dart';
-import 'package:efficient_test_common/efficient_test_common.dart';
-import 'package:efficient_test_dev/src/functions/log.dart';
-import 'package:efficient_test_dev/src/utils/util.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/utils/util.dart';
 
 Declarer collectIntoDeclarer(void Function() body) {
   return Declarer()..declare(body);
@@ -195,7 +195,7 @@ class _Reporter {
       print(text);
 
       // NOTE XXX add
-      GetIt.I.get<TestToolManagerClient>().reportRunnerMessage(RunnerMessage(
+      GetIt.I.get<ConvenientTestManagerClient>().reportRunnerMessage(RunnerMessage(
             testEntryName: liveTest.test.name,
             message: message.text,
           ));
@@ -205,7 +205,7 @@ class _Reporter {
   /// A callback called when [liveTest]'s state becomes [state].
   void _onStateChange(LiveTest liveTest, State state) {
     // NOTE XXX add
-    GetIt.I.get<TestToolManagerClient>().reportRunnerStateChange(RunnerStateChange(
+    GetIt.I.get<ConvenientTestManagerClient>().reportRunnerStateChange(RunnerStateChange(
           testEntryName: liveTest.test.name,
           state: state.toProto(),
         ));
@@ -218,14 +218,14 @@ class _Reporter {
   /// A callback called when [liveTest] throws [error].
   void _onError(LiveTest liveTest, Object error, StackTrace stackTrace) {
     // NOTE XXX add
-    GetIt.I.get<TestToolManagerClient>().reportRunnerError(RunnerError(
+    GetIt.I.get<ConvenientTestManagerClient>().reportRunnerError(RunnerError(
           testEntryName: liveTest.test.name,
           error: error.toString(),
           stackTrace: '$stackTrace',
         ));
     // print('hi _onError e.type=${error.runtimeType} error=$error');
     // print('hi _onError errors=${liveTest.errors}');
-    testToolLog(
+    convenientTestLog(
       'ERROR',
       '',
       error: error.toString(),

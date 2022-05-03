@@ -1,29 +1,29 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:efficient_test/src/gesture_visualizer.dart';
+import 'package:convenient_test/src/gesture_visualizer.dart';
 
-class TestToolWrapperWidget extends StatelessWidget {
+class ConvenientTestWrapperWidget extends StatelessWidget {
   final Widget child;
 
-  static var testToolActive = false;
+  static var convenientTestActive = false;
 
-  const TestToolWrapperWidget({Key? key, required this.child}) : super(key: key);
+  const ConvenientTestWrapperWidget({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (!testToolActive) return child;
+    if (!convenientTestActive) return child;
 
-    return TestToolImageCaptureWrapper(
+    return ConvenientTestImageCaptureWrapper(
       child: GestureVisualizer(child: child),
     );
   }
 }
 
 /// ref: Flutter's "golden test" implementations
-class TestToolImageCaptureWrapper extends StatelessWidget {
+class ConvenientTestImageCaptureWrapper extends StatelessWidget {
   final Widget child;
 
-  const TestToolImageCaptureWrapper({Key? key, required this.child}) : super(key: key);
+  const ConvenientTestImageCaptureWrapper({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class Mark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!TestToolWrapperWidget.testToolActive) return child;
+    if (!ConvenientTestWrapperWidget.convenientTestActive) return child;
 
     final color = kColorList['$name'.hashCode % kColorList.length];
 
