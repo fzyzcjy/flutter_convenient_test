@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 10 * * *'
+
+jobs:
+  flutter:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        channel:
+          - beta
+          - stable
+        package_name:
+          - efficient_test
+          - efficient_test_common
+          - efficient_test_dev
+          - efficient_test_manager
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: ${{ matrix.channel }}
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: ${{ matrix.package_name }}
+
+      - name: Check format
+        run: flutter format --set-exit-if-changed .
+        working-directory: ${{ matrix.package_name }}
+
+      - name: Analyze
+        run: flutter analyze
+        working-directory: ${{ matrix.package_name }}
+
+      - name: Run tests
+        run: flutter test
+        working-directory: ${{ matrix.package_name }}
