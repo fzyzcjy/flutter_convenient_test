@@ -1,0 +1,32 @@
+name: test_tool_worker_dev
+description: A new flutter plugin project.
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+
+dependencies:
+  collection: ^1.15.0
+  flutter:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+  get_it: ^6.0.0
+  grpc: ^3.0.0
+  integration_test:
+    sdk: flutter
+  lint: ^1.8.2
+  meta: ^1.3.0
+  pedantic: ^1.11.0
+  recase: ^4.0.0-nullsafety.0
+  test_api: ^0.4.2
+  test_tool_common: ^1.0.0
+  test_tool_worker: ^1.0.0
+  web_socket_channel: ^2.1.0
+
+dependency_overrides:
+  test_tool_common:
+    path: ../test_tool_common
+  test_tool_worker:
+    path: ../test_tool_worker

@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+service TestToolManager {
+  rpc ResetManagerCache (Empty) returns (Empty);
+  rpc ReportLogEntry (LogEntry) returns (Empty);
+  rpc ReportTestInfoPack (TestInfoPack) returns (Empty);
+  rpc ReportRunnerStateChange (RunnerStateChange) returns (Empty);
+  rpc ReportRunnerError (RunnerError) returns (Empty);
+  rpc ReportRunnerMessage (RunnerMessage) returns (Empty);
+  rpc ReportSnapshot (Snapshot) returns (Empty);
+  rpc GetTestFilter (Empty) returns (TestFilter);
+  rpc ManagerToWorkerActionStream (Empty) returns (stream ManagerToWorkerAction);
+}
+
+message LogEntry {
+  int32 id = 1;
+  string test_group_name = 2;
+  string test_entry_name = 3;
+  LogEntryType type = 6;
+  string title = 5;
+  string message = 4;
+  string error = 7;
+  string stack_trace = 8;
+}
+
+enum LogEntryType {
+  INVALID = 0;
+  GENERAL_MESSAGE = 1;
+  TEST_START = 2;
+  TEST_BODY = 3;
+  TEST_END = 4;
+  ASSERT = 5;
+  ASSERT_FAIL = 6;
+}
+
+message TestInfoPack {
+  repeated TestEntryInfo entries = 1;
+}
+
+message TestEntryInfo {
+  string test_group_name = 1;
+  string test_entry_name = 2;
+}
+
+message RunnerStateChange {
+  string test_entry_name = 1;
+  TestEntryState state = 2;
+}
+
+message TestEntryState {
+  string status = 1;
+  string result = 2;
+}
+
+message RunnerError {
+  string test_entry_name = 1;
+  string error = 2;
+  string stack_trace = 3;
+}
+
+message RunnerMessage {
+  string test_entry_name = 1;
+  string message = 2;
+}
+
+message Snapshot {
+  int32 log_entry_id = 1;
+  string name = 2;
+  bytes image = 3;
+}
+
+message TestFilter {
+  string filter_name_regex = 1;
+}
+
+message ManagerToWorkerAction {
+}
+
+// https://stackoverflow.com/questions/31768665/can-i-define-a-grpc-call-with-a-null-request-or-response
+message Empty {
+}

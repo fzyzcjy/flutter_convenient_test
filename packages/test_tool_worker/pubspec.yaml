@@ -1,0 +1,14 @@
+name: test_tool_worker
+description: A new flutter plugin project.
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: '>=2.15.1 <3.0.0'
+
+dependencies:
+  ansicolor: ^2.0.1
+  collection: ^1.15.0
+  flutter:
+    sdk: flutter
+  lint: ^1.8.2
