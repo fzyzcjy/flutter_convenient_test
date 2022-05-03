@@ -1,18 +1,18 @@
 import 'dart:async';
 
+import 'package:convenient_test/convenient_test.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/executor.dart';
+import 'package:convenient_test_dev/src/support/setup.dart';
+import 'package:convenient_test_dev/src/support/slot.dart';
+import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
-import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test/convenient_test.dart';
-import 'package:convenient_test_dev/src/functions/log.dart';
-import 'package:convenient_test_dev/src/support/executor.dart';
-import 'package:convenient_test_dev/src/support/setup.dart';
-import 'package:convenient_test_dev/src/support/slot.dart';
-import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 
 class ConvenientTest {
   @internal

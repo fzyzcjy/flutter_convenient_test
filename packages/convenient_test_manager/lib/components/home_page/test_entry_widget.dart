@@ -1,7 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
 import 'package:convenient_test_manager/components/home_page/log_entry_widget.dart';
 import 'package:convenient_test_manager/components/misc/state_indicator.dart';
 import 'package:convenient_test_manager/misc/proto_extensions.dart';
@@ -9,6 +6,9 @@ import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/utils/utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 class HomePageTestEntryWidget extends StatelessWidget {
   final int testEntryId;

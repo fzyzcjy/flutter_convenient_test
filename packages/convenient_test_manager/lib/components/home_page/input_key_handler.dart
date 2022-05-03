@@ -1,8 +1,8 @@
+import 'package:convenient_test_manager/stores/log_store.dart';
+import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:convenient_test_manager/stores/log_store.dart';
-import 'package:convenient_test_manager/stores/organization_store.dart';
 
 class HomePageInputKeyHandler extends StatefulWidget {
   const HomePageInputKeyHandler({Key? key}) : super(key: key);

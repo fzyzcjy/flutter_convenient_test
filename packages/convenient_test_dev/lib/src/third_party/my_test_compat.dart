@@ -2,6 +2,9 @@
 
 import 'dart:async';
 
+import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:get_it/get_it.dart';
 import 'package:test_api/src/backend/declarer.dart';
 import 'package:test_api/src/backend/group.dart';
@@ -14,9 +17,6 @@ import 'package:test_api/src/backend/state.dart';
 import 'package:test_api/src/backend/suite.dart';
 import 'package:test_api/src/backend/suite_platform.dart';
 import 'package:test_api/src/backend/test.dart';
-import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_dev/src/functions/log.dart';
-import 'package:convenient_test_dev/src/utils/util.dart';
 
 Declarer collectIntoDeclarer(void Function() body) {
   return Declarer()..declare(body);

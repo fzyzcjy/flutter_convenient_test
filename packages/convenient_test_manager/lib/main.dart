@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:convenient_test_manager/misc/setup.dart';
 import 'package:convenient_test_manager/pages/home_page.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   setup();

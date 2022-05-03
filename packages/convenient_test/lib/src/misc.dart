@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:convenient_test/src/gesture_visualizer.dart';
+import 'package:flutter/material.dart';
 
 class ConvenientTestWrapperWidget extends StatelessWidget {
   final Widget child;

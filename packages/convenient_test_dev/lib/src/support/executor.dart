@@ -1,13 +1,13 @@
 // ignore_for_file: implementation_imports
 
+import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:get_it/get_it.dart';
 import 'package:test_api/src/backend/declarer.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/group_entry.dart';
 import 'package:test_api/src/backend/test.dart';
-import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_dev/src/functions/log.dart';
-import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 
 class ConvenientTestExecutor {
   static const _kTag = 'ConvenientTestExecutor';

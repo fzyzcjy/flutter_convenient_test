@@ -1,5 +1,5 @@
-import 'package:get_it/get_it.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
+import 'package:get_it/get_it.dart';
 
 extension ExtTestGroup on TestGroup {
   String get briefName => name;

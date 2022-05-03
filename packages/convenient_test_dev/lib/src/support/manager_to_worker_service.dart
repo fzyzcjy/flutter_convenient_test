@@ -1,5 +1,5 @@
-import 'package:get_it/get_it.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:get_it/get_it.dart';
 
 class ConvenientTestManagerToWorkerService {
   ConvenientTestManagerToWorkerService() {
