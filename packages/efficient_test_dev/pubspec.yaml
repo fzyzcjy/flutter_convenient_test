@@ -21,12 +21,12 @@ dependencies:
   pedantic: ^1.11.0
   recase: ^4.0.0-nullsafety.0
   test_api: ^0.4.2
-  test_tool_common: ^1.0.0
-  test_tool_worker: ^1.0.0
+  efficient_test_common: ^1.0.0
+  efficient_test: ^1.0.0
   web_socket_channel: ^2.1.0
 
 dependency_overrides:
-  test_tool_common:
-    path: ../test_tool_common
-  test_tool_worker:
-    path: ../test_tool_worker
+  efficient_test_common:
+    path: ../efficient_test_common
+  efficient_test:
+    path: ../efficient_test

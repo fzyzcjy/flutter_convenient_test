@@ -1,5 +1,5 @@
-name: test_tool_worker_example
-description: Demonstrates how to use the test_tool_worker plugin.
+name: efficient_test_worker_example
+description: Demonstrates how to use the efficient_test_worker plugin.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -17,7 +17,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  test_tool_worker: ^1.0.0
+  efficient_test: ^1.0.0
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
@@ -26,15 +26,15 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   integration_test:
     sdk: flutter
-  test_tool_worker_dev: ^1.0.0
+  efficient_test_dev: ^1.0.0
 
 dependency_overrides:
-  test_tool_common:
-    path: ../../test_tool_common
-  test_tool_worker:
+  efficient_test_common:
+    path: ../../efficient_test_common
+  efficient_test:
     path: ../
-  test_tool_worker_dev:
-    path: ../../test_tool_worker_dev
+  efficient_test_dev:
+    path: ../../efficient_test_dev
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

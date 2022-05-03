@@ -33,13 +33,13 @@ dependencies:
   mobx: ^2.0.7
   protobuf: ^2.0.0
   test_api: ^0.4.2
-  test_tool_common: ^1.0.0
+  efficient_test_common: ^1.0.0
   vm_service: ^7.0.0
   web_socket_channel: ^2.1.0
 
 dependency_overrides:
-  test_tool_common:
-    path: ../test_tool_common
+  efficient_test_common:
+    path: ../efficient_test_common
 
 dev_dependencies:
   analyzer: ^2.3.0
