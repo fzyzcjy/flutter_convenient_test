@@ -95,7 +95,7 @@ class _GroupInfoWidget extends StatelessWidget {
     final organizationStore = GetIt.I.get<OrganizationStore>();
 
     final stateCountMap = ExhaustiveMap(SimplifiedStateEnum.values, (_) => 0);
-    suiteInfoStore.suiteInfo!.traverse((groupEntryInfo) {
+    info.traverse(suiteInfoStore.suiteInfo!, (groupEntryInfo) {
       if (groupEntryInfo is TestInfo) {
         stateCountMap[organizationStore.testEntryStateMap[groupEntryInfo.id].toSimplifiedStateEnum()]++;
       }
