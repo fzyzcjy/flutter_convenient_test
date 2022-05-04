@@ -99,7 +99,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: backgroundColor,
                             ),
-                            child: Text(
+                            child: SelectableText(
                               logEntry.title,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
@@ -113,7 +113,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
                   ),
                   Container(width: 12),
                   Expanded(
-                    child: Text(logEntry.message),
+                    child: SelectableText(logEntry.message),
                   ),
                 ],
               ),
@@ -130,8 +130,8 @@ class HomePageLogEntryWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(logEntry.error),
-                  Text(logEntry.stackTrace),
+                  SelectableText(logEntry.error),
+                  SelectableText(logEntry.stackTrace),
                 ],
               ),
             )
