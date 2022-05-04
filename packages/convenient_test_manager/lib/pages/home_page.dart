@@ -1,7 +1,7 @@
 import 'package:convenient_test_manager/components/home_page/command_info_panel.dart';
 import 'package:convenient_test_manager/components/home_page/header_panel.dart';
 import 'package:convenient_test_manager/components/home_page/input_key_handler.dart';
-import 'package:convenient_test_manager/components/home_page/screenshot_panel.dart';
+import 'package:convenient_test_manager/components/home_page/secondary_panel.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
