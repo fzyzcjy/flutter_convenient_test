@@ -34,7 +34,7 @@ class _HomePageInputKeyHandlerState extends State<HomePageInputKeyHandler> {
 
   void _autoRequestFocus() {
     if (!_focusNode.hasFocus) {
-      debugPrint('InputKeyHandler requestFocus');
+      // debugPrint('InputKeyHandler requestFocus');
       FocusScope.of(context).requestFocus(_focusNode);
     }
   }
