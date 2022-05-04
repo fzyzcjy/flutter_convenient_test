@@ -9,8 +9,12 @@ void main() {
     group('sample group one', () {
       tTestWidgets('empty test', (t) async {});
 
-      group('sample subgroup in group one', () {
+      group('sample sub-group', () {
         tTestWidgets('another empty test', (t) async {});
+
+        group('sample sub-sub-group', () {
+          tTestWidgets('yet another empty test', (t) async {});
+        });
       });
     });
 
