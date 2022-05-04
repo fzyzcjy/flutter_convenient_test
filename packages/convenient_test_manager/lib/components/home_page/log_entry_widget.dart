@@ -106,38 +106,40 @@ class HomePageLogEntryWidget extends StatelessWidget {
   }
 
   Widget _buildTitle(LogEntry logEntry) {
+    final Color? backgroundColor;
+    final Color textColor;
+    switch (logEntry.type) {
+      case LogEntryType.ASSERT:
+        backgroundColor = Colors.green;
+        textColor = Colors.white;
+        break;
+      case LogEntryType.ASSERT_FAIL:
+        backgroundColor = Colors.red;
+        textColor = Colors.white;
+        break;
+      default:
+        backgroundColor = null;
+        textColor = Colors.black;
+        break;
+    }
+
     return SizedBox(
       width: 80,
-      child: Builder(
-        builder: (_) {
-          Color? backgroundColor;
-          var textColor = Colors.black;
-          if (logEntry.type == LogEntryType.ASSERT) {
-            backgroundColor = Colors.green;
-            textColor = Colors.white;
-          }
-          if (logEntry.type == LogEntryType.ASSERT_FAIL) {
-            backgroundColor = Colors.red;
-            textColor = Colors.white;
-          }
-
-          return Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              padding: backgroundColor == null ? null : const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-              decoration: BoxDecoration(
-                color: backgroundColor,
-              ),
-              child: Text(
-                logEntry.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: textColor,
-                ),
-              ),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          padding: backgroundColor == null ? null : const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          decoration: BoxDecoration(
+            color: backgroundColor,
+          ),
+          child: Text(
+            logEntry.title,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: textColor,
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }
