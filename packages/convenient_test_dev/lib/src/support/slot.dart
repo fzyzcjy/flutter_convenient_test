@@ -5,8 +5,6 @@ abstract class ConvenientTestSlot {
   Future<void> appMain(AppMainExecuteMode mode);
 
   BuildContext? getNavContext(ConvenientTest t);
-
-  String get managerHost;
 }
 
 enum AppMainExecuteMode { integrationTest, interactiveApp }

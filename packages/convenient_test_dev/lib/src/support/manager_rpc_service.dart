@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/support/compile_time_config.dart';
-import 'package:convenient_test_dev/src/support/slot.dart';
-import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -32,8 +30,8 @@ abstract class ManagerRpcService {
 }
 
 class ManagerRpcServiceRealConnect extends ManagerRpcService {
-  final _client = createConvenientTestManagerClientStub(
-      host: GetIt.I.get<ConvenientTestSlot>().managerHost, port: kConvenientTestManagerPort);
+  final _client =
+      createConvenientTestManagerClientStub(host: kConvenientTestManagerHost, port: kConvenientTestManagerPort);
 
   @override
   Future<WorkerMode> getWorkerMode() => _client.getWorkerMode(Empty());

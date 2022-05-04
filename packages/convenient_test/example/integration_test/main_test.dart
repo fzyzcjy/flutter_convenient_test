@@ -96,9 +96,6 @@ class MyConvenientTestSlot extends ConvenientTestSlot {
 
   @override
   BuildContext? getNavContext(ConvenientTest t) => MyApp.navigatorKey.currentContext;
-
-  @override
-  String get managerHost => '127.0.0.1';
 }
 
 extension on ConvenientTest {
