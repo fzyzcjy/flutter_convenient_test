@@ -36,26 +36,24 @@ enum LogEntryType {
 
 // mimic test_api :: Suite
 message SuiteInfoProto {
-  GroupInfoProto group = 1;
-}
-
-// mimic test_api :: GroupEntry
-message GroupEntryInfoProto {
-  oneof sub_type {
-    GroupInfoProto group = 1;
-    TestInfoProto test = 2;
-  }
+  int32 group_id = 1;
+  repeated GroupInfoProto groups = 2;
+  repeated TestInfoProto tests = 3;
 }
 
 // mimic test_api :: Group
 message GroupInfoProto {
-  string name = 1;
-  repeated GroupEntryInfoProto entries = 2;
+  int32 id = 1;
+  string name = 2;
+  int32 parent_id = 3;
+  repeated int32 entry_ids = 4;
 }
 
 // mimic test_api :: Test
 message TestInfoProto {
-  string name = 1;
+  int32 id = 1;
+  string name = 2;
+  int32 parent_id = 3;
 }
 
 message RunnerStateChange {
