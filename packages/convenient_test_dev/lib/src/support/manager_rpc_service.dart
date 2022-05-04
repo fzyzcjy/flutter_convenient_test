@@ -57,7 +57,8 @@ ConvenientTestManagerClient createConvenientTestManagerClientStub({required Stri
 class ManagerRpcServiceLocalFile extends ManagerRpcService {
   static const _kTag = 'RpcServiceLocalFile';
 
-  final Future<String> reportPath = _createReportPath();
+  // should be "late", otherwise it accesses platform calls too early
+  late final Future<String> reportPath = _createReportPath();
 
   @override
   Future<WorkerMode> getWorkerMode() async {
