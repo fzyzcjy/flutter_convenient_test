@@ -10,9 +10,6 @@ class OrganizationStore = _OrganizationStore with _$OrganizationStore;
 abstract class _OrganizationStore with Store {
   static var _nextId = 1000000;
 
-  @observable
-  SuiteInfo? suiteInfo;
-
   final testGroupIds = ObservableList<int>();
   final testEntryInGroup = RelationOneToMany();
 

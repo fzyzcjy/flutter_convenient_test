@@ -5,6 +5,7 @@ import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
+import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/worker_mode_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart' as grpc;
@@ -102,7 +103,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   Future<Empty> reportSuiteInfo(ServiceCall call, SuiteInfoProto request) async {
     Log.d(_kTag, 'reportSuiteInfo called');
 
-    _organizationStore.suiteInfo = SuiteInfo.fromProto(request);
+    _suiteInfoStore.suiteInfo = SuiteInfo.fromProto(request);
 
     return Empty();
   }
@@ -137,6 +138,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
   final _logStore = GetIt.I.get<LogStore>();
   final _organizationStore = GetIt.I.get<OrganizationStore>();
+  final _suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
   final _rawLogStore = GetIt.I.get<RawLogStore>();
   final _workerModeStore = GetIt.I.get<WorkerModeStore>();
 }
