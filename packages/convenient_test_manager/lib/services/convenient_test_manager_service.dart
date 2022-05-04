@@ -62,10 +62,17 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   Future<Empty> reportRunnerError(ServiceCall call, RunnerError request) async {
     Log.d(_kTag, 'reportRunnerError called');
 
+<<<<<<< HEAD
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
     if (testEntryId == null) return Empty();
 
     _rawLogStore.rawLogInTest[testEntryId] += '${request.error}\n${request.stackTrace}\n';
+=======
+    if (_kIgnoreTestEntryNames.contains(request.testEntryName)) return Empty();
+
+    _rawLogStore.rawLogInTest[_organizationStore.testEntryNameToId(request.testEntryName)] +=
+        '${request.error}\n${request.stackTrace}\n';
+>>>>>>> master
 
     return Empty();
   }
