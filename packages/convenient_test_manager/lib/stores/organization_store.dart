@@ -28,6 +28,9 @@ abstract class _OrganizationStore with Store {
   @computed
   List<int> get allTestEntryIds => testGroupIds.expand((testGroupId) => testEntryInGroup[testGroupId]!).toList();
 
+  @observable
+  int? activeTestEntryId;
+
   int testGroupNameToId(String name) {
     final item = testGroupMap.values.singleWhereOrNull((item) => item.name == name);
     if (item != null) return item.id;
@@ -58,6 +61,7 @@ abstract class _OrganizationStore with Store {
     testEntryMap.clear();
     expandTestGroupMap.clear();
     expandTestEntryMap.clear();
+    activeTestEntryId = null;
   }
 }
 

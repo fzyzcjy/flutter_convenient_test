@@ -30,8 +30,13 @@ class HomePageTestEntryWidget extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
+              final targetExpand = !organizationStore.expandTestEntryMap[testEntryId];
+
               organizationStore.enableAutoExpand = false;
-              organizationStore.expandTestEntryMap[testEntryId] = !organizationStore.expandTestEntryMap[testEntryId];
+              organizationStore.expandTestEntryMap[testEntryId] = targetExpand;
+              if (targetExpand) {
+                organizationStore.activeTestEntryId = testEntryId;
+              }
             },
             child: SizedBox(
               width: double.infinity,

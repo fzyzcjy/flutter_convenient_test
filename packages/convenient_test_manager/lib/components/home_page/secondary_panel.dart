@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
+import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -83,12 +84,17 @@ class _RawLogPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final logStore = GetIt.I.get<LogStore>();
+    final organizationStore = GetIt.I.get<OrganizationStore>();
     final rawLogStore = GetIt.I.get<RawLogStore>();
 
     return Observer(builder: (_) {
-      final activeTestEntryId = TODO;
-   
+      final activeTestEntryId = organizationStore.activeTestEntryId;
+      if (activeTestEntryId == null) {
+        return const Center(
+          child: Text('Tap log entries on the left to view screenshots'),
+        );
+      }
+
       return SingleChildScrollView(
         child: Text(
           rawLogStore.rawLogInTest[activeTestEntryId],

@@ -33,10 +33,27 @@ mixin _$OrganizationStore on _OrganizationStore, Store {
     });
   }
 
+  late final _$activeTestEntryIdAtom =
+      Atom(name: '_OrganizationStore.activeTestEntryId', context: context);
+
+  @override
+  int? get activeTestEntryId {
+    _$activeTestEntryIdAtom.reportRead();
+    return super.activeTestEntryId;
+  }
+
+  @override
+  set activeTestEntryId(int? value) {
+    _$activeTestEntryIdAtom.reportWrite(value, super.activeTestEntryId, () {
+      super.activeTestEntryId = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 enableAutoExpand: ${enableAutoExpand},
+activeTestEntryId: ${activeTestEntryId},
 allTestEntryIds: ${allTestEntryIds}
     ''';
   }
