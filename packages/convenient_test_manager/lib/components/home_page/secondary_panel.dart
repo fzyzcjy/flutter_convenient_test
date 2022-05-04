@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
-class HomePageScreenshotPanel extends StatelessWidget {
-  const HomePageScreenshotPanel({Key? key}) : super(key: key);
+class HomePageSecondaryPanel extends StatelessWidget {
+  const HomePageSecondaryPanel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

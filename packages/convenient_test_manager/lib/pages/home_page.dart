@@ -77,7 +77,7 @@ class _Body extends StatelessWidget {
         Container(width: 8),
         const Expanded(
           flex: 1,
-          child: HomePageScreenshotPanel(),
+          child: HomePageSecondaryPanel(),
         ),
       ],
     );
