@@ -17,10 +17,20 @@ class HomePageCommandInfoPanel extends StatelessWidget {
 
     return Observer(builder: (_) {
       if (organizationStore.testGroupIds.isEmpty) {
-        return const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 32),
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
           child: Center(
-            child: Text('Empty'),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Text('Empty'),
+                SizedBox(height: 12),
+                Text(
+                  'Try to tap "Hot Restart" above to reload data',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
           ),
         );
       }
