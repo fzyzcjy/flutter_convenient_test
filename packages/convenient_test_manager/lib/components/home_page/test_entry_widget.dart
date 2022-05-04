@@ -30,8 +30,12 @@ class HomePageTestEntryWidget extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              organizationStore.enableAutoExpand = false;
-              organizationStore.expandTestEntryMap[testEntryId] = !organizationStore.expandTestEntryMap[testEntryId];
+              final targetExpand = !organizationStore.expandTestEntryMap[testEntryId];
+
+              organizationStore
+                ..enableAutoExpand = false
+                ..expandTestEntryMap[testEntryId] = targetExpand
+                ..activeTestEntryId = testEntryId;
             },
             child: SizedBox(
               width: double.infinity,
@@ -80,6 +84,7 @@ class HomePageTestEntryWidget extends StatelessWidget {
                     ...logEntryIds.mapIndexed(
                       (i, logEntryId) => HomePageLogEntryWidget(
                         order: i,
+                        testEntryId: testEntryId,
                         logEntryId: logEntryId,
                         running: state == SimplifiedStateEnum.running && i == logEntryIds.length - 1,
                       ),

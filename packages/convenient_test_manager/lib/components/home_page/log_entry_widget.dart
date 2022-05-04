@@ -1,6 +1,7 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/misc/rotate_animation.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
+import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -8,12 +9,14 @@ import 'package:get_it/get_it.dart';
 
 class HomePageLogEntryWidget extends StatelessWidget {
   final int order;
+  final int testEntryId;
   final int logEntryId;
   final bool running;
 
   const HomePageLogEntryWidget({
     Key? key,
     required this.order,
+    required this.testEntryId,
     required this.logEntryId,
     required this.running,
   }) : super(key: key);
@@ -21,6 +24,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logStore = GetIt.I.get<LogStore>();
+    final organizationStore = GetIt.I.get<OrganizationStore>();
 
     // const kSkipTypes = [
     //   LogEntryType.TEST_START,
@@ -42,10 +46,15 @@ class HomePageLogEntryWidget extends StatelessWidget {
         children: [
           InkWell(
             onHover: (hovering) {
-              if (hovering) logStore.activeLogEntryId = logEntryId;
+              if (hovering) {
+                logStore.activeLogEntryId = logEntryId;
+                organizationStore.activeTestEntryId = testEntryId;
+              }
             },
             onTap: () {
-              logStore.activeLogEntryId = active ? null : logEntryId;
+              final targetState = !active;
+              logStore.activeLogEntryId = targetState ? logEntryId : null;
+              organizationStore.activeTestEntryId = targetState ? testEntryId : null;
             },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8),
