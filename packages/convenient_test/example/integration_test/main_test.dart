@@ -17,12 +17,22 @@ void main() {
     });
 
     group('sample group two', () {
-      tTestWidgets('tap counter', (t) async {
+      tTestWidgets('tap and assert text', (t) async {
         await t.get(find.textContaining('No tap')).should(findsOneWidget);
         await t.get(MyAppMark.button).tap();
         await t.get(find.textContaining('1 tap')).should(findsOneWidget);
         await t.get(MyAppMark.button).tap();
         await t.get(find.textContaining('2 taps')).should(findsOneWidget);
+      });
+
+      tTestWidgets('navigation', (t) async {
+        await t.visit('/second');
+        await t.get(find.textContaining('I am second page')).should(findsOneWidget);
+        await t.get(find.textContaining('No tap')).should(findsNothing);
+
+        await t.pageBack();
+        await t.get(find.textContaining('I am second page')).should(findsNothing);
+        await t.get(find.textContaining('No tap')).should(findsOneWidget);
       });
     });
   });
