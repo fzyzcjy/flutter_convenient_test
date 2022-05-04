@@ -5,7 +5,7 @@ import 'package:test_api/src/backend/declarer.dart';
 
 class MyDeclarer extends Declarer {
   // NOTE use this for flaky test retrying, see #16
-  static const kDefaultRetry = 3;
+  static const kDefaultRetry = 1;
 
   @override
   void test(
