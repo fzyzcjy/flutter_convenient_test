@@ -16,25 +16,6 @@ class HomePageCommandInfoPanel extends StatelessWidget {
     final organizationStore = GetIt.I.get<OrganizationStore>();
 
     return Observer(builder: (_) {
-      if (organizationStore.testGroupIds.isEmpty) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Text('Empty'),
-                SizedBox(height: 12),
-                Text(
-                  'Try to tap "Reload Info" above to reload data',
-                  style: TextStyle(fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-        );
-      }
-
       final adapter = StaticSectionListViewAdapter();
 
       adapter.add(StaticSection.single(child: Container(height: 8)));

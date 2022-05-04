@@ -26,10 +26,7 @@ class HomePageHeaderPanel extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           TextButton(
-            onPressed: () {
-              organizationStore.enableAutoExpand = true;
-              GetIt.I.get<VmServiceWrapperService>().hotRestart();
-            },
+            onPressed: () => GetIt.I.get<MiscService>().reloadInfo(),
             child: const Text('Reload Info'),
           ),
           const SizedBox(width: 16),
