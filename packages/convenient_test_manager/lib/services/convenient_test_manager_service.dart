@@ -35,13 +35,39 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   }
 
   @override
-  Future<Empty> reportLogEntry(ServiceCall call, LogEntry request) async {
-    Log.d(_kTag, 'reportLogEntry called entryLocators=${request.entryLocators} message=${request.message}');
+  Future<Empty> report(ServiceCall call, ReportCollection request) async {
+    for (final item in request.items) {
+      await _handleReportItem(item);
+    }
+    return Empty();
+  }
+
+  Future<void> _handleReportItem(ReportItem item) async {
+    switch (item.whichSubType()) {
+      case ReportItem_SubType.suiteInfoProto:
+        return _handleReportSuiteInfoProto(item.suiteInfoProto);
+      case ReportItem_SubType.logEntry:
+        return _handleReportLogEntry(item.logEntry);
+      case ReportItem_SubType.runnerStateChange:
+        return _handleReportRunnerStateChange(item.runnerStateChange);
+      case ReportItem_SubType.runnerError:
+        return _handleReportRunnerError(item.runnerError);
+      case ReportItem_SubType.runnerMessage:
+        return _handleReportRunnerMessage(item.runnerMessage);
+      case ReportItem_SubType.snapshot:
+        return _handleReportSnapshot(item.snapshot);
+      case ReportItem_SubType.notSet:
+        throw Exception('unknown $item');
+    }
+  }
+
+  Future<void> _handleReportLogEntry(LogEntry request) async {
+    Log.d(_kTag, 'handleReportLogEntry called entryLocators=${request.entryLocators} message=${request.message}');
 
     _logStore.logEntryMap.addToIdObjMap(request);
 
     final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators);
-    if (testEntryId == null) return Empty();
+    if (testEntryId == null) return;
 
     if (!(_logStore.logEntryInTest[testEntryId]?.contains(request.id) ?? false)) {
       _logStore.logEntryInTest.addRelation(testEntryId, request.id);
@@ -54,63 +80,46 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
             _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))!] = true;
       }
     }
-
-    return Empty();
   }
 
-  @override
-  Future<Empty> reportRunnerError(ServiceCall call, RunnerError request) async {
-    Log.d(_kTag, 'reportRunnerError called');
+  Future<void> _handleReportRunnerError(RunnerError request) async {
+    Log.d(_kTag, 'handleReportRunnerError called');
 
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
-    if (testEntryId == null) return Empty();
+    if (testEntryId == null) return;
 
     _rawLogStore.rawLogInTest[testEntryId] += '${request.error}\n${request.stackTrace}\n';
-
-    return Empty();
   }
 
-  @override
-  Future<Empty> reportRunnerMessage(ServiceCall call, RunnerMessage request) async {
-    Log.d(_kTag, 'reportRunnerMessage called');
+  Future<void> _handleReportRunnerMessage(RunnerMessage request) async {
+    Log.d(_kTag, 'handleReportRunnerMessage called');
 
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
-    if (testEntryId == null) return Empty();
+    if (testEntryId == null) return;
 
     _rawLogStore.rawLogInTest[testEntryId] += '${request.message}\n';
-
-    return Empty();
   }
 
-  @override
-  Future<Empty> reportRunnerStateChange(ServiceCall call, RunnerStateChange request) async {
-    Log.d(_kTag, 'reportRunnerStateChange called entryLocators=${request.entryLocators} state=${request.state}');
+  Future<void> _handleReportRunnerStateChange(RunnerStateChange request) async {
+    Log.d(_kTag, 'handleReportRunnerStateChange called entryLocators=${request.entryLocators} state=${request.state}');
 
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
-    if (testEntryId == null) return Empty();
+    if (testEntryId == null) return;
 
     _organizationStore.testEntryStateMap[testEntryId] = request.state;
-
-    return Empty();
   }
 
-  @override
-  Future<Empty> reportSnapshot(ServiceCall call, Snapshot request) async {
-    Log.d(_kTag, 'reportSnapshot called');
+  Future<void> _handleReportSnapshot(Snapshot request) async {
+    Log.d(_kTag, 'handleReportSnapshot called');
 
     _logStore.snapshotInLog[request.logEntryId] ??= ObservableMap();
     _logStore.snapshotInLog[request.logEntryId]![request.name] = request.image as Uint8List;
-
-    return Empty();
   }
 
-  @override
-  Future<Empty> reportSuiteInfo(ServiceCall call, SuiteInfoProto request) async {
-    Log.d(_kTag, 'reportSuiteInfo called $request');
+  Future<void> _handleReportSuiteInfoProto(SuiteInfoProto request) async {
+    Log.d(_kTag, 'handleReportSuiteInfo called $request');
 
     _suiteInfoStore.suiteInfo = SuiteInfo.fromProto(request);
-
-    return Empty();
   }
 
   @override
