@@ -34,6 +34,19 @@ void main() {
         await t.get(find.textContaining('I am home page')).should(findsOneWidget);
         await t.get(find.textContaining('I am second page')).should(findsNothing);
       });
+
+      tTestWidgets('custom logging and snapshotting', (t) async {
+        // suppose you do something normal...
+        await t.get(find.textContaining('No tap')).should(findsOneWidget);
+
+        // then you want to log and snapshot
+        final log = t.log('HELLO', 'Just a demonstration of custom logging');
+        await log.snapshot();
+      });
+
+      tTestWidgets('custom commands', (t) async {
+        await t.myCustomCommand();
+      });
     });
   });
 }
@@ -49,4 +62,11 @@ class MyConvenientTestSlot extends ConvenientTestSlot {
 
   @override
   String get managerHost => '192.168.0.107'; // TODO
+}
+
+extension on ConvenientTest {
+  Future<void> myCustomCommand() async {
+    // Do anything you like... This is just a normal function
+    debugPrint('Hello, world!');
+  }
 }
