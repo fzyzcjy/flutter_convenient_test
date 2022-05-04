@@ -15,21 +15,21 @@ import 'package:test_api/src/backend/invoker.dart';
 import 'package:test_api/src/backend/live_test.dart';
 
 extension ConvenientTestLog on ConvenientTest {
-  void section(String description) => log('SECTION', description, type: LogEntryType.SECTION);
+  void section(String description) => log('SECTION', description, type: LogSubEntryType.SECTION);
 
   // p.s. can search emoji here - https://emojipedia.org
-  LogHandle log(String title, String message, {LogEntryType? type}) => convenientTestLog(title, message, type: type);
+  LogHandle log(String title, String message, {LogSubEntryType? type}) => convenientTestLog(title, message, type: type);
 }
 
 LogHandle convenientTestLog(
   String title,
   String message, {
-  LogEntryType? type,
+  LogSubEntryType? type,
   String? error,
   String? stackTrace,
   LiveTest? liveTest,
 }) {
-  type ??= LogEntryType.GENERAL_MESSAGE;
+  type ??= LogSubEntryType.GENERAL_MESSAGE;
   liveTest ??= Invoker.current!.liveTest;
 
   final log = LogHandle(
@@ -54,7 +54,7 @@ typedef LogUpdate = void Function(
   String message, {
   String? error,
   String? stackTrace,
-  required LogEntryType type,
+  required LogSubEntryType type,
   bool printing,
 });
 typedef LogSnapshot = Future<void> Function({
@@ -74,7 +74,7 @@ class LogHandle {
     String message, {
     String? error,
     String? stackTrace,
-    required LogEntryType type,
+    required LogSubEntryType type,
     bool printing = false,
   }) {
     myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
@@ -106,12 +106,12 @@ class LogHandle {
   }
 }
 
-String _typeToLeading(LogEntryType type) {
+String _typeToLeading(LogSubEntryType type) {
   switch (type) {
-    case LogEntryType.TEST_START:
-    case LogEntryType.TEST_END:
+    case LogSubEntryType.TEST_START:
+    case LogSubEntryType.TEST_END:
       return '🟤';
-    case LogEntryType.GENERAL_MESSAGE:
+    case LogSubEntryType.GENERAL_MESSAGE:
     default:
       return '🔵';
   }
@@ -133,9 +133,9 @@ String testGroupsToName(List<Group> testGroups) {
 @internal
 void setUpLogTestStartAndEnd() {
   setUp(() async {
-    convenientTestLog('START', '', type: LogEntryType.TEST_START);
+    convenientTestLog('START', '', type: LogSubEntryType.TEST_START);
   });
   tearDown(() async {
-    convenientTestLog('END', '', type: LogEntryType.TEST_END);
+    convenientTestLog('END', '', type: LogSubEntryType.TEST_END);
   });
 }

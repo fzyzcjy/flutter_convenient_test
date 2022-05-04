@@ -31,7 +31,7 @@ abstract class _LogStore with Store {
   bool isTestFlaky(int testInfoId) =>
       // If see multiple TEST_START, then this test is flaky
       (logEntryInTest[testInfoId] ?? <int>[])
-          .where((logEntryId) => logEntryMap[logEntryId]?.type == LogEntryType.TEST_START)
+          .where((logEntryId) => logEntryMap[logEntryId]?.type == LogSubEntryType.TEST_START)
           .length >
       1;
 

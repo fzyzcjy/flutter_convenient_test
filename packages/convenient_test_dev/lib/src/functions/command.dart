@@ -21,7 +21,7 @@ abstract class TCommand {
 
 extension ExtTCommand on TCommand {
   Future<void> should(Matcher matcher, {String? reason}) async {
-    final log = t.log('ASSERT', '', type: LogEntryType.ASSERT);
+    final log = t.log('ASSERT', '', type: LogSubEntryType.ASSERT);
     await shouldRaw(
       matcher,
       logUpdate: log.update,
@@ -77,7 +77,7 @@ Future<void> _expectWithRetry(
     // Why need log "update": Because `actualGetter` can change
     // ignore: avoid_dynamic_calls
     logUpdate('ASSERT', '{${_formatActual(actualGetter())}} matches {${_formatMatcher(matcher)}}',
-        type: LogEntryType.ASSERT);
+        type: LogSubEntryType.ASSERT);
 
     final actual = actualGetter();
     try {
@@ -92,7 +92,7 @@ Future<void> _expectWithRetry(
         logUpdate(
           'ASSERT',
           'after $failedCount retries with ${duration.inMilliseconds} milliseconds',
-          type: LogEntryType.ASSERT_FAIL,
+          type: LogSubEntryType.ASSERT_FAIL,
           error: '$e\n${_getTestFailureErrorExtraInfo(actual)}',
           stackTrace: '$s',
           printing: true,

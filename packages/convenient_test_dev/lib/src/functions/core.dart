@@ -103,7 +103,7 @@ void tTestWidgets(
   testWidgets(
     description,
     (tester) async {
-      convenientTestLog('BODY', '', type: LogEntryType.TEST_BODY);
+      convenientTestLog('BODY', '', type: LogSubEntryType.TEST_BODY);
 
       final t = ConvenientTest(tester);
 
