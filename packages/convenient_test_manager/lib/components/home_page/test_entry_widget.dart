@@ -32,11 +32,10 @@ class HomePageTestEntryWidget extends StatelessWidget {
             onTap: () {
               final targetExpand = !organizationStore.expandTestEntryMap[testEntryId];
 
-              organizationStore.enableAutoExpand = false;
-              organizationStore.expandTestEntryMap[testEntryId] = targetExpand;
-              if (targetExpand) {
-                organizationStore.activeTestEntryId = testEntryId;
-              }
+              organizationStore
+                ..enableAutoExpand = false
+                ..expandTestEntryMap[testEntryId] = targetExpand
+                ..activeTestEntryId = testEntryId;
             },
             child: SizedBox(
               width: double.infinity,
