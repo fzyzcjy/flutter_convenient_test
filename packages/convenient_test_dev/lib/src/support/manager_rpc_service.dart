@@ -72,7 +72,8 @@ class ManagerRpcServiceLocalFile extends ManagerRpcService {
 
   @override
   Future<void> report(ReportCollection request) async {
-    await File(await reportPath).writeAsBytes(request.writeToBuffer());
+    // need to be sync, otherwise when two reports come together they may conflict
+    File(await reportPath).writeAsBytesSync(request.writeToBuffer());
   }
 
   @override
