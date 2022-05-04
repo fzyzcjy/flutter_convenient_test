@@ -38,8 +38,79 @@ class _GroupInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Observer(builder: (_) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildHeader(),
+          if (expanding)
+            for (final childGroupEntryId in info.entryIds)
+              HomePageGroupEntryInfoWidget(groupEntryId: childGroupEntryId),
+        ],
+      );
+    });
   }
+
+  Widget _buildHeader() {
+    final organizationStore = GetIt.I.get<OrganizationStore>();
+    final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
+
+    return InkWell(
+      onTap: () {
+        organizationStore
+          ..enableAutoExpand = false
+          ..expandGroupEntryMap[info.id] = !expanding;
+      },
+      child: SizedBox(
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8, top: 12, bottom: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 24,
+                height: 12,
+                child: Icon(
+                  expanding ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                  size: 16,
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  info.calcBriefName(suiteInfoStore.suiteInfo!),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              ..._buildGroupStat(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildGroupStat() {
+    final organizationStore = GetIt.I.get<OrganizationStore>();
+
+    final stateCountMap = ExhaustiveMap(SimplifiedStateEnum.values, (_) => 0);
+    organizationStore.testEntryInGroup[testGroup.id]!
+        .map((testEntryId) => organizationStore.testEntryStateMap[testEntryId].toSimplifiedStateEnum())
+        .forEach((state) => stateCountMap[state]++);
+
+    return SimplifiedStateEnum.values.expand<Widget>((state) {
+      final count = stateCountMap[state];
+      if (count == 0) return const [SizedBox.shrink()];
+
+      return [
+        Text('${count}x', style: const TextStyle(fontSize: 12)),
+        const SizedBox(width: 2),
+        StateIndicatorWidget(state: state),
+      ];
+    }).toList();
+  }
+
+  bool get expanding => GetIt.I.get<OrganizationStore>().expandGroupEntryMap[info.id];
 }
 
 class _TestInfoWidget extends StatelessWidget {
