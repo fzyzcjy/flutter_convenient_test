@@ -18,7 +18,7 @@ extension ExtState on State {
       case Status.complete:
         switch (result) {
           case Result.success:
-            return isFlaky ? SimplifiedStateEnum.completeSuccess : SimplifiedStateEnum.completeSuccessButFlaky;
+            return isFlaky ? SimplifiedStateEnum.completeSuccessButFlaky : SimplifiedStateEnum.completeSuccess;
           case Result.skipped:
             return SimplifiedStateEnum.completeSkipped;
           case Result.failure:
