@@ -35,6 +35,7 @@ class _HomePage extends StatefulWidget {
 
 class _HomePageState extends State<_HomePage> {
   var count = 0;
+  var starredIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +51,25 @@ class _HomePageState extends State<_HomePage> {
               '' + (count == 0 ? 'No tap' : (count == 1 ? '1 tap' : '$count taps')),
               style: const TextStyle(fontSize: 18),
             ),
+            for (var i = 0; i < 3; ++i)
+              Mark(
+                name: HomePageMark.row,
+                child: ListTile(
+                  title: Text('Row ${i + 1}' + (starredIndex == i ? ' [Starred]' : '')),
+                  trailing: IconButton(
+                    onPressed: () => setState(() => starredIndex = i),
+                    icon: Mark(
+                      name: HomePageMark.star,
+                      child: Icon(starredIndex == i ? Icons.star : Icons.star_border),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
       floatingActionButton: Mark(
-        name: MyAppMark.button,
+        name: HomePageMark.button,
         child: FloatingActionButton(
           onPressed: () => setState(() => count++),
           child: const Icon(Icons.add),
@@ -81,6 +96,8 @@ class _SecondPage extends StatelessWidget {
   }
 }
 
-enum MyAppMark {
+enum HomePageMark {
   button,
+  row,
+  star,
 }

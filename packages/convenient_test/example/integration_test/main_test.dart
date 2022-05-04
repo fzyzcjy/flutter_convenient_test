@@ -19,17 +19,16 @@ void main() {
     group('sample group two', () {
       tTestWidgets('tap and assert text', (t) async {
         await t.get(find.textContaining('No tap')).should(findsOneWidget);
-        await t.get(MyAppMark.button).tap();
+        await t.get(HomePageMark.button).tap();
         await t.get(find.textContaining('1 tap')).should(findsOneWidget);
-        await t.get(MyAppMark.button).tap();
+        await t.get(HomePageMark.button).tap();
         await t.get(find.textContaining('2 taps')).should(findsOneWidget);
       });
 
       tTestWidgets('locate an element deep in the tree', (t) async {
-        await t.get([TODO, TODO]).tap();
+        await t.get(find.get([HomePageMark.row, HomePageMark.star]).last).tap();
 
-        // or do it like this
-        await t.get(find.get([TODO, TODO]).first).tap();
+        await t.get(find.textContaining('Row 3 [Starred]')).should(findsOneWidget);
       });
 
       tTestWidgets('navigation', (t) async {
