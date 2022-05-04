@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
 import 'package:convenient_test_dev/src/support/rpc.dart';
@@ -41,7 +42,7 @@ Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback testBody) 
 }
 
 Future<void> _runModeInteractiveApp() async {
-  await GetIt.I.get<ConvenientTestSlot>().startApp(TODO);
+  await GetIt.I.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.interactiveApp);
 }
 
 Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegrationTest workerModeIntegrationTest) async {
@@ -88,7 +89,10 @@ void tTestWidgets(
 
       final t = ConvenientTest(tester);
 
-      await GetIt.I.get<ConvenientTestSlot>().startApp(t);
+      final log = t.log('START APP', '');
+      await GetIt.I.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
+      await t.pumpAndSettle();
+      await log.snapshot(name: 'after');
 
       await callback(t);
 
