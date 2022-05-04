@@ -117,6 +117,10 @@ class HomePageLogEntryWidget extends StatelessWidget {
         backgroundColor = Colors.red;
         textColor = Colors.white;
         break;
+      case LogEntryType.SECTION:
+        backgroundColor = Colors.blue;
+        textColor = Colors.white;
+        break;
       default:
         backgroundColor = null;
         textColor = Colors.black;
