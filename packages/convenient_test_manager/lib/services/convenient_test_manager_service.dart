@@ -113,6 +113,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
     Log.d(_kTag, 'resetManagerCache called');
 
     _organizationStore.clear();
+    _suiteInfoStore.clear();
     _logStore.clear();
     _rawLogStore.clear();
 

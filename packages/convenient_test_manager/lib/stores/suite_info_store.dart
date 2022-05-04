@@ -9,6 +9,10 @@ class SuiteInfoStore = _SuiteInfoStore with _$SuiteInfoStore;
 abstract class _SuiteInfoStore with Store {
   @observable
   SuiteInfo? suiteInfo;
+
+  void clear() {
+    suiteInfo = null;
+  }
 }
 
 @immutable
