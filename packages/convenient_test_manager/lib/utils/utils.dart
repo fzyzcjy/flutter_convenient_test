@@ -17,7 +17,7 @@ extension ExtState on State {
       case Status.complete:
         switch (result) {
           case Result.success:
-            return SimplifiedStateEnum.completeSuccess;
+            return TODO ? SimplifiedStateEnum.completeSuccess : SimplifiedStateEnum.completeSuccessButFlaky;
           case Result.skipped:
             return SimplifiedStateEnum.completeSkipped;
           case Result.failure:
@@ -41,6 +41,7 @@ enum SimplifiedStateEnum {
   // can be running+success/skipped/failure/error, but we group into one
   running,
   completeSuccess,
+  completeSuccessButFlaky,
   completeSkipped,
   completeFailureOrError,
 }
