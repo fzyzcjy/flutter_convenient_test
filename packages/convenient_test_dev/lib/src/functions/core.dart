@@ -7,6 +7,7 @@ import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/compile_time_config.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
+import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/setup.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
@@ -14,7 +15,6 @@ import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
 
@@ -27,11 +27,11 @@ class ConvenientTest {
 
 /// Please make this the only method in your "main" method.
 Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback testBody) async {
-  GetIt.I.registerSingleton<ConvenientTestSlot>(slot);
+  myGetIt.registerSingleton<ConvenientTestSlot>(slot);
   // MUST do it this early, because we really need the rpc client immediately
-  GetIt.I.registerSingleton<ManagerRpcService>(ManagerRpcService.create());
+  myGetIt.registerSingleton<ManagerRpcService>(ManagerRpcService.create());
 
-  final workerMode = await GetIt.I.get<ManagerRpcService>().getWorkerMode();
+  final workerMode = await myGetIt.get<ManagerRpcService>().getWorkerMode();
   switch (workerMode.whichSubType()) {
     case WorkerMode_SubType.interactiveApp:
       return _runModeInteractiveApp();
@@ -43,7 +43,7 @@ Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback testBody) 
 }
 
 Future<void> _runModeInteractiveApp() async {
-  await GetIt.I.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.interactiveApp);
+  await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.interactiveApp);
 }
 
 Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegrationTest workerModeIntegrationTest) async {
@@ -108,7 +108,7 @@ void tTestWidgets(
       final t = ConvenientTest(tester);
 
       final log = t.log('START APP', '');
-      await GetIt.I.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
+      await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
       await t.pumpAndSettle();
       await log.snapshot(name: 'after');
 

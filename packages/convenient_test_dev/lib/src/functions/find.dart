@@ -4,12 +4,12 @@ import 'package:convenient_test_dev/src/functions/command.dart';
 import 'package:convenient_test_dev/src/functions/core.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:recase/recase.dart';
 
 extension ConvenientTestFind on ConvenientTest {
@@ -140,7 +140,7 @@ class TRouteNameCommand extends TCommand {
 
   @override
   Object? getCurrentActual() {
-    final context = GetIt.I.get<ConvenientTestSlot>().getNavContext(t);
+    final context = myGetIt.get<ConvenientTestSlot>().getNavContext(t);
     if (context == null) return null;
 
     // https://stackoverflow.com/questions/50817086/how-to-check-which-the-current-route-is?rq=1

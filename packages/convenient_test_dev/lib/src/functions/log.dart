@@ -3,12 +3,12 @@
 // ignore_for_file: implementation_imports
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/core.dart';
+import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/invoker.dart';
@@ -77,7 +77,7 @@ class LogHandle {
     required LogEntryType type,
     bool printing = false,
   }) {
-    GetIt.I.get<ManagerRpcService>().reportSingle(ReportItem(
+    myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
             logEntry: LogEntry(
           id: _id,
           entryLocators: _entryLocators,
@@ -95,7 +95,7 @@ class LogHandle {
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
     image ??= await takeSnapshot();
-    await GetIt.I.get<ManagerRpcService>().reportSingle(ReportItem(
+    await myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
             snapshot: Snapshot(
           logEntryId: _id,
           name: name,

@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:convenient_test_dev/src/functions/core.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:pedantic/pedantic.dart';
 
 extension ConvenientTestInteraction on ConvenientTest {
@@ -17,7 +17,7 @@ extension ConvenientTestInteraction on ConvenientTest {
 
     // If await, will wait forever until the page is popped - surely we do not want that
     unawaited(
-        Navigator.pushNamed(GetIt.I.get<ConvenientTestSlot>().getNavContext(this)!, routeName, arguments: arguments));
+        Navigator.pushNamed(myGetIt.get<ConvenientTestSlot>().getNavContext(this)!, routeName, arguments: arguments));
 
     await pumpAndSettle();
     await log.snapshot(name: 'after');
