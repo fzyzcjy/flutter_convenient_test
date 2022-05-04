@@ -4,11 +4,12 @@ import 'package:test_api/src/backend/state.dart'; // ignore: implementation_impo
 extension ExtTestEntryState on TestEntryState {
   State toState() => State(Status.parse(status), Result.parse(result));
 
-  SimplifiedStateEnum toSimplifiedStateEnum() => toState().toSimplifiedStateEnum();
+  SimplifiedStateEnum toSimplifiedStateEnum({required bool isFlaky}) =>
+      toState().toSimplifiedStateEnum(isFlaky: isFlaky);
 }
 
 extension ExtState on State {
-  SimplifiedStateEnum toSimplifiedStateEnum() {
+  SimplifiedStateEnum toSimplifiedStateEnum({required bool isFlaky}) {
     switch (status) {
       case Status.pending:
         return SimplifiedStateEnum.pending;
@@ -17,7 +18,7 @@ extension ExtState on State {
       case Status.complete:
         switch (result) {
           case Result.success:
-            return TODO ? SimplifiedStateEnum.completeSuccess : SimplifiedStateEnum.completeSuccessButFlaky;
+            return isFlaky ? SimplifiedStateEnum.completeSuccess : SimplifiedStateEnum.completeSuccessButFlaky;
           case Result.skipped:
             return SimplifiedStateEnum.completeSkipped;
           case Result.failure:

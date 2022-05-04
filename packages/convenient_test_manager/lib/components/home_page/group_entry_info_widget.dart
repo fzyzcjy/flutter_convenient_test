@@ -114,7 +114,7 @@ class _GroupInfoWidget extends StatelessWidget {
     final stateCountMap = ExhaustiveMap(SimplifiedStateEnum.values, (_) => 0);
     info.traverse(suiteInfoStore.suiteInfo!, (groupEntryInfo) {
       if (groupEntryInfo is TestInfo) {
-        stateCountMap[organizationStore.testEntryStateMap[groupEntryInfo.id].toSimplifiedStateEnum()]++;
+        stateCountMap[organizationStore.getSimplifiedState(groupEntryInfo.id)]++;
       }
     });
 
@@ -151,7 +151,7 @@ class _TestInfoWidget extends StatelessWidget {
 
     return Observer(builder: (_) {
       final logEntryIds = logStore.logEntryInTest[info.id] ?? <int>[];
-      final state = organizationStore.testEntryStateMap[info.id].toSimplifiedStateEnum();
+      final state = organizationStore.getSimplifiedState(info.id);
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
