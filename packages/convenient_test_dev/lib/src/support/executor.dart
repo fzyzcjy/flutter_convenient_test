@@ -26,22 +26,39 @@ class ConvenientTestExecutor {
 }
 
 class _SuiteInfoConverter {
-  SuiteInfoProto convert(Group root) => SuiteInfoProto(
-        group: _convertGroup(root),
-      );
+  var _unoccupiedId = 100; // initial id should be >0 to avoid confusion
+  int _nextId() => _unoccupiedId++;
 
-  GroupInfoProto _convertGroup(Group entry) => GroupInfoProto(
-        name: entry.name,
-        entries: entry.entries.map(_convertGroupEntry),
-      );
+  SuiteInfoProto convert(Group root) {
+    final target = SuiteInfoProto();
+    target.groupId = _convertGroup(root, target, -1);
+    return target;
+  }
 
-  TestInfoProto _convertTest(Test entry) => TestInfoProto(
-        name: entry.name,
-      );
+  int _convertGroup(Group entry, SuiteInfoProto target, int parentId) {
+    final id = _nextId();
+    target.groups.add(GroupInfoProto(
+      id: id,
+      name: entry.name,
+      parentId: parentId,
+      entryIds: entry.entries.map((child) => _convertGroupEntry(child, target, id)),
+    ));
+    return id;
+  }
 
-  GroupEntryInfoProto _convertGroupEntry(GroupEntry entry) {
-    if (entry is Group) return GroupEntryInfoProto(group: _convertGroup(entry));
-    if (entry is Test) return GroupEntryInfoProto(test: _convertTest(entry));
+  int _convertTest(Test entry, SuiteInfoProto target, int parentId) {
+    final id = _nextId();
+    target.tests.add(TestInfoProto(
+      id: id,
+      name: entry.name,
+      parentId: parentId,
+    ));
+    return id;
+  }
+
+  int _convertGroupEntry(GroupEntry entry, SuiteInfoProto target, int parentId) {
+    if (entry is Group) return _convertGroup(entry, target, parentId);
+    if (entry is Test) return _convertTest(entry, target, parentId);
     throw Exception('Unknown entry=$entry');
   }
 }
