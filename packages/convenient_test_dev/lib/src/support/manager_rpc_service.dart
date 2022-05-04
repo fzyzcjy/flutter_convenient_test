@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/support/compile_time_config.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart';
@@ -12,13 +13,9 @@ abstract class ManagerRpcService {
 
   ManagerRpcService();
 
-  // static const _forceCIMode = true; // for debug
-  static const _forceCIMode = false;
-
   factory ManagerRpcService.create() {
-    const ciMode = _forceCIMode || bool.fromEnvironment('CONVENIENT_TEST_CI_MODE', defaultValue: false);
-    Log.i(_kTag, 'create ciMode=$ciMode');
-    if (ciMode) {
+    Log.i(_kTag, 'create ciMode=${CompileTimeConfig.kCIMode}');
+    if (CompileTimeConfig.kCIMode) {
       return ManagerRpcServiceLocalFile();
     } else {
       return ManagerRpcServiceRealConnect();
