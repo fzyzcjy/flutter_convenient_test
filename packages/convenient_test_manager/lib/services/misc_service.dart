@@ -22,6 +22,8 @@ class MiscService {
 
   Future<void> reloadInfo() async {
     GetIt.I.get<OrganizationStore>().enableAutoExpand = true;
+    GetIt.I.get<WorkerModeStore>().activeWorkerMode =
+        WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: kRegexMatchNothing));
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 }

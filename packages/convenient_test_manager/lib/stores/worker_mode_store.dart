@@ -3,9 +3,8 @@ import 'package:mobx/mobx.dart';
 
 part 'worker_mode_store.g.dart';
 
-const _kRegexMatchNothing = r'match-nothing^$';
 final _kFallbackWorkerMode =
-    WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: _kRegexMatchNothing));
+    WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: kRegexMatchNothing));
 
 class WorkerModeStore = _WorkerModeStore with _$WorkerModeStore;
 
