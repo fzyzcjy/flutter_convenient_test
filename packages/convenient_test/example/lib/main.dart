@@ -41,9 +41,16 @@ class _HomePageState extends State<_HomePage> {
     return Scaffold(
       appBar: AppBar(title: const Text('HomePage')),
       body: Center(
-        child: Text(
-          count == 0 ? 'No tap' : (count == 1 ? '1 tap' : '$count taps'),
-          style: const TextStyle(fontSize: 18),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('I am home page.', style: TextStyle(fontSize: 18)),
+            const SizedBox(height: 4),
+            Text(
+              '' + (count == 0 ? 'No tap' : (count == 1 ? '1 tap' : '$count taps')),
+              style: const TextStyle(fontSize: 18),
+            ),
+          ],
         ),
       ),
       floatingActionButton: Mark(
@@ -65,7 +72,10 @@ class _SecondPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('SecondPage')),
       body: const Center(
-        child: Text('I am the second page'),
+        child: Text(
+          'I am second page',
+          style: TextStyle(fontSize: 18, height: 1.5),
+        ),
       ),
     );
   }

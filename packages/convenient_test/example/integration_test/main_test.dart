@@ -27,12 +27,12 @@ void main() {
 
       tTestWidgets('navigation', (t) async {
         await t.visit('/second');
-        await t.get(find.textContaining('I am the second page')).should(findsOneWidget);
-        await t.get(find.textContaining('No tap')).should(findsNothing);
+        await t.get(find.textContaining('I am home page')).should(findsNothing);
+        await t.get(find.textContaining('I am second page')).should(findsOneWidget);
 
         await t.pageBack();
-        await t.get(find.textContaining('I am the second page')).should(findsNothing);
-        await t.get(find.textContaining('No tap')).should(findsOneWidget);
+        await t.get(find.textContaining('I am home page')).should(findsOneWidget);
+        await t.get(find.textContaining('I am second page')).should(findsNothing);
       });
     });
   });
