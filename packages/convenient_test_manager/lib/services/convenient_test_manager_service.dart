@@ -49,7 +49,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
     if (_organizationStore.enableAutoExpand) {
       _organizationStore.expandGroupEntryMap.clear();
-      for (var i = 1; i < request.entryLocators.length; ++i) {
+      for (var i = 1; i <= request.entryLocators.length; ++i) {
         _organizationStore.expandGroupEntryMap[
             _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))!] = true;
       }

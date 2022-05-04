@@ -159,11 +159,9 @@ class _TestInfoWidget extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              final targetExpand = !organizationStore.expandGroupEntryMap[info.id];
-
               organizationStore
                 ..enableAutoExpand = false
-                ..expandGroupEntryMap[info.id] = targetExpand
+                ..expandGroupEntryMap[info.id] = !expanding
                 ..activeTestEntryId = info.id;
             },
             child: SizedBox(
@@ -197,7 +195,7 @@ class _TestInfoWidget extends StatelessWidget {
               ),
             ),
           ),
-          if (organizationStore.expandGroupEntryMap[info.id])
+          if (expanding)
             Stack(
               children: [
                 Column(
@@ -235,4 +233,6 @@ class _TestInfoWidget extends StatelessWidget {
       );
     });
   }
+
+  bool get expanding => GetIt.I.get<OrganizationStore>().expandGroupEntryMap[info.id];
 }
