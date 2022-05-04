@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:convenient_test_dev/convenient_test_dev.dart';
 import 'package:convenient_test_example/main.dart' as app;
 import 'package:convenient_test_example/main.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   convenientTestMain(MyConvenientTestSlot(), () {
@@ -18,9 +18,11 @@ void main() {
 
     group('sample group two', () {
       tTestWidgets('tap counter', (t) async {
-        await t.get(find.textContaining('Count: 0')).should(findsOneWidget);
+        await t.get(find.textContaining('No tap')).should(findsOneWidget);
         await t.get(MyAppMark.button).tap();
-        await t.get(find.textContaining('Count: 1')).should(findsOneWidget);
+        await t.get(find.textContaining('1 tap')).should(findsOneWidget);
+        await t.get(MyAppMark.button).tap();
+        await t.get(find.textContaining('2 taps')).should(findsOneWidget);
       });
     });
   });

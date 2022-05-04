@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:convenient_test/convenient_test.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,14 +21,15 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ConvenientTestWrapperWidget(
       child: MaterialApp(
-        title: 'Welcome',
+        title: 'Example',
         navigatorKey: MyApp.navigatorKey,
         home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Welcome'),
-          ),
+          appBar: AppBar(title: const Text('Example')),
           body: Center(
-            child: Text('Count: $count'),
+            child: Text(
+              count == 0 ? 'No tap' : (count == 1 ? '1 tap' : '$count taps'),
+              style: const TextStyle(fontSize: 18),
+            ),
           ),
           floatingActionButton: Mark(
             name: MyAppMark.button,
