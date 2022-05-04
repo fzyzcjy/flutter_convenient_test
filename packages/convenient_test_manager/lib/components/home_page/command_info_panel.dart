@@ -65,7 +65,7 @@ class HomePageCommandInfoPanel extends StatelessWidget {
           adapter.add(StaticSection(
             count: testEntryIds.length,
             builder: (context, index) {
-              return HomePageTestEntryWidget(testEntryId: testEntryIds[index]);
+              return HomePageTestEntryWidget(testInfoId: testEntryIds[index]);
             },
           ));
         }
