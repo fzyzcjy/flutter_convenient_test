@@ -15,6 +15,6 @@ class MiscService {
 
   Future<void> reloadInfo() async {
     GetIt.I.get<OrganizationStore>().enableAutoExpand = true;
-    GetIt.I.get<VmServiceWrapperService>().hotRestart();
+    await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 }
