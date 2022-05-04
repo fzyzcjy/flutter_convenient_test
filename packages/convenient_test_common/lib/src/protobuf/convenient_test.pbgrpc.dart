@@ -36,8 +36,8 @@ class ConvenientTestManagerClient extends $grpc.Client {
       ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
   static final _$reportSnapshot = $grpc.ClientMethod<$0.Snapshot, $0.Empty>('/ConvenientTestManager/ReportSnapshot',
       ($0.Snapshot value) => value.writeToBuffer(), ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
-  static final _$getTestFilter = $grpc.ClientMethod<$0.Empty, $0.TestFilter>('/ConvenientTestManager/GetTestFilter',
-      ($0.Empty value) => value.writeToBuffer(), ($core.List<$core.int> value) => $0.TestFilter.fromBuffer(value));
+  static final _$getWorkerMode = $grpc.ClientMethod<$0.Empty, $0.WorkerMode>('/ConvenientTestManager/GetWorkerMode',
+      ($0.Empty value) => value.writeToBuffer(), ($core.List<$core.int> value) => $0.WorkerMode.fromBuffer(value));
   static final _$managerToWorkerActionStream = $grpc.ClientMethod<$0.Empty, $0.ManagerToWorkerAction>(
       '/ConvenientTestManager/ManagerToWorkerActionStream',
       ($0.Empty value) => value.writeToBuffer(),
@@ -75,8 +75,8 @@ class ConvenientTestManagerClient extends $grpc.Client {
     return $createUnaryCall(_$reportSnapshot, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.TestFilter> getTestFilter($0.Empty request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$getTestFilter, request, options: options);
+  $grpc.ResponseFuture<$0.WorkerMode> getWorkerMode($0.Empty request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getWorkerMode, request, options: options);
   }
 
   $grpc.ResponseStream<$0.ManagerToWorkerAction> managerToWorkerActionStream($0.Empty request,
@@ -118,8 +118,8 @@ abstract class ConvenientTestManagerServiceBase extends $grpc.Service {
         ($0.Empty value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.Snapshot, $0.Empty>('ReportSnapshot', reportSnapshot_Pre, false, false,
         ($core.List<$core.int> value) => $0.Snapshot.fromBuffer(value), ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.Empty, $0.TestFilter>('GetTestFilter', getTestFilter_Pre, false, false,
-        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value), ($0.TestFilter value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Empty, $0.WorkerMode>('GetWorkerMode', getWorkerMode_Pre, false, false,
+        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value), ($0.WorkerMode value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.Empty, $0.ManagerToWorkerAction>(
         'ManagerToWorkerActionStream',
         managerToWorkerActionStream_Pre,
@@ -159,8 +159,8 @@ abstract class ConvenientTestManagerServiceBase extends $grpc.Service {
     return reportSnapshot(call, await request);
   }
 
-  $async.Future<$0.TestFilter> getTestFilter_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
-    return getTestFilter(call, await request);
+  $async.Future<$0.WorkerMode> getWorkerMode_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+    return getWorkerMode(call, await request);
   }
 
   $async.Stream<$0.ManagerToWorkerAction> managerToWorkerActionStream_Pre(
@@ -175,6 +175,6 @@ abstract class ConvenientTestManagerServiceBase extends $grpc.Service {
   $async.Future<$0.Empty> reportRunnerError($grpc.ServiceCall call, $0.RunnerError request);
   $async.Future<$0.Empty> reportRunnerMessage($grpc.ServiceCall call, $0.RunnerMessage request);
   $async.Future<$0.Empty> reportSnapshot($grpc.ServiceCall call, $0.Snapshot request);
-  $async.Future<$0.TestFilter> getTestFilter($grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$0.WorkerMode> getWorkerMode($grpc.ServiceCall call, $0.Empty request);
   $async.Stream<$0.ManagerToWorkerAction> managerToWorkerActionStream($grpc.ServiceCall call, $0.Empty request);
 }

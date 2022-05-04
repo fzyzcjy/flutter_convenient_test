@@ -130,17 +130,56 @@ const Snapshot$json = const {
 /// Descriptor for `Snapshot`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List snapshotDescriptor = $convert.base64Decode(
     'CghTbmFwc2hvdBIgCgxsb2dfZW50cnlfaWQYASABKAVSCmxvZ0VudHJ5SWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIUCgVpbWFnZRgDIAEoDFIFaW1hZ2U=');
-@$core.Deprecated('Use testFilterDescriptor instead')
-const TestFilter$json = const {
-  '1': 'TestFilter',
+@$core.Deprecated('Use workerModeDescriptor instead')
+const WorkerMode$json = const {
+  '1': 'WorkerMode',
+  '2': const [
+    const {
+      '1': 'interactive_app',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.WorkerModeInteractiveApp',
+      '9': 0,
+      '10': 'interactiveApp'
+    },
+    const {
+      '1': 'integration_test',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.WorkerModeIntegrationTest',
+      '9': 0,
+      '10': 'integrationTest'
+    },
+  ],
+  '8': const [
+    const {'1': 'sub_type'},
+  ],
+};
+
+/// Descriptor for `WorkerMode`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List workerModeDescriptor = $convert.base64Decode(
+    'CgpXb3JrZXJNb2RlEkQKD2ludGVyYWN0aXZlX2FwcBgBIAEoCzIZLldvcmtlck1vZGVJbnRlcmFjdGl2ZUFwcEgAUg5pbnRlcmFjdGl2ZUFwcBJHChBpbnRlZ3JhdGlvbl90ZXN0GAIgASgLMhouV29ya2VyTW9kZUludGVncmF0aW9uVGVzdEgAUg9pbnRlZ3JhdGlvblRlc3RCCgoIc3ViX3R5cGU=');
+@$core.Deprecated('Use workerModeInteractiveAppDescriptor instead')
+const WorkerModeInteractiveApp$json = const {
+  '1': 'WorkerModeInteractiveApp',
+};
+
+/// Descriptor for `WorkerModeInteractiveApp`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List workerModeInteractiveAppDescriptor =
+    $convert.base64Decode('ChhXb3JrZXJNb2RlSW50ZXJhY3RpdmVBcHA=');
+@$core.Deprecated('Use workerModeIntegrationTestDescriptor instead')
+const WorkerModeIntegrationTest$json = const {
+  '1': 'WorkerModeIntegrationTest',
   '2': const [
     const {'1': 'filter_name_regex', '3': 1, '4': 1, '5': 9, '10': 'filterNameRegex'},
   ],
 };
 
-/// Descriptor for `TestFilter`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List testFilterDescriptor =
-    $convert.base64Decode('CgpUZXN0RmlsdGVyEioKEWZpbHRlcl9uYW1lX3JlZ2V4GAEgASgJUg9maWx0ZXJOYW1lUmVnZXg=');
+/// Descriptor for `WorkerModeIntegrationTest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List workerModeIntegrationTestDescriptor = $convert
+    .base64Decode('ChlXb3JrZXJNb2RlSW50ZWdyYXRpb25UZXN0EioKEWZpbHRlcl9uYW1lX3JlZ2V4GAEgASgJUg9maWx0ZXJOYW1lUmVnZXg=');
 @$core.Deprecated('Use managerToWorkerActionDescriptor instead')
 const ManagerToWorkerAction$json = const {
   '1': 'ManagerToWorkerAction',
