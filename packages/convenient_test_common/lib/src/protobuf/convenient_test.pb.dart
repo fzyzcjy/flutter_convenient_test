@@ -13,6 +13,225 @@ import 'convenient_test.pbenum.dart';
 
 export 'convenient_test.pbenum.dart';
 
+class ReportCollection extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ReportCollection',
+      createEmptyInstance: create)
+    ..pc<ReportItem>(
+        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'items', $pb.PbFieldType.PM,
+        subBuilder: ReportItem.create)
+    ..hasRequiredFields = false;
+
+  ReportCollection._() : super();
+  factory ReportCollection({
+    $core.Iterable<ReportItem>? items,
+  }) {
+    final _result = create();
+    if (items != null) {
+      _result.items.addAll(items);
+    }
+    return _result;
+  }
+  factory ReportCollection.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ReportCollection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ReportCollection clone() => ReportCollection()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ReportCollection copyWith(void Function(ReportCollection) updates) =>
+      super.copyWith((message) => updates(message as ReportCollection))
+          as ReportCollection; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ReportCollection create() => ReportCollection._();
+  ReportCollection createEmptyInstance() => create();
+  static $pb.PbList<ReportCollection> createRepeated() => $pb.PbList<ReportCollection>();
+  @$core.pragma('dart2js:noInline')
+  static ReportCollection getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReportCollection>(create);
+  static ReportCollection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<ReportItem> get items => $_getList(0);
+}
+
+enum ReportItem_SubType { suiteInfoProto, logEntry, runnerStateChange, runnerError, runnerMessage, snapshot, notSet }
+
+class ReportItem extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, ReportItem_SubType> _ReportItem_SubTypeByTag = {
+    1: ReportItem_SubType.suiteInfoProto,
+    2: ReportItem_SubType.logEntry,
+    3: ReportItem_SubType.runnerStateChange,
+    4: ReportItem_SubType.runnerError,
+    5: ReportItem_SubType.runnerMessage,
+    6: ReportItem_SubType.snapshot,
+    0: ReportItem_SubType.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ReportItem',
+      createEmptyInstance: create)
+    ..oo(0, [1, 2, 3, 4, 5, 6])
+    ..aOM<SuiteInfoProto>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'suiteInfoProto',
+        subBuilder: SuiteInfoProto.create)
+    ..aOM<LogEntry>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'logEntry',
+        subBuilder: LogEntry.create)
+    ..aOM<RunnerStateChange>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'runnerStateChange',
+        subBuilder: RunnerStateChange.create)
+    ..aOM<RunnerError>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'runnerError',
+        subBuilder: RunnerError.create)
+    ..aOM<RunnerMessage>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'runnerMessage',
+        subBuilder: RunnerMessage.create)
+    ..aOM<Snapshot>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'snapshot',
+        subBuilder: Snapshot.create)
+    ..hasRequiredFields = false;
+
+  ReportItem._() : super();
+  factory ReportItem({
+    SuiteInfoProto? suiteInfoProto,
+    LogEntry? logEntry,
+    RunnerStateChange? runnerStateChange,
+    RunnerError? runnerError,
+    RunnerMessage? runnerMessage,
+    Snapshot? snapshot,
+  }) {
+    final _result = create();
+    if (suiteInfoProto != null) {
+      _result.suiteInfoProto = suiteInfoProto;
+    }
+    if (logEntry != null) {
+      _result.logEntry = logEntry;
+    }
+    if (runnerStateChange != null) {
+      _result.runnerStateChange = runnerStateChange;
+    }
+    if (runnerError != null) {
+      _result.runnerError = runnerError;
+    }
+    if (runnerMessage != null) {
+      _result.runnerMessage = runnerMessage;
+    }
+    if (snapshot != null) {
+      _result.snapshot = snapshot;
+    }
+    return _result;
+  }
+  factory ReportItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ReportItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ReportItem clone() => ReportItem()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ReportItem copyWith(void Function(ReportItem) updates) =>
+      super.copyWith((message) => updates(message as ReportItem)) as ReportItem; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ReportItem create() => ReportItem._();
+  ReportItem createEmptyInstance() => create();
+  static $pb.PbList<ReportItem> createRepeated() => $pb.PbList<ReportItem>();
+  @$core.pragma('dart2js:noInline')
+  static ReportItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReportItem>(create);
+  static ReportItem? _defaultInstance;
+
+  ReportItem_SubType whichSubType() => _ReportItem_SubTypeByTag[$_whichOneof(0)]!;
+  void clearSubType() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  SuiteInfoProto get suiteInfoProto => $_getN(0);
+  @$pb.TagNumber(1)
+  set suiteInfoProto(SuiteInfoProto v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasSuiteInfoProto() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSuiteInfoProto() => clearField(1);
+  @$pb.TagNumber(1)
+  SuiteInfoProto ensureSuiteInfoProto() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  LogEntry get logEntry => $_getN(1);
+  @$pb.TagNumber(2)
+  set logEntry(LogEntry v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasLogEntry() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLogEntry() => clearField(2);
+  @$pb.TagNumber(2)
+  LogEntry ensureLogEntry() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  RunnerStateChange get runnerStateChange => $_getN(2);
+  @$pb.TagNumber(3)
+  set runnerStateChange(RunnerStateChange v) {
+    setField(3, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasRunnerStateChange() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRunnerStateChange() => clearField(3);
+  @$pb.TagNumber(3)
+  RunnerStateChange ensureRunnerStateChange() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  RunnerError get runnerError => $_getN(3);
+  @$pb.TagNumber(4)
+  set runnerError(RunnerError v) {
+    setField(4, v);
+  }
+
+  @$pb.TagNumber(4)
+  $core.bool hasRunnerError() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRunnerError() => clearField(4);
+  @$pb.TagNumber(4)
+  RunnerError ensureRunnerError() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  RunnerMessage get runnerMessage => $_getN(4);
+  @$pb.TagNumber(5)
+  set runnerMessage(RunnerMessage v) {
+    setField(5, v);
+  }
+
+  @$pb.TagNumber(5)
+  $core.bool hasRunnerMessage() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearRunnerMessage() => clearField(5);
+  @$pb.TagNumber(5)
+  RunnerMessage ensureRunnerMessage() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  Snapshot get snapshot => $_getN(5);
+  @$pb.TagNumber(6)
+  set snapshot(Snapshot v) {
+    setField(6, v);
+  }
+
+  @$pb.TagNumber(6)
+  $core.bool hasSnapshot() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearSnapshot() => clearField(6);
+  @$pb.TagNumber(6)
+  Snapshot ensureSnapshot() => $_ensure(5);
+}
+
 class LogEntry extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LogEntry',
