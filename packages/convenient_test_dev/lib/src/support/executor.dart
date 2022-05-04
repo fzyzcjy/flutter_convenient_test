@@ -1,7 +1,6 @@
 // ignore_for_file: implementation_imports
 
 import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:get_it/get_it.dart';
 import 'package:test_api/src/backend/declarer.dart';
@@ -21,30 +20,28 @@ class ConvenientTestExecutor {
   }
 
   static void _reportTestInfoPack(Group group) {
-    final pack = _getTestInfoPack(group);
-    GetIt.I.get<ConvenientTestManagerClient>().reportTestInfoPack(pack);
+    final suiteInfo = _SuiteInfoConverter().convert(group);
+    GetIt.I.get<ConvenientTestManagerClient>().reportSuiteInfo(suiteInfo);
   }
+}
 
-  static TestInfoPack _getTestInfoPack(Group root) {
-    final pack = TestInfoPack();
+class _SuiteInfoConverter {
+  SuiteInfo convert(Group root) => SuiteInfo(
+        group: _convertGroup(root),
+      );
 
-    void _core(GroupEntry entry, List<Group> parents) {
-      if (entry is Group) {
-        for (final child in entry.entries) {
-          _core(child, [...parents, entry]);
-        }
-      } else if (entry is Test) {
-        pack.entries.add(TestEntryInfo(
-          testEntryName: entry.name,
-          testGroupName: testGroupsToName(parents),
-        ));
-      } else {
-        throw Exception;
-      }
-    }
+  GroupInfo _convertGroup(Group entry) => GroupInfo(
+        name: entry.name,
+        entries: entry.entries.map(_convertGroupEntry),
+      );
 
-    _core(root, []);
+  TestInfo _convertTest(Test entry) => TestInfo(
+        name: entry.name,
+      );
 
-    return pack;
+  GroupEntryInfo _convertGroupEntry(GroupEntry entry) {
+    if (entry is Group) return GroupEntryInfo(group: _convertGroup(entry));
+    if (entry is Test) return GroupEntryInfo(test: _convertTest(entry));
+    throw Exception('Unknown entry=$entry');
   }
 }
