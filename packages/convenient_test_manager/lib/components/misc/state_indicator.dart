@@ -55,6 +55,8 @@ class StateIndicatorWidget extends StatelessWidget {
         return result;
       case SimplifiedStateEnum.completeSuccess:
         return const Icon(Icons.check_circle_rounded, color: Colors.green, size: 16);
+      case SimplifiedStateEnum.completeSuccessButFlaky:
+        return const Icon(Icons.flaky_outlined, color: Colors.purple, size: 16);
       case SimplifiedStateEnum.completeSkipped:
         return const Icon(Icons.remove, color: Colors.orange, size: 16);
       case SimplifiedStateEnum.completeFailureOrError:
