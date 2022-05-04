@@ -102,8 +102,15 @@ class _ScreenshotPanel extends StatelessWidget {
         );
       }
 
+      final snapshotNames = logStore.snapshotInLog[activeLogEntryId]?.keys ?? [];
+      if (snapshotNames.isEmpty) {
+        return const Center(
+          child: Text('No screenshots for log entry'),
+        );
+      }
+
       return Row(
-        children: (logStore.snapshotInLog[activeLogEntryId]?.keys ?? []).map((snapshotName) {
+        children: snapshotNames.map((snapshotName) {
           final image = logStore.snapshotInLog[activeLogEntryId]![snapshotName];
 
           return Expanded(
