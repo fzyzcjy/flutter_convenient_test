@@ -82,6 +82,8 @@ class LogHandle {
           id: _id,
           entryLocators: _entryLocators,
           type: type,
+          startTime: TODO,
+          endTime: TODO,
           title: title,
           message: message,
           error: error,

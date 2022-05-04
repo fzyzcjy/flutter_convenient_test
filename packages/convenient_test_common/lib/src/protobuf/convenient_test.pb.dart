@@ -7,6 +7,7 @@
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'convenient_test.pbenum.dart';
@@ -245,6 +246,8 @@ class LogEntry extends $pb.GeneratedMessage {
     ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
     ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error')
     ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stackTrace')
+    ..aInt64(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'startTime')
+    ..aInt64(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'endTime')
     ..hasRequiredFields = false;
 
   LogEntry._() : super();
@@ -256,6 +259,8 @@ class LogEntry extends $pb.GeneratedMessage {
     $core.String? message,
     $core.String? error,
     $core.String? stackTrace,
+    $fixnum.Int64? startTime,
+    $fixnum.Int64? endTime,
   }) {
     final _result = create();
     if (id != null) {
@@ -278,6 +283,12 @@ class LogEntry extends $pb.GeneratedMessage {
     }
     if (stackTrace != null) {
       _result.stackTrace = stackTrace;
+    }
+    if (startTime != null) {
+      _result.startTime = startTime;
+    }
+    if (endTime != null) {
+      _result.endTime = endTime;
     }
     return _result;
   }
@@ -377,6 +388,30 @@ class LogEntry extends $pb.GeneratedMessage {
   $core.bool hasStackTrace() => $_has(6);
   @$pb.TagNumber(7)
   void clearStackTrace() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $fixnum.Int64 get startTime => $_getI64(7);
+  @$pb.TagNumber(8)
+  set startTime($fixnum.Int64 v) {
+    $_setInt64(7, v);
+  }
+
+  @$pb.TagNumber(8)
+  $core.bool hasStartTime() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearStartTime() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $fixnum.Int64 get endTime => $_getI64(8);
+  @$pb.TagNumber(9)
+  set endTime($fixnum.Int64 v) {
+    $_setInt64(8, v);
+  }
+
+  @$pb.TagNumber(9)
+  $core.bool hasEndTime() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearEndTime() => clearField(9);
 }
 
 class SuiteInfoProto extends $pb.GeneratedMessage {

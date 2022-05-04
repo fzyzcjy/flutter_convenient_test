@@ -71,6 +71,8 @@ const LogEntry$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
     const {'1': 'entry_locators', '3': 2, '4': 3, '5': 9, '10': 'entryLocators'},
+    const {'1': 'start_time', '3': 8, '4': 1, '5': 3, '10': 'startTime'},
+    const {'1': 'end_time', '3': 9, '4': 1, '5': 3, '10': 'endTime'},
     const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.LogEntryType', '10': 'type'},
     const {'1': 'title', '3': 4, '4': 1, '5': 9, '10': 'title'},
     const {'1': 'message', '3': 5, '4': 1, '5': 9, '10': 'message'},
@@ -81,7 +83,7 @@ const LogEntry$json = const {
 
 /// Descriptor for `LogEntry`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List logEntryDescriptor = $convert.base64Decode(
-    'CghMb2dFbnRyeRIOCgJpZBgBIAEoBVICaWQSJQoOZW50cnlfbG9jYXRvcnMYAiADKAlSDWVudHJ5TG9jYXRvcnMSIQoEdHlwZRgDIAEoDjINLkxvZ0VudHJ5VHlwZVIEdHlwZRIUCgV0aXRsZRgEIAEoCVIFdGl0bGUSGAoHbWVzc2FnZRgFIAEoCVIHbWVzc2FnZRIUCgVlcnJvchgGIAEoCVIFZXJyb3ISHwoLc3RhY2tfdHJhY2UYByABKAlSCnN0YWNrVHJhY2U=');
+    'CghMb2dFbnRyeRIOCgJpZBgBIAEoBVICaWQSJQoOZW50cnlfbG9jYXRvcnMYAiADKAlSDWVudHJ5TG9jYXRvcnMSHQoKc3RhcnRfdGltZRgIIAEoA1IJc3RhcnRUaW1lEhkKCGVuZF90aW1lGAkgASgDUgdlbmRUaW1lEiEKBHR5cGUYAyABKA4yDS5Mb2dFbnRyeVR5cGVSBHR5cGUSFAoFdGl0bGUYBCABKAlSBXRpdGxlEhgKB21lc3NhZ2UYBSABKAlSB21lc3NhZ2USFAoFZXJyb3IYBiABKAlSBWVycm9yEh8KC3N0YWNrX3RyYWNlGAcgASgJUgpzdGFja1RyYWNl');
 @$core.Deprecated('Use suiteInfoProtoDescriptor instead')
 const SuiteInfoProto$json = const {
   '1': 'SuiteInfoProto',
