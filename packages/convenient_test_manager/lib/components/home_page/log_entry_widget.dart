@@ -99,7 +99,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: backgroundColor,
                             ),
-                            child: SelectableText(
+                            child: Text(
                               logEntry.title,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
