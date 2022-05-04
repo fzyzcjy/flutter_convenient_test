@@ -25,6 +25,7 @@ abstract class _OrganizationStore with Store {
       testEntryStateMap[testInfoId].toSimplifiedStateEnum(isFlaky: GetIt.I.get<LogStore>().isTestFlaky(testInfoId));
 
   void clear() {
+    testEntryStateMap.clear();
     expandGroupEntryMap.clear();
     activeTestEntryId = null;
   }
