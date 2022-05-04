@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
+import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:grpc/grpc.dart';
@@ -62,7 +63,9 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   @override
   Future<Empty> reportRunnerError(ServiceCall call, RunnerError request) async {
     Log.d(_kTag, 'reportRunnerError called');
-    // TODO
+
+    _rawLogStore.rawLogInTest[_organizationStore.testEntryNameToId(request.testEntryName)] +=
+        '${request.error}\n${request.stackTrace}\n';
 
     return Empty();
   }
@@ -70,7 +73,8 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   @override
   Future<Empty> reportRunnerMessage(ServiceCall call, RunnerMessage request) async {
     Log.d(_kTag, 'reportRunnerMessage called');
-    // TODO
+
+    _rawLogStore.rawLogInTest[_organizationStore.testEntryNameToId(request.testEntryName)] += '${request.message}\n';
 
     return Empty();
   }
@@ -115,6 +119,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
     _organizationStore.clear();
     _logStore.clear();
+    _rawLogStore.clear();
 
     return Empty();
   }
@@ -143,6 +148,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
   final _logStore = GetIt.I.get<LogStore>();
   final _organizationStore = GetIt.I.get<OrganizationStore>();
+  final _rawLogStore = GetIt.I.get<RawLogStore>();
 }
 
 extension<T> on Map<int, T> {
