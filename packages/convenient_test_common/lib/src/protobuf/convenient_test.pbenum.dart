@@ -24,6 +24,8 @@ class LogEntryType extends $pb.ProtobufEnum {
       LogEntryType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ASSERT');
   static const LogEntryType ASSERT_FAIL =
       LogEntryType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ASSERT_FAIL');
+  static const LogEntryType SECTION =
+      LogEntryType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SECTION');
 
   static const $core.List<LogEntryType> values = <LogEntryType>[
     INVALID,
@@ -33,6 +35,7 @@ class LogEntryType extends $pb.ProtobufEnum {
     TEST_END,
     ASSERT,
     ASSERT_FAIL,
+    SECTION,
   ];
 
   static final $core.Map<$core.int, LogEntryType> _byValue = $pb.ProtobufEnum.initByValue(values);

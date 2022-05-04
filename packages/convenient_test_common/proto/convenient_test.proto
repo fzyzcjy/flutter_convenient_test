@@ -31,6 +31,7 @@ enum LogEntryType {
   TEST_END = 4;
   ASSERT = 5;
   ASSERT_FAIL = 6;
+  SECTION = 7;
 }
 
 message TestInfoPack {

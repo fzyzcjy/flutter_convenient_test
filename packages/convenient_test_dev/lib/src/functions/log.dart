@@ -14,7 +14,7 @@ import 'package:test_api/src/backend/invoker.dart';
 import 'package:test_api/src/backend/live_test.dart';
 
 extension ConvenientTestLog on ConvenientTest {
-  void section(String description) => log('SECTION', description);
+  void section(String description) => log('SECTION', description, type: LogEntryType.SECTION);
 
   // p.s. can search emoji here - https://emojipedia.org
   LogHandle log(String title, String message, {LogEntryType? type}) => convenientTestLog(title, message, type: type);
