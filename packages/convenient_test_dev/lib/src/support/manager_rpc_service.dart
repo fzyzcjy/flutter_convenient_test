@@ -81,7 +81,7 @@ class ManagerRpcServiceLocalFile extends ManagerRpcService {
 
   static Future<String> _createReportPath() async {
     final stem = DateFormat('yyyyMMdd_hhmmss').format(DateTime.now());
-    final path = '${(await getTemporaryDirectory()).path}/ConvenientTest_Report_$stem.bin';
+    final path = '${(await getTemporaryDirectory()).path}/ConvenientTest_Report_$stem.$kReportFileExtension';
     Log.i(_kTag, '*** Report data will be written to path: $path ***');
     return path;
   }
