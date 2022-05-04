@@ -101,7 +101,7 @@ class _RawLogPanel extends StatelessWidget {
           children: [
             SelectableText(
               rawLogStore.rawLogInTest[activeTestEntryId],
-              style: const TextStyle(fontSize: 13),
+              style: const TextStyle(fontSize: 13, fontFamily: 'RobotoMono'),
             ),
           ],
         ),

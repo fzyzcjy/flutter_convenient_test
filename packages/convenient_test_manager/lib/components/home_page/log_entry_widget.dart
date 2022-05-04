@@ -123,7 +123,10 @@ class HomePageLogEntryWidget extends StatelessWidget {
                   ),
                   Container(width: 12),
                   Expanded(
-                    child: SelectableText(logEntry.message),
+                    child: SelectableText(
+                      logEntry.message,
+                      // style: const TextStyle(fontFamily: 'RobotoMono'),
+                    ),
                   ),
                 ],
               ),
@@ -147,7 +150,10 @@ class HomePageLogEntryWidget extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          SelectableText(text),
+          SelectableText(
+            text,
+            style: const TextStyle(fontSize: 13, fontFamily: 'RobotoMono'),
+          ),
           Positioned(
             top: 0,
             right: 0,
