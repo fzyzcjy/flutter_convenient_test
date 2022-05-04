@@ -41,6 +41,10 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
     _logStore.logEntryMap.addToIdObjMap(request);
 
     final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators);
+    if (testEntryId == null) {
+      Log.w(_kTag, 'reportLogEntry skip since testEntryId==null');
+      return Empty();
+    }
 
     if (!(_logStore.logEntryInTest[testEntryId]?.contains(request.id) ?? false)) {
       _logStore.logEntryInTest.addRelation(testEntryId, request.id);
@@ -50,7 +54,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
       _organizationStore.expandGroupEntryMap.clear();
       for (var i = 0; i < request.entryLocators.length; ++i) {
         _organizationStore.expandGroupEntryMap[
-            _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))] = true;
+            _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))!] = true;
       }
     }
 
@@ -61,8 +65,13 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   Future<Empty> reportRunnerError(ServiceCall call, RunnerError request) async {
     Log.d(_kTag, 'reportRunnerError called');
 
-    _rawLogStore.rawLogInTest[_organizationStore.testEntryNameToId(request.testEntryName)] +=
-        '${request.error}\n${request.stackTrace}\n';
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
+    if (testEntryId == null) {
+      Log.w(_kTag, 'reportRunnerError skip since testEntryId==null');
+      return Empty();
+    }
+
+    _rawLogStore.rawLogInTest[testEntryId] += '${request.error}\n${request.stackTrace}\n';
 
     return Empty();
   }
@@ -71,18 +80,27 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   Future<Empty> reportRunnerMessage(ServiceCall call, RunnerMessage request) async {
     Log.d(_kTag, 'reportRunnerMessage called');
 
-    _rawLogStore.rawLogInTest[_organizationStore.testEntryNameToId(request.testEntryName)] += '${request.message}\n';
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
+    if (testEntryId == null) {
+      Log.w(_kTag, 'reportRunnerMessage skip since testEntryId==null');
+      return Empty();
+    }
+
+    _rawLogStore.rawLogInTest[testEntryId] += '${request.message}\n';
 
     return Empty();
   }
 
   @override
   Future<Empty> reportRunnerStateChange(ServiceCall call, RunnerStateChange request) async {
-    Log.d(_kTag, 'reportRunnerStateChange called name=${request.testEntryName} state=${request.state}');
+    Log.d(_kTag, 'reportRunnerStateChange called entryLocators=${request.entryLocators} state=${request.state}');
 
-    if (_kIgnoreTestEntryNames.contains(request.testEntryName)) return Empty();
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
+    if (testEntryId == null) {
+      Log.w(_kTag, 'reportRunnerStateChange skip since testEntryId==null');
+      return Empty();
+    }
 
-    final testEntryId = _organizationStore.testEntryNameToId(request.testEntryName);
     _organizationStore.testEntryStateMap[testEntryId] = request.state;
 
     return Empty();
@@ -149,5 +167,3 @@ extension<T> on Map<int, T> {
     this[(obj as dynamic).id as int] = obj;
   }
 }
-
-const _kIgnoreTestEntryNames = ['(tearDownAll)'];

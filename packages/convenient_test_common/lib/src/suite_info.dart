@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:convenient_test_common/src/protobuf/convenient_test.pb.dart';
 import 'package:flutter/foundation.dart';
 
@@ -21,12 +22,16 @@ class SuiteInfo {
     );
   }
 
-  int getEntryIdFromNames(List<String> entryLocators) {
+  int? getEntryIdFromNames(List<String> entryLocators) {
     var currEntryId = rootGroupId;
 
     for (final name in entryLocators) {
-      final currEntry = entryMap[currEntryId]! as GroupInfo;
-      final nextEntryId = currEntry.entryIds.singleWhere((childEntryId) => entryMap[childEntryId]!.name == name);
+      final currEntry = entryMap[currEntryId];
+      if (currEntry is! GroupInfo) return null;
+
+      final nextEntryId = currEntry.entryIds.singleWhereOrNull((childEntryId) => entryMap[childEntryId]?.name == name);
+      if (nextEntryId == null) return null;
+
       currEntryId = nextEntryId;
     }
 
