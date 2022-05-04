@@ -23,7 +23,7 @@ class ConvenientTest {
 }
 
 /// Please make this the only method in your "main" method.
-Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback body) async {
+Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback testBody) async {
   GetIt.I.registerSingleton<ConvenientTestSlot>(slot);
   // MUST do it this early, because we really need the rpc client immediately
   GetIt.I.registerSingleton<ConvenientTestManagerClient>(createConvenientTestManagerClientStub(
@@ -32,19 +32,19 @@ Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback body) asyn
   final workerMode = await GetIt.I.get<ConvenientTestManagerClient>().getWorkerMode(Empty());
   switch (workerMode.whichSubType()) {
     case WorkerMode_SubType.interactiveApp:
-      return _runModeInteractiveApp(body);
+      return _runModeInteractiveApp();
     case WorkerMode_SubType.integrationTest:
-      return _runModeIntegrationTest(body, workerMode.integrationTest);
+      return _runModeIntegrationTest(testBody, workerMode.integrationTest);
     case WorkerMode_SubType.notSet:
       throw Exception('Unknown WorkerMode: $workerMode');
   }
 }
 
-Future<void> _runModeInteractiveApp(VoidCallback body) async {
-  body();
+Future<void> _runModeInteractiveApp() async {
+  await GetIt.I.get<ConvenientTestSlot>().startApp(TODO);
 }
 
-Future<void> _runModeIntegrationTest(VoidCallback body, WorkerModeIntegrationTest workerModeIntegrationTest) async {
+Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegrationTest workerModeIntegrationTest) async {
   runZonedGuarded(() {
     ConvenientTestWrapperWidget.convenientTestActive = true;
 
@@ -62,7 +62,7 @@ Future<void> _runModeIntegrationTest(VoidCallback body, WorkerModeIntegrationTes
       setup();
 
       setUpLogTestStartAndEnd();
-      body();
+      testBody();
     });
 
     ConvenientTestExecutor.execute(declarer, filterNameRegex: RegExp(workerModeIntegrationTest.filterNameRegex));
