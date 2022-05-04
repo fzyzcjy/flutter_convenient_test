@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,9 @@ class HomePageSecondaryPanel extends StatelessWidget {
     return Observer(
       builder: (_) => Column(
         children: [
+          const SizedBox(
+            height: 8,
+          ),
           _buildTabBar(),
           Expanded(
             child: _buildTab(),
@@ -26,22 +30,37 @@ class HomePageSecondaryPanel extends StatelessWidget {
 
     return Row(
       children: [
-        for (final tab in HomePageSecondaryPanelTab.values) //
-          InkWell(
+        ...HomePageSecondaryPanelTab.values.mapIndexed((index, tab) {
+          final active = homePageStore.activeSecondaryPanelTab == tab;
+
+          const borderSide = BorderSide(color: Colors.grey, width: 0.5);
+
+          return InkWell(
             onTap: () => homePageStore.activeSecondaryPanelTab = tab,
             child: Material(
-              color: homePageStore.activeSecondaryPanelTab == tab ? Colors.blue : Colors.white,
+              color: active ? Colors.blue : Colors.white,
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
+                  border: Border(
+                    left: index == 0 ? borderSide : BorderSide.none,
+                    right: index == HomePageSecondaryPanelTab.values.length - 1 ? borderSide : BorderSide.none,
+                    top: borderSide,
+                    bottom: borderSide,
+                  ),
                 ),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 child: Text(
                   tab.title,
-                  style: const TextStyle(fontSize: 13),
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: active ? Colors.white : Colors.black87,
+                    height: 1,
+                  ),
                 ),
               ),
             ),
-          ),
+          );
+        }),
       ],
     );
   }
