@@ -3,7 +3,7 @@
 // ignore_for_file: implementation_imports
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/core.dart';
-import 'package:convenient_test_dev/src/support/extensions.dart';
+import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
@@ -77,7 +77,7 @@ class LogHandle {
     required LogEntryType type,
     bool printing = false,
   }) {
-    GetIt.I.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
+    GetIt.I.get<ManagerRpcService>().reportSingle(ReportItem(
             logEntry: LogEntry(
           id: _id,
           entryLocators: _entryLocators,
@@ -95,7 +95,7 @@ class LogHandle {
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
     image ??= await takeSnapshot();
-    await GetIt.I.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
+    await GetIt.I.get<ManagerRpcService>().reportSingle(ReportItem(
             snapshot: Snapshot(
           logEntryId: _id,
           name: name,

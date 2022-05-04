@@ -5,7 +5,7 @@ import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
-import 'package:convenient_test_dev/src/support/rpc.dart';
+import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/setup.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
@@ -27,10 +27,9 @@ class ConvenientTest {
 Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback testBody) async {
   GetIt.I.registerSingleton<ConvenientTestSlot>(slot);
   // MUST do it this early, because we really need the rpc client immediately
-  GetIt.I.registerSingleton<ConvenientTestManagerClient>(createConvenientTestManagerClientStub(
-      host: GetIt.I.get<ConvenientTestSlot>().managerHost, port: kConvenientTestManagerPort));
+  GetIt.I.registerSingleton<ManagerRpcService>(ManagerRpcService.create());
 
-  final workerMode = await GetIt.I.get<ConvenientTestManagerClient>().getWorkerMode(Empty());
+  final workerMode = await GetIt.I.get<ManagerRpcService>().getWorkerMode();
   switch (workerMode.whichSubType()) {
     case WorkerMode_SubType.interactiveApp:
       return _runModeInteractiveApp();
