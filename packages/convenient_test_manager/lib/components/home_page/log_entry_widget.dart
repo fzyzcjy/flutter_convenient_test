@@ -86,41 +86,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
                     ),
                   ),
                   Container(width: 12),
-                  SizedBox(
-                    width: 80,
-                    child: Builder(
-                      builder: (_) {
-                        Color? backgroundColor;
-                        var textColor = Colors.black;
-                        if (logEntry.type == LogEntryType.ASSERT) {
-                          backgroundColor = Colors.green;
-                          textColor = Colors.white;
-                        }
-                        if (logEntry.type == LogEntryType.ASSERT_FAIL) {
-                          backgroundColor = Colors.red;
-                          textColor = Colors.white;
-                        }
-
-                        return Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            padding:
-                                backgroundColor == null ? null : const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: backgroundColor,
-                            ),
-                            child: Text(
-                              logEntry.title,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: textColor,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  _buildTitle(logEntry),
                   Container(width: 12),
                   Expanded(
                     child: EnhancedSelectableText(
@@ -137,6 +103,43 @@ class HomePageLogEntryWidget extends StatelessWidget {
         ],
       );
     });
+  }
+
+  Widget _buildTitle(LogEntry logEntry) {
+    return SizedBox(
+      width: 80,
+      child: Builder(
+        builder: (_) {
+          Color? backgroundColor;
+          var textColor = Colors.black;
+          if (logEntry.type == LogEntryType.ASSERT) {
+            backgroundColor = Colors.green;
+            textColor = Colors.white;
+          }
+          if (logEntry.type == LogEntryType.ASSERT_FAIL) {
+            backgroundColor = Colors.red;
+            textColor = Colors.white;
+          }
+
+          return Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: backgroundColor == null ? null : const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              decoration: BoxDecoration(
+                color: backgroundColor,
+              ),
+              child: Text(
+                logEntry.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: textColor,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   Widget _buildError(BuildContext context, LogEntry logEntry) {
