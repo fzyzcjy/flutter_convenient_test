@@ -1,9 +1,9 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_manager/components/misc/enhanced_selectable_text.dart';
 import 'package:convenient_test_manager/components/misc/rotate_animation.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
@@ -123,9 +123,10 @@ class HomePageLogEntryWidget extends StatelessWidget {
                   ),
                   Container(width: 12),
                   Expanded(
-                    child: SelectableText(
+                    child: EnhancedSelectableText(
                       logEntry.message,
                       // style: const TextStyle(fontFamily: 'RobotoMono'),
+                      enableCopyAllButton: false,
                     ),
                   ),
                 ],
@@ -148,29 +149,9 @@ class HomePageLogEntryWidget extends StatelessWidget {
         color: Colors.red[50],
         border: Border(left: BorderSide(color: Colors.red[200]!, width: 2)),
       ),
-      child: Stack(
-        children: [
-          SelectableText(
-            text,
-            style: const TextStyle(fontSize: 13, fontFamily: 'RobotoMono'),
-          ),
-          Positioned(
-            top: 0,
-            right: 0,
-            child: InkWell(
-              onTap: () async {
-                await Clipboard.setData(ClipboardData(text: text));
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied')));
-              },
-              child: const Icon(
-                Icons.copy,
-                color: Colors.blue,
-                size: 16,
-              ),
-            ),
-          ),
-        ],
+      child: EnhancedSelectableText(
+        text,
+        style: const TextStyle(fontSize: 13, fontFamily: 'RobotoMono'),
       ),
     );
   }
