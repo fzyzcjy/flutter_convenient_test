@@ -12,8 +12,11 @@ abstract class ManagerRpcService {
 
   ManagerRpcService();
 
+  // static const _forceCIMode = true; // for debug
+  static const _forceCIMode = false;
+
   factory ManagerRpcService.create() {
-    const ciMode = bool.fromEnvironment('CONVENIENT_TEST_CI_MODE', defaultValue: false);
+    const ciMode = _forceCIMode || bool.fromEnvironment('CONVENIENT_TEST_CI_MODE', defaultValue: false);
     Log.i(_kTag, 'create ciMode=$ciMode');
     if (ciMode) {
       return ManagerRpcServiceLocalFile();
