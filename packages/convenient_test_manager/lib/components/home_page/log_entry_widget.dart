@@ -1,4 +1,5 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_manager/components/misc/enhanced_selectable_text.dart';
 import 'package:convenient_test_manager/components/misc/rotate_animation.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
@@ -123,7 +124,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
                   ),
                   Container(width: 12),
                   Expanded(
-                    child: SelectableText(
+                    child: EnhancedSelectableText(
                       logEntry.message,
                       // style: const TextStyle(fontFamily: 'RobotoMono'),
                     ),
@@ -150,7 +151,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          SelectableText(
+          EnhancedSelectableText(
             text,
             style: const TextStyle(fontSize: 13, fontFamily: 'RobotoMono'),
           ),

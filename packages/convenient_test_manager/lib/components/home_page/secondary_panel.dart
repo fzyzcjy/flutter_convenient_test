@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:convenient_test_manager/components/misc/enhanced_selectable_text.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
@@ -99,7 +100,7 @@ class _RawLogPanel extends StatelessWidget {
         child: ListView(
           primary: false,
           children: [
-            SelectableText(
+            EnhancedSelectableText(
               rawLogStore.rawLogInTest[activeTestEntryId],
               style: const TextStyle(fontSize: 13, fontFamily: 'RobotoMono'),
             ),
