@@ -20,12 +20,13 @@ const LogEntryType$json = const {
     const {'1': 'TEST_END', '2': 4},
     const {'1': 'ASSERT', '2': 5},
     const {'1': 'ASSERT_FAIL', '2': 6},
+    const {'1': 'SECTION', '2': 7},
   ],
 };
 
 /// Descriptor for `LogEntryType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List logEntryTypeDescriptor = $convert.base64Decode(
-    'CgxMb2dFbnRyeVR5cGUSCwoHSU5WQUxJRBAAEhMKD0dFTkVSQUxfTUVTU0FHRRABEg4KClRFU1RfU1RBUlQQAhINCglURVNUX0JPRFkQAxIMCghURVNUX0VORBAEEgoKBkFTU0VSVBAFEg8KC0FTU0VSVF9GQUlMEAY=');
+    'CgxMb2dFbnRyeVR5cGUSCwoHSU5WQUxJRBAAEhMKD0dFTkVSQUxfTUVTU0FHRRABEg4KClRFU1RfU1RBUlQQAhINCglURVNUX0JPRFkQAxIMCghURVNUX0VORBAEEgoKBkFTU0VSVBAFEg8KC0FTU0VSVF9GQUlMEAYSCwoHU0VDVElPThAH');
 @$core.Deprecated('Use logEntryDescriptor instead')
 const LogEntry$json = const {
   '1': 'LogEntry',
