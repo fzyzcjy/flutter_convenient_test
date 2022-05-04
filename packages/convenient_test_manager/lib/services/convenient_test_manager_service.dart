@@ -36,7 +36,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
   @override
   Future<Empty> reportLogEntry(ServiceCall call, LogEntry request) async {
-    Log.d(_kTag, 'reportLogEntry called');
+    Log.d(_kTag, 'reportLogEntry called entryLocators=${request.entryLocators} message=${request.message}');
 
     _logStore.logEntryMap.addToIdObjMap(request);
 
@@ -49,7 +49,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
     if (_organizationStore.enableAutoExpand) {
       _organizationStore.expandGroupEntryMap.clear();
-      for (var i = 0; i < request.entryLocators.length; ++i) {
+      for (var i = 1; i < request.entryLocators.length; ++i) {
         _organizationStore.expandGroupEntryMap[
             _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))!] = true;
       }

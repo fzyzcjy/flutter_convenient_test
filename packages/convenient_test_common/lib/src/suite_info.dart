@@ -26,9 +26,17 @@ class SuiteInfo {
   }
 
   int? getEntryIdFromNames(List<String> entryLocators) {
+    if (entryLocators.first != rootGroup.name) {
+      Log.w(
+          _kTag,
+          'getEntryIdFromNames since entryLocators.first does not match rootGroup.name=${rootGroup.name} '
+          '(entryLocators=$entryLocators)');
+      return null;
+    }
+
     var currEntryId = rootGroupId;
 
-    for (final name in entryLocators) {
+    for (final name in entryLocators.sublist(1)) {
       void logFail(String reason) => Log.w(_kTag,
           'getEntryIdFromNames fail reason=$reason currEntryId=$currEntryId name=$name entryLocators=$entryLocators');
 
