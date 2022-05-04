@@ -3,6 +3,7 @@
 // ignore_for_file: implementation_imports
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/core.dart';
+import 'package:convenient_test_dev/src/support/extensions.dart';
 import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
@@ -76,7 +77,8 @@ class LogHandle {
     required LogEntryType type,
     bool printing = false,
   }) {
-    GetIt.I.get<ConvenientTestManagerClient>().reportLogEntry(LogEntry(
+    GetIt.I.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
+            logEntry: LogEntry(
           id: _id,
           entryLocators: _entryLocators,
           type: type,
@@ -84,7 +86,7 @@ class LogHandle {
           message: message,
           error: error,
           stackTrace: stackTrace,
-        ));
+        )));
 
     if (printing) {
       Log.i(_kTag, '${_typeToLeading(type)} $title $message $error $stackTrace');
@@ -93,11 +95,12 @@ class LogHandle {
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
     image ??= await takeSnapshot();
-    await GetIt.I.get<ConvenientTestManagerClient>().reportSnapshot(Snapshot(
+    await GetIt.I.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
+            snapshot: Snapshot(
           logEntryId: _id,
           name: name,
           image: image,
-        ));
+        )));
   }
 }
 
