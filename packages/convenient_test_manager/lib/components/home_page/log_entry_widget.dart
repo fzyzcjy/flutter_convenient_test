@@ -2,6 +2,7 @@ import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/misc/rotate_animation.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
@@ -119,23 +120,43 @@ class HomePageLogEntryWidget extends StatelessWidget {
               ),
             ),
           ),
-          if (logEntry.error.isNotEmpty)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              margin: const EdgeInsets.only(left: 32),
-              decoration: BoxDecoration(
-                color: Colors.red[50],
-                border: Border(left: BorderSide(color: Colors.red[200]!, width: 2)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SelectableText('${logEntry.error}\n${logEntry.stackTrace}'),
-                ],
-              ),
-            )
+          if (logEntry.error.isNotEmpty) _buildError(context, logEntry)
         ],
       );
     });
+  }
+
+  Widget _buildError(BuildContext context, LogEntry logEntry) {
+    final text = '${logEntry.error}\n${logEntry.stackTrace}';
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      margin: const EdgeInsets.only(left: 32),
+      decoration: BoxDecoration(
+        color: Colors.red[50],
+        border: Border(left: BorderSide(color: Colors.red[200]!, width: 2)),
+      ),
+      child: Stack(
+        children: [
+          SelectableText(text),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: InkWell(
+              onTap: () async {
+                await Clipboard.setData(ClipboardData(text: text));
+                // ignore: use_build_context_synchronously
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied')));
+              },
+              child: const Icon(
+                Icons.copy,
+                color: Colors.blue,
+                size: 16,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
