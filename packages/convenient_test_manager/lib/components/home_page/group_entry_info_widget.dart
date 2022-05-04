@@ -58,7 +58,7 @@ class _GroupInfoWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (showHeader) _buildHeader(),
-          if (!showHeader || expanding)
+          if (expanding || !showHeader)
             for (final childGroupEntryId in info.entryIds)
               HomePageGroupEntryInfoWidget(
                 groupEntryId: childGroupEntryId,
