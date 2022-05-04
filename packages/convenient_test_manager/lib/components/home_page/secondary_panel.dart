@@ -15,9 +15,7 @@ class HomePageSecondaryPanel extends StatelessWidget {
     return Observer(
       builder: (_) => Column(
         children: [
-          const SizedBox(
-            height: 8,
-          ),
+          const SizedBox(height: 12),
           _buildTabBar(),
           Expanded(
             child: _buildTab(),
@@ -32,6 +30,7 @@ class HomePageSecondaryPanel extends StatelessWidget {
 
     return Row(
       children: [
+        const SizedBox(width: 8),
         ...HomePageSecondaryPanelTab.values.mapIndexed((index, tab) {
           final active = homePageStore.activeSecondaryPanelTab == tab;
 
@@ -95,10 +94,16 @@ class _RawLogPanel extends StatelessWidget {
         );
       }
 
-      return SingleChildScrollView(
-        child: Text(
-          rawLogStore.rawLogInTest[activeTestEntryId],
-          style: const TextStyle(fontSize: 11.5),
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        child: ListView(
+          primary: false,
+          children: [
+            SelectableText(
+              rawLogStore.rawLogInTest[activeTestEntryId],
+              style: const TextStyle(fontSize: 13),
+            ),
+          ],
         ),
       );
     });
@@ -123,7 +128,7 @@ class _ScreenshotPanel extends StatelessWidget {
       final snapshotNames = logStore.snapshotInLog[activeLogEntryId]?.keys ?? [];
       if (snapshotNames.isEmpty) {
         return const Center(
-          child: Text('No screenshots for log entry'),
+          child: Text('No screenshots for chosen log entry'),
         );
       }
 

@@ -84,6 +84,7 @@ class HomePageTestEntryWidget extends StatelessWidget {
                     ...logEntryIds.mapIndexed(
                       (i, logEntryId) => HomePageLogEntryWidget(
                         order: i,
+                        testEntryId: testEntryId,
                         logEntryId: logEntryId,
                         running: state == SimplifiedStateEnum.running && i == logEntryIds.length - 1,
                       ),
