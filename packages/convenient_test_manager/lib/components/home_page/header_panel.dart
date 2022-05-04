@@ -39,6 +39,11 @@ class HomePageHeaderPanel extends StatelessWidget {
             onPressed: GetIt.I.get<VmServiceWrapperService>().connect,
             child: const Text('Reconnect VM'),
           ),
+          const SizedBox(width: 20),
+          TextButton(
+            onPressed: GetIt.I.get<MiscService>().readReportFromFile(),
+            child: const Text('Read From File'),
+          ),
           Expanded(child: Container()),
           const Text(
             'Auto Expand',

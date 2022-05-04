@@ -24,6 +24,7 @@ dependencies:
   collection: ^1.15.0-nullsafety.4
   convenient_test_common: ^1.0.0
   cupertino_icons: ^1.0.2
+  file_picker: ^1.13.3
   flutter:
     sdk: flutter
   flutter_mobx: ^2.0.5

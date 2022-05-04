@@ -26,4 +26,8 @@ class MiscService {
         WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: kRegexMatchNothing));
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
+
+  Future<void> readReportFromFile() async {
+    TODO;
+  }
 }
