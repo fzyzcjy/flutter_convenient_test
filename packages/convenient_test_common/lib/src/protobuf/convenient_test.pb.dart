@@ -186,17 +186,17 @@ class LogEntry extends $pb.GeneratedMessage {
   void clearStackTrace() => clearField(8);
 }
 
-class SuiteInfo extends $pb.GeneratedMessage {
+class SuiteInfoProto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SuiteInfo',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SuiteInfoProto',
       createEmptyInstance: create)
-    ..aOM<GroupInfo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'group',
-        subBuilder: GroupInfo.create)
+    ..aOM<GroupInfoProto>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'group',
+        subBuilder: GroupInfoProto.create)
     ..hasRequiredFields = false;
 
-  SuiteInfo._() : super();
-  factory SuiteInfo({
-    GroupInfo? group,
+  SuiteInfoProto._() : super();
+  factory SuiteInfoProto({
+    GroupInfoProto? group,
   }) {
     final _result = create();
     if (group != null) {
@@ -204,32 +204,33 @@ class SuiteInfo extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory SuiteInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory SuiteInfoProto.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory SuiteInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory SuiteInfoProto.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  SuiteInfo clone() => SuiteInfo()..mergeFromMessage(this);
+  SuiteInfoProto clone() => SuiteInfoProto()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  SuiteInfo copyWith(void Function(SuiteInfo) updates) =>
-      super.copyWith((message) => updates(message as SuiteInfo)) as SuiteInfo; // ignore: deprecated_member_use
+  SuiteInfoProto copyWith(void Function(SuiteInfoProto) updates) =>
+      super.copyWith((message) => updates(message as SuiteInfoProto))
+          as SuiteInfoProto; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static SuiteInfo create() => SuiteInfo._();
-  SuiteInfo createEmptyInstance() => create();
-  static $pb.PbList<SuiteInfo> createRepeated() => $pb.PbList<SuiteInfo>();
+  static SuiteInfoProto create() => SuiteInfoProto._();
+  SuiteInfoProto createEmptyInstance() => create();
+  static $pb.PbList<SuiteInfoProto> createRepeated() => $pb.PbList<SuiteInfoProto>();
   @$core.pragma('dart2js:noInline')
-  static SuiteInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SuiteInfo>(create);
-  static SuiteInfo? _defaultInstance;
+  static SuiteInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SuiteInfoProto>(create);
+  static SuiteInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
-  GroupInfo get group => $_getN(0);
+  GroupInfoProto get group => $_getN(0);
   @$pb.TagNumber(1)
-  set group(GroupInfo v) {
+  set group(GroupInfoProto v) {
     setField(1, v);
   }
 
@@ -238,31 +239,31 @@ class SuiteInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearGroup() => clearField(1);
   @$pb.TagNumber(1)
-  GroupInfo ensureGroup() => $_ensure(0);
+  GroupInfoProto ensureGroup() => $_ensure(0);
 }
 
-enum GroupEntryInfo_SubType { group, test, notSet }
+enum GroupEntryInfoProto_SubType { group, test, notSet }
 
-class GroupEntryInfo extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, GroupEntryInfo_SubType> _GroupEntryInfo_SubTypeByTag = {
-    1: GroupEntryInfo_SubType.group,
-    2: GroupEntryInfo_SubType.test,
-    0: GroupEntryInfo_SubType.notSet
+class GroupEntryInfoProto extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, GroupEntryInfoProto_SubType> _GroupEntryInfoProto_SubTypeByTag = {
+    1: GroupEntryInfoProto_SubType.group,
+    2: GroupEntryInfoProto_SubType.test,
+    0: GroupEntryInfoProto_SubType.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupEntryInfo',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupEntryInfoProto',
       createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..aOM<GroupInfo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'group',
-        subBuilder: GroupInfo.create)
-    ..aOM<TestInfo>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'test',
-        subBuilder: TestInfo.create)
+    ..aOM<GroupInfoProto>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'group',
+        subBuilder: GroupInfoProto.create)
+    ..aOM<TestInfoProto>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'test',
+        subBuilder: TestInfoProto.create)
     ..hasRequiredFields = false;
 
-  GroupEntryInfo._() : super();
-  factory GroupEntryInfo({
-    GroupInfo? group,
-    TestInfo? test,
+  GroupEntryInfoProto._() : super();
+  factory GroupEntryInfoProto({
+    GroupInfoProto? group,
+    TestInfoProto? test,
   }) {
     final _result = create();
     if (group != null) {
@@ -273,36 +274,38 @@ class GroupEntryInfo extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory GroupEntryInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory GroupEntryInfoProto.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory GroupEntryInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory GroupEntryInfoProto.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  GroupEntryInfo clone() => GroupEntryInfo()..mergeFromMessage(this);
+  GroupEntryInfoProto clone() => GroupEntryInfoProto()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  GroupEntryInfo copyWith(void Function(GroupEntryInfo) updates) =>
-      super.copyWith((message) => updates(message as GroupEntryInfo))
-          as GroupEntryInfo; // ignore: deprecated_member_use
+  GroupEntryInfoProto copyWith(void Function(GroupEntryInfoProto) updates) =>
+      super.copyWith((message) => updates(message as GroupEntryInfoProto))
+          as GroupEntryInfoProto; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static GroupEntryInfo create() => GroupEntryInfo._();
-  GroupEntryInfo createEmptyInstance() => create();
-  static $pb.PbList<GroupEntryInfo> createRepeated() => $pb.PbList<GroupEntryInfo>();
+  static GroupEntryInfoProto create() => GroupEntryInfoProto._();
+  GroupEntryInfoProto createEmptyInstance() => create();
+  static $pb.PbList<GroupEntryInfoProto> createRepeated() => $pb.PbList<GroupEntryInfoProto>();
   @$core.pragma('dart2js:noInline')
-  static GroupEntryInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupEntryInfo>(create);
-  static GroupEntryInfo? _defaultInstance;
+  static GroupEntryInfoProto getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupEntryInfoProto>(create);
+  static GroupEntryInfoProto? _defaultInstance;
 
-  GroupEntryInfo_SubType whichSubType() => _GroupEntryInfo_SubTypeByTag[$_whichOneof(0)]!;
+  GroupEntryInfoProto_SubType whichSubType() => _GroupEntryInfoProto_SubTypeByTag[$_whichOneof(0)]!;
   void clearSubType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  GroupInfo get group => $_getN(0);
+  GroupInfoProto get group => $_getN(0);
   @$pb.TagNumber(1)
-  set group(GroupInfo v) {
+  set group(GroupInfoProto v) {
     setField(1, v);
   }
 
@@ -311,12 +314,12 @@ class GroupEntryInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearGroup() => clearField(1);
   @$pb.TagNumber(1)
-  GroupInfo ensureGroup() => $_ensure(0);
+  GroupInfoProto ensureGroup() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  TestInfo get test => $_getN(1);
+  TestInfoProto get test => $_getN(1);
   @$pb.TagNumber(2)
-  set test(TestInfo v) {
+  set test(TestInfoProto v) {
     setField(2, v);
   }
 
@@ -325,23 +328,23 @@ class GroupEntryInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearTest() => clearField(2);
   @$pb.TagNumber(2)
-  TestInfo ensureTest() => $_ensure(1);
+  TestInfoProto ensureTest() => $_ensure(1);
 }
 
-class GroupInfo extends $pb.GeneratedMessage {
+class GroupInfoProto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupInfo',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupInfoProto',
       createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..pc<GroupEntryInfo>(
+    ..pc<GroupEntryInfoProto>(
         2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entries', $pb.PbFieldType.PM,
-        subBuilder: GroupEntryInfo.create)
+        subBuilder: GroupEntryInfoProto.create)
     ..hasRequiredFields = false;
 
-  GroupInfo._() : super();
-  factory GroupInfo({
+  GroupInfoProto._() : super();
+  factory GroupInfoProto({
     $core.String? name,
-    $core.Iterable<GroupEntryInfo>? entries,
+    $core.Iterable<GroupEntryInfoProto>? entries,
   }) {
     final _result = create();
     if (name != null) {
@@ -352,27 +355,28 @@ class GroupInfo extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory GroupInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory GroupInfoProto.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory GroupInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory GroupInfoProto.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  GroupInfo clone() => GroupInfo()..mergeFromMessage(this);
+  GroupInfoProto clone() => GroupInfoProto()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  GroupInfo copyWith(void Function(GroupInfo) updates) =>
-      super.copyWith((message) => updates(message as GroupInfo)) as GroupInfo; // ignore: deprecated_member_use
+  GroupInfoProto copyWith(void Function(GroupInfoProto) updates) =>
+      super.copyWith((message) => updates(message as GroupInfoProto))
+          as GroupInfoProto; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static GroupInfo create() => GroupInfo._();
-  GroupInfo createEmptyInstance() => create();
-  static $pb.PbList<GroupInfo> createRepeated() => $pb.PbList<GroupInfo>();
+  static GroupInfoProto create() => GroupInfoProto._();
+  GroupInfoProto createEmptyInstance() => create();
+  static $pb.PbList<GroupInfoProto> createRepeated() => $pb.PbList<GroupInfoProto>();
   @$core.pragma('dart2js:noInline')
-  static GroupInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupInfo>(create);
-  static GroupInfo? _defaultInstance;
+  static GroupInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupInfoProto>(create);
+  static GroupInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -387,18 +391,18 @@ class GroupInfo extends $pb.GeneratedMessage {
   void clearName() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<GroupEntryInfo> get entries => $_getList(1);
+  $core.List<GroupEntryInfoProto> get entries => $_getList(1);
 }
 
-class TestInfo extends $pb.GeneratedMessage {
+class TestInfoProto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TestInfo',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TestInfoProto',
       createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..hasRequiredFields = false;
 
-  TestInfo._() : super();
-  factory TestInfo({
+  TestInfoProto._() : super();
+  factory TestInfoProto({
     $core.String? name,
   }) {
     final _result = create();
@@ -407,27 +411,27 @@ class TestInfo extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory TestInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory TestInfoProto.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory TestInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory TestInfoProto.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  TestInfo clone() => TestInfo()..mergeFromMessage(this);
+  TestInfoProto clone() => TestInfoProto()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  TestInfo copyWith(void Function(TestInfo) updates) =>
-      super.copyWith((message) => updates(message as TestInfo)) as TestInfo; // ignore: deprecated_member_use
+  TestInfoProto copyWith(void Function(TestInfoProto) updates) =>
+      super.copyWith((message) => updates(message as TestInfoProto)) as TestInfoProto; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static TestInfo create() => TestInfo._();
-  TestInfo createEmptyInstance() => create();
-  static $pb.PbList<TestInfo> createRepeated() => $pb.PbList<TestInfo>();
+  static TestInfoProto create() => TestInfoProto._();
+  TestInfoProto createEmptyInstance() => create();
+  static $pb.PbList<TestInfoProto> createRepeated() => $pb.PbList<TestInfoProto>();
   @$core.pragma('dart2js:noInline')
-  static TestInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestInfo>(create);
-  static TestInfo? _defaultInstance;
+  static TestInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestInfoProto>(create);
+  static TestInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);

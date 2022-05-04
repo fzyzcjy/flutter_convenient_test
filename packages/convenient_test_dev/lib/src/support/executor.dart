@@ -26,22 +26,22 @@ class ConvenientTestExecutor {
 }
 
 class _SuiteInfoConverter {
-  SuiteInfo convert(Group root) => SuiteInfo(
+  SuiteInfoProto convert(Group root) => SuiteInfoProto(
         group: _convertGroup(root),
       );
 
-  GroupInfo _convertGroup(Group entry) => GroupInfo(
+  GroupInfoProto _convertGroup(Group entry) => GroupInfoProto(
         name: entry.name,
         entries: entry.entries.map(_convertGroupEntry),
       );
 
-  TestInfo _convertTest(Test entry) => TestInfo(
+  TestInfoProto _convertTest(Test entry) => TestInfoProto(
         name: entry.name,
       );
 
-  GroupEntryInfo _convertGroupEntry(GroupEntry entry) {
-    if (entry is Group) return GroupEntryInfo(group: _convertGroup(entry));
-    if (entry is Test) return GroupEntryInfo(test: _convertTest(entry));
+  GroupEntryInfoProto _convertGroupEntry(GroupEntry entry) {
+    if (entry is Group) return GroupEntryInfoProto(group: _convertGroup(entry));
+    if (entry is Test) return GroupEntryInfoProto(test: _convertTest(entry));
     throw Exception('Unknown entry=$entry');
   }
 }

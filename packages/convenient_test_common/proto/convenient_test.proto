@@ -3,7 +3,7 @@ syntax = "proto3";
 service ConvenientTestManager {
   rpc ResetManagerCache (Empty) returns (Empty);
   rpc ReportLogEntry (LogEntry) returns (Empty);
-  rpc ReportSuiteInfo (SuiteInfo) returns (Empty);
+  rpc ReportSuiteInfo (SuiteInfoProto) returns (Empty);
   rpc ReportRunnerStateChange (RunnerStateChange) returns (Empty);
   rpc ReportRunnerError (RunnerError) returns (Empty);
   rpc ReportRunnerMessage (RunnerMessage) returns (Empty);
@@ -35,26 +35,26 @@ enum LogEntryType {
 }
 
 // mimic test_api :: Suite
-message SuiteInfo {
-  GroupInfo group = 1;
+message SuiteInfoProto {
+  GroupInfoProto group = 1;
 }
 
 // mimic test_api :: GroupEntry
-message GroupEntryInfo {
+message GroupEntryInfoProto {
   oneof sub_type {
-    GroupInfo group = 1;
-    TestInfo test = 2;
+    GroupInfoProto group = 1;
+    TestInfoProto test = 2;
   }
 }
 
 // mimic test_api :: Group
-message GroupInfo {
+message GroupInfoProto {
   string name = 1;
-  repeated GroupEntryInfo entries = 2;
+  repeated GroupEntryInfoProto entries = 2;
 }
 
 // mimic test_api :: Test
-message TestInfo {
+message TestInfoProto {
   string name = 1;
 }
 
