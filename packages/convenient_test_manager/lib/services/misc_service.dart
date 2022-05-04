@@ -1,6 +1,9 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
+import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
+import 'package:convenient_test_manager/stores/raw_log_store.dart';
+import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/worker_mode_store.dart';
 import 'package:get_it/get_it.dart';
 
@@ -25,6 +28,15 @@ class MiscService {
     GetIt.I.get<WorkerModeStore>().activeWorkerMode =
         WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: kRegexMatchNothing));
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
+  }
+
+  void resetCache() {
+    Log.d(_kTag, 'resetCache');
+
+    GetIt.I.get<OrganizationStore>().clear();
+    GetIt.I.get<SuiteInfoStore>().clear();
+    GetIt.I.get<LogStore>().clear();
+    GetIt.I.get<RawLogStore>().clear();
   }
 
   Future<void> readReportFromFile() async {

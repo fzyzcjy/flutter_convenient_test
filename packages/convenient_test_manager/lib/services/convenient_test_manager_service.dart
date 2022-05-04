@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/services/report_handler_service.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
@@ -36,12 +37,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   @override
   Future<Empty> resetManagerCache(ServiceCall call, Empty request) async {
     Log.d(_kTag, 'resetManagerCache called');
-
-    _organizationStore.clear();
-    _suiteInfoStore.clear();
-    _logStore.clear();
-    _rawLogStore.clear();
-
+    GetIt.I.get<MiscService>().resetCache();
     return Empty();
   }
 
@@ -55,9 +51,5 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
     Log.e(_kTag, 'error when handling grpc requests. error=$error stack=$stackTrace');
   }
 
-  final _logStore = GetIt.I.get<LogStore>();
-  final _organizationStore = GetIt.I.get<OrganizationStore>();
-  final _suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
-  final _rawLogStore = GetIt.I.get<RawLogStore>();
   final _workerModeStore = GetIt.I.get<WorkerModeStore>();
 }
