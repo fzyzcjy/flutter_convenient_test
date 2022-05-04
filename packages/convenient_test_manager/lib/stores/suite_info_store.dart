@@ -17,22 +17,34 @@ abstract class _SuiteInfoStore with Store {
 
 @immutable
 class SuiteInfo {
-  final int groupId;
+  final int rootGroupId;
   final Map<int, GroupEntryInfo> entryMap;
 
-  const SuiteInfo({
-    required this.groupId,
+  const SuiteInfo._({
+    required this.rootGroupId,
     required this.entryMap,
   });
 
   factory SuiteInfo.fromProto(SuiteInfoProto proto) {
-    return SuiteInfo(
-      groupId: proto.groupId,
+    return SuiteInfo._(
+      rootGroupId: proto.groupId,
       entryMap: Map.fromEntries([
         ...proto.groups.map((group) => MapEntry(group.id, GroupInfo.fromProto(group))),
         ...proto.tests.map((test) => MapEntry(test.id, TestInfo.fromProto(test))),
       ]),
     );
+  }
+
+  int getEntryIdFromNames(List<String> names) {
+    var currEntryId = rootGroupId;
+
+    for (final name in names) {
+      final currEntry = entryMap[currEntryId]! as GroupInfo;
+      final nextEntryId = currEntry.entryIds.singleWhere((childEntryId) => entryMap[childEntryId]!.name == name);
+      currEntryId = nextEntryId;
+    }
+
+    return currEntryId;
   }
 }
 
