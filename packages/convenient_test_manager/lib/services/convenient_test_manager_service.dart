@@ -40,19 +40,18 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
     _logStore.logEntryMap.addToIdObjMap(request);
 
-    final testGroupId = _organizationStore.testGroupNameToId(request.testGroupName);
-    final testEntryId = _organizationStore.testEntryNameToId(request.testEntryName, testGroupId: testGroupId);
+    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators);
 
     if (!(_logStore.logEntryInTest[testEntryId]?.contains(request.id) ?? false)) {
       _logStore.logEntryInTest.addRelation(testEntryId, request.id);
     }
 
     if (_organizationStore.enableAutoExpand) {
-      _organizationStore
-        ..expandTestGroupMap.clear()
-        ..expandTestGroupMap[testGroupId] = true
-        ..expandTestEntryMap.clear()
-        ..expandTestEntryMap[testEntryId] = true;
+      _organizationStore.expandGroupEntryMap.clear();
+      for (var i = 0; i < request.entryLocators.length; ++i) {
+        _organizationStore.expandGroupEntryMap[
+            _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))] = true;
+      }
     }
 
     return Empty();

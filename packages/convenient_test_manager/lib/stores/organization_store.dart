@@ -9,8 +9,8 @@ abstract class _OrganizationStore with Store {
   final testEntryStateMap = ObservableDefaultMap<int, TestEntryState>(
       createDefaultValue: (_) => TestEntryState(status: 'pending', result: 'success'));
 
-  final expandTestGroupMap = ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
-  final expandTestEntryMap = ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
+  /// key: [GroupEntryInfo].id
+  final expandGroupEntryMap = ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
 
   @observable
   bool enableAutoExpand = true;
@@ -19,8 +19,7 @@ abstract class _OrganizationStore with Store {
   int? activeTestEntryId;
 
   void clear() {
-    expandTestGroupMap.clear();
-    expandTestEntryMap.clear();
+    expandGroupEntryMap.clear();
     activeTestEntryId = null;
   }
 }
