@@ -2,7 +2,15 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/group_entry.dart';
+import 'package:test_api/src/backend/live_test.dart';
 import 'package:test_api/src/backend/test.dart';
+
+class SuiteInfoUtils {
+  static List<String> entryLocatorsFromGroupEntries(List<GroupEntry> entries) => entries.map((e) => e.name).toList();
+
+  static List<String> entryLocatorsFromLiveTest(LiveTest liveTest) =>
+      entryLocatorsFromGroupEntries([...liveTest.groups, liveTest.test]);
+}
 
 class SuiteInfoConverter {
   var _unoccupiedId = 100; // initial id should be >0 to avoid confusion

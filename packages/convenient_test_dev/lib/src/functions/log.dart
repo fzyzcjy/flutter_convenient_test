@@ -1,11 +1,11 @@
 // ref: https://docs.cypress.io/api/cypress-api/cypress-log#Arguments
 
+// ignore_for_file: implementation_imports
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/core.dart';
+import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
-// ignore_for_file: implementation_imports
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
@@ -33,8 +33,7 @@ LogHandle convenientTestLog(
 
   final log = LogHandle(
     ConvenientTestIdGen.nextId(),
-    testGroupsToName(liveTest.groups),
-    liveTest.test.name,
+    SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
   );
 
   log.update(
@@ -65,10 +64,9 @@ class LogHandle {
   static const _kTag = 'LogHandle';
 
   final int _id;
-  final String _testGroupName;
-  final String _testEntryName;
+  final List<String> _entryLocators;
 
-  LogHandle(this._id, this._testGroupName, this._testEntryName);
+  LogHandle(this._id, this._entryLocators);
 
   void update(
     String title,
@@ -80,8 +78,7 @@ class LogHandle {
   }) {
     GetIt.I.get<ConvenientTestManagerClient>().reportLogEntry(LogEntry(
           id: _id,
-          testGroupName: _testGroupName,
-          testEntryName: _testEntryName,
+          entryLocators: _entryLocators,
           type: type,
           title: title,
           message: message,
