@@ -14,6 +14,13 @@ class MiscService {
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 
+  Future<void> hotRestartAndRunInAppMode() async {
+    Log.d(_kTag, 'hotRestartAndRunInAppMode');
+    GetIt.I.get<ConvenientTestManagerService>().activeWorkerMode =
+        WorkerMode(interactiveApp: WorkerModeInteractiveApp());
+    await GetIt.I.get<VmServiceWrapperService>().hotRestart();
+  }
+
   Future<void> reloadInfo() async {
     GetIt.I.get<OrganizationStore>().enableAutoExpand = true;
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
