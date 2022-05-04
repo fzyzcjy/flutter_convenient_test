@@ -4,6 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:test_api/src/backend/declarer.dart';
 
 class MyDeclarer extends Declarer {
+  // NOTE use this for flaky test retrying, see #16
+  static const kDefaultRetry = 3;
+
   @override
   void test(
     String name,
@@ -24,7 +27,8 @@ class MyDeclarer extends Declarer {
       skip: skip,
       onPlatform: onPlatform,
       tags: tags,
-      retry: retry,
+      // NOTE use this for flaky test retrying, see #16
+      retry: retry ?? kDefaultRetry,
       solo: solo,
     );
   }
@@ -49,7 +53,8 @@ class MyDeclarer extends Declarer {
       skip: skip,
       onPlatform: onPlatform,
       tags: tags,
-      retry: retry,
+      // NOTE use this for flaky test retrying, see #16
+      retry: retry ?? kDefaultRetry,
       solo: solo,
     );
   }
