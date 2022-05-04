@@ -37,7 +37,13 @@ class SuiteInfo {
 
     return currEntryId;
   }
+
+  GroupInfo get rootGroup => entryMap[rootGroupId]! as GroupInfo;
+
+  void traverse(GroupEntryInfoTraverseCallback callback) => rootGroup.traverse(this, callback);
 }
+
+typedef GroupEntryInfoTraverseCallback = void Function(GroupEntryInfo groupEntryInfo);
 
 @immutable
 abstract class GroupEntryInfo {
@@ -51,7 +57,16 @@ abstract class GroupEntryInfo {
     required this.name,
   });
 
+  List<int> get childrenGroupEntryIds;
+
   String calcBriefName(SuiteInfo suiteInfo);
+
+  void traverse(SuiteInfo suiteInfo, GroupEntryInfoTraverseCallback callback) {
+    callback(this);
+    for (final entryId in childrenGroupEntryIds) {
+      suiteInfo.entryMap[entryId]!.traverse(suiteInfo, callback);
+    }
+  }
 }
 
 @immutable
@@ -74,6 +89,9 @@ class GroupInfo extends GroupEntryInfo {
 
   @override
   String calcBriefName(SuiteInfo suiteInfo) => name;
+
+  @override
+  List<int> get childrenGroupEntryIds => entryIds;
 }
 
 @immutable
@@ -100,4 +118,7 @@ class TestInfo extends GroupEntryInfo {
 
     return name;
   }
+
+  @override
+  List<int> get childrenGroupEntryIds => const [];
 }

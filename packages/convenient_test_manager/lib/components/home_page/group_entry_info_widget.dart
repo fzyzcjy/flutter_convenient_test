@@ -91,12 +91,15 @@ class _GroupInfoWidget extends StatelessWidget {
   }
 
   List<Widget> _buildGroupStat() {
+    final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
     final organizationStore = GetIt.I.get<OrganizationStore>();
 
     final stateCountMap = ExhaustiveMap(SimplifiedStateEnum.values, (_) => 0);
-    organizationStore.testEntryInGroup[testGroup.id]!
-        .map((testEntryId) => organizationStore.testEntryStateMap[testEntryId].toSimplifiedStateEnum())
-        .forEach((state) => stateCountMap[state]++);
+    suiteInfoStore.suiteInfo!.traverse((groupEntryInfo) {
+      if (groupEntryInfo is TestInfo) {
+        stateCountMap[organizationStore.testEntryStateMap[groupEntryInfo.id].toSimplifiedStateEnum()]++;
+      }
+    });
 
     return SimplifiedStateEnum.values.expand<Widget>((state) {
       final count = stateCountMap[state];
