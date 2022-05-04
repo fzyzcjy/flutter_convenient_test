@@ -1,5 +1,6 @@
 import 'package:convenient_test_manager/services/convenient_test_manager_service.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
+import 'package:convenient_test_manager/services/report_handler_service.dart';
 import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
@@ -21,6 +22,7 @@ void setup() {
   getIt.registerSingleton<VmServiceWrapperService>(VmServiceWrapperService());
   getIt.registerSingleton<MiscService>(MiscService());
   getIt.registerSingleton<HomePageStore>(HomePageStore());
+  getIt.registerSingleton<ReportHandlerService>(ReportHandlerService());
 
   GetIt.I.get<ConvenientTestManagerService>().serve();
 }
