@@ -9,7 +9,8 @@ class MiscService {
 
   Future<void> hotRestartAndRunTests({required String filterNameRegex}) async {
     Log.d(_kTag, 'hotRestartAndRunTests filterNameRegex=$filterNameRegex');
-    GetIt.I.get<ConvenientTestManagerService>().activeTestFilter = TestFilter(filterNameRegex: filterNameRegex);
+    GetIt.I.get<ConvenientTestManagerService>().activeWorkerMode =
+        WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: filterNameRegex));
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 

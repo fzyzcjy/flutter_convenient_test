@@ -11,13 +11,14 @@ import 'package:grpc/grpc.dart';
 import 'package:mobx/mobx.dart';
 
 const _kRegexMatchNothing = r'match-nothing^$';
-final _kRejectAllTestFilter = TestFilter(filterNameRegex: _kRegexMatchNothing);
+final _kFallbackWorkerMode =
+    WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: _kRegexMatchNothing));
 
 class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   static const _kTag = 'ConvenientTestManagerService';
 
   final managerToWorkerActionStreamController = StreamController<ManagerToWorkerAction>.broadcast();
-  TestFilter? activeTestFilter;
+  WorkerMode? activeWorkerMode;
 
   void serve() {
     final server = grpc.Server(
@@ -132,12 +133,12 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   }
 
   @override
-  Future<TestFilter> getTestFilter(grpc.ServiceCall call, Empty request) async {
-    Log.d(_kTag, 'getTestFilter activeTestFilter=$activeTestFilter');
+  Future<WorkerMode> getWorkerMode(grpc.ServiceCall call, Empty request) async {
+    Log.d(_kTag, 'getWorkerMode active=$activeWorkerMode');
 
-    final ans = activeTestFilter ?? _kRejectAllTestFilter;
+    final ans = activeWorkerMode ?? _kFallbackWorkerMode;
 
-    activeTestFilter = null;
+    activeWorkerMode = null;
 
     return ans;
   }
