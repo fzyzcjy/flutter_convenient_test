@@ -35,10 +35,10 @@ class SuiteInfo {
     );
   }
 
-  int getEntryIdFromNames(List<String> names) {
+  int getEntryIdFromNames(List<String> entryLocators) {
     var currEntryId = rootGroupId;
 
-    for (final name in names) {
+    for (final name in entryLocators) {
       final currEntry = entryMap[currEntryId]! as GroupInfo;
       final nextEntryId = currEntry.entryIds.singleWhere((childEntryId) => entryMap[childEntryId]!.name == name);
       currEntryId = nextEntryId;

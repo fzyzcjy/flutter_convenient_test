@@ -18,25 +18,23 @@ class LogEntry extends $pb.GeneratedMessage {
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LogEntry',
       createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testGroupName')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testEntryName')
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
     ..e<LogEntryType>(
-        6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE,
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE,
         defaultOrMaker: LogEntryType.INVALID, valueOf: LogEntryType.valueOf, enumValues: LogEntryType.values)
-    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error')
-    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stackTrace')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stackTrace')
     ..hasRequiredFields = false;
 
   LogEntry._() : super();
   factory LogEntry({
     $core.int? id,
-    $core.String? testGroupName,
-    $core.String? testEntryName,
-    $core.String? message,
-    $core.String? title,
+    $core.Iterable<$core.String>? entryLocators,
     LogEntryType? type,
+    $core.String? title,
+    $core.String? message,
     $core.String? error,
     $core.String? stackTrace,
   }) {
@@ -44,20 +42,17 @@ class LogEntry extends $pb.GeneratedMessage {
     if (id != null) {
       _result.id = id;
     }
-    if (testGroupName != null) {
-      _result.testGroupName = testGroupName;
+    if (entryLocators != null) {
+      _result.entryLocators.addAll(entryLocators);
     }
-    if (testEntryName != null) {
-      _result.testEntryName = testEntryName;
-    }
-    if (message != null) {
-      _result.message = message;
+    if (type != null) {
+      _result.type = type;
     }
     if (title != null) {
       _result.title = title;
     }
-    if (type != null) {
-      _result.type = type;
+    if (message != null) {
+      _result.message = message;
     }
     if (error != null) {
       _result.error = error;
@@ -102,88 +97,67 @@ class LogEntry extends $pb.GeneratedMessage {
   void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get testGroupName => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set testGroupName($core.String v) {
-    $_setString(1, v);
-  }
-
-  @$pb.TagNumber(2)
-  $core.bool hasTestGroupName() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearTestGroupName() => clearField(2);
+  $core.List<$core.String> get entryLocators => $_getList(1);
 
   @$pb.TagNumber(3)
-  $core.String get testEntryName => $_getSZ(2);
+  LogEntryType get type => $_getN(2);
   @$pb.TagNumber(3)
-  set testEntryName($core.String v) {
-    $_setString(2, v);
+  set type(LogEntryType v) {
+    setField(3, v);
   }
 
   @$pb.TagNumber(3)
-  $core.bool hasTestEntryName() => $_has(2);
+  $core.bool hasType() => $_has(2);
   @$pb.TagNumber(3)
-  void clearTestEntryName() => clearField(3);
+  void clearType() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get message => $_getSZ(3);
+  $core.String get title => $_getSZ(3);
   @$pb.TagNumber(4)
-  set message($core.String v) {
+  set title($core.String v) {
     $_setString(3, v);
   }
 
   @$pb.TagNumber(4)
-  $core.bool hasMessage() => $_has(3);
+  $core.bool hasTitle() => $_has(3);
   @$pb.TagNumber(4)
-  void clearMessage() => clearField(4);
+  void clearTitle() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.String get title => $_getSZ(4);
+  $core.String get message => $_getSZ(4);
   @$pb.TagNumber(5)
-  set title($core.String v) {
+  set message($core.String v) {
     $_setString(4, v);
   }
 
   @$pb.TagNumber(5)
-  $core.bool hasTitle() => $_has(4);
+  $core.bool hasMessage() => $_has(4);
   @$pb.TagNumber(5)
-  void clearTitle() => clearField(5);
+  void clearMessage() => clearField(5);
 
   @$pb.TagNumber(6)
-  LogEntryType get type => $_getN(5);
+  $core.String get error => $_getSZ(5);
   @$pb.TagNumber(6)
-  set type(LogEntryType v) {
-    setField(6, v);
+  set error($core.String v) {
+    $_setString(5, v);
   }
 
   @$pb.TagNumber(6)
-  $core.bool hasType() => $_has(5);
+  $core.bool hasError() => $_has(5);
   @$pb.TagNumber(6)
-  void clearType() => clearField(6);
+  void clearError() => clearField(6);
 
   @$pb.TagNumber(7)
-  $core.String get error => $_getSZ(6);
+  $core.String get stackTrace => $_getSZ(6);
   @$pb.TagNumber(7)
-  set error($core.String v) {
+  set stackTrace($core.String v) {
     $_setString(6, v);
   }
 
   @$pb.TagNumber(7)
-  $core.bool hasError() => $_has(6);
+  $core.bool hasStackTrace() => $_has(6);
   @$pb.TagNumber(7)
-  void clearError() => clearField(7);
-
-  @$pb.TagNumber(8)
-  $core.String get stackTrace => $_getSZ(7);
-  @$pb.TagNumber(8)
-  set stackTrace($core.String v) {
-    $_setString(7, v);
-  }
-
-  @$pb.TagNumber(8)
-  $core.bool hasStackTrace() => $_has(7);
-  @$pb.TagNumber(8)
-  void clearStackTrace() => clearField(8);
+  void clearStackTrace() => clearField(7);
 }
 
 class SuiteInfoProto extends $pb.GeneratedMessage {
@@ -448,19 +422,19 @@ class RunnerStateChange extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RunnerStateChange',
       createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testEntryName')
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
     ..aOM<TestEntryState>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state',
         subBuilder: TestEntryState.create)
     ..hasRequiredFields = false;
 
   RunnerStateChange._() : super();
   factory RunnerStateChange({
-    $core.String? testEntryName,
+    $core.Iterable<$core.String>? entryLocators,
     TestEntryState? state,
   }) {
     final _result = create();
-    if (testEntryName != null) {
-      _result.testEntryName = testEntryName;
+    if (entryLocators != null) {
+      _result.entryLocators.addAll(entryLocators);
     }
     if (state != null) {
       _result.state = state;
@@ -493,16 +467,7 @@ class RunnerStateChange extends $pb.GeneratedMessage {
   static RunnerStateChange? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get testEntryName => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set testEntryName($core.String v) {
-    $_setString(0, v);
-  }
-
-  @$pb.TagNumber(1)
-  $core.bool hasTestEntryName() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearTestEntryName() => clearField(1);
+  $core.List<$core.String> get entryLocators => $_getList(0);
 
   @$pb.TagNumber(2)
   TestEntryState get state => $_getN(1);
@@ -593,20 +558,20 @@ class RunnerError extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RunnerError',
       createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testEntryName')
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stackTrace')
     ..hasRequiredFields = false;
 
   RunnerError._() : super();
   factory RunnerError({
-    $core.String? testEntryName,
+    $core.Iterable<$core.String>? entryLocators,
     $core.String? error,
     $core.String? stackTrace,
   }) {
     final _result = create();
-    if (testEntryName != null) {
-      _result.testEntryName = testEntryName;
+    if (entryLocators != null) {
+      _result.entryLocators.addAll(entryLocators);
     }
     if (error != null) {
       _result.error = error;
@@ -639,16 +604,7 @@ class RunnerError extends $pb.GeneratedMessage {
   static RunnerError? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get testEntryName => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set testEntryName($core.String v) {
-    $_setString(0, v);
-  }
-
-  @$pb.TagNumber(1)
-  $core.bool hasTestEntryName() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearTestEntryName() => clearField(1);
+  $core.List<$core.String> get entryLocators => $_getList(0);
 
   @$pb.TagNumber(2)
   $core.String get error => $_getSZ(1);
@@ -679,18 +635,18 @@ class RunnerMessage extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RunnerMessage',
       createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testEntryName')
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
     ..hasRequiredFields = false;
 
   RunnerMessage._() : super();
   factory RunnerMessage({
-    $core.String? testEntryName,
+    $core.Iterable<$core.String>? entryLocators,
     $core.String? message,
   }) {
     final _result = create();
-    if (testEntryName != null) {
-      _result.testEntryName = testEntryName;
+    if (entryLocators != null) {
+      _result.entryLocators.addAll(entryLocators);
     }
     if (message != null) {
       _result.message = message;
@@ -720,16 +676,7 @@ class RunnerMessage extends $pb.GeneratedMessage {
   static RunnerMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get testEntryName => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set testEntryName($core.String v) {
-    $_setString(0, v);
-  }
-
-  @$pb.TagNumber(1)
-  $core.bool hasTestEntryName() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearTestEntryName() => clearField(1);
+  $core.List<$core.String> get entryLocators => $_getList(0);
 
   @$pb.TagNumber(2)
   $core.String get message => $_getSZ(1);

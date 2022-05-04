@@ -32,19 +32,18 @@ const LogEntry$json = const {
   '1': 'LogEntry',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
-    const {'1': 'test_group_name', '3': 2, '4': 1, '5': 9, '10': 'testGroupName'},
-    const {'1': 'test_entry_name', '3': 3, '4': 1, '5': 9, '10': 'testEntryName'},
-    const {'1': 'type', '3': 6, '4': 1, '5': 14, '6': '.LogEntryType', '10': 'type'},
-    const {'1': 'title', '3': 5, '4': 1, '5': 9, '10': 'title'},
-    const {'1': 'message', '3': 4, '4': 1, '5': 9, '10': 'message'},
-    const {'1': 'error', '3': 7, '4': 1, '5': 9, '10': 'error'},
-    const {'1': 'stack_trace', '3': 8, '4': 1, '5': 9, '10': 'stackTrace'},
+    const {'1': 'entry_locators', '3': 2, '4': 3, '5': 9, '10': 'entryLocators'},
+    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.LogEntryType', '10': 'type'},
+    const {'1': 'title', '3': 4, '4': 1, '5': 9, '10': 'title'},
+    const {'1': 'message', '3': 5, '4': 1, '5': 9, '10': 'message'},
+    const {'1': 'error', '3': 6, '4': 1, '5': 9, '10': 'error'},
+    const {'1': 'stack_trace', '3': 7, '4': 1, '5': 9, '10': 'stackTrace'},
   ],
 };
 
 /// Descriptor for `LogEntry`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List logEntryDescriptor = $convert.base64Decode(
-    'CghMb2dFbnRyeRIOCgJpZBgBIAEoBVICaWQSJgoPdGVzdF9ncm91cF9uYW1lGAIgASgJUg10ZXN0R3JvdXBOYW1lEiYKD3Rlc3RfZW50cnlfbmFtZRgDIAEoCVINdGVzdEVudHJ5TmFtZRIhCgR0eXBlGAYgASgOMg0uTG9nRW50cnlUeXBlUgR0eXBlEhQKBXRpdGxlGAUgASgJUgV0aXRsZRIYCgdtZXNzYWdlGAQgASgJUgdtZXNzYWdlEhQKBWVycm9yGAcgASgJUgVlcnJvchIfCgtzdGFja190cmFjZRgIIAEoCVIKc3RhY2tUcmFjZQ==');
+    'CghMb2dFbnRyeRIOCgJpZBgBIAEoBVICaWQSJQoOZW50cnlfbG9jYXRvcnMYAiADKAlSDWVudHJ5TG9jYXRvcnMSIQoEdHlwZRgDIAEoDjINLkxvZ0VudHJ5VHlwZVIEdHlwZRIUCgV0aXRsZRgEIAEoCVIFdGl0bGUSGAoHbWVzc2FnZRgFIAEoCVIHbWVzc2FnZRIUCgVlcnJvchgGIAEoCVIFZXJyb3ISHwoLc3RhY2tfdHJhY2UYByABKAlSCnN0YWNrVHJhY2U=');
 @$core.Deprecated('Use suiteInfoProtoDescriptor instead')
 const SuiteInfoProto$json = const {
   '1': 'SuiteInfoProto',
@@ -89,14 +88,14 @@ final $typed_data.Uint8List testInfoProtoDescriptor = $convert.base64Decode(
 const RunnerStateChange$json = const {
   '1': 'RunnerStateChange',
   '2': const [
-    const {'1': 'test_entry_name', '3': 1, '4': 1, '5': 9, '10': 'testEntryName'},
+    const {'1': 'entry_locators', '3': 1, '4': 3, '5': 9, '10': 'entryLocators'},
     const {'1': 'state', '3': 2, '4': 1, '5': 11, '6': '.TestEntryState', '10': 'state'},
   ],
 };
 
 /// Descriptor for `RunnerStateChange`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List runnerStateChangeDescriptor = $convert.base64Decode(
-    'ChFSdW5uZXJTdGF0ZUNoYW5nZRImCg90ZXN0X2VudHJ5X25hbWUYASABKAlSDXRlc3RFbnRyeU5hbWUSJQoFc3RhdGUYAiABKAsyDy5UZXN0RW50cnlTdGF0ZVIFc3RhdGU=');
+    'ChFSdW5uZXJTdGF0ZUNoYW5nZRIlCg5lbnRyeV9sb2NhdG9ycxgBIAMoCVINZW50cnlMb2NhdG9ycxIlCgVzdGF0ZRgCIAEoCzIPLlRlc3RFbnRyeVN0YXRlUgVzdGF0ZQ==');
 @$core.Deprecated('Use testEntryStateDescriptor instead')
 const TestEntryState$json = const {
   '1': 'TestEntryState',
@@ -113,7 +112,7 @@ final $typed_data.Uint8List testEntryStateDescriptor =
 const RunnerError$json = const {
   '1': 'RunnerError',
   '2': const [
-    const {'1': 'test_entry_name', '3': 1, '4': 1, '5': 9, '10': 'testEntryName'},
+    const {'1': 'entry_locators', '3': 1, '4': 3, '5': 9, '10': 'entryLocators'},
     const {'1': 'error', '3': 2, '4': 1, '5': 9, '10': 'error'},
     const {'1': 'stack_trace', '3': 3, '4': 1, '5': 9, '10': 'stackTrace'},
   ],
@@ -121,19 +120,19 @@ const RunnerError$json = const {
 
 /// Descriptor for `RunnerError`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List runnerErrorDescriptor = $convert.base64Decode(
-    'CgtSdW5uZXJFcnJvchImCg90ZXN0X2VudHJ5X25hbWUYASABKAlSDXRlc3RFbnRyeU5hbWUSFAoFZXJyb3IYAiABKAlSBWVycm9yEh8KC3N0YWNrX3RyYWNlGAMgASgJUgpzdGFja1RyYWNl');
+    'CgtSdW5uZXJFcnJvchIlCg5lbnRyeV9sb2NhdG9ycxgBIAMoCVINZW50cnlMb2NhdG9ycxIUCgVlcnJvchgCIAEoCVIFZXJyb3ISHwoLc3RhY2tfdHJhY2UYAyABKAlSCnN0YWNrVHJhY2U=');
 @$core.Deprecated('Use runnerMessageDescriptor instead')
 const RunnerMessage$json = const {
   '1': 'RunnerMessage',
   '2': const [
-    const {'1': 'test_entry_name', '3': 1, '4': 1, '5': 9, '10': 'testEntryName'},
+    const {'1': 'entry_locators', '3': 1, '4': 3, '5': 9, '10': 'entryLocators'},
     const {'1': 'message', '3': 2, '4': 1, '5': 9, '10': 'message'},
   ],
 };
 
 /// Descriptor for `RunnerMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List runnerMessageDescriptor = $convert.base64Decode(
-    'Cg1SdW5uZXJNZXNzYWdlEiYKD3Rlc3RfZW50cnlfbmFtZRgBIAEoCVINdGVzdEVudHJ5TmFtZRIYCgdtZXNzYWdlGAIgASgJUgdtZXNzYWdl');
+    'Cg1SdW5uZXJNZXNzYWdlEiUKDmVudHJ5X2xvY2F0b3JzGAEgAygJUg1lbnRyeUxvY2F0b3JzEhgKB21lc3NhZ2UYAiABKAlSB21lc3NhZ2U=');
 @$core.Deprecated('Use snapshotDescriptor instead')
 const Snapshot$json = const {
   '1': 'Snapshot',
