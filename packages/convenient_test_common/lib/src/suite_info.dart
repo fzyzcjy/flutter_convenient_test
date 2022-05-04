@@ -43,6 +43,8 @@ abstract class GroupEntryInfo {
     required this.parentId,
     required this.name,
   });
+
+  String calcBriefName(SuiteInfo suiteInfo);
 }
 
 @immutable
@@ -60,6 +62,9 @@ class GroupInfo extends GroupEntryInfo {
         name: proto.name,
         entryIds: proto.entryIds,
       );
+
+  @override
+  String calcBriefName(SuiteInfo suiteInfo) => name;
 }
 
 @immutable
@@ -73,4 +78,15 @@ class TestInfo extends GroupEntryInfo {
         parentId: proto.parentId,
         name: proto.name,
       );
+
+  @override
+  String calcBriefName(SuiteInfo suiteInfo) {
+    final parentGroup = suiteInfo.entryMap[parentId];
+    if (parentGroup is! GroupInfo) return name;
+
+    final prefix = parentGroup.name;
+    if (name.startsWith(prefix)) return name.substring(prefix.length);
+
+    return name;
+  }
 }

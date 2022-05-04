@@ -4,7 +4,7 @@ import 'package:convenient_test_manager/components/home_page/header_panel.dart';
 import 'package:convenient_test_manager/components/home_page/secondary_panel.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
-import 'package:convenient_test_manager/stores/organization_store.dart';
+import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/worker_mode_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -44,7 +44,7 @@ class _Body extends StatelessWidget {
 
   Widget _buildBody() {
     final vmServiceWrapperService = GetIt.I.get<VmServiceWrapperService>();
-    final organizationStore = GetIt.I.get<OrganizationStore>();
+    final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
     final workerModeStore = GetIt.I.get<WorkerModeStore>();
 
     if (!vmServiceWrapperService.connected) {
@@ -56,7 +56,7 @@ class _Body extends StatelessWidget {
       );
     }
 
-    if (organizationStore.testGroupIds.isEmpty) {
+    if (suiteInfoStore.suiteInfo == null) {
       return _buildFullscreenHint(
         onTap: () => GetIt.I.get<MiscService>().reloadInfo(),
         tapHint: const Text('Tap here to reload information'),
