@@ -7,6 +7,7 @@ import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -81,7 +82,7 @@ class _GroupInfoWidget extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.only(left: 8, right: 8, top: 12, bottom: 12),
+          padding: const EdgeInsets.only(left: 8, right: 8, top: 12, bottom: 12) + EdgeInsets.only(left: depth * 12),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -168,7 +169,7 @@ class _TestInfoWidget extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4) + EdgeInsets.only(left: depth * 12),
                 child: Row(
                   children: [
                     StateIndicatorWidget(

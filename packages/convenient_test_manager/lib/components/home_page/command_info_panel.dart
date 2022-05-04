@@ -17,7 +17,7 @@ class HomePageCommandInfoPanel extends StatelessWidget {
           const SizedBox(height: 8),
           HomePageGroupEntryInfoWidget(
             groupEntryId: suiteInfoStore.suiteInfo!.rootGroupId,
-            depth: 0,
+            depth: -1,
             showHeader: false,
           ),
           const SizedBox(height: 8),
