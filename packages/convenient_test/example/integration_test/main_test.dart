@@ -23,6 +23,19 @@ void main() {
         expect(1, 0, reason: 'this expect should deliberately fail');
       });
 
+      tTestWidgets('deliberately flaky test', (t) async {
+        final shouldFailThisTime = !_deliberatelyFlakyTestHasRun;
+        _deliberatelyFlakyTestHasRun = true;
+
+        await t.get(HomePageMark.button).tap();
+
+        if (shouldFailThisTime) {
+          await t.get(find.textContaining('NotExistString')).should(findsOneWidget);
+        } else {
+          await t.get(find.textContaining('1 tap')).should(findsOneWidget);
+        }
+      });
+
       tTestWidgets('tap and assert text', (t) async {
         await t.get(find.textContaining('No tap')).should(findsOneWidget);
         await t.get(HomePageMark.button).tap();
@@ -74,6 +87,8 @@ void main() {
     });
   });
 }
+
+var _deliberatelyFlakyTestHasRun = false;
 
 class MyConvenientTestSlot extends ConvenientTestSlot {
   @override
