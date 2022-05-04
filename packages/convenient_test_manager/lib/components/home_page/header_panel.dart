@@ -24,13 +24,18 @@ class HomePageHeaderPanel extends StatelessWidget {
             },
             child: const Text('Run All'),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 16),
           TextButton(
             onPressed: () {
               organizationStore.enableAutoExpand = true;
               GetIt.I.get<VmServiceWrapperService>().hotRestart();
             },
-            child: const Text('Hot Restart'),
+            child: const Text('Reload Info'),
+          ),
+          const SizedBox(width: 16),
+          TextButton(
+            onPressed: GetIt.I.get<VmServiceWrapperService>().connect,
+            child: const Text('Reconnect VM'),
           ),
           Expanded(child: Container()),
           const Text(

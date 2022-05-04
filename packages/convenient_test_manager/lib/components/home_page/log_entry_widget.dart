@@ -62,11 +62,11 @@ class HomePageLogEntryWidget extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: running //
                           ? const RotateAnimation(
-                              duration: Duration(seconds: 1),
+                              duration: Duration(seconds: 2),
                               child: Icon(
                                 Icons.autorenew,
                                 size: 16,
-                                color: Colors.grey,
+                                color: Colors.indigo,
                               ),
                             )
                           : Text(
