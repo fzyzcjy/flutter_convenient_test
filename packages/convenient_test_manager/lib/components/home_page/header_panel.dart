@@ -11,6 +11,7 @@ class HomePageHeaderPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final organizationStore = GetIt.I.get<OrganizationStore>();
+    final miscService = GetIt.I.get<MiscService>();
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -20,24 +21,29 @@ class HomePageHeaderPanel extends StatelessWidget {
           TextButton(
             onPressed: () {
               organizationStore.enableAutoExpand = true;
-              GetIt.I.get<MiscService>().hotRestartAndRunTests(filterNameRegex: '.*');
+              miscService.hotRestartAndRunTests(filterNameRegex: '.*');
             },
             child: const Text('Run All Tests'),
           ),
           const SizedBox(width: 20),
           TextButton(
-            onPressed: () => GetIt.I.get<MiscService>().hotRestartAndRunInAppMode(),
+            onPressed: miscService.hotRestartAndRunInAppMode,
             child: const Text('Run In App Mode'),
           ),
           const SizedBox(width: 20),
           TextButton(
-            onPressed: () => GetIt.I.get<MiscService>().reloadInfo(),
+            onPressed: miscService.reloadInfo,
             child: const Text('Reload Info'),
           ),
           const SizedBox(width: 20),
           TextButton(
             onPressed: GetIt.I.get<VmServiceWrapperService>().connect,
             child: const Text('Reconnect VM'),
+          ),
+          const SizedBox(width: 20),
+          TextButton(
+            onPressed: miscService.pickFileAndReadReport,
+            child: const Text('Read From File'),
           ),
           Expanded(child: Container()),
           const Text(

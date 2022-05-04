@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/declarer.dart';
+import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:get_it/get_it.dart';
@@ -198,20 +199,22 @@ class _Reporter {
       print(text);
 
       // NOTE XXX add
-      GetIt.I.get<ConvenientTestManagerClient>().reportRunnerMessage(RunnerMessage(
+      GetIt.I.get<ManagerRpcService>().reportSingle(ReportItem(
+              runnerMessage: RunnerMessage(
             entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
             message: message.text,
-          ));
+          )));
     }));
   }
 
   /// A callback called when [liveTest]'s state becomes [state].
   void _onStateChange(LiveTest liveTest, State state) {
     // NOTE XXX add
-    GetIt.I.get<ConvenientTestManagerClient>().reportRunnerStateChange(RunnerStateChange(
+    GetIt.I.get<ManagerRpcService>().reportSingle(ReportItem(
+            runnerStateChange: RunnerStateChange(
           entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
           state: state.toProto(),
-        ));
+        )));
 
     if (state.status != Status.complete) {
       return;
@@ -221,11 +224,12 @@ class _Reporter {
   /// A callback called when [liveTest] throws [error].
   void _onError(LiveTest liveTest, Object error, StackTrace stackTrace) {
     // NOTE XXX add
-    GetIt.I.get<ConvenientTestManagerClient>().reportRunnerError(RunnerError(
+    GetIt.I.get<ManagerRpcService>().reportSingle(ReportItem(
+            runnerError: RunnerError(
           entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
           error: error.toString(),
           stackTrace: '$stackTrace',
-        ));
+        )));
     // print('hi _onError e.type=${error.runtimeType} error=$error');
     // print('hi _onError errors=${liveTest.errors}');
     convenientTestLog(

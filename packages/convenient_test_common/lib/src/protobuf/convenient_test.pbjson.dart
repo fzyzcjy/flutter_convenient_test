@@ -27,6 +27,44 @@ const LogEntryType$json = const {
 /// Descriptor for `LogEntryType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List logEntryTypeDescriptor = $convert.base64Decode(
     'CgxMb2dFbnRyeVR5cGUSCwoHSU5WQUxJRBAAEhMKD0dFTkVSQUxfTUVTU0FHRRABEg4KClRFU1RfU1RBUlQQAhINCglURVNUX0JPRFkQAxIMCghURVNUX0VORBAEEgoKBkFTU0VSVBAFEg8KC0FTU0VSVF9GQUlMEAYSCwoHU0VDVElPThAH');
+@$core.Deprecated('Use reportCollectionDescriptor instead')
+const ReportCollection$json = const {
+  '1': 'ReportCollection',
+  '2': const [
+    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.ReportItem', '10': 'items'},
+  ],
+};
+
+/// Descriptor for `ReportCollection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List reportCollectionDescriptor =
+    $convert.base64Decode('ChBSZXBvcnRDb2xsZWN0aW9uEiEKBWl0ZW1zGAEgAygLMgsuUmVwb3J0SXRlbVIFaXRlbXM=');
+@$core.Deprecated('Use reportItemDescriptor instead')
+const ReportItem$json = const {
+  '1': 'ReportItem',
+  '2': const [
+    const {'1': 'suite_info_proto', '3': 1, '4': 1, '5': 11, '6': '.SuiteInfoProto', '9': 0, '10': 'suiteInfoProto'},
+    const {'1': 'log_entry', '3': 2, '4': 1, '5': 11, '6': '.LogEntry', '9': 0, '10': 'logEntry'},
+    const {
+      '1': 'runner_state_change',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.RunnerStateChange',
+      '9': 0,
+      '10': 'runnerStateChange'
+    },
+    const {'1': 'runner_error', '3': 4, '4': 1, '5': 11, '6': '.RunnerError', '9': 0, '10': 'runnerError'},
+    const {'1': 'runner_message', '3': 5, '4': 1, '5': 11, '6': '.RunnerMessage', '9': 0, '10': 'runnerMessage'},
+    const {'1': 'snapshot', '3': 6, '4': 1, '5': 11, '6': '.Snapshot', '9': 0, '10': 'snapshot'},
+  ],
+  '8': const [
+    const {'1': 'sub_type'},
+  ],
+};
+
+/// Descriptor for `ReportItem`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List reportItemDescriptor = $convert.base64Decode(
+    'CgpSZXBvcnRJdGVtEjsKEHN1aXRlX2luZm9fcHJvdG8YASABKAsyDy5TdWl0ZUluZm9Qcm90b0gAUg5zdWl0ZUluZm9Qcm90bxIoCglsb2dfZW50cnkYAiABKAsyCS5Mb2dFbnRyeUgAUghsb2dFbnRyeRJEChNydW5uZXJfc3RhdGVfY2hhbmdlGAMgASgLMhIuUnVubmVyU3RhdGVDaGFuZ2VIAFIRcnVubmVyU3RhdGVDaGFuZ2USMQoMcnVubmVyX2Vycm9yGAQgASgLMgwuUnVubmVyRXJyb3JIAFILcnVubmVyRXJyb3ISNwoOcnVubmVyX21lc3NhZ2UYBSABKAsyDi5SdW5uZXJNZXNzYWdlSABSDXJ1bm5lck1lc3NhZ2USJwoIc25hcHNob3QYBiABKAsyCS5TbmFwc2hvdEgAUghzbmFwc2hvdEIKCghzdWJfdHlwZQ==');
 @$core.Deprecated('Use logEntryDescriptor instead')
 const LogEntry$json = const {
   '1': 'LogEntry',
@@ -196,13 +234,6 @@ const WorkerModeIntegrationTest$json = const {
 /// Descriptor for `WorkerModeIntegrationTest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List workerModeIntegrationTestDescriptor = $convert
     .base64Decode('ChlXb3JrZXJNb2RlSW50ZWdyYXRpb25UZXN0EioKEWZpbHRlcl9uYW1lX3JlZ2V4GAEgASgJUg9maWx0ZXJOYW1lUmVnZXg=');
-@$core.Deprecated('Use managerToWorkerActionDescriptor instead')
-const ManagerToWorkerAction$json = const {
-  '1': 'ManagerToWorkerAction',
-};
-
-/// Descriptor for `ManagerToWorkerAction`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List managerToWorkerActionDescriptor = $convert.base64Decode('ChVNYW5hZ2VyVG9Xb3JrZXJBY3Rpb24=');
 @$core.Deprecated('Use emptyDescriptor instead')
 const Empty$json = const {
   '1': 'Empty',

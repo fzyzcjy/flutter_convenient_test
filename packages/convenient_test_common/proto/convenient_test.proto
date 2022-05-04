@@ -2,14 +2,24 @@ syntax = "proto3";
 
 service ConvenientTestManager {
   rpc ResetManagerCache (Empty) returns (Empty);
-  rpc ReportLogEntry (LogEntry) returns (Empty);
-  rpc ReportSuiteInfo (SuiteInfoProto) returns (Empty);
-  rpc ReportRunnerStateChange (RunnerStateChange) returns (Empty);
-  rpc ReportRunnerError (RunnerError) returns (Empty);
-  rpc ReportRunnerMessage (RunnerMessage) returns (Empty);
-  rpc ReportSnapshot (Snapshot) returns (Empty);
+  rpc Report (ReportCollection) returns (Empty);
   rpc GetWorkerMode (Empty) returns (WorkerMode);
-  rpc ManagerToWorkerActionStream (Empty) returns (stream ManagerToWorkerAction);
+}
+
+message ReportCollection {
+  // use "repeated" + single-field, thus can concat multiple ReportCollection together
+  repeated ReportItem items = 1;
+}
+
+message ReportItem {
+  oneof sub_type {
+    SuiteInfoProto suite_info_proto = 1;
+    LogEntry log_entry = 2;
+    RunnerStateChange runner_state_change = 3;
+    RunnerError runner_error = 4;
+    RunnerMessage runner_message = 5;
+    Snapshot snapshot = 6;
+  }
 }
 
 message LogEntry {
@@ -93,9 +103,6 @@ message WorkerModeInteractiveApp {}
 
 message WorkerModeIntegrationTest {
   string filter_name_regex = 1;
-}
-
-message ManagerToWorkerAction {
 }
 
 // https://stackoverflow.com/questions/31768665/can-i-define-a-grpc-call-with-a-null-request-or-response
