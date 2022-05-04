@@ -51,23 +51,23 @@ class _TestInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final organizationStore = GetIt.I.get<OrganizationStore>();
     final logStore = GetIt.I.get<LogStore>();
+    final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
     return Observer(builder: (_) {
-      final testEntry = organizationStore.testEntryMap[testInfoId]!;
-      final logEntryIds = logStore.logEntryInTest[testInfoId] ?? <int>[];
-      final state = organizationStore.testEntryStateMap[testInfoId].toSimplifiedStateEnum();
+      final logEntryIds = logStore.logEntryInTest[info.id] ?? <int>[];
+      final state = organizationStore.testEntryStateMap[info.id].toSimplifiedStateEnum();
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
             onTap: () {
-              final targetExpand = !organizationStore.expandGroupEntryMap[testInfoId];
+              final targetExpand = !organizationStore.expandGroupEntryMap[info.id];
 
               organizationStore
                 ..enableAutoExpand = false
-                ..expandGroupEntryMap[testInfoId] = targetExpand
-                ..activeTestEntryId = testInfoId;
+                ..expandGroupEntryMap[info.id] = targetExpand
+                ..activeTestEntryId = info.id;
             },
             child: SizedBox(
               width: double.infinity,
@@ -80,14 +80,14 @@ class _TestInfoWidget extends StatelessWidget {
                       enableAnimation: true,
                     ),
                     Text(
-                      testEntry.briefName,
+                      info.calcBriefName(suiteInfoStore.suiteInfo!),
                       style: const TextStyle(),
                     ),
                     Expanded(child: Container()),
                     IconButton(
                       onPressed: () {
                         organizationStore.enableAutoExpand = true;
-                        GetIt.I.get<MiscService>().hotRestartAndRunTests(filterNameRegex: '^${testEntry.name}\$');
+                        GetIt.I.get<MiscService>().hotRestartAndRunTests(filterNameRegex: '^${info.name}\$');
                       },
                       icon: const Icon(
                         Icons.play_arrow,
@@ -100,7 +100,7 @@ class _TestInfoWidget extends StatelessWidget {
               ),
             ),
           ),
-          if (organizationStore.expandGroupEntryMap[testInfoId])
+          if (organizationStore.expandGroupEntryMap[info.id])
             Stack(
               children: [
                 Column(
@@ -116,7 +116,7 @@ class _TestInfoWidget extends StatelessWidget {
                     ...logEntryIds.mapIndexed(
                       (i, logEntryId) => HomePageLogEntryWidget(
                         order: i,
-                        testEntryId: testInfoId,
+                        testEntryId: info.id,
                         logEntryId: logEntryId,
                         running: state == SimplifiedStateEnum.running && i == logEntryIds.length - 1,
                       ),
