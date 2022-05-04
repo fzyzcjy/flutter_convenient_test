@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/declarer.dart';
 import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:get_it/get_it.dart';
@@ -20,7 +21,8 @@ import 'package:test_api/src/backend/suite_platform.dart';
 import 'package:test_api/src/backend/test.dart';
 
 Declarer collectIntoDeclarer(void Function() body) {
-  return Declarer()..declare(body);
+  // NOTE use MyDeclarer instead of Declarer
+  return MyDeclarer()..declare(body);
 }
 
 /// NOTE XXX ref: [flutter_test :: test_compat.dart :: get _declarer ]
