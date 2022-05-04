@@ -13,11 +13,13 @@ import 'package:get_it/get_it.dart';
 
 class HomePageGroupEntryInfoWidget extends StatelessWidget {
   final int groupEntryId;
+  final int depth;
   final bool showHeader;
 
   const HomePageGroupEntryInfoWidget({
     Key? key,
     required this.groupEntryId,
+    required this.depth,
     this.showHeader = true,
   }) : super(key: key);
 
@@ -29,8 +31,8 @@ class HomePageGroupEntryInfoWidget extends StatelessWidget {
       final info = suiteInfoStore.suiteInfo?.entryMap[groupEntryId];
       if (info == null) return const SizedBox.shrink();
 
-      if (info is GroupInfo) return _GroupInfoWidget(info: info, showHeader: showHeader);
-      if (info is TestInfo) return _TestInfoWidget(info: info);
+      if (info is GroupInfo) return _GroupInfoWidget(info: info, depth: depth, showHeader: showHeader);
+      if (info is TestInfo) return _TestInfoWidget(info: info, depth: depth);
       throw Exception('unknown info=$info');
     });
   }
@@ -38,11 +40,13 @@ class HomePageGroupEntryInfoWidget extends StatelessWidget {
 
 class _GroupInfoWidget extends StatelessWidget {
   final GroupInfo info;
+  final int depth;
   final bool showHeader;
 
   const _GroupInfoWidget({
     Key? key,
     required this.info,
+    required this.depth,
     this.showHeader = true,
   }) : super(key: key);
 
@@ -55,7 +59,10 @@ class _GroupInfoWidget extends StatelessWidget {
           if (showHeader) _buildHeader(),
           if (!showHeader || expanding)
             for (final childGroupEntryId in info.entryIds)
-              HomePageGroupEntryInfoWidget(groupEntryId: childGroupEntryId),
+              HomePageGroupEntryInfoWidget(
+                groupEntryId: childGroupEntryId,
+                depth: depth + 1,
+              ),
         ],
       );
     });
@@ -128,8 +135,13 @@ class _GroupInfoWidget extends StatelessWidget {
 
 class _TestInfoWidget extends StatelessWidget {
   final TestInfo info;
+  final int depth;
 
-  const _TestInfoWidget({Key? key, required this.info}) : super(key: key);
+  const _TestInfoWidget({
+    Key? key,
+    required this.info,
+    required this.depth,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
