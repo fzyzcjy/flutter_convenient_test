@@ -13,8 +13,13 @@ import 'package:get_it/get_it.dart';
 
 class HomePageGroupEntryInfoWidget extends StatelessWidget {
   final int groupEntryId;
+  final bool showHeader;
 
-  const HomePageGroupEntryInfoWidget({Key? key, required this.groupEntryId}) : super(key: key);
+  const HomePageGroupEntryInfoWidget({
+    Key? key,
+    required this.groupEntryId,
+    this.showHeader = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class HomePageGroupEntryInfoWidget extends StatelessWidget {
       final info = suiteInfoStore.suiteInfo?.entryMap[groupEntryId];
       if (info == null) return const SizedBox.shrink();
 
-      if (info is GroupInfo) return _GroupInfoWidget(info: info);
+      if (info is GroupInfo) return _GroupInfoWidget(info: info, showHeader: showHeader);
       if (info is TestInfo) return _TestInfoWidget(info: info);
       throw Exception('unknown info=$info');
     });
@@ -33,8 +38,13 @@ class HomePageGroupEntryInfoWidget extends StatelessWidget {
 
 class _GroupInfoWidget extends StatelessWidget {
   final GroupInfo info;
+  final bool showHeader;
 
-  const _GroupInfoWidget({Key? key, required this.info}) : super(key: key);
+  const _GroupInfoWidget({
+    Key? key,
+    required this.info,
+    this.showHeader = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +52,7 @@ class _GroupInfoWidget extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(),
+          if (showHeader) _buildHeader(),
           if (expanding)
             for (final childGroupEntryId in info.entryIds)
               HomePageGroupEntryInfoWidget(groupEntryId: childGroupEntryId),
