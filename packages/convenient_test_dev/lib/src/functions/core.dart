@@ -4,6 +4,7 @@ import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
+import 'package:convenient_test_dev/src/support/rpc.dart';
 import 'package:convenient_test_dev/src/support/setup.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
@@ -22,7 +23,28 @@ class ConvenientTest {
 }
 
 /// Please make this the only method in your "main" method.
-void convenientTestMain(ConvenientTestSlot slot, VoidCallback body) {
+Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback body) async {
+  GetIt.I.registerSingleton<ConvenientTestSlot>(slot);
+  // MUST do it this early, because we really need the rpc client immediately
+  GetIt.I.registerSingleton<ConvenientTestManagerClient>(createConvenientTestManagerClientStub(
+      host: GetIt.I.get<ConvenientTestSlot>().managerHost, port: kConvenientTestManagerPort));
+
+  final workerMode = await GetIt.I.get<ConvenientTestManagerClient>().getWorkerMode(Empty());
+  switch (workerMode.whichSubType()) {
+    case WorkerMode_SubType.interactiveApp:
+      return _runModeInteractiveApp(body);
+    case WorkerMode_SubType.integrationTest:
+      return _runModeIntegrationTest(body);
+    case WorkerMode_SubType.notSet:
+      throw Exception('Unknown WorkerMode: $workerMode');
+  }
+}
+
+Future<void> _runModeInteractiveApp(VoidCallback body) async {
+  body();
+}
+
+Future<void> _runModeIntegrationTest(VoidCallback body) async {
   runZonedGuarded(() {
     ConvenientTestWrapperWidget.convenientTestActive = true;
 
@@ -37,7 +59,7 @@ void convenientTestMain(ConvenientTestSlot slot, VoidCallback body) {
       }
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-      setupConvenientTest(slot);
+      setup();
 
       setUpLogTestStartAndEnd();
       body();
