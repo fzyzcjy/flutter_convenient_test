@@ -130,8 +130,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SelectableText(logEntry.error),
-                  SelectableText(logEntry.stackTrace),
+                  SelectableText('${logEntry.error}\n${logEntry.stackTrace}'),
                 ],
               ),
             )
