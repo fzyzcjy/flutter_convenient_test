@@ -25,6 +25,13 @@ void main() {
         await t.get(find.textContaining('2 taps')).should(findsOneWidget);
       });
 
+      tTestWidgets('locate an element deep in the tree', (t) async {
+        await t.get([TODO, TODO]).tap();
+
+        // or do it like this
+        await t.get(find.get([TODO, TODO]).first).tap();
+      });
+
       tTestWidgets('navigation', (t) async {
         await t.visit('/second');
         await t.get(find.textContaining('I am home page')).should(findsNothing);
