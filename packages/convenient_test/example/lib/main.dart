@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Example',
         navigatorKey: MyApp.navigatorKey,
+        initialRoute: '/home',
         routes: {
           '/home': (_) => const _HomePage(),
           '/second': (_) => const _SecondPage(),
@@ -64,7 +65,7 @@ class _SecondPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('SecondPage')),
       body: const Center(
-        child: Text('I am Second Page.'),
+        child: Text('I am the second page'),
       ),
     );
   }
