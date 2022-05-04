@@ -47,6 +47,18 @@ void main() {
       tTestWidgets('custom commands', (t) async {
         await t.myCustomCommand();
       });
+
+      tTestWidgets('sections', (t) async {
+        t.section('sample section one');
+
+        // do something
+        await t.get(find.textContaining('I am home page')).should(findsOneWidget);
+
+        t.section('sample section two');
+
+        // do something
+        await t.get(find.textContaining('I am home page')).should(findsOneWidget);
+      });
     });
   });
 }
