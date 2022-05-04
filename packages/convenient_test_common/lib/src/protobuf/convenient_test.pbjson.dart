@@ -9,9 +9,9 @@ import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use logEntryTypeDescriptor instead')
-const LogEntryType$json = const {
-  '1': 'LogEntryType',
+@$core.Deprecated('Use logSubEntryTypeDescriptor instead')
+const LogSubEntryType$json = const {
+  '1': 'LogSubEntryType',
   '2': const [
     const {'1': 'INVALID', '2': 0},
     const {'1': 'GENERAL_MESSAGE', '2': 1},
@@ -24,9 +24,9 @@ const LogEntryType$json = const {
   ],
 };
 
-/// Descriptor for `LogEntryType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List logEntryTypeDescriptor = $convert.base64Decode(
-    'CgxMb2dFbnRyeVR5cGUSCwoHSU5WQUxJRBAAEhMKD0dFTkVSQUxfTUVTU0FHRRABEg4KClRFU1RfU1RBUlQQAhINCglURVNUX0JPRFkQAxIMCghURVNUX0VORBAEEgoKBkFTU0VSVBAFEg8KC0FTU0VSVF9GQUlMEAYSCwoHU0VDVElPThAH');
+/// Descriptor for `LogSubEntryType`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List logSubEntryTypeDescriptor = $convert.base64Decode(
+    'Cg9Mb2dTdWJFbnRyeVR5cGUSCwoHSU5WQUxJRBAAEhMKD0dFTkVSQUxfTUVTU0FHRRABEg4KClRFU1RfU1RBUlQQAhINCglURVNUX0JPRFkQAxIMCghURVNUX0VORBAEEgoKBkFTU0VSVBAFEg8KC0FTU0VSVF9GQUlMEAYSCwoHU0VDVElPThAH');
 @$core.Deprecated('Use reportCollectionDescriptor instead')
 const ReportCollection$json = const {
   '1': 'ReportCollection',
@@ -71,9 +71,20 @@ const LogEntry$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
     const {'1': 'entry_locators', '3': 2, '4': 3, '5': 9, '10': 'entryLocators'},
-    const {'1': 'start_time', '3': 8, '4': 1, '5': 3, '10': 'startTime'},
-    const {'1': 'end_time', '3': 9, '4': 1, '5': 3, '10': 'endTime'},
-    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.LogEntryType', '10': 'type'},
+    const {'1': 'sub_entries', '3': 3, '4': 3, '5': 11, '6': '.LogSubEntry', '10': 'subEntries'},
+  ],
+};
+
+/// Descriptor for `LogEntry`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List logEntryDescriptor = $convert.base64Decode(
+    'CghMb2dFbnRyeRIOCgJpZBgBIAEoBVICaWQSJQoOZW50cnlfbG9jYXRvcnMYAiADKAlSDWVudHJ5TG9jYXRvcnMSLQoLc3ViX2VudHJpZXMYAyADKAsyDC5Mb2dTdWJFbnRyeVIKc3ViRW50cmllcw==');
+@$core.Deprecated('Use logSubEntryDescriptor instead')
+const LogSubEntry$json = const {
+  '1': 'LogSubEntry',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
+    const {'1': 'time', '3': 2, '4': 1, '5': 3, '10': 'time'},
+    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.LogSubEntryType', '10': 'type'},
     const {'1': 'title', '3': 4, '4': 1, '5': 9, '10': 'title'},
     const {'1': 'message', '3': 5, '4': 1, '5': 9, '10': 'message'},
     const {'1': 'error', '3': 6, '4': 1, '5': 9, '10': 'error'},
@@ -81,9 +92,9 @@ const LogEntry$json = const {
   ],
 };
 
-/// Descriptor for `LogEntry`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List logEntryDescriptor = $convert.base64Decode(
-    'CghMb2dFbnRyeRIOCgJpZBgBIAEoBVICaWQSJQoOZW50cnlfbG9jYXRvcnMYAiADKAlSDWVudHJ5TG9jYXRvcnMSHQoKc3RhcnRfdGltZRgIIAEoA1IJc3RhcnRUaW1lEhkKCGVuZF90aW1lGAkgASgDUgdlbmRUaW1lEiEKBHR5cGUYAyABKA4yDS5Mb2dFbnRyeVR5cGVSBHR5cGUSFAoFdGl0bGUYBCABKAlSBXRpdGxlEhgKB21lc3NhZ2UYBSABKAlSB21lc3NhZ2USFAoFZXJyb3IYBiABKAlSBWVycm9yEh8KC3N0YWNrX3RyYWNlGAcgASgJUgpzdGFja1RyYWNl');
+/// Descriptor for `LogSubEntry`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List logSubEntryDescriptor = $convert.base64Decode(
+    'CgtMb2dTdWJFbnRyeRIOCgJpZBgBIAEoBVICaWQSEgoEdGltZRgCIAEoA1IEdGltZRIkCgR0eXBlGAMgASgOMhAuTG9nU3ViRW50cnlUeXBlUgR0eXBlEhQKBXRpdGxlGAQgASgJUgV0aXRsZRIYCgdtZXNzYWdlGAUgASgJUgdtZXNzYWdlEhQKBWVycm9yGAYgASgJUgVlcnJvchIfCgtzdGFja190cmFjZRgHIAEoCVIKc3RhY2tUcmFjZQ==');
 @$core.Deprecated('Use suiteInfoProtoDescriptor instead')
 const SuiteInfoProto$json = const {
   '1': 'SuiteInfoProto',
