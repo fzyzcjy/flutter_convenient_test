@@ -42,7 +42,7 @@ class HomePageHeaderPanel extends StatelessWidget {
           ),
           const SizedBox(width: 20),
           TextButton(
-            onPressed: miscService.readReportFromFile,
+            onPressed: miscService.pickFileAndReadReport,
             child: const Text('Read From File'),
           ),
           Expanded(child: Container()),
