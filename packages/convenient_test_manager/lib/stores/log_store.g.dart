@@ -12,11 +12,14 @@ mixin _$LogStore on _LogStore, Store {
   Computed<String?>? _$effectiveActiveSnapshotNameComputed;
 
   @override
-  String? get effectiveActiveSnapshotName => (_$effectiveActiveSnapshotNameComputed ??=
-          Computed<String?>(() => super.effectiveActiveSnapshotName, name: '_LogStore.effectiveActiveSnapshotName'))
-      .value;
+  String? get effectiveActiveSnapshotName =>
+      (_$effectiveActiveSnapshotNameComputed ??= Computed<String?>(
+              () => super.effectiveActiveSnapshotName,
+              name: '_LogStore.effectiveActiveSnapshotName'))
+          .value;
 
-  late final _$activeLogEntryIdAtom = Atom(name: '_LogStore.activeLogEntryId', context: context);
+  late final _$activeLogEntryIdAtom =
+      Atom(name: '_LogStore.activeLogEntryId', context: context);
 
   @override
   int? get activeLogEntryId {
@@ -31,7 +34,8 @@ mixin _$LogStore on _LogStore, Store {
     });
   }
 
-  late final _$activeSnapshotNameAtom = Atom(name: '_LogStore.activeSnapshotName', context: context);
+  late final _$activeSnapshotNameAtom =
+      Atom(name: '_LogStore.activeSnapshotName', context: context);
 
   @override
   String? get activeSnapshotName {

@@ -5,20 +5,16 @@ import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
+import 'package:convenient_test_manager/stores/worker_mode_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:grpc/grpc.dart';
 import 'package:mobx/mobx.dart';
 
-const _kRegexMatchNothing = r'match-nothing^$';
-final _kFallbackWorkerMode =
-    WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: _kRegexMatchNothing));
-
 class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   static const _kTag = 'ConvenientTestManagerService';
 
   final managerToWorkerActionStreamController = StreamController<ManagerToWorkerAction>.broadcast();
-  WorkerMode? activeWorkerMode;
 
   void serve() {
     final server = grpc.Server(
@@ -134,13 +130,8 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
   @override
   Future<WorkerMode> getWorkerMode(grpc.ServiceCall call, Empty request) async {
-    Log.d(_kTag, 'getWorkerMode active=$activeWorkerMode');
-
-    final ans = activeWorkerMode ?? _kFallbackWorkerMode;
-
-    activeWorkerMode = null;
-
-    return ans;
+    Log.d(_kTag, 'getWorkerMode active=${_workerModeStore.activeWorkerMode}');
+    return _workerModeStore.activeWorkerMode;
   }
 
   static void _responseErrorHandler(Object? error, Object? stackTrace) {
@@ -150,6 +141,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   final _logStore = GetIt.I.get<LogStore>();
   final _organizationStore = GetIt.I.get<OrganizationStore>();
   final _rawLogStore = GetIt.I.get<RawLogStore>();
+  final _workerModeStore = GetIt.I.get<WorkerModeStore>();
 }
 
 extension<T> on Map<int, T> {
