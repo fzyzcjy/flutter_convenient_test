@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
+import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -82,8 +83,19 @@ class _RawLogPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO
-    return Text('TODO');
+    final logStore = GetIt.I.get<LogStore>();
+    final rawLogStore = GetIt.I.get<RawLogStore>();
+
+    return Observer(builder: (_) {
+      final activeTestEntryId = TODO;
+   
+      return SingleChildScrollView(
+        child: Text(
+          rawLogStore.rawLogInTest[activeTestEntryId],
+          style: const TextStyle(fontSize: 11.5),
+        ),
+      );
+    });
   }
 }
 
