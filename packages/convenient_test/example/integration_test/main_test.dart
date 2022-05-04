@@ -71,9 +71,7 @@ void main() {
 
 class MyConvenientTestSlot extends ConvenientTestSlot {
   @override
-  Future<void> startApp(ConvenientTest t) async {
-    app.main();
-  }
+  Future<void> appMain(AppMainExecuteMode mode) async => app.main();
 
   @override
   BuildContext? getNavContext(ConvenientTest t) => MyApp.navigatorKey.currentContext;

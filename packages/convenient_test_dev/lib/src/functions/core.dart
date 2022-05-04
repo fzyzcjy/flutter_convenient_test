@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
+import 'package:convenient_test_dev/src/support/rpc.dart';
 import 'package:convenient_test_dev/src/support/setup.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
@@ -22,7 +24,28 @@ class ConvenientTest {
 }
 
 /// Please make this the only method in your "main" method.
-void convenientTestMain(ConvenientTestSlot slot, VoidCallback body) {
+Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback testBody) async {
+  GetIt.I.registerSingleton<ConvenientTestSlot>(slot);
+  // MUST do it this early, because we really need the rpc client immediately
+  GetIt.I.registerSingleton<ConvenientTestManagerClient>(createConvenientTestManagerClientStub(
+      host: GetIt.I.get<ConvenientTestSlot>().managerHost, port: kConvenientTestManagerPort));
+
+  final workerMode = await GetIt.I.get<ConvenientTestManagerClient>().getWorkerMode(Empty());
+  switch (workerMode.whichSubType()) {
+    case WorkerMode_SubType.interactiveApp:
+      return _runModeInteractiveApp();
+    case WorkerMode_SubType.integrationTest:
+      return _runModeIntegrationTest(testBody, workerMode.integrationTest);
+    case WorkerMode_SubType.notSet:
+      throw Exception('Unknown WorkerMode: $workerMode');
+  }
+}
+
+Future<void> _runModeInteractiveApp() async {
+  await GetIt.I.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.interactiveApp);
+}
+
+Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegrationTest workerModeIntegrationTest) async {
   runZonedGuarded(() {
     ConvenientTestWrapperWidget.convenientTestActive = true;
 
@@ -37,13 +60,13 @@ void convenientTestMain(ConvenientTestSlot slot, VoidCallback body) {
       }
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-      setupConvenientTest(slot);
+      setup();
 
       setUpLogTestStartAndEnd();
-      body();
+      testBody();
     });
 
-    ConvenientTestExecutor.execute(declarer);
+    ConvenientTestExecutor.execute(declarer, filterNameRegex: RegExp(workerModeIntegrationTest.filterNameRegex));
   }, (e, s) {
     Log.w('ConvenientTestMain',
         'ConvenientTest captured error (via runZonedGuarded). type(e)=${e.runtimeType} exception=$e stackTrace=$s');
@@ -66,7 +89,10 @@ void tTestWidgets(
 
       final t = ConvenientTest(tester);
 
-      await GetIt.I.get<ConvenientTestSlot>().startApp(t);
+      final log = t.log('START APP', '');
+      await GetIt.I.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
+      await t.pumpAndSettle();
+      await log.snapshot(name: 'after');
 
       await callback(t);
 

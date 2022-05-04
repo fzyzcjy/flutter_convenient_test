@@ -8,7 +8,7 @@ service ConvenientTestManager {
   rpc ReportRunnerError (RunnerError) returns (Empty);
   rpc ReportRunnerMessage (RunnerMessage) returns (Empty);
   rpc ReportSnapshot (Snapshot) returns (Empty);
-  rpc GetTestFilter (Empty) returns (TestFilter);
+  rpc GetWorkerMode (Empty) returns (WorkerMode);
   rpc ManagerToWorkerActionStream (Empty) returns (stream ManagerToWorkerAction);
 }
 
@@ -70,7 +70,16 @@ message Snapshot {
   bytes image = 3;
 }
 
-message TestFilter {
+message WorkerMode {
+  oneof sub_type {
+    WorkerModeInteractiveApp interactive_app = 1;
+    WorkerModeIntegrationTest integration_test = 2;
+  }
+}
+
+message WorkerModeInteractiveApp {}
+
+message WorkerModeIntegrationTest {
   string filter_name_regex = 1;
 }
 

@@ -10,22 +10,14 @@ import 'package:test_api/src/backend/group_entry.dart';
 import 'package:test_api/src/backend/test.dart';
 
 class ConvenientTestExecutor {
-  static const _kTag = 'ConvenientTestExecutor';
+  // static const _kTag = 'ConvenientTestExecutor';
 
-  static void execute(Declarer declarer) {
-    final filterNameRegexFuture = _fetchFilterNameRegex();
-
+  static void execute(Declarer declarer, {required RegExp filterNameRegex}) {
     runTestsInDeclarer(
       declarer,
       onGroupBuilt: _reportTestInfoPack,
-      shouldSkip: (entry) async => !(await filterNameRegexFuture).hasMatch(entry.name),
+      shouldSkip: (entry) async => !filterNameRegex.hasMatch(entry.name),
     );
-  }
-
-  static Future<RegExp> _fetchFilterNameRegex() async {
-    final response = await GetIt.I.get<ConvenientTestManagerClient>().getTestFilter(Empty());
-    Log.d(_kTag, 'filterNameRegex=${response.filterNameRegex}');
-    return RegExp(response.filterNameRegex);
   }
 
   static void _reportTestInfoPack(Group group) {

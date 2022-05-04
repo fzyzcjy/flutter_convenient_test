@@ -22,14 +22,19 @@ class HomePageHeaderPanel extends StatelessWidget {
               organizationStore.enableAutoExpand = true;
               GetIt.I.get<MiscService>().hotRestartAndRunTests(filterNameRegex: '.*');
             },
-            child: const Text('Run All'),
+            child: const Text('Run All Tests'),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 20),
+          TextButton(
+            onPressed: () => GetIt.I.get<MiscService>().hotRestartAndRunInAppMode(),
+            child: const Text('Run In App Mode'),
+          ),
+          const SizedBox(width: 20),
           TextButton(
             onPressed: () => GetIt.I.get<MiscService>().reloadInfo(),
             child: const Text('Reload Info'),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 20),
           TextButton(
             onPressed: GetIt.I.get<VmServiceWrapperService>().connect,
             child: const Text('Reconnect VM'),
