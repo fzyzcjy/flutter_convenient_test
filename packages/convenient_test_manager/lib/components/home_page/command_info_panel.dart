@@ -26,7 +26,7 @@ class HomePageCommandInfoPanel extends StatelessWidget {
                 Text('Empty'),
                 SizedBox(height: 12),
                 Text(
-                  'Try to tap "Hot Restart" above to reload data',
+                  'Try to tap "Reload Info" above to reload data',
                   style: TextStyle(fontSize: 12),
                 ),
               ],
