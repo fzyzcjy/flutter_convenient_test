@@ -18,10 +18,8 @@ class ConvenientTestManagerClient extends $grpc.Client {
       ($0.Empty value) => value.writeToBuffer(), ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
   static final _$reportLogEntry = $grpc.ClientMethod<$0.LogEntry, $0.Empty>('/ConvenientTestManager/ReportLogEntry',
       ($0.LogEntry value) => value.writeToBuffer(), ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
-  static final _$reportTestInfoPack = $grpc.ClientMethod<$0.TestInfoPack, $0.Empty>(
-      '/ConvenientTestManager/ReportTestInfoPack',
-      ($0.TestInfoPack value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$reportSuiteInfo = $grpc.ClientMethod<$0.SuiteInfo, $0.Empty>('/ConvenientTestManager/ReportSuiteInfo',
+      ($0.SuiteInfo value) => value.writeToBuffer(), ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
   static final _$reportRunnerStateChange = $grpc.ClientMethod<$0.RunnerStateChange, $0.Empty>(
       '/ConvenientTestManager/ReportRunnerStateChange',
       ($0.RunnerStateChange value) => value.writeToBuffer(),
@@ -55,8 +53,8 @@ class ConvenientTestManagerClient extends $grpc.Client {
     return $createUnaryCall(_$reportLogEntry, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> reportTestInfoPack($0.TestInfoPack request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$reportTestInfoPack, request, options: options);
+  $grpc.ResponseFuture<$0.Empty> reportSuiteInfo($0.SuiteInfo request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$reportSuiteInfo, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.Empty> reportRunnerStateChange($0.RunnerStateChange request, {$grpc.CallOptions? options}) {
@@ -93,13 +91,8 @@ abstract class ConvenientTestManagerServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) => $0.Empty.fromBuffer(value), ($0.Empty value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.LogEntry, $0.Empty>('ReportLogEntry', reportLogEntry_Pre, false, false,
         ($core.List<$core.int> value) => $0.LogEntry.fromBuffer(value), ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.TestInfoPack, $0.Empty>(
-        'ReportTestInfoPack',
-        reportTestInfoPack_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $0.TestInfoPack.fromBuffer(value),
-        ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.SuiteInfo, $0.Empty>('ReportSuiteInfo', reportSuiteInfo_Pre, false, false,
+        ($core.List<$core.int> value) => $0.SuiteInfo.fromBuffer(value), ($0.Empty value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.RunnerStateChange, $0.Empty>(
         'ReportRunnerStateChange',
         reportRunnerStateChange_Pre,
@@ -137,8 +130,8 @@ abstract class ConvenientTestManagerServiceBase extends $grpc.Service {
     return reportLogEntry(call, await request);
   }
 
-  $async.Future<$0.Empty> reportTestInfoPack_Pre($grpc.ServiceCall call, $async.Future<$0.TestInfoPack> request) async {
-    return reportTestInfoPack(call, await request);
+  $async.Future<$0.Empty> reportSuiteInfo_Pre($grpc.ServiceCall call, $async.Future<$0.SuiteInfo> request) async {
+    return reportSuiteInfo(call, await request);
   }
 
   $async.Future<$0.Empty> reportRunnerStateChange_Pre(
@@ -170,7 +163,7 @@ abstract class ConvenientTestManagerServiceBase extends $grpc.Service {
 
   $async.Future<$0.Empty> resetManagerCache($grpc.ServiceCall call, $0.Empty request);
   $async.Future<$0.Empty> reportLogEntry($grpc.ServiceCall call, $0.LogEntry request);
-  $async.Future<$0.Empty> reportTestInfoPack($grpc.ServiceCall call, $0.TestInfoPack request);
+  $async.Future<$0.Empty> reportSuiteInfo($grpc.ServiceCall call, $0.SuiteInfo request);
   $async.Future<$0.Empty> reportRunnerStateChange($grpc.ServiceCall call, $0.RunnerStateChange request);
   $async.Future<$0.Empty> reportRunnerError($grpc.ServiceCall call, $0.RunnerError request);
   $async.Future<$0.Empty> reportRunnerMessage($grpc.ServiceCall call, $0.RunnerMessage request);

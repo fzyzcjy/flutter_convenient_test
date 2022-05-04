@@ -186,118 +186,260 @@ class LogEntry extends $pb.GeneratedMessage {
   void clearStackTrace() => clearField(8);
 }
 
-class TestInfoPack extends $pb.GeneratedMessage {
+class SuiteInfo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TestInfoPack',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SuiteInfo',
       createEmptyInstance: create)
-    ..pc<TestEntryInfo>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entries', $pb.PbFieldType.PM,
-        subBuilder: TestEntryInfo.create)
+    ..aOM<GroupInfo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'group',
+        subBuilder: GroupInfo.create)
     ..hasRequiredFields = false;
 
-  TestInfoPack._() : super();
-  factory TestInfoPack({
-    $core.Iterable<TestEntryInfo>? entries,
+  SuiteInfo._() : super();
+  factory SuiteInfo({
+    GroupInfo? group,
   }) {
     final _result = create();
+    if (group != null) {
+      _result.group = group;
+    }
+    return _result;
+  }
+  factory SuiteInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory SuiteInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  SuiteInfo clone() => SuiteInfo()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  SuiteInfo copyWith(void Function(SuiteInfo) updates) =>
+      super.copyWith((message) => updates(message as SuiteInfo)) as SuiteInfo; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SuiteInfo create() => SuiteInfo._();
+  SuiteInfo createEmptyInstance() => create();
+  static $pb.PbList<SuiteInfo> createRepeated() => $pb.PbList<SuiteInfo>();
+  @$core.pragma('dart2js:noInline')
+  static SuiteInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SuiteInfo>(create);
+  static SuiteInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  GroupInfo get group => $_getN(0);
+  @$pb.TagNumber(1)
+  set group(GroupInfo v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasGroup() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearGroup() => clearField(1);
+  @$pb.TagNumber(1)
+  GroupInfo ensureGroup() => $_ensure(0);
+}
+
+enum GroupEntryInfo_SubType { group, test, notSet }
+
+class GroupEntryInfo extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, GroupEntryInfo_SubType> _GroupEntryInfo_SubTypeByTag = {
+    1: GroupEntryInfo_SubType.group,
+    2: GroupEntryInfo_SubType.test,
+    0: GroupEntryInfo_SubType.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupEntryInfo',
+      createEmptyInstance: create)
+    ..oo(0, [1, 2])
+    ..aOM<GroupInfo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'group',
+        subBuilder: GroupInfo.create)
+    ..aOM<TestInfo>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'test',
+        subBuilder: TestInfo.create)
+    ..hasRequiredFields = false;
+
+  GroupEntryInfo._() : super();
+  factory GroupEntryInfo({
+    GroupInfo? group,
+    TestInfo? test,
+  }) {
+    final _result = create();
+    if (group != null) {
+      _result.group = group;
+    }
+    if (test != null) {
+      _result.test = test;
+    }
+    return _result;
+  }
+  factory GroupEntryInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory GroupEntryInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  GroupEntryInfo clone() => GroupEntryInfo()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  GroupEntryInfo copyWith(void Function(GroupEntryInfo) updates) =>
+      super.copyWith((message) => updates(message as GroupEntryInfo))
+          as GroupEntryInfo; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GroupEntryInfo create() => GroupEntryInfo._();
+  GroupEntryInfo createEmptyInstance() => create();
+  static $pb.PbList<GroupEntryInfo> createRepeated() => $pb.PbList<GroupEntryInfo>();
+  @$core.pragma('dart2js:noInline')
+  static GroupEntryInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupEntryInfo>(create);
+  static GroupEntryInfo? _defaultInstance;
+
+  GroupEntryInfo_SubType whichSubType() => _GroupEntryInfo_SubTypeByTag[$_whichOneof(0)]!;
+  void clearSubType() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  GroupInfo get group => $_getN(0);
+  @$pb.TagNumber(1)
+  set group(GroupInfo v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasGroup() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearGroup() => clearField(1);
+  @$pb.TagNumber(1)
+  GroupInfo ensureGroup() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  TestInfo get test => $_getN(1);
+  @$pb.TagNumber(2)
+  set test(TestInfo v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasTest() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTest() => clearField(2);
+  @$pb.TagNumber(2)
+  TestInfo ensureTest() => $_ensure(1);
+}
+
+class GroupInfo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupInfo',
+      createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..pc<GroupEntryInfo>(
+        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entries', $pb.PbFieldType.PM,
+        subBuilder: GroupEntryInfo.create)
+    ..hasRequiredFields = false;
+
+  GroupInfo._() : super();
+  factory GroupInfo({
+    $core.String? name,
+    $core.Iterable<GroupEntryInfo>? entries,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
     if (entries != null) {
       _result.entries.addAll(entries);
     }
     return _result;
   }
-  factory TestInfoPack.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory GroupInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory TestInfoPack.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory GroupInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  TestInfoPack clone() => TestInfoPack()..mergeFromMessage(this);
+  GroupInfo clone() => GroupInfo()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  TestInfoPack copyWith(void Function(TestInfoPack) updates) =>
-      super.copyWith((message) => updates(message as TestInfoPack)) as TestInfoPack; // ignore: deprecated_member_use
+  GroupInfo copyWith(void Function(GroupInfo) updates) =>
+      super.copyWith((message) => updates(message as GroupInfo)) as GroupInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static TestInfoPack create() => TestInfoPack._();
-  TestInfoPack createEmptyInstance() => create();
-  static $pb.PbList<TestInfoPack> createRepeated() => $pb.PbList<TestInfoPack>();
+  static GroupInfo create() => GroupInfo._();
+  GroupInfo createEmptyInstance() => create();
+  static $pb.PbList<GroupInfo> createRepeated() => $pb.PbList<GroupInfo>();
   @$core.pragma('dart2js:noInline')
-  static TestInfoPack getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestInfoPack>(create);
-  static TestInfoPack? _defaultInstance;
+  static GroupInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupInfo>(create);
+  static GroupInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<TestEntryInfo> get entries => $_getList(0);
-}
-
-class TestEntryInfo extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TestEntryInfo',
-      createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testGroupName')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testEntryName')
-    ..hasRequiredFields = false;
-
-  TestEntryInfo._() : super();
-  factory TestEntryInfo({
-    $core.String? testGroupName,
-    $core.String? testEntryName,
-  }) {
-    final _result = create();
-    if (testGroupName != null) {
-      _result.testGroupName = testGroupName;
-    }
-    if (testEntryName != null) {
-      _result.testEntryName = testEntryName;
-    }
-    return _result;
-  }
-  factory TestEntryInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory TestEntryInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
-  TestEntryInfo clone() => TestEntryInfo()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  TestEntryInfo copyWith(void Function(TestEntryInfo) updates) =>
-      super.copyWith((message) => updates(message as TestEntryInfo)) as TestEntryInfo; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static TestEntryInfo create() => TestEntryInfo._();
-  TestEntryInfo createEmptyInstance() => create();
-  static $pb.PbList<TestEntryInfo> createRepeated() => $pb.PbList<TestEntryInfo>();
-  @$core.pragma('dart2js:noInline')
-  static TestEntryInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestEntryInfo>(create);
-  static TestEntryInfo? _defaultInstance;
-
+  $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  $core.String get testGroupName => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set testGroupName($core.String v) {
+  set name($core.String v) {
     $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasTestGroupName() => $_has(0);
+  $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearTestGroupName() => clearField(1);
+  void clearName() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get testEntryName => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set testEntryName($core.String v) {
-    $_setString(1, v);
+  $core.List<GroupEntryInfo> get entries => $_getList(1);
+}
+
+class TestInfo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TestInfo',
+      createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false;
+
+  TestInfo._() : super();
+  factory TestInfo({
+    $core.String? name,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    return _result;
+  }
+  factory TestInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory TestInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  TestInfo clone() => TestInfo()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  TestInfo copyWith(void Function(TestInfo) updates) =>
+      super.copyWith((message) => updates(message as TestInfo)) as TestInfo; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TestInfo create() => TestInfo._();
+  TestInfo createEmptyInstance() => create();
+  static $pb.PbList<TestInfo> createRepeated() => $pb.PbList<TestInfo>();
+  @$core.pragma('dart2js:noInline')
+  static TestInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestInfo>(create);
+  static TestInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) {
+    $_setString(0, v);
   }
 
-  @$pb.TagNumber(2)
-  $core.bool hasTestEntryName() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearTestEntryName() => clearField(2);
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
 }
 
 class RunnerStateChange extends $pb.GeneratedMessage {
