@@ -34,7 +34,7 @@ Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback body) asyn
     case WorkerMode_SubType.interactiveApp:
       return _runModeInteractiveApp(body);
     case WorkerMode_SubType.integrationTest:
-      return _runModeIntegrationTest(body);
+      return _runModeIntegrationTest(body, workerMode.integrationTest);
     case WorkerMode_SubType.notSet:
       throw Exception('Unknown WorkerMode: $workerMode');
   }
@@ -44,7 +44,7 @@ Future<void> _runModeInteractiveApp(VoidCallback body) async {
   body();
 }
 
-Future<void> _runModeIntegrationTest(VoidCallback body) async {
+Future<void> _runModeIntegrationTest(VoidCallback body, WorkerModeIntegrationTest workerModeIntegrationTest) async {
   runZonedGuarded(() {
     ConvenientTestWrapperWidget.convenientTestActive = true;
 
@@ -65,7 +65,7 @@ Future<void> _runModeIntegrationTest(VoidCallback body) async {
       body();
     });
 
-    ConvenientTestExecutor.execute(declarer);
+    ConvenientTestExecutor.execute(declarer, filterNameRegex: RegExp(workerModeIntegrationTest.filterNameRegex));
   }, (e, s) {
     Log.w('ConvenientTestMain',
         'ConvenientTest captured error (via runZonedGuarded). type(e)=${e.runtimeType} exception=$e stackTrace=$s');
