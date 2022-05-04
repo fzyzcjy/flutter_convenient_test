@@ -42,10 +42,12 @@ class SuiteInfo {
 @immutable
 abstract class GroupEntryInfo {
   final int parentId;
+  final int id;
   final String name;
 
   const GroupEntryInfo({
     required this.parentId,
+    required this.id,
     required this.name,
   });
 
@@ -57,14 +59,16 @@ class GroupInfo extends GroupEntryInfo {
   final List<int> entryIds;
 
   const GroupInfo({
-    required int parentId,
+    required int id,
     required String name,
+    required int parentId,
     required this.entryIds,
-  }) : super(parentId: parentId, name: name);
+  }) : super(id: id, name: name, parentId: parentId);
 
   factory GroupInfo.fromProto(GroupInfoProto proto) => GroupInfo(
-        parentId: proto.parentId,
+        id: proto.id,
         name: proto.name,
+        parentId: proto.parentId,
         entryIds: proto.entryIds,
       );
 
@@ -75,13 +79,15 @@ class GroupInfo extends GroupEntryInfo {
 @immutable
 class TestInfo extends GroupEntryInfo {
   const TestInfo({
-    required int parentId,
+    required int id,
     required String name,
-  }) : super(parentId: parentId, name: name);
+    required int parentId,
+  }) : super(id: id, name: name, parentId: parentId);
 
   factory TestInfo.fromProto(TestInfoProto proto) => TestInfo(
-        parentId: proto.parentId,
+        id: proto.id,
         name: proto.name,
+        parentId: proto.parentId,
       );
 
   @override
