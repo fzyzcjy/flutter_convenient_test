@@ -99,13 +99,10 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   }
 
   @override
-  Future<Empty> reportTestInfoPack(ServiceCall call, TestInfoPack request) async {
-    Log.d(_kTag, 'reportTestInfoPack called');
+  Future<Empty> reportSuiteInfo(ServiceCall call, SuiteInfoProto request) async {
+    Log.d(_kTag, 'reportSuiteInfo called');
 
-    for (final entry in request.entries) {
-      final testGroupId = _organizationStore.testGroupNameToId(entry.testGroupName);
-      _organizationStore.testEntryNameToId(entry.testEntryName, testGroupId: testGroupId);
-    }
+    _organizationStore.suiteInfo = SuiteInfo.fromProto(request);
 
     return Empty();
   }
