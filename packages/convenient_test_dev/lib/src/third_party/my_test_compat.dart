@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:get_it/get_it.dart';
 import 'package:test_api/src/backend/declarer.dart';
@@ -196,7 +197,7 @@ class _Reporter {
 
       // NOTE XXX add
       GetIt.I.get<ConvenientTestManagerClient>().reportRunnerMessage(RunnerMessage(
-            testEntryName: liveTest.test.name,
+            entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
             message: message.text,
           ));
     }));
@@ -206,7 +207,7 @@ class _Reporter {
   void _onStateChange(LiveTest liveTest, State state) {
     // NOTE XXX add
     GetIt.I.get<ConvenientTestManagerClient>().reportRunnerStateChange(RunnerStateChange(
-          testEntryName: liveTest.test.name,
+          entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
           state: state.toProto(),
         ));
 
@@ -219,7 +220,7 @@ class _Reporter {
   void _onError(LiveTest liveTest, Object error, StackTrace stackTrace) {
     // NOTE XXX add
     GetIt.I.get<ConvenientTestManagerClient>().reportRunnerError(RunnerError(
-          testEntryName: liveTest.test.name,
+          entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
           error: error.toString(),
           stackTrace: '$stackTrace',
         ));

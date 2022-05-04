@@ -18,25 +18,23 @@ class LogEntry extends $pb.GeneratedMessage {
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LogEntry',
       createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testGroupName')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testEntryName')
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
     ..e<LogEntryType>(
-        6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE,
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE,
         defaultOrMaker: LogEntryType.INVALID, valueOf: LogEntryType.valueOf, enumValues: LogEntryType.values)
-    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error')
-    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stackTrace')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stackTrace')
     ..hasRequiredFields = false;
 
   LogEntry._() : super();
   factory LogEntry({
     $core.int? id,
-    $core.String? testGroupName,
-    $core.String? testEntryName,
-    $core.String? message,
-    $core.String? title,
+    $core.Iterable<$core.String>? entryLocators,
     LogEntryType? type,
+    $core.String? title,
+    $core.String? message,
     $core.String? error,
     $core.String? stackTrace,
   }) {
@@ -44,20 +42,17 @@ class LogEntry extends $pb.GeneratedMessage {
     if (id != null) {
       _result.id = id;
     }
-    if (testGroupName != null) {
-      _result.testGroupName = testGroupName;
+    if (entryLocators != null) {
+      _result.entryLocators.addAll(entryLocators);
     }
-    if (testEntryName != null) {
-      _result.testEntryName = testEntryName;
-    }
-    if (message != null) {
-      _result.message = message;
+    if (type != null) {
+      _result.type = type;
     }
     if (title != null) {
       _result.title = title;
     }
-    if (type != null) {
-      _result.type = type;
+    if (message != null) {
+      _result.message = message;
     }
     if (error != null) {
       _result.error = error;
@@ -102,221 +97,344 @@ class LogEntry extends $pb.GeneratedMessage {
   void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get testGroupName => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set testGroupName($core.String v) {
-    $_setString(1, v);
-  }
-
-  @$pb.TagNumber(2)
-  $core.bool hasTestGroupName() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearTestGroupName() => clearField(2);
+  $core.List<$core.String> get entryLocators => $_getList(1);
 
   @$pb.TagNumber(3)
-  $core.String get testEntryName => $_getSZ(2);
+  LogEntryType get type => $_getN(2);
   @$pb.TagNumber(3)
-  set testEntryName($core.String v) {
-    $_setString(2, v);
+  set type(LogEntryType v) {
+    setField(3, v);
   }
 
   @$pb.TagNumber(3)
-  $core.bool hasTestEntryName() => $_has(2);
+  $core.bool hasType() => $_has(2);
   @$pb.TagNumber(3)
-  void clearTestEntryName() => clearField(3);
+  void clearType() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get message => $_getSZ(3);
+  $core.String get title => $_getSZ(3);
   @$pb.TagNumber(4)
-  set message($core.String v) {
+  set title($core.String v) {
     $_setString(3, v);
   }
 
   @$pb.TagNumber(4)
-  $core.bool hasMessage() => $_has(3);
+  $core.bool hasTitle() => $_has(3);
   @$pb.TagNumber(4)
-  void clearMessage() => clearField(4);
+  void clearTitle() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.String get title => $_getSZ(4);
+  $core.String get message => $_getSZ(4);
   @$pb.TagNumber(5)
-  set title($core.String v) {
+  set message($core.String v) {
     $_setString(4, v);
   }
 
   @$pb.TagNumber(5)
-  $core.bool hasTitle() => $_has(4);
+  $core.bool hasMessage() => $_has(4);
   @$pb.TagNumber(5)
-  void clearTitle() => clearField(5);
+  void clearMessage() => clearField(5);
 
   @$pb.TagNumber(6)
-  LogEntryType get type => $_getN(5);
+  $core.String get error => $_getSZ(5);
   @$pb.TagNumber(6)
-  set type(LogEntryType v) {
-    setField(6, v);
+  set error($core.String v) {
+    $_setString(5, v);
   }
 
   @$pb.TagNumber(6)
-  $core.bool hasType() => $_has(5);
+  $core.bool hasError() => $_has(5);
   @$pb.TagNumber(6)
-  void clearType() => clearField(6);
+  void clearError() => clearField(6);
 
   @$pb.TagNumber(7)
-  $core.String get error => $_getSZ(6);
+  $core.String get stackTrace => $_getSZ(6);
   @$pb.TagNumber(7)
-  set error($core.String v) {
+  set stackTrace($core.String v) {
     $_setString(6, v);
   }
 
   @$pb.TagNumber(7)
-  $core.bool hasError() => $_has(6);
+  $core.bool hasStackTrace() => $_has(6);
   @$pb.TagNumber(7)
-  void clearError() => clearField(7);
-
-  @$pb.TagNumber(8)
-  $core.String get stackTrace => $_getSZ(7);
-  @$pb.TagNumber(8)
-  set stackTrace($core.String v) {
-    $_setString(7, v);
-  }
-
-  @$pb.TagNumber(8)
-  $core.bool hasStackTrace() => $_has(7);
-  @$pb.TagNumber(8)
-  void clearStackTrace() => clearField(8);
+  void clearStackTrace() => clearField(7);
 }
 
-class TestInfoPack extends $pb.GeneratedMessage {
+class SuiteInfoProto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TestInfoPack',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SuiteInfoProto',
       createEmptyInstance: create)
-    ..pc<TestEntryInfo>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entries', $pb.PbFieldType.PM,
-        subBuilder: TestEntryInfo.create)
+    ..a<$core.int>(
+        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupId', $pb.PbFieldType.O3)
+    ..pc<GroupInfoProto>(
+        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.PM,
+        subBuilder: GroupInfoProto.create)
+    ..pc<TestInfoProto>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tests', $pb.PbFieldType.PM,
+        subBuilder: TestInfoProto.create)
     ..hasRequiredFields = false;
 
-  TestInfoPack._() : super();
-  factory TestInfoPack({
-    $core.Iterable<TestEntryInfo>? entries,
+  SuiteInfoProto._() : super();
+  factory SuiteInfoProto({
+    $core.int? groupId,
+    $core.Iterable<GroupInfoProto>? groups,
+    $core.Iterable<TestInfoProto>? tests,
   }) {
     final _result = create();
-    if (entries != null) {
-      _result.entries.addAll(entries);
+    if (groupId != null) {
+      _result.groupId = groupId;
+    }
+    if (groups != null) {
+      _result.groups.addAll(groups);
+    }
+    if (tests != null) {
+      _result.tests.addAll(tests);
     }
     return _result;
   }
-  factory TestInfoPack.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory SuiteInfoProto.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory TestInfoPack.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory SuiteInfoProto.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  TestInfoPack clone() => TestInfoPack()..mergeFromMessage(this);
+  SuiteInfoProto clone() => SuiteInfoProto()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  TestInfoPack copyWith(void Function(TestInfoPack) updates) =>
-      super.copyWith((message) => updates(message as TestInfoPack)) as TestInfoPack; // ignore: deprecated_member_use
+  SuiteInfoProto copyWith(void Function(SuiteInfoProto) updates) =>
+      super.copyWith((message) => updates(message as SuiteInfoProto))
+          as SuiteInfoProto; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static TestInfoPack create() => TestInfoPack._();
-  TestInfoPack createEmptyInstance() => create();
-  static $pb.PbList<TestInfoPack> createRepeated() => $pb.PbList<TestInfoPack>();
+  static SuiteInfoProto create() => SuiteInfoProto._();
+  SuiteInfoProto createEmptyInstance() => create();
+  static $pb.PbList<SuiteInfoProto> createRepeated() => $pb.PbList<SuiteInfoProto>();
   @$core.pragma('dart2js:noInline')
-  static TestInfoPack getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestInfoPack>(create);
-  static TestInfoPack? _defaultInstance;
+  static SuiteInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SuiteInfoProto>(create);
+  static SuiteInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<TestEntryInfo> get entries => $_getList(0);
+  $core.int get groupId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set groupId($core.int v) {
+    $_setSignedInt32(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasGroupId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearGroupId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<GroupInfoProto> get groups => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.List<TestInfoProto> get tests => $_getList(2);
 }
 
-class TestEntryInfo extends $pb.GeneratedMessage {
+class GroupInfoProto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TestEntryInfo',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupInfoProto',
       createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testGroupName')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testEntryName')
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.int>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parentId', $pb.PbFieldType.O3)
+    ..p<$core.int>(
+        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryIds', $pb.PbFieldType.P3)
     ..hasRequiredFields = false;
 
-  TestEntryInfo._() : super();
-  factory TestEntryInfo({
-    $core.String? testGroupName,
-    $core.String? testEntryName,
+  GroupInfoProto._() : super();
+  factory GroupInfoProto({
+    $core.int? id,
+    $core.String? name,
+    $core.int? parentId,
+    $core.Iterable<$core.int>? entryIds,
   }) {
     final _result = create();
-    if (testGroupName != null) {
-      _result.testGroupName = testGroupName;
+    if (id != null) {
+      _result.id = id;
     }
-    if (testEntryName != null) {
-      _result.testEntryName = testEntryName;
+    if (name != null) {
+      _result.name = name;
+    }
+    if (parentId != null) {
+      _result.parentId = parentId;
+    }
+    if (entryIds != null) {
+      _result.entryIds.addAll(entryIds);
     }
     return _result;
   }
-  factory TestEntryInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory GroupInfoProto.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory TestEntryInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory GroupInfoProto.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  TestEntryInfo clone() => TestEntryInfo()..mergeFromMessage(this);
+  GroupInfoProto clone() => GroupInfoProto()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  TestEntryInfo copyWith(void Function(TestEntryInfo) updates) =>
-      super.copyWith((message) => updates(message as TestEntryInfo)) as TestEntryInfo; // ignore: deprecated_member_use
+  GroupInfoProto copyWith(void Function(GroupInfoProto) updates) =>
+      super.copyWith((message) => updates(message as GroupInfoProto))
+          as GroupInfoProto; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static TestEntryInfo create() => TestEntryInfo._();
-  TestEntryInfo createEmptyInstance() => create();
-  static $pb.PbList<TestEntryInfo> createRepeated() => $pb.PbList<TestEntryInfo>();
+  static GroupInfoProto create() => GroupInfoProto._();
+  GroupInfoProto createEmptyInstance() => create();
+  static $pb.PbList<GroupInfoProto> createRepeated() => $pb.PbList<GroupInfoProto>();
   @$core.pragma('dart2js:noInline')
-  static TestEntryInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestEntryInfo>(create);
-  static TestEntryInfo? _defaultInstance;
+  static GroupInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupInfoProto>(create);
+  static GroupInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get testGroupName => $_getSZ(0);
+  $core.int get id => $_getIZ(0);
   @$pb.TagNumber(1)
-  set testGroupName($core.String v) {
-    $_setString(0, v);
+  set id($core.int v) {
+    $_setSignedInt32(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasTestGroupName() => $_has(0);
+  $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearTestGroupName() => clearField(1);
+  void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get testEntryName => $_getSZ(1);
+  $core.String get name => $_getSZ(1);
   @$pb.TagNumber(2)
-  set testEntryName($core.String v) {
+  set name($core.String v) {
     $_setString(1, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasTestEntryName() => $_has(1);
+  $core.bool hasName() => $_has(1);
   @$pb.TagNumber(2)
-  void clearTestEntryName() => clearField(2);
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get parentId => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set parentId($core.int v) {
+    $_setSignedInt32(2, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasParentId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearParentId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.int> get entryIds => $_getList(3);
+}
+
+class TestInfoProto extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TestInfoProto',
+      createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.int>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parentId', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false;
+
+  TestInfoProto._() : super();
+  factory TestInfoProto({
+    $core.int? id,
+    $core.String? name,
+    $core.int? parentId,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (parentId != null) {
+      _result.parentId = parentId;
+    }
+    return _result;
+  }
+  factory TestInfoProto.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory TestInfoProto.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  TestInfoProto clone() => TestInfoProto()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  TestInfoProto copyWith(void Function(TestInfoProto) updates) =>
+      super.copyWith((message) => updates(message as TestInfoProto)) as TestInfoProto; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TestInfoProto create() => TestInfoProto._();
+  TestInfoProto createEmptyInstance() => create();
+  static $pb.PbList<TestInfoProto> createRepeated() => $pb.PbList<TestInfoProto>();
+  @$core.pragma('dart2js:noInline')
+  static TestInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestInfoProto>(create);
+  static TestInfoProto? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get id => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set id($core.int v) {
+    $_setSignedInt32(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) {
+    $_setString(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get parentId => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set parentId($core.int v) {
+    $_setSignedInt32(2, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasParentId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearParentId() => clearField(3);
 }
 
 class RunnerStateChange extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RunnerStateChange',
       createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testEntryName')
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
     ..aOM<TestEntryState>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state',
         subBuilder: TestEntryState.create)
     ..hasRequiredFields = false;
 
   RunnerStateChange._() : super();
   factory RunnerStateChange({
-    $core.String? testEntryName,
+    $core.Iterable<$core.String>? entryLocators,
     TestEntryState? state,
   }) {
     final _result = create();
-    if (testEntryName != null) {
-      _result.testEntryName = testEntryName;
+    if (entryLocators != null) {
+      _result.entryLocators.addAll(entryLocators);
     }
     if (state != null) {
       _result.state = state;
@@ -349,16 +467,7 @@ class RunnerStateChange extends $pb.GeneratedMessage {
   static RunnerStateChange? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get testEntryName => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set testEntryName($core.String v) {
-    $_setString(0, v);
-  }
-
-  @$pb.TagNumber(1)
-  $core.bool hasTestEntryName() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearTestEntryName() => clearField(1);
+  $core.List<$core.String> get entryLocators => $_getList(0);
 
   @$pb.TagNumber(2)
   TestEntryState get state => $_getN(1);
@@ -449,20 +558,20 @@ class RunnerError extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RunnerError',
       createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testEntryName')
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stackTrace')
     ..hasRequiredFields = false;
 
   RunnerError._() : super();
   factory RunnerError({
-    $core.String? testEntryName,
+    $core.Iterable<$core.String>? entryLocators,
     $core.String? error,
     $core.String? stackTrace,
   }) {
     final _result = create();
-    if (testEntryName != null) {
-      _result.testEntryName = testEntryName;
+    if (entryLocators != null) {
+      _result.entryLocators.addAll(entryLocators);
     }
     if (error != null) {
       _result.error = error;
@@ -495,16 +604,7 @@ class RunnerError extends $pb.GeneratedMessage {
   static RunnerError? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get testEntryName => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set testEntryName($core.String v) {
-    $_setString(0, v);
-  }
-
-  @$pb.TagNumber(1)
-  $core.bool hasTestEntryName() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearTestEntryName() => clearField(1);
+  $core.List<$core.String> get entryLocators => $_getList(0);
 
   @$pb.TagNumber(2)
   $core.String get error => $_getSZ(1);
@@ -535,18 +635,18 @@ class RunnerMessage extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RunnerMessage',
       createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testEntryName')
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
     ..hasRequiredFields = false;
 
   RunnerMessage._() : super();
   factory RunnerMessage({
-    $core.String? testEntryName,
+    $core.Iterable<$core.String>? entryLocators,
     $core.String? message,
   }) {
     final _result = create();
-    if (testEntryName != null) {
-      _result.testEntryName = testEntryName;
+    if (entryLocators != null) {
+      _result.entryLocators.addAll(entryLocators);
     }
     if (message != null) {
       _result.message = message;
@@ -576,16 +676,7 @@ class RunnerMessage extends $pb.GeneratedMessage {
   static RunnerMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get testEntryName => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set testEntryName($core.String v) {
-    $_setString(0, v);
-  }
-
-  @$pb.TagNumber(1)
-  $core.bool hasTestEntryName() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearTestEntryName() => clearField(1);
+  $core.List<$core.String> get entryLocators => $_getList(0);
 
   @$pb.TagNumber(2)
   $core.String get message => $_getSZ(1);

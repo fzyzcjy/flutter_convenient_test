@@ -3,7 +3,7 @@ syntax = "proto3";
 service ConvenientTestManager {
   rpc ResetManagerCache (Empty) returns (Empty);
   rpc ReportLogEntry (LogEntry) returns (Empty);
-  rpc ReportTestInfoPack (TestInfoPack) returns (Empty);
+  rpc ReportSuiteInfo (SuiteInfoProto) returns (Empty);
   rpc ReportRunnerStateChange (RunnerStateChange) returns (Empty);
   rpc ReportRunnerError (RunnerError) returns (Empty);
   rpc ReportRunnerMessage (RunnerMessage) returns (Empty);
@@ -14,13 +14,12 @@ service ConvenientTestManager {
 
 message LogEntry {
   int32 id = 1;
-  string test_group_name = 2;
-  string test_entry_name = 3;
-  LogEntryType type = 6;
-  string title = 5;
-  string message = 4;
-  string error = 7;
-  string stack_trace = 8;
+  repeated string entry_locators = 2;
+  LogEntryType type = 3;
+  string title = 4;
+  string message = 5;
+  string error = 6;
+  string stack_trace = 7;
 }
 
 enum LogEntryType {
@@ -34,17 +33,30 @@ enum LogEntryType {
   SECTION = 7;
 }
 
-message TestInfoPack {
-  repeated TestEntryInfo entries = 1;
+// mimic test_api :: Suite
+message SuiteInfoProto {
+  int32 group_id = 1;
+  repeated GroupInfoProto groups = 2;
+  repeated TestInfoProto tests = 3;
 }
 
-message TestEntryInfo {
-  string test_group_name = 1;
-  string test_entry_name = 2;
+// mimic test_api :: Group
+message GroupInfoProto {
+  int32 id = 1;
+  string name = 2;
+  int32 parent_id = 3;
+  repeated int32 entry_ids = 4;
+}
+
+// mimic test_api :: Test
+message TestInfoProto {
+  int32 id = 1;
+  string name = 2;
+  int32 parent_id = 3;
 }
 
 message RunnerStateChange {
-  string test_entry_name = 1;
+  repeated string entry_locators = 1;
   TestEntryState state = 2;
 }
 
@@ -54,13 +66,13 @@ message TestEntryState {
 }
 
 message RunnerError {
-  string test_entry_name = 1;
+  repeated string entry_locators = 1;
   string error = 2;
   string stack_trace = 3;
 }
 
 message RunnerMessage {
-  string test_entry_name = 1;
+  repeated string entry_locators = 1;
   string message = 2;
 }
 

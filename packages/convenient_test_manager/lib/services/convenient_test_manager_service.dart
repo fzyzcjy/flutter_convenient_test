@@ -5,6 +5,7 @@ import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
+import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/worker_mode_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart' as grpc;
@@ -35,23 +36,23 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
   @override
   Future<Empty> reportLogEntry(ServiceCall call, LogEntry request) async {
-    Log.d(_kTag, 'reportLogEntry called');
+    Log.d(_kTag, 'reportLogEntry called entryLocators=${request.entryLocators} message=${request.message}');
 
     _logStore.logEntryMap.addToIdObjMap(request);
 
-    final testGroupId = _organizationStore.testGroupNameToId(request.testGroupName);
-    final testEntryId = _organizationStore.testEntryNameToId(request.testEntryName, testGroupId: testGroupId);
+    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators);
+    if (testEntryId == null) return Empty();
 
     if (!(_logStore.logEntryInTest[testEntryId]?.contains(request.id) ?? false)) {
       _logStore.logEntryInTest.addRelation(testEntryId, request.id);
     }
 
     if (_organizationStore.enableAutoExpand) {
-      _organizationStore
-        ..expandTestGroupMap.clear()
-        ..expandTestGroupMap[testGroupId] = true
-        ..expandTestEntryMap.clear()
-        ..expandTestEntryMap[testEntryId] = true;
+      _organizationStore.expandGroupEntryMap.clear();
+      for (var i = 1; i <= request.entryLocators.length; ++i) {
+        _organizationStore.expandGroupEntryMap[
+            _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))!] = true;
+      }
     }
 
     return Empty();
@@ -61,10 +62,17 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   Future<Empty> reportRunnerError(ServiceCall call, RunnerError request) async {
     Log.d(_kTag, 'reportRunnerError called');
 
+<<<<<<< HEAD
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
+    if (testEntryId == null) return Empty();
+
+    _rawLogStore.rawLogInTest[testEntryId] += '${request.error}\n${request.stackTrace}\n';
+=======
     if (_kIgnoreTestEntryNames.contains(request.testEntryName)) return Empty();
 
     _rawLogStore.rawLogInTest[_organizationStore.testEntryNameToId(request.testEntryName)] +=
         '${request.error}\n${request.stackTrace}\n';
+>>>>>>> master
 
     return Empty();
   }
@@ -73,20 +81,21 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   Future<Empty> reportRunnerMessage(ServiceCall call, RunnerMessage request) async {
     Log.d(_kTag, 'reportRunnerMessage called');
 
-    if (_kIgnoreTestEntryNames.contains(request.testEntryName)) return Empty();
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
+    if (testEntryId == null) return Empty();
 
-    _rawLogStore.rawLogInTest[_organizationStore.testEntryNameToId(request.testEntryName)] += '${request.message}\n';
+    _rawLogStore.rawLogInTest[testEntryId] += '${request.message}\n';
 
     return Empty();
   }
 
   @override
   Future<Empty> reportRunnerStateChange(ServiceCall call, RunnerStateChange request) async {
-    Log.d(_kTag, 'reportRunnerStateChange called name=${request.testEntryName} state=${request.state}');
+    Log.d(_kTag, 'reportRunnerStateChange called entryLocators=${request.entryLocators} state=${request.state}');
 
-    if (_kIgnoreTestEntryNames.contains(request.testEntryName)) return Empty();
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
+    if (testEntryId == null) return Empty();
 
-    final testEntryId = _organizationStore.testEntryNameToId(request.testEntryName);
     _organizationStore.testEntryStateMap[testEntryId] = request.state;
 
     return Empty();
@@ -103,13 +112,10 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   }
 
   @override
-  Future<Empty> reportTestInfoPack(ServiceCall call, TestInfoPack request) async {
-    Log.d(_kTag, 'reportTestInfoPack called');
+  Future<Empty> reportSuiteInfo(ServiceCall call, SuiteInfoProto request) async {
+    Log.d(_kTag, 'reportSuiteInfo called $request');
 
-    for (final entry in request.entries) {
-      final testGroupId = _organizationStore.testGroupNameToId(entry.testGroupName);
-      _organizationStore.testEntryNameToId(entry.testEntryName, testGroupId: testGroupId);
-    }
+    _suiteInfoStore.suiteInfo = SuiteInfo.fromProto(request);
 
     return Empty();
   }
@@ -119,6 +125,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
     Log.d(_kTag, 'resetManagerCache called');
 
     _organizationStore.clear();
+    _suiteInfoStore.clear();
     _logStore.clear();
     _rawLogStore.clear();
 
@@ -144,6 +151,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
   final _logStore = GetIt.I.get<LogStore>();
   final _organizationStore = GetIt.I.get<OrganizationStore>();
+  final _suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
   final _rawLogStore = GetIt.I.get<RawLogStore>();
   final _workerModeStore = GetIt.I.get<WorkerModeStore>();
 }
@@ -154,5 +162,3 @@ extension<T> on Map<int, T> {
     this[(obj as dynamic).id as int] = obj;
   }
 }
-
-const _kIgnoreTestEntryNames = ['(tearDownAll)'];

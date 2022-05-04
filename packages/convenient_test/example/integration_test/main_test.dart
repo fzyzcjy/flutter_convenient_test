@@ -7,16 +7,22 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   convenientTestMain(MyConvenientTestSlot(), () {
     group('sample group one', () {
-      tTestWidgets('empty test', (t) async {
-        // just an empty test
-      });
+      tTestWidgets('empty test', (t) async {});
 
-      tTestWidgets('deliberately failing test', (t) async {
-        expect(1, 0, reason: 'this expect should deliberately fail');
+      group('sample sub-group', () {
+        tTestWidgets('another empty test', (t) async {});
+
+        group('sample sub-sub-group', () {
+          tTestWidgets('yet another empty test', (t) async {});
+        });
       });
     });
 
     group('sample group two', () {
+      tTestWidgets('deliberately failing test', (t) async {
+        expect(1, 0, reason: 'this expect should deliberately fail');
+      });
+
       tTestWidgets('tap and assert text', (t) async {
         await t.get(find.textContaining('No tap')).should(findsOneWidget);
         await t.get(HomePageMark.button).tap();
