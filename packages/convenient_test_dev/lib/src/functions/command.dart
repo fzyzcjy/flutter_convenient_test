@@ -22,16 +22,30 @@ abstract class TCommand {
 extension ExtTCommand on TCommand {
   Future<void> should(Matcher matcher, {String? reason}) async {
     final log = t.log('ASSERT', '', type: LogEntryType.ASSERT);
-    await shouldRaw(matcher, logUpdate: log.update, logSnapshot: log.snapshot);
+    await shouldRaw(
+      matcher,
+      logUpdate: log.update,
+      logSnapshot: log.snapshot,
+      snapshotWhenSuccess: true,
+    );
   }
 
   Future<void> shouldRaw(
     Matcher matcher, {
     String? reason,
     required LogUpdate logUpdate,
-    required LogSnapshot? logSnapshot,
+    required LogSnapshot logSnapshot,
+    required bool snapshotWhenSuccess,
   }) =>
-      _expectWithRetry(t, getCurrentActual, matcher, reason: reason, logUpdate: logUpdate, logSnapshot: logSnapshot);
+      _expectWithRetry(
+        t,
+        getCurrentActual,
+        matcher,
+        reason: reason,
+        logUpdate: logUpdate,
+        logSnapshot: logSnapshot,
+        snapshotWhenSuccess: snapshotWhenSuccess,
+      );
 
   // syntax sugar
   Future<void> shouldEquals(dynamic expected, {String? reason}) => should(equals(expected), reason: reason);
@@ -54,7 +68,8 @@ Future<void> _expectWithRetry(
   dynamic skip,
   Duration timeout = const Duration(seconds: 4),
   required LogUpdate logUpdate,
-  required LogSnapshot? logSnapshot,
+  required LogSnapshot logSnapshot,
+  required bool snapshotWhenSuccess,
 }) async {
   final startTime = DateTime.now();
   var failedCount = 0;
@@ -67,7 +82,7 @@ Future<void> _expectWithRetry(
     final actual = actualGetter();
     try {
       expect(actual, matcher, reason: reason, skip: skip);
-      await logSnapshot?.call(name: 'after');
+      if (snapshotWhenSuccess) await logSnapshot(name: 'after');
       return;
     } on TestFailure catch (e, s) {
       failedCount++;
@@ -82,7 +97,7 @@ Future<void> _expectWithRetry(
           stackTrace: '$s',
           printing: true,
         );
-        await logSnapshot?.call(name: 'after');
+        await logSnapshot(name: 'failed');
         rethrow;
       }
 

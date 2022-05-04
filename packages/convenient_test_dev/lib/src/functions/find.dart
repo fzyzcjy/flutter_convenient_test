@@ -121,8 +121,9 @@ class TFinderCommand extends TCommand {
       findsOneWidget,
       logUpdate: (title, message, {error, stackTrace, required type, printing = false}) =>
           log.update('$logTitle ASSERT', message, type: type, error: error, stackTrace: stackTrace, printing: printing),
-      // do not take snapshot
-      logSnapshot: null,
+      logSnapshot: log.snapshot,
+      // do not take snapshot if success - since we will do it later
+      snapshotWhenSuccess: false,
     );
     // update log, since [should] will change logs
     log.update(logTitle, logMessage, type: LogEntryType.GENERAL_MESSAGE);
