@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/compile_time_config.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/setup.dart';
@@ -49,6 +51,11 @@ Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegratio
     ConvenientTestWrapperWidget.convenientTestActive = true;
 
     final declarer = collectIntoDeclarer(() {
+      // put this tearDownAll *before* everything else (including
+      // `IntegrationTestWidgetsFlutterBinding.ensureInitialized` which adds another tearDownAll)
+      // thus it should be run lastly
+      tearDownAll(_lastTearDownAll);
+
       if (WidgetsBinding.instance != null) {
         // This is because:
         // (1) Must call [runZonedGuarded] *outside* [ensureInitialized], otherwise no errors will be captured.
@@ -70,6 +77,18 @@ Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegratio
     Log.w('ConvenientTestMain',
         'ConvenientTest captured error (via runZonedGuarded). type(e)=${e.runtimeType} exception=$e stackTrace=$s');
   });
+}
+
+Future<void> _lastTearDownAll() async {
+  const _kTag = 'LastTearDownAll';
+
+  if (CompileTimeConfig.kCIMode) {
+    Log.i(_kTag, 'wait for a few seconds, hoping everything is really finished');
+    await Future<void>.delayed(const Duration(seconds: 3));
+
+    Log.i(_kTag, 'exit the process');
+    exit(0);
+  }
 }
 
 typedef TWidgetTesterCallback = Future<void> Function(ConvenientTest t);
