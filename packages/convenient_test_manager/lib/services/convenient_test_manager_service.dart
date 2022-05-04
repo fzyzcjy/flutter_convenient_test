@@ -15,8 +15,6 @@ import 'package:mobx/mobx.dart';
 class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   static const _kTag = 'ConvenientTestManagerService';
 
-  final managerToWorkerActionStreamController = StreamController<ManagerToWorkerAction>.broadcast();
-
   void serve() {
     final server = grpc.Server(
       [this],
@@ -28,10 +26,6 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
       address: '0.0.0.0',
       port: kConvenientTestManagerPort,
     );
-  }
-
-  void dispose() {
-    managerToWorkerActionStreamController.close();
   }
 
   @override
@@ -132,13 +126,6 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
     _rawLogStore.clear();
 
     return Empty();
-  }
-
-  @override
-  Stream<ManagerToWorkerAction> managerToWorkerActionStream(grpc.ServiceCall call, Empty request) async* {
-    Log.d(_kTag, 'managerToWorkerActionStream called');
-
-    yield* managerToWorkerActionStreamController.stream;
   }
 
   @override

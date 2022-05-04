@@ -234,13 +234,6 @@ const WorkerModeIntegrationTest$json = const {
 /// Descriptor for `WorkerModeIntegrationTest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List workerModeIntegrationTestDescriptor = $convert
     .base64Decode('ChlXb3JrZXJNb2RlSW50ZWdyYXRpb25UZXN0EioKEWZpbHRlcl9uYW1lX3JlZ2V4GAEgASgJUg9maWx0ZXJOYW1lUmVnZXg=');
-@$core.Deprecated('Use managerToWorkerActionDescriptor instead')
-const ManagerToWorkerAction$json = const {
-  '1': 'ManagerToWorkerAction',
-};
-
-/// Descriptor for `ManagerToWorkerAction`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List managerToWorkerActionDescriptor = $convert.base64Decode('ChVNYW5hZ2VyVG9Xb3JrZXJBY3Rpb24=');
 @$core.Deprecated('Use emptyDescriptor instead')
 const Empty$json = const {
   '1': 'Empty',

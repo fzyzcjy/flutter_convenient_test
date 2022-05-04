@@ -4,7 +4,6 @@ service ConvenientTestManager {
   rpc ResetManagerCache (Empty) returns (Empty);
   rpc Report (ReportCollection) returns (Empty);
   rpc GetWorkerMode (Empty) returns (WorkerMode);
-  rpc ManagerToWorkerActionStream (Empty) returns (stream ManagerToWorkerAction);
 }
 
 message ReportCollection {
@@ -104,9 +103,6 @@ message WorkerModeInteractiveApp {}
 
 message WorkerModeIntegrationTest {
   string filter_name_regex = 1;
-}
-
-message ManagerToWorkerAction {
 }
 
 // https://stackoverflow.com/questions/31768665/can-i-define-a-grpc-call-with-a-null-request-or-response

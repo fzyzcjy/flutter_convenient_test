@@ -1175,40 +1175,6 @@ class WorkerModeIntegrationTest extends $pb.GeneratedMessage {
   void clearFilterNameRegex() => clearField(1);
 }
 
-class ManagerToWorkerAction extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ManagerToWorkerAction',
-      createEmptyInstance: create)
-    ..hasRequiredFields = false;
-
-  ManagerToWorkerAction._() : super();
-  factory ManagerToWorkerAction() => create();
-  factory ManagerToWorkerAction.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ManagerToWorkerAction.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
-  ManagerToWorkerAction clone() => ManagerToWorkerAction()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  ManagerToWorkerAction copyWith(void Function(ManagerToWorkerAction) updates) =>
-      super.copyWith((message) => updates(message as ManagerToWorkerAction))
-          as ManagerToWorkerAction; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static ManagerToWorkerAction create() => ManagerToWorkerAction._();
-  ManagerToWorkerAction createEmptyInstance() => create();
-  static $pb.PbList<ManagerToWorkerAction> createRepeated() => $pb.PbList<ManagerToWorkerAction>();
-  @$core.pragma('dart2js:noInline')
-  static ManagerToWorkerAction getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ManagerToWorkerAction>(create);
-  static ManagerToWorkerAction? _defaultInstance;
-}
-
 class Empty extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Empty',
