@@ -4,10 +4,18 @@ import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart';
 
 abstract class ManagerRpcService {
+  static const _kTag = 'ManagerRpcService';
+
   ManagerRpcService();
 
   factory ManagerRpcService.create() {
-    return TODO;
+    const ciMode = bool.fromEnvironment('CONVENIENT_TEST_CI_MODE', defaultValue: false);
+    Log.i(_kTag, 'create ciMode=$ciMode');
+    if (ciMode) {
+      return ManagerRpcServiceLocalFile();
+    } else {
+      return ManagerRpcServiceRealConnect();
+    }
   }
 
   Future<void> resetManagerCache();
