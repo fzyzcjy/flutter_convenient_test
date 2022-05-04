@@ -1,9 +1,12 @@
 import 'package:collection/collection.dart';
+import 'package:convenient_test_common/src/common_flutter/front_log.dart';
 import 'package:convenient_test_common/src/protobuf/convenient_test.pb.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
 class SuiteInfo {
+  static const _kTag = 'SuiteInfo';
+
   final int rootGroupId;
   final Map<int, GroupEntryInfo> entryMap;
 
@@ -26,11 +29,20 @@ class SuiteInfo {
     var currEntryId = rootGroupId;
 
     for (final name in entryLocators) {
+      void logFail(String reason) => Log.w(_kTag,
+          'getEntryIdFromNames fail reason=$reason currEntryId=$currEntryId name=$name entryLocators=$entryLocators');
+
       final currEntry = entryMap[currEntryId];
-      if (currEntry is! GroupInfo) return null;
+      if (currEntry is! GroupInfo) {
+        logFail('currEntry is not GroupInfo');
+        return null;
+      }
 
       final nextEntryId = currEntry.entryIds.singleWhereOrNull((childEntryId) => entryMap[childEntryId]?.name == name);
-      if (nextEntryId == null) return null;
+      if (nextEntryId == null) {
+        logFail('nextEntryId is null (currEntry.entryIds=${currEntry.entryIds})');
+        return null;
+      }
 
       currEntryId = nextEntryId;
     }

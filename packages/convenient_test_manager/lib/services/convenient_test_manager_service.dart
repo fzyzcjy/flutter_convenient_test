@@ -41,10 +41,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
     _logStore.logEntryMap.addToIdObjMap(request);
 
     final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators);
-    if (testEntryId == null) {
-      Log.w(_kTag, 'reportLogEntry skip since testEntryId==null');
-      return Empty();
-    }
+    if (testEntryId == null) return Empty();
 
     if (!(_logStore.logEntryInTest[testEntryId]?.contains(request.id) ?? false)) {
       _logStore.logEntryInTest.addRelation(testEntryId, request.id);
@@ -66,10 +63,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
     Log.d(_kTag, 'reportRunnerError called');
 
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
-    if (testEntryId == null) {
-      Log.w(_kTag, 'reportRunnerError skip since testEntryId==null');
-      return Empty();
-    }
+    if (testEntryId == null) return Empty();
 
     _rawLogStore.rawLogInTest[testEntryId] += '${request.error}\n${request.stackTrace}\n';
 
@@ -81,10 +75,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
     Log.d(_kTag, 'reportRunnerMessage called');
 
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
-    if (testEntryId == null) {
-      Log.w(_kTag, 'reportRunnerMessage skip since testEntryId==null');
-      return Empty();
-    }
+    if (testEntryId == null) return Empty();
 
     _rawLogStore.rawLogInTest[testEntryId] += '${request.message}\n';
 
@@ -96,10 +87,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
     Log.d(_kTag, 'reportRunnerStateChange called entryLocators=${request.entryLocators} state=${request.state}');
 
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
-    if (testEntryId == null) {
-      Log.w(_kTag, 'reportRunnerStateChange skip since testEntryId==null');
-      return Empty();
-    }
+    if (testEntryId == null) return Empty();
 
     _organizationStore.testEntryStateMap[testEntryId] = request.state;
 
@@ -118,7 +106,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
   @override
   Future<Empty> reportSuiteInfo(ServiceCall call, SuiteInfoProto request) async {
-    Log.d(_kTag, 'reportSuiteInfo called');
+    Log.d(_kTag, 'reportSuiteInfo called $request');
 
     _suiteInfoStore.suiteInfo = SuiteInfo.fromProto(request);
 
