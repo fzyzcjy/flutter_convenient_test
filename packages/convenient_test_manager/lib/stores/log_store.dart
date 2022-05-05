@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:typed_data';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
@@ -12,18 +13,25 @@ abstract class _LogStore with Store {
   final testIdOfLogEntry = ObservableMap<int, int>();
 
   final logSubEntryInEntry = RelationOneToMany();
+  final logEntryIdOfLogSubEntry = ObservableMap<int, int>();
 
   final logSubEntryMap = ObservableMap<int, LogSubEntry>();
+
+  /// [LogSubEntry.time] => [LogSubEntry.id]
+  final logSubEntryIdOfTime = SplayTreeMap<int, int>();
 
   /// `snapshotInLog[logEntryId][name] == snapshot bytes`
   final snapshotInLog = ObservableMap<int, ObservableMap<String, Uint8List>>();
 
   void addLogEntry({required int testEntryId, required int logEntryId, required List<LogSubEntry> subEntries}) {
+    logSubEntryInEntry[logEntryId] ??= ObservableList();
+
     for (final subEntry in subEntries) {
       logSubEntryMap[subEntry.id] = subEntry;
+      logSubEntryInEntry[logEntryId]!.add(subEntry.id);
+      logEntryIdOfLogSubEntry[subEntry.id] = logEntryId;
+      logSubEntryIdOfTime[subEntry.time.toInt()] = subEntry.id;
     }
-
-    (logSubEntryInEntry[logEntryId] ??= ObservableList()).addAll(subEntries.map((subEntry) => subEntry.id));
 
     if (!(logEntryInTest[testEntryId]?.contains(logEntryId) ?? false)) {
       logEntryInTest.addRelation(testEntryId, logEntryId);
@@ -42,7 +50,9 @@ abstract class _LogStore with Store {
       1;
 
   int calcLogEntryAtTime(DateTime time) {
-    return TODO;
+    final logSubEntryId = logSubEntryIdOfTime.lastKeyBefore(time.microsecondsSinceEpoch);
+    final logEntryId = logEntryIdOfLogSubEntry[logSubEntryId]!;
+    return logEntryId;
   }
 
   void clear() {
