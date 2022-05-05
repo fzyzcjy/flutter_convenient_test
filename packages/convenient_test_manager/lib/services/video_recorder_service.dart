@@ -3,14 +3,37 @@ import 'dart:io';
 import 'package:convenient_test_common/convenient_test_common.dart';
 
 abstract class VideoRecorderService {
-  Future<VideoRecorderService> create() async {
+  static Future<VideoRecorderService> create() async {
     // TODO add Android support
-    return (await _VideoRecorderServiceIosSimulator.maybeCreate()) ?? _VideoRecorderServiceNoOp();
+    final inner = (await _VideoRecorderServiceIosSimulator.maybeCreate()) ?? _VideoRecorderServiceNoOp();
+    return _VideoRecorderServiceIsolateExceptionDecorator(inner);
   }
 
   Future<void> startRecord(String targetPath);
 
   Future<void> stopRecord();
+}
+
+class _VideoRecorderServiceIsolateExceptionDecorator implements VideoRecorderService {
+  static const _kTag = 'VideoRecorderServiceIsolateExceptionDecorator';
+
+  final VideoRecorderService inner;
+
+  _VideoRecorderServiceIsolateExceptionDecorator(this.inner);
+
+  @override
+  Future<void> startRecord(String targetPath) => _captureException(() => inner.startRecord(targetPath));
+
+  @override
+  Future<void> stopRecord() => _captureException(inner.stopRecord);
+
+  Future<void> _captureException(Future<void> Function() body) async {
+    try {
+      await body();
+    } catch (e, s) {
+      Log.w(_kTag, 'capture and ignore exception e=$e s=$s');
+    }
+  }
 }
 
 class _VideoRecorderServiceIosSimulator extends VideoRecorderService {
