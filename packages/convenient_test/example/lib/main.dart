@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConvenientTestWrapperWidget(
       child: MaterialApp(
-        title: 'ConvenientTestExample',
+        title: 'Example',
         navigatorKey: MyApp.navigatorKey,
         initialRoute: '/home',
         routes: {
