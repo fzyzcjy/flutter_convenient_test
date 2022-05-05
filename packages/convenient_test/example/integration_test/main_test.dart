@@ -84,6 +84,17 @@ void main() {
         // do something
         await t.get(find.textContaining('I am home page')).should(findsOneWidget);
       });
+
+      tTestWidgets('timer page', (t) async {
+        await t.visit('/timer');
+
+        final log = t.log('HELLO', 'Let us just wait a few seconds to look at the timer');
+        await log.snapshot(name: 'before');
+        await Future.delayed(const Duration(seconds: 5));
+        await log.snapshot(name: 'after');
+
+        await t.pageBack();
+      });
     });
   });
 }
