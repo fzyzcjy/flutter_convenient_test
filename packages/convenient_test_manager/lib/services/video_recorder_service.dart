@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:convenient_test_common/convenient_test_common.dart';
 
 abstract class VideoRecorderService {
-  static Future<VideoRecorderService> create() async {
+  static VideoRecorderService create() {
     // TODO add Android support
-    final inner = (await _VideoRecorderServiceIosSimulator.maybeCreate()) ?? _VideoRecorderServiceNoOp();
+    final inner = _VideoRecorderServiceIosSimulator.maybeCreate() ?? _VideoRecorderServiceNoOp();
     return _VideoRecorderServiceIsolateExceptionDecorator(inner);
   }
 
@@ -39,7 +39,7 @@ class _VideoRecorderServiceIsolateExceptionDecorator implements VideoRecorderSer
 class _VideoRecorderServiceIosSimulator extends VideoRecorderService {
   static const _kTag = 'VideoRecorderServiceIosSimulator';
 
-  static Future<_VideoRecorderServiceIosSimulator?> maybeCreate() async {
+  static _VideoRecorderServiceIosSimulator? maybeCreate() {
     // non-mac computers cannot have ios simulators
     if (!Platform.isMacOS) return null;
 

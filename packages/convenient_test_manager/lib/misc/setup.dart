@@ -24,7 +24,7 @@ void setup() {
   getIt.registerSingleton<MiscService>(MiscService());
   getIt.registerSingleton<HomePageStore>(HomePageStore());
   getIt.registerSingleton<ReportHandlerService>(ReportHandlerService());
-  getIt.registerSingleton<VideoRecorderService>(VideoRecorderService());
+  getIt.registerSingleton<VideoRecorderService>(VideoRecorderService.create());
 
   GetIt.I.get<ConvenientTestManagerService>().serve();
 }
