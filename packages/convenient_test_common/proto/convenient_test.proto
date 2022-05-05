@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 service ConvenientTestManager {
-  rpc ResetManagerCache (Empty) returns (Empty);
   rpc Report (ReportCollection) returns (Empty);
   rpc GetWorkerMode (Empty) returns (WorkerMode);
 }
@@ -13,6 +12,7 @@ message ReportCollection {
 
 message ReportItem {
   oneof sub_type {
+    OverallExecution overall_execution = 7;
     SuiteInfoProto suite_info_proto = 1;
     LogEntry log_entry = 2;
     RunnerStateChange runner_state_change = 3;
@@ -20,6 +20,12 @@ message ReportItem {
     RunnerMessage runner_message = 5;
     Snapshot snapshot = 6;
   }
+}
+
+enum OverallExecution {
+  OVERALL_EXECUTION_INVALID = 0;
+  SET_UP_ALL = 1;
+  TEAR_DOWN_ALL = 2;
 }
 
 message LogEntry {

@@ -9,6 +9,19 @@ import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use overallExecutionDescriptor instead')
+const OverallExecution$json = const {
+  '1': 'OverallExecution',
+  '2': const [
+    const {'1': 'OVERALL_EXECUTION_INVALID', '2': 0},
+    const {'1': 'SET_UP_ALL', '2': 1},
+    const {'1': 'TEAR_DOWN_ALL', '2': 2},
+  ],
+};
+
+/// Descriptor for `OverallExecution`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List overallExecutionDescriptor = $convert.base64Decode(
+    'ChBPdmVyYWxsRXhlY3V0aW9uEh0KGU9WRVJBTExfRVhFQ1VUSU9OX0lOVkFMSUQQABIOCgpTRVRfVVBfQUxMEAESEQoNVEVBUl9ET1dOX0FMTBAC');
 @$core.Deprecated('Use logSubEntryTypeDescriptor instead')
 const LogSubEntryType$json = const {
   '1': 'LogSubEntryType',
@@ -42,6 +55,15 @@ final $typed_data.Uint8List reportCollectionDescriptor =
 const ReportItem$json = const {
   '1': 'ReportItem',
   '2': const [
+    const {
+      '1': 'overall_execution',
+      '3': 7,
+      '4': 1,
+      '5': 14,
+      '6': '.OverallExecution',
+      '9': 0,
+      '10': 'overallExecution'
+    },
     const {'1': 'suite_info_proto', '3': 1, '4': 1, '5': 11, '6': '.SuiteInfoProto', '9': 0, '10': 'suiteInfoProto'},
     const {'1': 'log_entry', '3': 2, '4': 1, '5': 11, '6': '.LogEntry', '9': 0, '10': 'logEntry'},
     const {
@@ -64,7 +86,7 @@ const ReportItem$json = const {
 
 /// Descriptor for `ReportItem`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List reportItemDescriptor = $convert.base64Decode(
-    'CgpSZXBvcnRJdGVtEjsKEHN1aXRlX2luZm9fcHJvdG8YASABKAsyDy5TdWl0ZUluZm9Qcm90b0gAUg5zdWl0ZUluZm9Qcm90bxIoCglsb2dfZW50cnkYAiABKAsyCS5Mb2dFbnRyeUgAUghsb2dFbnRyeRJEChNydW5uZXJfc3RhdGVfY2hhbmdlGAMgASgLMhIuUnVubmVyU3RhdGVDaGFuZ2VIAFIRcnVubmVyU3RhdGVDaGFuZ2USMQoMcnVubmVyX2Vycm9yGAQgASgLMgwuUnVubmVyRXJyb3JIAFILcnVubmVyRXJyb3ISNwoOcnVubmVyX21lc3NhZ2UYBSABKAsyDi5SdW5uZXJNZXNzYWdlSABSDXJ1bm5lck1lc3NhZ2USJwoIc25hcHNob3QYBiABKAsyCS5TbmFwc2hvdEgAUghzbmFwc2hvdEIKCghzdWJfdHlwZQ==');
+    'CgpSZXBvcnRJdGVtEkAKEW92ZXJhbGxfZXhlY3V0aW9uGAcgASgOMhEuT3ZlcmFsbEV4ZWN1dGlvbkgAUhBvdmVyYWxsRXhlY3V0aW9uEjsKEHN1aXRlX2luZm9fcHJvdG8YASABKAsyDy5TdWl0ZUluZm9Qcm90b0gAUg5zdWl0ZUluZm9Qcm90bxIoCglsb2dfZW50cnkYAiABKAsyCS5Mb2dFbnRyeUgAUghsb2dFbnRyeRJEChNydW5uZXJfc3RhdGVfY2hhbmdlGAMgASgLMhIuUnVubmVyU3RhdGVDaGFuZ2VIAFIRcnVubmVyU3RhdGVDaGFuZ2USMQoMcnVubmVyX2Vycm9yGAQgASgLMgwuUnVubmVyRXJyb3JIAFILcnVubmVyRXJyb3ISNwoOcnVubmVyX21lc3NhZ2UYBSABKAsyDi5SdW5uZXJNZXNzYWdlSABSDXJ1bm5lck1lc3NhZ2USJwoIc25hcHNob3QYBiABKAsyCS5TbmFwc2hvdEgAUghzbmFwc2hvdEIKCghzdWJfdHlwZQ==');
 @$core.Deprecated('Use logEntryDescriptor instead')
 const LogEntry$json = const {
   '1': 'LogEntry',

@@ -1,9 +1,8 @@
 import 'package:collection/collection.dart';
-import 'package:convenient_test_manager/components/misc/enhanced_selectable_text.dart';
+import 'package:convenient_test_manager/components/home_page/raw_log_panel.dart';
+import 'package:convenient_test_manager/components/home_page/screenshot_panel.dart';
+import 'package:convenient_test_manager/components/home_page/video_panel.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
-import 'package:convenient_test_manager/stores/log_store.dart';
-import 'package:convenient_test_manager/stores/organization_store.dart';
-import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -72,102 +71,11 @@ class HomePageSecondaryPanel extends StatelessWidget {
 
     switch (homePageStore.activeSecondaryPanelTab) {
       case HomePageSecondaryPanelTab.screenshot:
-        return const _ScreenshotPanel();
+        return const HomePageScreenshotPanel();
       case HomePageSecondaryPanelTab.rawLog:
-        return const _RawLogPanel();
+        return const HomePageRawLogPanel();
+      case HomePageSecondaryPanelTab.video:
+        return const HomePageVideoPanel();
     }
-  }
-}
-
-class _RawLogPanel extends StatelessWidget {
-  const _RawLogPanel({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final organizationStore = GetIt.I.get<OrganizationStore>();
-    final rawLogStore = GetIt.I.get<RawLogStore>();
-
-    return Observer(builder: (_) {
-      final activeTestEntryId = organizationStore.activeTestEntryId;
-      if (activeTestEntryId == null) {
-        return const Center(
-          child: Text('Tap log entries on the left to view screenshots'),
-        );
-      }
-
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: ListView(
-          primary: false,
-          children: [
-            EnhancedSelectableText(
-              rawLogStore.rawLogInTest[activeTestEntryId],
-              style: const TextStyle(fontSize: 13, fontFamily: 'RobotoMono'),
-            ),
-          ],
-        ),
-      );
-    });
-  }
-}
-
-class _ScreenshotPanel extends StatelessWidget {
-  const _ScreenshotPanel({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final logStore = GetIt.I.get<LogStore>();
-
-    return Observer(builder: (_) {
-      final activeLogEntryId = logStore.activeLogEntryId;
-      if (activeLogEntryId == null) {
-        return const Center(
-          child: Text('Tap log entries on the left to view screenshots'),
-        );
-      }
-
-      final snapshotNames = logStore.snapshotInLog[activeLogEntryId]?.keys ?? [];
-      if (snapshotNames.isEmpty) {
-        return const Center(
-          child: Text('No screenshots for chosen log entry'),
-        );
-      }
-
-      return Row(
-        children: snapshotNames.map((snapshotName) {
-          final image = logStore.snapshotInLog[activeLogEntryId]![snapshotName];
-
-          return Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      snapshotName,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                          ),
-                          child: image != null ? Image.memory(image) : const Text('[Failed to load image]'),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        }).toList(),
-      );
-    });
   }
 }

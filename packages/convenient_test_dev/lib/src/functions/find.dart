@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/command.dart';
@@ -126,7 +128,7 @@ class TFinderCommand extends TCommand {
       snapshotWhenSuccess: false,
     );
     // update log, since [should] will change logs
-    log.update(logTitle, logMessage, type: LogSubEntryType.GENERAL_MESSAGE);
+    unawaited(log.update(logTitle, logMessage, type: LogSubEntryType.GENERAL_MESSAGE));
 
     await act();
 

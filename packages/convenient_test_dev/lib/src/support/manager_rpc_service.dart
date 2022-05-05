@@ -20,8 +20,6 @@ abstract class ManagerRpcService {
     }
   }
 
-  Future<void> resetManagerCache();
-
   Future<void> report(ReportCollection request);
 
   Future<WorkerMode> getWorkerMode();
@@ -38,9 +36,6 @@ class ManagerRpcServiceRealConnect extends ManagerRpcService {
 
   @override
   Future<void> report(ReportCollection request) => _client.report(request);
-
-  @override
-  Future<void> resetManagerCache() => _client.resetManagerCache(Empty());
 }
 
 ConvenientTestManagerClient createConvenientTestManagerClientStub({required String host, required int port}) {
@@ -69,11 +64,6 @@ class ManagerRpcServiceLocalFile extends ManagerRpcService {
   Future<void> report(ReportCollection request) async {
     // need to be sync, otherwise when two reports come together they may conflict
     File(await reportPath).writeAsBytesSync(request.writeToBuffer(), mode: FileMode.append);
-  }
-
-  @override
-  Future<void> resetManagerCache() async {
-    Log.d(_kTag, 'resetManagerCache do nothing');
   }
 
   static Future<String> _createReportPath() async {

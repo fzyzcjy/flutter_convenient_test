@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/services/report_handler_service.dart';
 import 'package:convenient_test_manager/stores/worker_mode_store.dart';
 import 'package:get_it/get_it.dart';
@@ -26,14 +25,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
   @override
   Future<Empty> report(ServiceCall call, ReportCollection request) async {
-    await GetIt.I.get<ReportHandlerService>().handle(request);
-    return Empty();
-  }
-
-  @override
-  Future<Empty> resetManagerCache(ServiceCall call, Empty request) async {
-    Log.d(_kTag, 'resetManagerCache called');
-    GetIt.I.get<MiscService>().resetCache();
+    await GetIt.I.get<ReportHandlerService>().handle(request, offlineFile: false);
     return Empty();
   }
 

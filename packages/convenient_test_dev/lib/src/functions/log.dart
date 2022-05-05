@@ -30,18 +30,12 @@ LogHandle convenientTestLog(
   String? stackTrace,
   LiveTest? liveTest,
 }) {
-  type ??= LogSubEntryType.GENERAL_MESSAGE;
-  liveTest ??= Invoker.current!.liveTest;
-
-  final log = LogHandle(
-    ConvenientTestIdGen.nextId(),
-    SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
-  );
+  final log = LogHandle.create(liveTest: liveTest);
 
   log.update(
     title,
     message,
-    type: type,
+    type: type ?? LogSubEntryType.GENERAL_MESSAGE,
     error: error,
     stackTrace: stackTrace,
     printing: true, // <--
@@ -68,17 +62,30 @@ class LogHandle {
   final int _id;
   final List<String> _entryLocators;
 
-  LogHandle(this._id, this._entryLocators);
+  LogHandle._(this._id, this._entryLocators);
 
-  void update(
+  factory LogHandle.create({
+    LiveTest? liveTest,
+  }) {
+    return LogHandle._(
+      ConvenientTestIdGen.nextId(),
+      SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest ?? Invoker.current!.liveTest),
+    );
+  }
+
+  Future<void> update(
     String title,
     String message, {
     String? error,
     String? stackTrace,
     required LogSubEntryType type,
     bool printing = false,
-  }) {
-    myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
+  }) async {
+    if (printing) {
+      Log.i(_kTag, '${_typeToLeading(type)} $title $message $error $stackTrace');
+    }
+
+    await myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
             logEntry: LogEntry(
           id: _id,
           entryLocators: _entryLocators,
@@ -94,10 +101,6 @@ class LogHandle {
             ),
           ],
         )));
-
-    if (printing) {
-      Log.i(_kTag, '${_typeToLeading(type)} $title $message $error $stackTrace');
-    }
   }
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
