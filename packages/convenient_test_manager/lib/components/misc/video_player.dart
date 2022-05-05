@@ -15,6 +15,11 @@ class VideoPlayer extends StatefulWidget {
 
 class _VideoPlayerState extends State<VideoPlayer> {
   final player = Player(id: Random().nextInt(100000000));
+  var playbackRateIndex = 0;
+
+  double get playbackRate => _kPlaybackRates[playbackRateIndex];
+
+  static const _kPlaybackRates = [1.0, 0.2, 0.4];
 
   @override
   void initState() {
@@ -48,11 +53,38 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Video(
-        player: player,
-        playlistLength: 1,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        children: [
+          const SizedBox(height: 8),
+          _buildControlRow(),
+          const SizedBox(height: 8),
+          Expanded(
+            child: Center(
+              child: Video(
+                player: player,
+                playlistLength: 1,
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+        ],
       ),
+    );
+  }
+
+  Widget _buildControlRow() {
+    return Row(
+      children: [
+        TextButton(
+          onPressed: () {
+            setState(() => playbackRateIndex = (playbackRateIndex + 1) % _kPlaybackRates.length);
+            player.setRate(playbackRate);
+          },
+          child: Text('Speed ${playbackRate.toStringAsFixed(1)}x'),
+        ),
+      ],
     );
   }
 }
