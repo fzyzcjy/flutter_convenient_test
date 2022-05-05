@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 
-abstract class VideoRecorderService {
-  static VideoRecorderService create() {
+abstract class ScreenVideoRecorderService {
+  static ScreenVideoRecorderService create() {
     // TODO add Android support
-    final inner = _VideoRecorderServiceIosSimulator.maybeCreate() ?? _VideoRecorderServiceNoOp();
-    return _VideoRecorderServiceIsolateExceptionDecorator(inner);
+    final inner = _ScreenVideoRecorderServiceIosSimulator.maybeCreate() ?? _ScreenVideoRecorderServiceNoOp();
+    return _ScreenVideoRecorderServiceIsolateExceptionDecorator(inner);
   }
 
   Future<void> startRecord(String targetPath);
@@ -14,12 +14,12 @@ abstract class VideoRecorderService {
   Future<void> stopRecord();
 }
 
-class _VideoRecorderServiceIsolateExceptionDecorator implements VideoRecorderService {
-  static const _kTag = 'VideoRecorderServiceIsolateExceptionDecorator';
+class _ScreenVideoRecorderServiceIsolateExceptionDecorator implements ScreenVideoRecorderService {
+  static const _kTag = 'ScreenVideoRecorderServiceIsolateExceptionDecorator';
 
-  final VideoRecorderService inner;
+  final ScreenVideoRecorderService inner;
 
-  _VideoRecorderServiceIsolateExceptionDecorator(this.inner);
+  _ScreenVideoRecorderServiceIsolateExceptionDecorator(this.inner);
 
   @override
   Future<void> startRecord(String targetPath) => _captureException(() => inner.startRecord(targetPath));
@@ -36,14 +36,14 @@ class _VideoRecorderServiceIsolateExceptionDecorator implements VideoRecorderSer
   }
 }
 
-class _VideoRecorderServiceIosSimulator extends VideoRecorderService {
-  static const _kTag = 'VideoRecorderServiceIosSimulator';
+class _ScreenVideoRecorderServiceIosSimulator extends ScreenVideoRecorderService {
+  static const _kTag = 'ScreenVideoRecorderServiceIosSimulator';
 
-  static _VideoRecorderServiceIosSimulator? maybeCreate() {
+  static _ScreenVideoRecorderServiceIosSimulator? maybeCreate() {
     // non-mac computers cannot have ios simulators
     if (!Platform.isMacOS) return null;
 
-    return _VideoRecorderServiceIosSimulator();
+    return _ScreenVideoRecorderServiceIosSimulator();
   }
 
   Process? _process;
@@ -84,8 +84,8 @@ class _VideoRecorderServiceIosSimulator extends VideoRecorderService {
   }
 }
 
-class _VideoRecorderServiceNoOp extends VideoRecorderService {
-  static const _kTag = 'VideoRecorderServiceNoOp';
+class _ScreenVideoRecorderServiceNoOp extends ScreenVideoRecorderService {
+  static const _kTag = 'ScreenVideoRecorderServiceNoOp';
 
   @override
   Future<void> startRecord(String targetPath) async {

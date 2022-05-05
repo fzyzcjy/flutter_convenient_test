@@ -1,4 +1,4 @@
-import 'package:convenient_test_manager/services/video_recorder_service.dart';
+import 'package:convenient_test_manager/services/screen_video_recorder_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
@@ -23,12 +23,12 @@ abstract class _VideoStore with Store {
   @action
   Future<void> startRecord() async {
     recordingVideoPath = await _createVideoPath();
-    await GetIt.I.get<VideoRecorderService>().startRecord(recordingVideoPath!);
+    await GetIt.I.get<ScreenVideoRecorderService>().startRecord(recordingVideoPath!);
   }
 
   @action
   Future<void> stopRecord() async {
-    await GetIt.I.get<VideoRecorderService>().stopRecord();
+    await GetIt.I.get<ScreenVideoRecorderService>().stopRecord();
     displayVideoPath = recordingVideoPath;
     recordingVideoPath = null;
   }
