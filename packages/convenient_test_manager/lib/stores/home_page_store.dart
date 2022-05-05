@@ -11,15 +11,15 @@ abstract class _HomePageStore with Store {
 
   final itemScrollController = ItemScrollController();
   final itemPositionsListener = ItemPositionsListener.create();
- 
+
   /// key: testId; value: ListView index of *first* log entry of that test
   final rdtListViewIndexOfFirstLogEntryOfTestIdMap = ObservableMap<int, int>();
 }
 
 enum HomePageSecondaryPanelTab {
   screenshot,
-  rawLog,
   video,
+  rawLog,
 }
 
 extension ExtHomePageSecondaryPanelTab on HomePageSecondaryPanelTab {
@@ -27,10 +27,10 @@ extension ExtHomePageSecondaryPanelTab on HomePageSecondaryPanelTab {
     switch (this) {
       case HomePageSecondaryPanelTab.screenshot:
         return 'Screenshots';
+      case HomePageSecondaryPanelTab.video:
+        return 'Videos';
       case HomePageSecondaryPanelTab.rawLog:
         return 'Raw Logs';
-      case HomePageSecondaryPanelTab.video:
-        return 'Video';
     }
   }
 }

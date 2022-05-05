@@ -197,6 +197,7 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     return IconButton(
       visualDensity: VisualDensity.compact,
       onPressed: _handleTapPlayVideoButton,
+      tooltip: 'Play video recording',
       icon: const Icon(
         Icons.movie,
         color: Colors.teal,
@@ -278,6 +279,7 @@ class _RunTestButton extends StatelessWidget {
         GetIt.I.get<HighlightStore>().enableAutoExpand = true;
         GetIt.I.get<MiscService>().hotRestartAndRunTests(filterNameRegex: filterNameRegex);
       },
+      tooltip: 'Run this test',
       icon: const Icon(
         Icons.play_arrow,
         color: Colors.blue,
