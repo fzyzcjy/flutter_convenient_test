@@ -1,3 +1,4 @@
+import 'package:convenient_test_manager/components/misc/video_player.dart';
 import 'package:convenient_test_manager/services/screen_video_recorder_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,8 @@ abstract class _VideoStore with Store {
 
   @observable
   String? displayVideoPath;
+
+  final mainPlayerController = VideoPlayerController();
 
   void clear() {
     recordingVideoPath = null;

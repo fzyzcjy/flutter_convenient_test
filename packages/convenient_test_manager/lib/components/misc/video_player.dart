@@ -5,6 +5,14 @@ import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
 
+class VideoPlayerController {
+  Stream<Duration> get positionStream => TODO;
+ 
+  Future<void> seek(Duration position) async {
+    TODO;
+  }
+}
+
 class VideoPlayer extends StatefulWidget {
   final String videoPath;
 
