@@ -91,6 +91,8 @@ abstract class _HighlightStore with Store {
     if (highlightLogEntryId == null) return;
 
     final listViewIndexForHighlight = _calcListViewIndexForLogEntry(logEntryId: highlightLogEntryId);
+    Log.d(_kTag,
+        'handleHighlightLogEntryIdChange highlightLogEntryId=$highlightLogEntryId listViewIndexForHighlight=$listViewIndexForHighlight');
     if (listViewIndexForHighlight == null) return;
 
     final itemPositions = homePageStore.itemPositionsListener.itemPositions.value.map((e) => e.index).toList();
