@@ -38,6 +38,8 @@ P.S. Highlighted action is in sync with the playing video. Tap action to seek vi
 
 Though not necessarily needed, you can still use everything from `integration_test`. This package is not a reinvented wheel.
 
+A few places need to be changed for an app using `integration_test`: Change `testWidgets` to `tTestWidgets`, and wrap `main` with `convenientTestMain`.
+
 #### Flaky tests awareness
 
 Flaky is flaky, and we are aware of it. It is neither failed nor success, so you will not be alarmed by false positives, and not completely ignore it.
