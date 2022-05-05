@@ -6,9 +6,12 @@ import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
 
 class VideoPlayerController {
+  static const _kTag = 'VideoPlayerController';
+
   Stream<Duration> get positionStream => TODO;
- 
+
   Future<void> seek(Duration position) async {
+    Log.d(_kTag, 'seek position=$position');
     TODO;
   }
 }
