@@ -18,12 +18,12 @@ abstract class _VideoStore with Store {
   @action
   Future<void> startRecord() async {
     recordingVideoPath = await _createVideoPath();
-    await _videoRecorderService.startRecord(recordingVideoPath!);
+    await GetIt.I.get<VideoRecorderService>().startRecord(recordingVideoPath!);
   }
 
   @action
   Future<void> stopRecord() async {
-    await _videoRecorderService.stopRecord();
+    await GetIt.I.get<VideoRecorderService>().stopRecord();
     displayVideoPath = recordingVideoPath;
     recordingVideoPath = null;
   }
@@ -32,6 +32,4 @@ abstract class _VideoStore with Store {
     final stem = DateFormat('yyyyMMdd_hhmmss').format(DateTime.now());
     return '${(await getTemporaryDirectory()).path}/ConvenientTest_Video_$stem.mov';
   }
-
-  final _videoRecorderService = GetIt.I.get<VideoRecorderService>();
 }
