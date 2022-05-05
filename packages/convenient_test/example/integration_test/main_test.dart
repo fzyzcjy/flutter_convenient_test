@@ -1,4 +1,5 @@
 import 'package:convenient_test_dev/convenient_test_dev.dart';
+import 'package:convenient_test_example/home_page.dart';
 import 'package:convenient_test_example/main.dart' as app;
 import 'package:convenient_test_example/main.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   convenientTestMain(MyConvenientTestSlot(), () {
     group('quickstart tests', () {
-      TODO;
+      // TODO;
     });
 
     group('other tests', () {
