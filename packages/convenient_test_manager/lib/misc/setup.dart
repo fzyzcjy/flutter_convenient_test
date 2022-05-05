@@ -10,11 +10,14 @@ import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/video_store.dart';
 import 'package:convenient_test_manager/stores/worker_mode_store.dart';
+import 'package:dart_vlc/dart_vlc.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
 
 void setup() {
+  DartVLC.initialize();
+
   getIt.registerSingleton<LogStore>(LogStore());
   getIt.registerSingleton<OrganizationStore>(OrganizationStore());
   getIt.registerSingleton<SuiteInfoStore>(SuiteInfoStore());
