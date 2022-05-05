@@ -50,10 +50,12 @@ abstract class _LogStore with Store {
       1;
 
   int? calcLogEntryAtTime(DateTime time) {
-    final logSubEntryId = logSubEntryIdOfTime.lastKeyBefore(time.microsecondsSinceEpoch);
-    if (logSubEntryId == null) return null;
+    final interestKey = logSubEntryIdOfTime.lastKeyBefore(time.microsecondsSinceEpoch);
+    if (interestKey == null) return null;
 
+    final logSubEntryId = logSubEntryIdOfTime[interestKey];
     final logEntryId = logEntryIdOfLogSubEntry[logSubEntryId];
+
     return logEntryId;
   }
 
