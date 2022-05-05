@@ -9,6 +9,8 @@ class LogStore = _LogStore with _$LogStore;
 
 abstract class _LogStore with Store {
   final logEntryInTest = RelationOneToMany();
+  final testIdOfLogEntry = ObservableMap<int, int>();
+
   final logSubEntryInEntry = RelationOneToMany();
 
   final logSubEntryMap = ObservableMap<int, LogSubEntry>();
@@ -25,6 +27,7 @@ abstract class _LogStore with Store {
 
     if (!(logEntryInTest[testEntryId]?.contains(logEntryId) ?? false)) {
       logEntryInTest.addRelation(testEntryId, logEntryId);
+      testIdOfLogEntry[logEntryId] = testEntryId;
     }
   }
 
