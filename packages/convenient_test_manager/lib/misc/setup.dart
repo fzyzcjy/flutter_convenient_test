@@ -6,7 +6,6 @@ import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart
 import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
-import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/video_store.dart';
@@ -20,7 +19,6 @@ void setup() {
   DartVLC.initialize();
 
   getIt.registerSingleton<LogStore>(LogStore());
-  getIt.registerSingleton<OrganizationStore>(OrganizationStore());
   getIt.registerSingleton<SuiteInfoStore>(SuiteInfoStore());
   getIt.registerSingleton<RawLogStore>(RawLogStore());
   getIt.registerSingleton<WorkerModeStore>(WorkerModeStore());

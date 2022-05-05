@@ -5,7 +5,6 @@ import 'package:convenient_test_manager/services/report_handler_service.dart';
 import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
-import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/video_store.dart';
@@ -39,7 +38,6 @@ class MiscService {
   void clearAll() {
     Log.d(_kTag, 'clearAll');
 
-    GetIt.I.get<OrganizationStore>().clear();
     GetIt.I.get<SuiteInfoStore>().clear();
     GetIt.I.get<LogStore>().clear();
     GetIt.I.get<RawLogStore>().clear();
