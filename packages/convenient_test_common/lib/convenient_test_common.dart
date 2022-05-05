@@ -1,4 +1,5 @@
 export 'package:convenient_test_common/src/common_flutter/collections.dart';
+export 'package:convenient_test_common/src/common_flutter/counter.dart';
 export 'package:convenient_test_common/src/common_flutter/front_log.dart';
 export 'package:convenient_test_common/src/common_flutter/get_set.dart';
 export 'package:convenient_test_common/src/common_flutter/relations.dart';

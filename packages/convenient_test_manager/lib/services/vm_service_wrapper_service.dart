@@ -31,13 +31,18 @@ class VmServiceWrapperService {
     }
   }
 
+  bool get hotRestartActing => _hotRestartActing.positive;
+  final _hotRestartActing = ObservableCounter();
+
   // ref devtools/packages/devtools_app :: HotRestartButton
   Future<void> hotRestart() async {
-    Log.i(_kTag, 'hotRestart start');
-    // p.s. devtool's code reads isolateId and ensure it is sent to main isolate.
-    // Here we have not done that, but seems to work well already.
-    final resp = await _manager.callService('hotRestart');
-    Log.i(_kTag, 'hotRestart end resp=${resp.json}');
+    await _hotRestartActing.withPlusOneAsync(() async {
+      Log.i(_kTag, 'hotRestart start');
+      // p.s. devtool's code reads isolateId and ensure it is sent to main isolate.
+      // Here we have not done that, but seems to work well already.
+      final resp = await _manager.callService('hotRestart');
+      Log.i(_kTag, 'hotRestart end resp=${resp.json}');
+    });
   }
 }
 
