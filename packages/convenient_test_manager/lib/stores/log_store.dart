@@ -1,6 +1,6 @@
+import 'dart:collection';
 import 'dart:typed_data';
 
-import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:mobx/mobx.dart';
 
@@ -10,23 +10,33 @@ class LogStore = _LogStore with _$LogStore;
 
 abstract class _LogStore with Store {
   final logEntryInTest = RelationOneToMany();
+  final testIdOfLogEntry = ObservableMap<int, int>();
+
   final logSubEntryInEntry = RelationOneToMany();
+  final logEntryIdOfLogSubEntry = ObservableMap<int, int>();
 
   final logSubEntryMap = ObservableMap<int, LogSubEntry>();
+
+  /// [LogSubEntry.time] => [LogSubEntry.id]
+  final logSubEntryIdOfTime = SplayTreeMap<int, int>();
 
   /// `snapshotInLog[logEntryId][name] == snapshot bytes`
   final snapshotInLog = ObservableMap<int, ObservableMap<String, Uint8List>>();
 
-  @observable
-  int? activeLogEntryId;
+  void addLogEntry({required int testEntryId, required int logEntryId, required List<LogSubEntry> subEntries}) {
+    logSubEntryInEntry[logEntryId] ??= ObservableList();
 
-  @observable
-  String? activeSnapshotName;
+    for (final subEntry in subEntries) {
+      logSubEntryMap[subEntry.id] = subEntry;
+      logSubEntryInEntry[logEntryId]!.add(subEntry.id);
+      logEntryIdOfLogSubEntry[subEntry.id] = logEntryId;
+      logSubEntryIdOfTime[subEntry.time.toInt()] = subEntry.id;
+    }
 
-  @computed
-  String? get effectiveActiveSnapshotName {
-    if (activeSnapshotName != null) return activeSnapshotName;
-    return snapshotInLog[activeLogEntryId]?.keys.firstOrNull;
+    if (!(logEntryInTest[testEntryId]?.contains(logEntryId) ?? false)) {
+      logEntryInTest.addRelation(testEntryId, logEntryId);
+      testIdOfLogEntry[logEntryId] = testEntryId;
+    }
   }
 
   Iterable<int> logSubEntryInTest(int testInfoId) =>
@@ -39,12 +49,20 @@ abstract class _LogStore with Store {
           .length >
       1;
 
+  int? calcLogEntryAtTime(DateTime time) {
+    final interestKey = logSubEntryIdOfTime.lastKeyBefore(time.microsecondsSinceEpoch);
+    if (interestKey == null) return null;
+
+    final logSubEntryId = logSubEntryIdOfTime[interestKey];
+    final logEntryId = logEntryIdOfLogSubEntry[logSubEntryId];
+
+    return logEntryId;
+  }
+
   void clear() {
     logEntryInTest.clear();
     logSubEntryInEntry.clear();
     logSubEntryMap.clear();
     snapshotInLog.clear();
-    activeLogEntryId = null;
-    activeSnapshotName = null;
   }
 }

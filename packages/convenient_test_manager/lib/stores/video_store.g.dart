@@ -9,35 +9,53 @@ part of 'video_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$VideoStore on _VideoStore, Store {
-  late final _$recordingVideoPathAtom =
-      Atom(name: '_VideoStore.recordingVideoPath', context: context);
+  late final _$recordingVideoInfoAtom =
+      Atom(name: '_VideoStore.recordingVideoInfo', context: context);
 
   @override
-  String? get recordingVideoPath {
-    _$recordingVideoPathAtom.reportRead();
-    return super.recordingVideoPath;
+  VideoInfo? get recordingVideoInfo {
+    _$recordingVideoInfoAtom.reportRead();
+    return super.recordingVideoInfo;
   }
 
   @override
-  set recordingVideoPath(String? value) {
-    _$recordingVideoPathAtom.reportWrite(value, super.recordingVideoPath, () {
-      super.recordingVideoPath = value;
+  set recordingVideoInfo(VideoInfo? value) {
+    _$recordingVideoInfoAtom.reportWrite(value, super.recordingVideoInfo, () {
+      super.recordingVideoInfo = value;
     });
   }
 
-  late final _$displayVideoPathAtom =
-      Atom(name: '_VideoStore.displayVideoPath', context: context);
+  late final _$displayVideoInfoAtom =
+      Atom(name: '_VideoStore.displayVideoInfo', context: context);
 
   @override
-  String? get displayVideoPath {
-    _$displayVideoPathAtom.reportRead();
-    return super.displayVideoPath;
+  VideoInfo? get displayVideoInfo {
+    _$displayVideoInfoAtom.reportRead();
+    return super.displayVideoInfo;
   }
 
   @override
-  set displayVideoPath(String? value) {
-    _$displayVideoPathAtom.reportWrite(value, super.displayVideoPath, () {
-      super.displayVideoPath = value;
+  set displayVideoInfo(VideoInfo? value) {
+    _$displayVideoInfoAtom.reportWrite(value, super.displayVideoInfo, () {
+      super.displayVideoInfo = value;
+    });
+  }
+
+  late final _$playerPositionCorrespondingLogEntryIdAtom = Atom(
+      name: '_VideoStore.playerPositionCorrespondingLogEntryId',
+      context: context);
+
+  @override
+  int? get playerPositionCorrespondingLogEntryId {
+    _$playerPositionCorrespondingLogEntryIdAtom.reportRead();
+    return super.playerPositionCorrespondingLogEntryId;
+  }
+
+  @override
+  set playerPositionCorrespondingLogEntryId(int? value) {
+    _$playerPositionCorrespondingLogEntryIdAtom
+        .reportWrite(value, super.playerPositionCorrespondingLogEntryId, () {
+      super.playerPositionCorrespondingLogEntryId = value;
     });
   }
 
@@ -60,8 +78,9 @@ mixin _$VideoStore on _VideoStore, Store {
   @override
   String toString() {
     return '''
-recordingVideoPath: ${recordingVideoPath},
-displayVideoPath: ${displayVideoPath}
+recordingVideoInfo: ${recordingVideoInfo},
+displayVideoInfo: ${displayVideoInfo},
+playerPositionCorrespondingLogEntryId: ${playerPositionCorrespondingLogEntryId}
     ''';
   }
 }

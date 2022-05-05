@@ -12,15 +12,16 @@ class HomePageVideoPanel extends StatelessWidget {
     final videoStore = GetIt.I.get<VideoStore>();
 
     return Observer(builder: (_) {
-      final displayVideoPath = videoStore.displayVideoPath;
+      final displayVideoPath = videoStore.displayVideoInfo?.path;
       if (displayVideoPath == null) {
         return const Center(
-          child: Text('No video'),
+          child: Text('No video or still recording'),
         );
       }
 
       return VideoPlayer(
         videoPath: displayVideoPath,
+        controller: videoStore.mainPlayerController,
       );
     });
   }

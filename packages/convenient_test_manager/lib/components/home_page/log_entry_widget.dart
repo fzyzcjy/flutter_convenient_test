@@ -2,8 +2,9 @@ import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/misc/enhanced_selectable_text.dart';
 import 'package:convenient_test_manager/components/misc/rotate_animation.dart';
 import 'package:convenient_test_manager/misc/protobuf_extensions.dart';
+import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
-import 'package:convenient_test_manager/stores/organization_store.dart';
+import 'package:convenient_test_manager/stores/video_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -25,7 +26,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logStore = GetIt.I.get<LogStore>();
-    final organizationStore = GetIt.I.get<OrganizationStore>();
+    final highlightStore = GetIt.I.get<HighlightStore>();
 
     // const kSkipTypes = [
     //   LogEntryType.TEST_START,
@@ -41,23 +42,16 @@ class HomePageLogEntryWidget extends StatelessWidget {
       //   return Container();
       // }
 
-      final active = logStore.activeLogEntryId == logEntryId;
+      final active = highlightStore.highlightLogEntryId == logEntryId;
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
             onHover: (hovering) {
-              if (hovering) {
-                logStore.activeLogEntryId = logEntryId;
-                organizationStore.activeTestEntryId = testEntryId;
-              }
+              if (hovering) _handleTapOrHover(interestLogSubEntry, targetState: true);
             },
-            onTap: () {
-              final targetState = !active;
-              logStore.activeLogEntryId = targetState ? logEntryId : null;
-              organizationStore.activeTestEntryId = targetState ? testEntryId : null;
-            },
+            onTap: () => _handleTapOrHover(interestLogSubEntry, targetState: !active),
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8),
               margin: const EdgeInsets.only(left: 32),
@@ -109,6 +103,17 @@ class HomePageLogEntryWidget extends StatelessWidget {
         ],
       );
     });
+  }
+
+  void _handleTapOrHover(LogSubEntry interestLogSubEntry, {required bool targetState}) {
+    final highlightStore = GetIt.I.get<HighlightStore>();
+    final videoStore = GetIt.I.get<VideoStore>();
+
+    highlightStore.highlightLogEntryId = targetState ? logEntryId : null;
+    highlightStore.highlightTestEntryId = targetState ? testEntryId : null;
+    if (targetState) {
+      videoStore.mainPlayerController.seek(videoStore.absoluteToVideoTime(interestLogSubEntry.timeTyped));
+    }
   }
 
   Widget _buildTitle(LogSubEntry interestLogSubEntry) {

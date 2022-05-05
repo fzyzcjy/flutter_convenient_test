@@ -3,8 +3,8 @@ import 'dart:typed_data';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
+import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
-import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/video_store.dart';
@@ -62,21 +62,12 @@ class ReportHandlerService {
     final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators);
     if (testEntryId == null) return;
 
-    for (final subEntry in request.subEntries) {
-      _logStore.logSubEntryMap.addToIdObjMap(subEntry);
-    }
-    (_logStore.logSubEntryInEntry[request.id] ??= ObservableList())
-        .addAll(request.subEntries.map((subEntry) => subEntry.id));
-    if (!(_logStore.logEntryInTest[testEntryId]?.contains(request.id) ?? false)) {
-      _logStore.logEntryInTest.addRelation(testEntryId, request.id);
-    }
+    _logStore.addLogEntry(testEntryId: testEntryId, logEntryId: request.id, subEntries: request.subEntries);
 
-    if (_organizationStore.enableAutoExpand) {
-      _organizationStore.expandGroupEntryMap.clear();
-      for (var i = 1; i <= request.entryLocators.length; ++i) {
-        _organizationStore.expandGroupEntryMap[
-        _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))!] = true;
-      }
+    if (_highlightStore.enableAutoExpand) {
+      _highlightStore
+        ..expandGroupEntryMap.clear()
+        ..expandSeriesForTest(testInfoId: testEntryId);
     }
   }
 
@@ -104,7 +95,7 @@ class ReportHandlerService {
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
     if (testEntryId == null) return;
 
-    _organizationStore.testEntryStateMap[testEntryId] = request.state;
+    _suiteInfoStore.testEntryStateMap[testEntryId] = request.state;
   }
 
   Future<void> _handleSnapshot(Snapshot request) async {
@@ -121,14 +112,7 @@ class ReportHandlerService {
   }
 
   final _logStore = GetIt.I.get<LogStore>();
-  final _organizationStore = GetIt.I.get<OrganizationStore>();
+  final _highlightStore = GetIt.I.get<HighlightStore>();
   final _suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
   final _rawLogStore = GetIt.I.get<RawLogStore>();
-}
-
-extension<T> on Map<int, T> {
-  void addToIdObjMap(T obj) {
-    // ignore: avoid_dynamic_calls
-    this[(obj as dynamic).id as int] = obj;
-  }
 }

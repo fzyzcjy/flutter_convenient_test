@@ -19,7 +19,6 @@ import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
 
 class ConvenientTest {
-  @internal
   final WidgetTester tester;
 
   ConvenientTest(this.tester);
@@ -68,7 +67,7 @@ Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegratio
 
       unawaited(
           myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(overallExecution: OverallExecution.SET_UP_ALL)));
-         
+
       setup();
 
       setUpLogTestStartAndEnd();

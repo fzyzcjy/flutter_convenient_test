@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/services/report_handler_service.dart';
 import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
+import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
-import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/video_store.dart';
@@ -29,7 +29,7 @@ class MiscService {
   }
 
   Future<void> reloadInfo() async {
-    GetIt.I.get<OrganizationStore>().enableAutoExpand = true;
+    GetIt.I.get<HighlightStore>().enableAutoExpand = true;
     GetIt.I.get<WorkerModeStore>().activeWorkerMode =
         WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: kRegexMatchNothing));
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
@@ -38,11 +38,11 @@ class MiscService {
   void clearAll() {
     Log.d(_kTag, 'clearAll');
 
-    GetIt.I.get<OrganizationStore>().clear();
     GetIt.I.get<SuiteInfoStore>().clear();
     GetIt.I.get<LogStore>().clear();
     GetIt.I.get<RawLogStore>().clear();
     GetIt.I.get<VideoStore>().clear();
+    GetIt.I.get<HighlightStore>().clear();
   }
 
   Future<void> pickFileAndReadReport() async {
