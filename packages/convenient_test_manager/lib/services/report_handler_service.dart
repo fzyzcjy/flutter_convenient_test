@@ -67,7 +67,9 @@ class ReportHandlerService {
     if (_highlightStore.enableAutoExpand) {
       _highlightStore
         ..expandGroupEntryMap.clear()
-        ..expandSeriesForTest(testInfoId: testEntryId);
+        ..expandSeriesForTest(testInfoId: testEntryId)
+        ..highlightTestEntryId = testEntryId
+        ..highlightLogEntryId = request.id;
     }
   }
 

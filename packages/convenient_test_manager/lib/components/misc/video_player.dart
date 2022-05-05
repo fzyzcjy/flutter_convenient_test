@@ -160,14 +160,17 @@ class _VideoPlayerState extends State<VideoPlayer> {
       builder: (_, positionSnapshot) {
         final position = positionSnapshot.data ?? PositionState();
 
+        final sliderMax = position.duration?.inMicroseconds.toDouble() ?? 0;
+        final sliderValue = (position.position?.inMicroseconds.toDouble() ?? 0).clamp(0.0, sliderMax);
+
         return Row(
           children: [
             Text(_formatDuration(position.position ?? Duration.zero)),
             Expanded(
               child: Slider(
-                value: position.position?.inMicroseconds.toDouble() ?? 0,
+                value: sliderValue,
                 min: 0,
-                max: position.duration?.inMicroseconds.toDouble() ?? 0,
+                max: sliderMax,
                 onChanged: (microseconds) => player.seek(Duration(microseconds: microseconds.round())),
               ),
             ),

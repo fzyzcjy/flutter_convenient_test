@@ -204,6 +204,9 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
       );
     } else {
       yield StaticSection(
+        metadata: TestInfoLogEntrySectionMetadata(
+          testInfoId: info.id,
+        ),
         count: logEntryIds.length,
         builder: (_, i) => HomePageLogEntryWidget(
           order: i,
@@ -216,6 +219,13 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
   }
 
   bool get expanding => GetIt.I.get<HighlightStore>().expandGroupEntryMap[info.id];
+}
+
+@immutable
+class TestInfoLogEntrySectionMetadata {
+  final int testInfoId;
+
+  const TestInfoLogEntrySectionMetadata({required this.testInfoId});
 }
 
 class _RunTestButton extends StatelessWidget {
