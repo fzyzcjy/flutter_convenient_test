@@ -129,7 +129,15 @@ class _TimerPageState extends State<_TimerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Text((displayDuration.inMilliseconds / 1000).toStringAsFixed(3));
+    return Scaffold(
+      appBar: AppBar(title: const Text('TimerPage')),
+      body: Center(
+        child: Text(
+          (displayDuration.inMilliseconds / 1000).toStringAsFixed(3),
+          style: const TextStyle(fontSize: 20),
+        ),
+      ),
+    );
   }
 }
 
