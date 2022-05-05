@@ -33,7 +33,8 @@ class HomePageLogEntryWidget extends StatelessWidget {
     // ];
 
     return Observer(builder: (_) {
-      final logEntry = logStore.logEntryMap[logEntryId]!;
+      final interestLogSubEntryId = logStore.logSubEntryInEntry[logEntryId]!.last;
+      final interestLogSubEntry = logStore.logSubEntryMap[interestLogSubEntryId]!;
 
       // if (kSkipTypes.contains(logEntry.type)) {
       //   return Container();
@@ -86,11 +87,11 @@ class HomePageLogEntryWidget extends StatelessWidget {
                     ),
                   ),
                   Container(width: 12),
-                  _buildTitle(logEntry),
+                  _buildTitle(interestLogSubEntry),
                   Container(width: 12),
                   Expanded(
                     child: EnhancedSelectableText(
-                      logEntry.message,
+                      interestLogSubEntry.message,
                       // style: const TextStyle(fontFamily: 'RobotoMono'),
                       enableCopyAllButton: false,
                     ),
@@ -99,25 +100,25 @@ class HomePageLogEntryWidget extends StatelessWidget {
               ),
             ),
           ),
-          if (logEntry.error.isNotEmpty) _buildError(context, logEntry)
+          if (interestLogSubEntry.error.isNotEmpty) _buildError(context, interestLogSubEntry)
         ],
       );
     });
   }
 
-  Widget _buildTitle(LogEntry logEntry) {
+  Widget _buildTitle(LogSubEntry interestLogSubEntry) {
     final Color? backgroundColor;
     final Color textColor;
-    switch (logEntry.type) {
-      case LogEntryType.ASSERT:
+    switch (interestLogSubEntry.type) {
+      case LogSubEntryType.ASSERT:
         backgroundColor = Colors.green;
         textColor = Colors.white;
         break;
-      case LogEntryType.ASSERT_FAIL:
+      case LogSubEntryType.ASSERT_FAIL:
         backgroundColor = Colors.red;
         textColor = Colors.white;
         break;
-      case LogEntryType.SECTION:
+      case LogSubEntryType.SECTION:
         backgroundColor = Colors.blue;
         textColor = Colors.white;
         break;
@@ -137,7 +138,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
             color: backgroundColor,
           ),
           child: Text(
-            logEntry.title,
+            interestLogSubEntry.title,
             style: TextStyle(
               fontWeight: FontWeight.w600,
               color: textColor,
@@ -148,8 +149,8 @@ class HomePageLogEntryWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildError(BuildContext context, LogEntry logEntry) {
-    final text = '${logEntry.error}\n${logEntry.stackTrace}';
+  Widget _buildError(BuildContext context, LogSubEntry interestLogSubEntry) {
+    final text = '${interestLogSubEntry.error}\n${interestLogSubEntry.stackTrace}';
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

@@ -38,16 +38,17 @@ class ReportHandlerService {
   }
 
   Future<void> _handleLogEntry(LogEntry request) async {
-    Log.d(_kTag, 'handleReportLogEntry called entryLocators=${request.entryLocators} message=${request.message}');
-
-    _logStore.logEntryMap.addToIdObjMap(request);
+    Log.d(_kTag, 'handleReportLogEntry called');
 
     final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators);
     if (testEntryId == null) return;
 
-    if (!(_logStore.logEntryInTest[testEntryId]?.contains(request.id) ?? false)) {
-      _logStore.logEntryInTest.addRelation(testEntryId, request.id);
+    for (final subEntry in request.subEntries) {
+      _logStore.logSubEntryMap.addToIdObjMap(subEntry);
     }
+    (_logStore.logSubEntryInEntry[request.id] ??= ObservableList())
+        .addAll(request.subEntries.map((subEntry) => subEntry.id));
+    _logStore.logEntryInTest.addRelation(testEntryId, request.id);
 
     if (_organizationStore.enableAutoExpand) {
       _organizationStore.expandGroupEntryMap.clear();
