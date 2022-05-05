@@ -54,18 +54,19 @@ abstract class _HighlightStore with Store {
   }
 
   void _setupSyncVideoPositionToHighlight() {
+    final videoStore = GetIt.I.get<VideoStore>();
+    final logStore = GetIt.I.get<LogStore>();
+
     reaction<int?>(
-      (_) => GetIt.I.get<VideoStore>().playerPositionCorrespondingLogEntryId,
-      (playerPositionCorrespondingLogEntryId) {
-        if (playerPositionCorrespondingLogEntryId == null) return;
-        Log.d(_kTag,
-            'update highlight since playerPositionCorrespondingLogEntryId=$playerPositionCorrespondingLogEntryId');
+      (_) => videoStore.playerPositionCorrespondingLogEntryId,
+      (logEntryId) {
+        if (logEntryId == null) return;
+        Log.d(_kTag, 'update highlight since playerPositionCorrespondingLogEntryId=$logEntryId');
 
-        expandGroupEntryMap[TODO] = true;
+        final testEntryId = logStore.testIdOfLogEntry[logEntryId]!;
+        expandSeriesForTest(testInfoId: testEntryId);
         highlightTestEntryId = testEntryId;
-        highlightLogEntryId = playerPositionCorrespondingLogEntryId;
-
-        TODO;
+        highlightLogEntryId = logEntryId;
       },
     );
   }
