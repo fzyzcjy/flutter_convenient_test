@@ -8,15 +8,17 @@ A fast, easy and reliable testing utility on top of `integration_test`, making w
 
 ## Quick demo
 
-[merge things below into one video. especially good, because the first several subsections *is just a continuous story*!]
+[TODO merge things below into one video. especially good, because the first several subsections *is just a continuous story*!]
 
-[TODO what is this? notice "video" is not here, need to introduce separately]
+[TODO note: let's make each page have a different background color]
 
 ## Features
 
 #### Action history
 
 [TODO video: Prepare - a test like "assert 0, tap, input text, etc, assert 1, tap, wrongly assert 1", notice need to have ~10 steps so more beautiful. Click "run (that one) test" to run that single test, and see time travel and log etc, and see failure.]
+
+[TODO about the video screen: just screenshot the exact size of the Manager, do not be bigger. Otherwise, the ppt looks bad. When needing VSCode, just let it be (partially) inside this region.]
 
 #### Time travel with screenshots
 
