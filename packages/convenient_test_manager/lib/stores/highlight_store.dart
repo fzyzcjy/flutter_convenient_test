@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
+import 'package:convenient_test_manager/stores/video_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -9,6 +10,7 @@ part 'highlight_store.g.dart';
 class HighlightStore = _HighlightStore with _$HighlightStore;
 
 abstract class _HighlightStore with Store {
+  static const _kTag = 'HighlightStore';
   @observable
   bool enableAutoExpand = true;
 
@@ -35,6 +37,27 @@ abstract class _HighlightStore with Store {
     highlightTestEntryId = null;
     highlightLogEntryId = null;
     highlightSnapshotName = null;
+  }
+
+  _HighlightStore() {
+    _setupSyncVideoPositionToHighlight();
+  }
+
+  void _setupSyncVideoPositionToHighlight() {
+    reaction<int?>(
+      (_) => GetIt.I.get<VideoStore>().playerPositionCorrespondingLogEntryId,
+      (playerPositionCorrespondingLogEntryId) {
+        if (playerPositionCorrespondingLogEntryId == null) return;
+        Log.d(_kTag,
+            'update highlight since playerPositionCorrespondingLogEntryId=$playerPositionCorrespondingLogEntryId');
+
+        expandGroupEntryMap[TODO] = true;
+        highlightTestEntryId = testEntryId;
+        highlightLogEntryId = playerPositionCorrespondingLogEntryId;
+
+        TODO;
+      },
+    );
   }
 
   final _logStore = GetIt.I.get<LogStore>();
