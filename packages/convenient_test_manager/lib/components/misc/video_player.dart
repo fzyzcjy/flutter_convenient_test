@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'dart:math';
+
+import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
 
 class VideoPlayer extends StatefulWidget {
@@ -10,6 +14,8 @@ class VideoPlayer extends StatefulWidget {
 }
 
 class _VideoPlayerState extends State<VideoPlayer> {
+  final player = Player(id: Random().nextInt(100000000));
+
   @override
   void initState() {
     super.initState();
@@ -28,19 +34,25 @@ class _VideoPlayerState extends State<VideoPlayer> {
   @override
   void dispose() {
     _deInit();
+    player.dispose();
     super.dispose();
   }
 
   void _init() {
-    TODO;
+    player.open(Media.file(File(widget.videoPath)));
   }
 
   void _deInit() {
-    TODO;
+    // nothing yet
   }
 
   @override
   Widget build(BuildContext context) {
-    return TODO;
+    return Center(
+      child: Video(
+        player: player,
+        playlistLength: 1,
+      ),
+    );
   }
 }
