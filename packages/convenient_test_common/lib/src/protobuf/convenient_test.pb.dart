@@ -7,6 +7,7 @@
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'convenient_test.pbenum.dart';
@@ -238,24 +239,16 @@ class LogEntry extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
     ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
-    ..e<LogEntryType>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE,
-        defaultOrMaker: LogEntryType.INVALID, valueOf: LogEntryType.valueOf, enumValues: LogEntryType.values)
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
-    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error')
-    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stackTrace')
+    ..pc<LogSubEntry>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'subEntries', $pb.PbFieldType.PM,
+        subBuilder: LogSubEntry.create)
     ..hasRequiredFields = false;
 
   LogEntry._() : super();
   factory LogEntry({
     $core.int? id,
     $core.Iterable<$core.String>? entryLocators,
-    LogEntryType? type,
-    $core.String? title,
-    $core.String? message,
-    $core.String? error,
-    $core.String? stackTrace,
+    $core.Iterable<LogSubEntry>? subEntries,
   }) {
     final _result = create();
     if (id != null) {
@@ -264,20 +257,8 @@ class LogEntry extends $pb.GeneratedMessage {
     if (entryLocators != null) {
       _result.entryLocators.addAll(entryLocators);
     }
-    if (type != null) {
-      _result.type = type;
-    }
-    if (title != null) {
-      _result.title = title;
-    }
-    if (message != null) {
-      _result.message = message;
-    }
-    if (error != null) {
-      _result.error = error;
-    }
-    if (stackTrace != null) {
-      _result.stackTrace = stackTrace;
+    if (subEntries != null) {
+      _result.subEntries.addAll(subEntries);
     }
     return _result;
   }
@@ -319,9 +300,108 @@ class LogEntry extends $pb.GeneratedMessage {
   $core.List<$core.String> get entryLocators => $_getList(1);
 
   @$pb.TagNumber(3)
-  LogEntryType get type => $_getN(2);
+  $core.List<LogSubEntry> get subEntries => $_getList(2);
+}
+
+class LogSubEntry extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LogSubEntry',
+      createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time')
+    ..e<LogSubEntryType>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE,
+        defaultOrMaker: LogSubEntryType.INVALID, valueOf: LogSubEntryType.valueOf, enumValues: LogSubEntryType.values)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stackTrace')
+    ..hasRequiredFields = false;
+
+  LogSubEntry._() : super();
+  factory LogSubEntry({
+    $core.int? id,
+    $fixnum.Int64? time,
+    LogSubEntryType? type,
+    $core.String? title,
+    $core.String? message,
+    $core.String? error,
+    $core.String? stackTrace,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (time != null) {
+      _result.time = time;
+    }
+    if (type != null) {
+      _result.type = type;
+    }
+    if (title != null) {
+      _result.title = title;
+    }
+    if (message != null) {
+      _result.message = message;
+    }
+    if (error != null) {
+      _result.error = error;
+    }
+    if (stackTrace != null) {
+      _result.stackTrace = stackTrace;
+    }
+    return _result;
+  }
+  factory LogSubEntry.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory LogSubEntry.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  LogSubEntry clone() => LogSubEntry()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  LogSubEntry copyWith(void Function(LogSubEntry) updates) =>
+      super.copyWith((message) => updates(message as LogSubEntry)) as LogSubEntry; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LogSubEntry create() => LogSubEntry._();
+  LogSubEntry createEmptyInstance() => create();
+  static $pb.PbList<LogSubEntry> createRepeated() => $pb.PbList<LogSubEntry>();
+  @$core.pragma('dart2js:noInline')
+  static LogSubEntry getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogSubEntry>(create);
+  static LogSubEntry? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get id => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set id($core.int v) {
+    $_setSignedInt32(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get time => $_getI64(1);
+  @$pb.TagNumber(2)
+  set time($fixnum.Int64 v) {
+    $_setInt64(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasTime() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTime() => clearField(2);
+
   @$pb.TagNumber(3)
-  set type(LogEntryType v) {
+  LogSubEntryType get type => $_getN(2);
+  @$pb.TagNumber(3)
+  set type(LogSubEntryType v) {
     setField(3, v);
   }
 

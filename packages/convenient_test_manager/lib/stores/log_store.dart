@@ -10,8 +10,9 @@ class LogStore = _LogStore with _$LogStore;
 
 abstract class _LogStore with Store {
   final logEntryInTest = RelationOneToMany();
+  final logSubEntryInEntry = RelationOneToMany();
 
-  final logEntryMap = ObservableMap<int, LogEntry>();
+  final logSubEntryMap = ObservableMap<int, LogSubEntry>();
 
   /// `snapshotInLog[logEntryId][name] == snapshot bytes`
   final snapshotInLog = ObservableMap<int, ObservableMap<String, Uint8List>>();
@@ -28,16 +29,20 @@ abstract class _LogStore with Store {
     return snapshotInLog[activeLogEntryId]?.keys.firstOrNull;
   }
 
+  Iterable<int> logSubEntryInTest(int testInfoId) =>
+      (logEntryInTest[testInfoId] ?? <int>[]).expand((logEntryId) => logSubEntryInEntry[logEntryId] ?? <int>[]);
+
   bool isTestFlaky(int testInfoId) =>
       // If see multiple TEST_START, then this test is flaky
-      (logEntryInTest[testInfoId] ?? <int>[])
-          .where((logEntryId) => logEntryMap[logEntryId]?.type == LogEntryType.TEST_START)
+      logSubEntryInTest(testInfoId)
+          .where((logSubEntryId) => logSubEntryMap[logSubEntryId]?.type == LogSubEntryType.TEST_START)
           .length >
       1;
 
   void clear() {
     logEntryInTest.clear();
-    logEntryMap.clear();
+    logSubEntryInEntry.clear();
+    logSubEntryMap.clear();
     snapshotInLog.clear();
     activeLogEntryId = null;
     activeSnapshotName = null;

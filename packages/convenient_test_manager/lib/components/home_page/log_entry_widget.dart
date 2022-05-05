@@ -1,6 +1,7 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/misc/enhanced_selectable_text.dart';
 import 'package:convenient_test_manager/components/misc/rotate_animation.dart';
+import 'package:convenient_test_manager/misc/protobuf_extensions.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,8 @@ class HomePageLogEntryWidget extends StatelessWidget {
     // ];
 
     return Observer(builder: (_) {
-      final logEntry = logStore.logEntryMap[logEntryId]!;
+      final logSubEntryIds = logStore.logSubEntryInEntry[logEntryId]!;
+      final interestLogSubEntry = logStore.logSubEntryMap[logSubEntryIds.last]!;
 
       // if (kSkipTypes.contains(logEntry.type)) {
       //   return Container();
@@ -86,38 +88,42 @@ class HomePageLogEntryWidget extends StatelessWidget {
                     ),
                   ),
                   Container(width: 12),
-                  _buildTitle(logEntry),
+                  _buildTitle(interestLogSubEntry),
                   Container(width: 12),
                   Expanded(
                     child: EnhancedSelectableText(
-                      logEntry.message,
+                      interestLogSubEntry.message,
                       // style: const TextStyle(fontFamily: 'RobotoMono'),
                       enableCopyAllButton: false,
                     ),
                   ),
+                  Container(width: 4),
+                  _buildTime(logSubEntryIds: logSubEntryIds),
+                  Container(width: 4),
+                  Container(width: 4),
                 ],
               ),
             ),
           ),
-          if (logEntry.error.isNotEmpty) _buildError(context, logEntry)
+          if (interestLogSubEntry.error.isNotEmpty) _buildError(context, interestLogSubEntry)
         ],
       );
     });
   }
 
-  Widget _buildTitle(LogEntry logEntry) {
+  Widget _buildTitle(LogSubEntry interestLogSubEntry) {
     final Color? backgroundColor;
     final Color textColor;
-    switch (logEntry.type) {
-      case LogEntryType.ASSERT:
+    switch (interestLogSubEntry.type) {
+      case LogSubEntryType.ASSERT:
         backgroundColor = Colors.green;
         textColor = Colors.white;
         break;
-      case LogEntryType.ASSERT_FAIL:
+      case LogSubEntryType.ASSERT_FAIL:
         backgroundColor = Colors.red;
         textColor = Colors.white;
         break;
-      case LogEntryType.SECTION:
+      case LogSubEntryType.SECTION:
         backgroundColor = Colors.blue;
         textColor = Colors.white;
         break;
@@ -137,7 +143,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
             color: backgroundColor,
           ),
           child: Text(
-            logEntry.title,
+            interestLogSubEntry.title,
             style: TextStyle(
               fontWeight: FontWeight.w600,
               color: textColor,
@@ -148,8 +154,8 @@ class HomePageLogEntryWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildError(BuildContext context, LogEntry logEntry) {
-    final text = '${logEntry.error}\n${logEntry.stackTrace}';
+  Widget _buildError(BuildContext context, LogSubEntry interestLogSubEntry) {
+    final text = '${interestLogSubEntry.error}\n${interestLogSubEntry.stackTrace}';
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -164,4 +170,28 @@ class HomePageLogEntryWidget extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildTime({required List<int> logSubEntryIds}) {
+    final logStore = GetIt.I.get<LogStore>();
+
+    final testStartTime = logStore.logSubEntryMap[logStore.logSubEntryInTest(testEntryId).first]!.timeTyped;
+    final logEntryStartTime = logStore.logSubEntryMap[logSubEntryIds.first]!.timeTyped;
+    final logEntryEndTime = logStore.logSubEntryMap[logSubEntryIds.last]!.timeTyped;
+
+    final logEntryStartDisplay = _formatDuration(logEntryStartTime.difference(testStartTime));
+    final logEntryEndDisplay = _formatDuration(logEntryEndTime.difference(testStartTime));
+
+    final shouldShowLogEndDisplay = logEntryEndTime.difference(logEntryStartTime) > const Duration(milliseconds: 300);
+
+    return Text(
+      '$logEntryStartDisplay${shouldShowLogEndDisplay ? '-$logEntryEndDisplay' : ''}s',
+      style: const TextStyle(
+        fontSize: 10,
+        color: Colors.grey,
+        fontFamily: 'RobotoMono',
+      ),
+    );
+  }
+
+  String _formatDuration(Duration d) => (d.inMilliseconds / 1000).toStringAsFixed(1);
 }

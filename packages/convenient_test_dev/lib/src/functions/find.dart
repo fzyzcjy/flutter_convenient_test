@@ -126,7 +126,7 @@ class TFinderCommand extends TCommand {
       snapshotWhenSuccess: false,
     );
     // update log, since [should] will change logs
-    log.update(logTitle, logMessage, type: LogEntryType.GENERAL_MESSAGE);
+    log.update(logTitle, logMessage, type: LogSubEntryType.GENERAL_MESSAGE);
 
     await act();
 

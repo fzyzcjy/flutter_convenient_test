@@ -25,14 +25,20 @@ message ReportItem {
 message LogEntry {
   int32 id = 1;
   repeated string entry_locators = 2;
-  LogEntryType type = 3;
+  repeated LogSubEntry sub_entries = 3;
+}
+
+message LogSubEntry {
+  int32 id = 1;
+  int64 time = 2;
+  LogSubEntryType type = 3;
   string title = 4;
   string message = 5;
   string error = 6;
   string stack_trace = 7;
 }
 
-enum LogEntryType {
+enum LogSubEntryType {
   INVALID = 0;
   GENERAL_MESSAGE = 1;
   TEST_START = 2;
