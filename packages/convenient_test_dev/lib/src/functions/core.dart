@@ -66,6 +66,9 @@ Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegratio
       }
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+      unawaited(
+          myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(overallExecution: OverallExecution.SET_UP_ALL)));
+         
       setup();
 
       setUpLogTestStartAndEnd();
