@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:convenient_test/convenient_test.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/home': (_) => const _HomePage(),
           '/second': (_) => const _SecondPage(),
+          '/timer': (_) => const _TimerPage(),
         },
       ),
     );
@@ -93,6 +96,40 @@ class _SecondPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _TimerPage extends StatefulWidget {
+  const _TimerPage({Key? key}) : super(key: key);
+
+  @override
+  State<_TimerPage> createState() => _TimerPageState();
+}
+
+class _TimerPageState extends State<_TimerPage> {
+  final stopwatch = Stopwatch();
+  var displayDuration = Duration.zero;
+  late final Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    stopwatch.start();
+    timer = Timer.periodic(const Duration(milliseconds: 10), (_) {
+      setState(() => displayDuration = stopwatch.elapsed);
+    });
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text((displayDuration.inMilliseconds / 1000).toStringAsFixed(3));
   }
 }
 
