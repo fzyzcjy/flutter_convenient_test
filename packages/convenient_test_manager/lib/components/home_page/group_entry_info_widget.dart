@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/home_page/log_entry_widget.dart';
 import 'package:convenient_test_manager/components/misc/state_indicator.dart';
@@ -11,102 +10,98 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
-class HomePageGroupEntryInfoWidget extends StatelessWidget {
+class HomePageGroupEntryInfoSectionBuilder extends StaticSectionBuilder {
   final int groupEntryId;
   final int depth;
   final bool showHeader;
 
-  const HomePageGroupEntryInfoWidget({
-    Key? key,
+  const HomePageGroupEntryInfoSectionBuilder({
     required this.groupEntryId,
     required this.depth,
     this.showHeader = true,
-  }) : super(key: key);
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Iterable<StaticSection> build() sync* {
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
-    return Observer(builder: (_) {
-      final info = suiteInfoStore.suiteInfo?.entryMap[groupEntryId];
-      if (info == null) return const SizedBox.shrink();
+    final info = suiteInfoStore.suiteInfo?.entryMap[groupEntryId];
+    if (info == null) return;
 
-      if (info is GroupInfo) return _GroupInfoWidget(info: info, depth: depth, showHeader: showHeader);
-      if (info is TestInfo) return _TestInfoWidget(info: info, depth: depth);
-      throw Exception('unknown info=$info');
-    });
+    if (info is GroupInfo) yield* _GroupInfoSectionBuilder(info: info, depth: depth, showHeader: showHeader).build();
+    if (info is TestInfo) yield* _TestInfoSectionBuilder(info: info, depth: depth).build();
+    throw Exception('unknown info=$info');
   }
 }
 
-class _GroupInfoWidget extends StatelessWidget {
+class _GroupInfoSectionBuilder extends StaticSectionBuilder {
   final GroupInfo info;
   final int depth;
   final bool showHeader;
 
-  const _GroupInfoWidget({
-    Key? key,
+  const _GroupInfoSectionBuilder({
     required this.info,
     required this.depth,
     this.showHeader = true,
-  }) : super(key: key);
+  });
 
   @override
-  Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (showHeader) _buildHeader(),
-          if (expanding || !showHeader)
-            for (final childGroupEntryId in info.entryIds)
-              HomePageGroupEntryInfoWidget(
-                groupEntryId: childGroupEntryId,
-                depth: depth + 1,
-              ),
-        ],
-      );
-    });
+  Iterable<StaticSection> build() sync* {
+    if (showHeader) {
+      yield StaticSection.single(child: _buildHeader());
+    }
+
+    if (expanding || !showHeader) {
+      for (final childGroupEntryId in info.entryIds) {
+        yield* HomePageGroupEntryInfoSectionBuilder(
+          groupEntryId: childGroupEntryId,
+          depth: depth + 1,
+        ).build();
+      }
+    }
   }
 
   Widget _buildHeader() {
-    final highlightStore = GetIt.I.get<HighlightStore>();
-    final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
+    return Observer(builder: (_) {
+      final highlightStore = GetIt.I.get<HighlightStore>();
+      final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
-    return InkWell(
-      onTap: () {
-        highlightStore
-          ..enableAutoExpand = false
-          ..expandGroupEntryMap[info.id] = !expanding;
-      },
-      child: SizedBox(
-        width: double.infinity,
-        height: 48,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8) + EdgeInsets.only(left: depth * 12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 24,
-                height: 12,
-                child: Icon(
-                  expanding ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                  size: 16,
+      return InkWell(
+        onTap: () {
+          highlightStore
+            ..enableAutoExpand = false
+            ..expandGroupEntryMap[info.id] = !expanding;
+        },
+        child: SizedBox(
+          width: double.infinity,
+          height: 48,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8) + EdgeInsets.only(left: depth * 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 24,
+                  height: 12,
+                  child: Icon(
+                    expanding ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                    size: 16,
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Text(
-                  info.calcBriefName(suiteInfoStore.suiteInfo!),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    info.calcBriefName(suiteInfoStore.suiteInfo!),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              ..._buildGroupStat(),
-              _RunTestButton(filterNameRegex: '^${info.name}.*'),
-            ],
+                ..._buildGroupStat(),
+                _RunTestButton(filterNameRegex: '^${info.name}.*'),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   List<Widget> _buildGroupStat() {
@@ -134,94 +129,90 @@ class _GroupInfoWidget extends StatelessWidget {
   bool get expanding => GetIt.I.get<HighlightStore>().expandGroupEntryMap[info.id];
 }
 
-class _TestInfoWidget extends StatelessWidget {
+class _TestInfoSectionBuilder extends StaticSectionBuilder {
   final TestInfo info;
   final int depth;
 
-  const _TestInfoWidget({
-    Key? key,
+  const _TestInfoSectionBuilder({
     required this.info,
     required this.depth,
-  }) : super(key: key);
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Iterable<StaticSection> build() sync* {
+    final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
+
+    final state = suiteInfoStore.getSimplifiedState(info.id);
+
+    yield StaticSection.single(child: _buildHeader(state));
+
+    if (expanding) {
+      yield* _buildLogEntries(state);
+    }
+  }
+
+  Widget _buildHeader(SimplifiedStateEnum state) {
     final highlightStore = GetIt.I.get<HighlightStore>();
-    final logStore = GetIt.I.get<LogStore>();
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
     return Observer(builder: (_) {
-      final logEntryIds = logStore.logEntryInTest[info.id] ?? <int>[];
-      final state = suiteInfoStore.getSimplifiedState(info.id);
-
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            onTap: () {
-              highlightStore
-                ..enableAutoExpand = false
-                ..expandGroupEntryMap[info.id] = !expanding
-                ..highlightTestEntryId = info.id;
-            },
-            child: SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4) + EdgeInsets.only(left: 16 + depth * 12),
-                child: Row(
-                  children: [
-                    StateIndicatorWidget(
-                      state: state,
-                      enableAnimation: true,
-                    ),
-                    Text(
-                      info.calcBriefName(suiteInfoStore.suiteInfo!),
-                      style: const TextStyle(),
-                    ),
-                    Expanded(child: Container()),
-                    _RunTestButton(filterNameRegex: '^${info.name}\$'),
-                  ],
+      return InkWell(
+        onTap: () {
+          highlightStore
+            ..enableAutoExpand = false
+            ..expandGroupEntryMap[info.id] = !expanding
+            ..highlightTestEntryId = info.id;
+        },
+        child: SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4) + EdgeInsets.only(left: 16 + depth * 12),
+            child: Row(
+              children: [
+                StateIndicatorWidget(
+                  state: state,
+                  enableAnimation: true,
                 ),
-              ),
+                Text(
+                  info.calcBriefName(suiteInfoStore.suiteInfo!),
+                  style: const TextStyle(),
+                ),
+                Expanded(child: Container()),
+                _RunTestButton(filterNameRegex: '^${info.name}\$'),
+              ],
             ),
           ),
-          if (expanding)
-            Stack(
-              children: [
-                Column(
-                  children: [
-                    if (logEntryIds.isEmpty)
-                      const Padding(
-                        padding: EdgeInsets.only(left: 16, right: 16, bottom: 12),
-                        child: Text(
-                          'No log entries for this test',
-                          style: TextStyle(fontSize: 11, color: Colors.grey),
-                        ),
-                      ),
-                    ...logEntryIds.mapIndexed(
-                      (i, logEntryId) => HomePageLogEntryWidget(
-                        order: i,
-                        testEntryId: info.id,
-                        logEntryId: logEntryId,
-                        running: state == SimplifiedStateEnum.running && i == logEntryIds.length - 1,
-                      ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  left: 24,
-                  top: 0,
-                  bottom: 0,
-                  child: Container(
-                    width: 1,
-                    color: Colors.grey[300],
-                  ),
-                )
-              ],
-            )
-        ],
+        ),
       );
     });
+  }
+
+  Iterable<StaticSection> _buildLogEntries(SimplifiedStateEnum state) sync* {
+    final logStore = GetIt.I.get<LogStore>();
+
+    final logEntryIds = logStore.logEntryInTest[info.id] ?? <int>[];
+
+    if (logEntryIds.isEmpty) {
+      yield StaticSection.single(
+        child: const Padding(
+          padding: EdgeInsets.only(left: 16, right: 16, bottom: 12),
+          child: Text(
+            'No log entries for this test',
+            style: TextStyle(fontSize: 11, color: Colors.grey),
+          ),
+        ),
+      );
+    } else {
+      yield StaticSection(
+        count: logEntryIds.length,
+        builder: (_, i) => HomePageLogEntryWidget(
+          order: i,
+          testEntryId: info.id,
+          logEntryId: logEntryIds[i],
+          running: state == SimplifiedStateEnum.running && i == logEntryIds.length - 1,
+        ),
+      );
+    }
   }
 
   bool get expanding => GetIt.I.get<HighlightStore>().expandGroupEntryMap[info.id];

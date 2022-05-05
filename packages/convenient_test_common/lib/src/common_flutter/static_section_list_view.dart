@@ -88,3 +88,9 @@ class CountedArrayView<T> {
 
   int length() => arr.map(getCount).fold(0, (a, b) => a + b);
 }
+
+abstract class StaticSectionBuilder {
+  const StaticSectionBuilder();
+
+  Iterable<StaticSection> build();
+}
