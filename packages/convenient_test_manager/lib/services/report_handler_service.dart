@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
+import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
@@ -71,11 +72,11 @@ class ReportHandlerService {
       _logStore.logEntryInTest.addRelation(testEntryId, request.id);
     }
 
-    if (_organizationStore.enableAutoExpand) {
-      _organizationStore.expandGroupEntryMap.clear();
+    if (_highlightStore.enableAutoExpand) {
+      _highlightStore.expandGroupEntryMap.clear();
       for (var i = 1; i <= request.entryLocators.length; ++i) {
-        _organizationStore.expandGroupEntryMap[
-        _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))!] = true;
+        _highlightStore.expandGroupEntryMap[
+            _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))!] = true;
       }
     }
   }
@@ -122,6 +123,7 @@ class ReportHandlerService {
 
   final _logStore = GetIt.I.get<LogStore>();
   final _organizationStore = GetIt.I.get<OrganizationStore>();
+  final _highlightStore = GetIt.I.get<HighlightStore>();
   final _suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
   final _rawLogStore = GetIt.I.get<RawLogStore>();
 }

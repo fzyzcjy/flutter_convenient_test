@@ -12,21 +12,10 @@ abstract class _OrganizationStore with Store {
   final testEntryStateMap = ObservableDefaultMap<int, TestEntryState>(
       createDefaultValue: (_) => TestEntryState(status: 'pending', result: 'success'));
 
-  /// key: [GroupEntryInfo].id
-  final expandGroupEntryMap = ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
-
-  @observable
-  bool enableAutoExpand = true;
-
-  @observable
-  int? activeTestEntryId;
-
   SimplifiedStateEnum getSimplifiedState(int testInfoId) =>
       testEntryStateMap[testInfoId].toSimplifiedStateEnum(isFlaky: GetIt.I.get<LogStore>().isTestFlaky(testInfoId));
 
   void clear() {
     testEntryStateMap.clear();
-    expandGroupEntryMap.clear();
-    activeTestEntryId = null;
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:mobx/mobx.dart';
 
@@ -17,18 +16,6 @@ abstract class _LogStore with Store {
   /// `snapshotInLog[logEntryId][name] == snapshot bytes`
   final snapshotInLog = ObservableMap<int, ObservableMap<String, Uint8List>>();
 
-  @observable
-  int? activeLogEntryId;
-
-  @observable
-  String? activeSnapshotName;
-
-  @computed
-  String? get effectiveActiveSnapshotName {
-    if (activeSnapshotName != null) return activeSnapshotName;
-    return snapshotInLog[activeLogEntryId]?.keys.firstOrNull;
-  }
-
   Iterable<int> logSubEntryInTest(int testInfoId) =>
       (logEntryInTest[testInfoId] ?? <int>[]).expand((logEntryId) => logSubEntryInEntry[logEntryId] ?? <int>[]);
 
@@ -44,7 +31,5 @@ abstract class _LogStore with Store {
     logSubEntryInEntry.clear();
     logSubEntryMap.clear();
     snapshotInLog.clear();
-    activeLogEntryId = null;
-    activeSnapshotName = null;
   }
 }

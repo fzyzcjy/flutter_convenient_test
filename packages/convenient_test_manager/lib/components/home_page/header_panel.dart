@@ -1,7 +1,7 @@
 import 'package:convenient_test_manager/components/home_page/misc_dialog.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
-import 'package:convenient_test_manager/stores/organization_store.dart';
+import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -11,7 +11,7 @@ class HomePageHeaderPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final organizationStore = GetIt.I.get<OrganizationStore>();
+    final highlightStore = GetIt.I.get<HighlightStore>();
     final miscService = GetIt.I.get<MiscService>();
 
     return Padding(
@@ -21,7 +21,7 @@ class HomePageHeaderPanel extends StatelessWidget {
           const SizedBox(width: 8),
           TextButton(
             onPressed: () {
-              organizationStore.enableAutoExpand = true;
+              highlightStore.enableAutoExpand = true;
               miscService.hotRestartAndRunTests(filterNameRegex: '.*');
             },
             child: const Text('Run All Tests'),
@@ -58,8 +58,8 @@ class HomePageHeaderPanel extends StatelessWidget {
           ),
           Observer(
             builder: (_) => Switch(
-              value: organizationStore.enableAutoExpand,
-              onChanged: (v) => organizationStore.enableAutoExpand = v,
+              value: highlightStore.enableAutoExpand,
+              onChanged: (v) => highlightStore.enableAutoExpand = v,
             ),
           ),
         ],

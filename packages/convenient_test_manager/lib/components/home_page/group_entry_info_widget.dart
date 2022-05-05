@@ -3,6 +3,7 @@ import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/home_page/log_entry_widget.dart';
 import 'package:convenient_test_manager/components/misc/state_indicator.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
+import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
@@ -69,12 +70,12 @@ class _GroupInfoWidget extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    final organizationStore = GetIt.I.get<OrganizationStore>();
+    final highlightStore = GetIt.I.get<HighlightStore>();
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
     return InkWell(
       onTap: () {
-        organizationStore
+        highlightStore
           ..enableAutoExpand = false
           ..expandGroupEntryMap[info.id] = !expanding;
       },
@@ -132,7 +133,7 @@ class _GroupInfoWidget extends StatelessWidget {
     }).toList();
   }
 
-  bool get expanding => GetIt.I.get<OrganizationStore>().expandGroupEntryMap[info.id];
+  bool get expanding => GetIt.I.get<HighlightStore>().expandGroupEntryMap[info.id];
 }
 
 class _TestInfoWidget extends StatelessWidget {
@@ -148,6 +149,7 @@ class _TestInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final organizationStore = GetIt.I.get<OrganizationStore>();
+    final highlightStore = GetIt.I.get<HighlightStore>();
     final logStore = GetIt.I.get<LogStore>();
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
@@ -160,10 +162,10 @@ class _TestInfoWidget extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              organizationStore
+              highlightStore
                 ..enableAutoExpand = false
                 ..expandGroupEntryMap[info.id] = !expanding
-                ..activeTestEntryId = info.id;
+                ..highlightTestEntryId = info.id;
             },
             child: SizedBox(
               width: double.infinity,
@@ -225,7 +227,7 @@ class _TestInfoWidget extends StatelessWidget {
     });
   }
 
-  bool get expanding => GetIt.I.get<OrganizationStore>().expandGroupEntryMap[info.id];
+  bool get expanding => GetIt.I.get<HighlightStore>().expandGroupEntryMap[info.id];
 }
 
 class _RunTestButton extends StatelessWidget {
@@ -238,7 +240,7 @@ class _RunTestButton extends StatelessWidget {
     return IconButton(
       visualDensity: VisualDensity.compact,
       onPressed: () {
-        GetIt.I.get<OrganizationStore>().enableAutoExpand = true;
+        GetIt.I.get<HighlightStore>().enableAutoExpand = true;
         GetIt.I.get<MiscService>().hotRestartAndRunTests(filterNameRegex: filterNameRegex);
       },
       icon: const Icon(
