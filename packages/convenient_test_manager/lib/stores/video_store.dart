@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tuple/tuple.dart';
 
 part 'video_store.g.dart';
 
@@ -17,6 +18,9 @@ abstract class _VideoStore with Store {
 
   @observable
   VideoInfo? displayVideoInfo;
+
+  @observable
+  var displayRange = const Tuple2(Duration.zero, Duration.zero);
 
   final mainPlayerController = VideoPlayerController();
 

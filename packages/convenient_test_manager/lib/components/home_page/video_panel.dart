@@ -21,6 +21,8 @@ class HomePageVideoPanel extends StatelessWidget {
 
       return VideoPlayer(
         videoPath: displayVideoPath,
+        startTime: videoStore.displayRange.item1,
+        stopTime: videoStore.displayRange.item2,
         controller: videoStore.mainPlayerController,
       );
     });
