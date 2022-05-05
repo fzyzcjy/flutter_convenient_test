@@ -34,6 +34,12 @@ A fast, easy and reliable testing utility on top of `integration_test`, making w
 
 P.S. Highlighted action is in sync with the playing video. Tap action to seek video.
 
+### Being interactive
+
+Temporarily play with the app interactively.
+
+[TODO video: tap "interactive mode", and then play with the app in the simulator]
+
 ### `integration_test` is still there
 
 Though not necessarily needed, you can still use everything from `integration_test`. This package is not a reinvented wheel.
@@ -45,12 +51,6 @@ A few places need to be changed for an app using `integration_test`: Change `tes
 Flaky is flaky, and we are aware of it. It is neither failed nor success, so you will not be alarmed by false positives, and not completely ignore it.
 
 [TODO screenshot: Several tests, one failed, one flaky, one success]
-
-### Being interactive
-
-Want to temporarily play with the app interactively, but Flutter's test mechanism enforces that you cannot interact with it?
-
-Just click `Interactive Mode` button, and within a second you are ready to go.
 
 ### Simpler and shorter code
 
