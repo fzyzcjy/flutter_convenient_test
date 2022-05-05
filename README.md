@@ -14,27 +14,7 @@ A fast, easy and reliable testing utility on top of integration_test, making wri
 
 ## Features
 
-[TODO move *most interesting* features at top!]
-
-### Write tests
-
-Write less. Write it like speaking to a tester.
-
-#### No more `pump`
-
-[TODO Automatic wait and retry. no need to manually pump or wait. All done automatically.]
-
-#### Fluent grammar
-
-[TODO the more natural grammar]
-
-#### Everything from `integration_test`
-
-[TODO use *everything* - we expose the underlying `tester` so you can do anything with it]
-
-### Debug tests faster
-
-#### Time travel
+#### Time travel and action history...
 
 [TODO explain it - command panel]
 
@@ -42,7 +22,7 @@ Write less. Write it like speaking to a tester.
 
 [TODO tap a step to see screenshots]
 
-#### Videos & screenshots
+#### ... with videos and screenshots
 
 [TODO when playing, auto highlight corresponding command entry]
 
@@ -58,15 +38,29 @@ Write less. Write it like speaking to a tester.
 
 [TODO p.s. tests may execute too fast and you want to re-watch the process again]
 
-#### Fast re-execution
+#### Fluent grammar, no more `pump`
+
+[TODO No more `pump`: Automatic wait and retry. no need to manually pump or wait. All done automatically.]
+
+[TODO the more natural grammar]
+
+#### Use everything from `integration_test`
+
+[TODO use *everything* - we expose the underlying `tester` so you can do anything with it]
+
+#### Rapidly re-execute after changing code
 
 [TODO Change tests quickly: change your test code, save it. then run it using one click. nothing more.]
 
-#### Run selected tests
+[TODO can run one single test / a group of tests. all in one click. no need to run all.]
 
-[TODO run one single test / a group of tests]
+#### Flaky tests tolerance
 
-#### Interactive mode
+[TODO e2e tests tend to be flaky sometimes. we auto retry and report. no need to be alermed by such false positives. ]
+
+[TODO also explicitly show which tests are flaky. report to you (unlike `test` which silently mark it as pass).]
+
+#### Being interactive
 
 [TODO only time of a hot restart. no need to recompile]
 
@@ -76,19 +70,9 @@ Write less. Write it like speaking to a tester.
 
 [TODO b. taps have visual feedbacks, can be seen in recorded video]
 
-### Maintain tests
-
-#### Flaky tests
-
-[TODO e2e tests tend to be flaky sometimes. we auto retry and report. no need to be alermed by such false positives.]
-
-[TODO also explicitly show which tests are flaky]
-
 #### CI mode
 
 [TODO explain]
-
-### Misc
 
 #### Raw logs
 
