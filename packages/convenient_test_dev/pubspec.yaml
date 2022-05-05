@@ -10,6 +10,7 @@ dependencies:
   collection: ^1.15.0
   convenient_test: ^1.0.0
   convenient_test_common: ^1.0.0
+  fixnum: ^1.0.0
   flutter:
     sdk: flutter
   flutter_test:

@@ -8,6 +8,7 @@ import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
 import 'package:test_api/src/backend/group.dart';
@@ -81,13 +82,17 @@ class LogHandle {
             logEntry: LogEntry(
           id: _id,
           entryLocators: _entryLocators,
-          type: type,
-          startTime: TODO,
-          endTime: TODO,
-          title: title,
-          message: message,
-          error: error,
-          stackTrace: stackTrace,
+          subEntries: [
+            LogSubEntry(
+              id: ConvenientTestIdGen.nextId(),
+              type: type,
+              time: Int64(DateTime.now().microsecondsSinceEpoch),
+              title: title,
+              message: message,
+              error: error,
+              stackTrace: stackTrace,
+            ),
+          ],
         )));
 
     if (printing) {
