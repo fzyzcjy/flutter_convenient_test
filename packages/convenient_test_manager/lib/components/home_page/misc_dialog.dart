@@ -1,4 +1,5 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager/stores/worker_mode_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -32,6 +33,17 @@ class HomePageMiscDialog extends StatelessWidget {
                   ),
                 );
               }),
+              const SizedBox(height: 24),
+              TextButton(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  GetIt.I.get<VmServiceWrapperService>().hotRestart();
+                },
+                child: const Text('Run tests using filter'),
+              ),
             ],
           ),
         ),
