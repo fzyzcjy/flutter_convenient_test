@@ -48,7 +48,9 @@ class ReportHandlerService {
     }
     (_logStore.logSubEntryInEntry[request.id] ??= ObservableList())
         .addAll(request.subEntries.map((subEntry) => subEntry.id));
-    _logStore.logEntryInTest.addRelation(testEntryId, request.id);
+    if (!(_logStore.logEntryInTest[testEntryId]?.contains(request.id) ?? false)) {
+      _logStore.logEntryInTest.addRelation(testEntryId, request.id);
+    }
 
     if (_organizationStore.enableAutoExpand) {
       _organizationStore.expandGroupEntryMap.clear();
