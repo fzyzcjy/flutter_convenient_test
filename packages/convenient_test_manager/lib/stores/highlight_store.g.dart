@@ -84,6 +84,20 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
+  late final _$_HighlightStoreActionController =
+      ActionController(name: '_HighlightStore', context: context);
+
+  @override
+  void expandSeriesForTest({required int testInfoId}) {
+    final _$actionInfo = _$_HighlightStoreActionController.startAction(
+        name: '_HighlightStore.expandSeriesForTest');
+    try {
+      return super.expandSeriesForTest(testInfoId: testInfoId);
+    } finally {
+      _$_HighlightStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

@@ -61,6 +61,10 @@ class SuiteInfo {
   GroupInfo get rootGroup => entryMap[rootGroupId]! as GroupInfo;
 
   void traverse(GroupEntryInfoTraverseCallback callback) => rootGroup.traverse(this, callback);
+
+  List<int> ancestors(int entryId) {
+    return TODO;
+  }
 }
 
 typedef GroupEntryInfoTraverseCallback = void Function(GroupEntryInfo groupEntryInfo);

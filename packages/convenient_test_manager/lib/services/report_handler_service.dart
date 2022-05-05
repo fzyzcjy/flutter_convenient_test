@@ -72,11 +72,9 @@ class ReportHandlerService {
     }
 
     if (_highlightStore.enableAutoExpand) {
-      _highlightStore.expandGroupEntryMap.clear();
-      for (var i = 1; i <= request.entryLocators.length; ++i) {
-        _highlightStore.expandGroupEntryMap[
-            _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))!] = true;
-      }
+      _highlightStore
+        ..expandGroupEntryMap.clear()
+        ..expandSeriesForTest(testInfoId: testEntryId);
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
+import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/video_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -16,6 +17,15 @@ abstract class _HighlightStore with Store {
 
   /// key: [GroupEntryInfo].id
   final expandGroupEntryMap = ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
+
+  @action
+  void expandSeriesForTest({required int testInfoId}) {
+    final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
+
+    for (final entryId in suiteInfoStore.suiteInfo!.ancestors(testInfoId)) {
+      expandGroupEntryMap[entryId] = true;
+    }
+  }
 
   @observable
   int? highlightTestEntryId;
