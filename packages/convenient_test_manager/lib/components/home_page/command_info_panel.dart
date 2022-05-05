@@ -33,6 +33,8 @@ class HomePageCommandInfoPanel extends StatelessWidget {
       return ScrollablePositionedList.builder(
         itemScrollController: homePageStore.itemScrollController,
         itemPositionsListener: homePageStore.itemPositionsListener,
+        // #89
+        physics: NonBallisticClampingScrollPhysics(parent: const AlwaysScrollableScrollPhysics()),
         itemBuilder: adapter.itemBuilder,
         itemCount: adapter.itemCount,
       );
