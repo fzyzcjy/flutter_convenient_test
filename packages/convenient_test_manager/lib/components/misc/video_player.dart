@@ -15,9 +15,9 @@ class VideoPlayer extends StatefulWidget {
 
 class _VideoPlayerState extends State<VideoPlayer> {
   final player = Player(id: Random().nextInt(100000000));
-  var playbackRateIndex = 0;
 
   double get playbackRate => _kPlaybackRates[playbackRateIndex];
+  var playbackRateIndex = 0;
 
   static const _kPlaybackRates = [1.0, 0.2, 0.4];
 
@@ -69,6 +69,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
             ),
           ),
           const SizedBox(height: 8),
+          _buildPositionBar(),
+          const SizedBox(height: 8),
         ],
       ),
     );
@@ -87,4 +89,31 @@ class _VideoPlayerState extends State<VideoPlayer> {
       ],
     );
   }
+
+  Widget _buildPositionBar() {
+    return StreamBuilder<PositionState>(
+      stream: player.positionStream,
+      builder: (_, positionSnapshot) {
+        final position = positionSnapshot.data ?? PositionState();
+
+        return Row(
+          children: [
+            Text(_formatDuration(position.position ?? Duration.zero)),
+            Expanded(
+              child: Slider(
+                value: position.position?.inMicroseconds.toDouble() ?? 0,
+                min: 0,
+                max: position.duration?.inMicroseconds.toDouble() ?? 0,
+                onChanged: (microseconds) => player.seek(Duration(microseconds: microseconds.round())),
+              ),
+            ),
+            Text(_formatDuration(position.duration ?? Duration.zero)),
+          ],
+        );
+      },
+    );
+  }
 }
+
+// ignore: prefer_interpolation_to_compose_strings
+String _formatDuration(Duration d) => (d.inMilliseconds / 1000).toStringAsFixed(2) + 's';
