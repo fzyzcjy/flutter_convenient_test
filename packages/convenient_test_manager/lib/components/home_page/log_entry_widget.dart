@@ -48,16 +48,9 @@ class HomePageLogEntryWidget extends StatelessWidget {
         children: [
           InkWell(
             onHover: (hovering) {
-              if (hovering) {
-                logStore.activeLogEntryId = logEntryId;
-                organizationStore.activeTestEntryId = testEntryId;
-              }
+              if (hovering) _handleTapOrHover(targetState: true);
             },
-            onTap: () {
-              final targetState = !active;
-              logStore.activeLogEntryId = targetState ? logEntryId : null;
-              organizationStore.activeTestEntryId = targetState ? testEntryId : null;
-            },
+            onTap: () => _handleTapOrHover(targetState: !active),
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8),
               margin: const EdgeInsets.only(left: 32),
@@ -109,6 +102,14 @@ class HomePageLogEntryWidget extends StatelessWidget {
         ],
       );
     });
+  }
+
+  void _handleTapOrHover({required bool targetState}) {
+    final logStore = GetIt.I.get<LogStore>();
+    final organizationStore = GetIt.I.get<OrganizationStore>();
+
+    logStore.activeLogEntryId = targetState ? logEntryId : null;
+    organizationStore.activeTestEntryId = targetState ? testEntryId : null;
   }
 
   Widget _buildTitle(LogSubEntry interestLogSubEntry) {
