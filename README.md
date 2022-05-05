@@ -14,33 +14,41 @@ A fast, easy and reliable testing utility on top of integration_test, making wri
 
 ## Features
 
-### Use everything from `integration_test`
+[TODO move *most interesting* features at top!]
 
-[TODO]
+### Write tests
 
-[TODO use *everything* - we expose the underlying `tester` so you can do anything with it]
+Write less. Write it like speaking to a tester.
 
-### Automatic wait and retry
+#### No more `pump`
 
-[TODO no need to manually pump or wait. All done automatically.]
+[TODO Automatic wait and retry. no need to manually pump or wait. All done automatically.]
 
-### Write tests fluently
+#### Fluent grammar
 
 [TODO the more natural grammar]
 
-### Command panel
+#### Everything from `integration_test`
 
-[TODO explain it]
+[TODO use *everything* - we expose the underlying `tester` so you can do anything with it]
 
-[TODO "time travel"]
+### Debug tests faster
+
+#### Time travel
+
+[TODO explain it - command panel]
 
 [TODO clearly see what steps are taken]
 
 [TODO tap a step to see screenshots]
 
-### Video records
+#### Videos & screenshots
 
 [TODO when playing, auto highlight corresponding command entry]
+
+[TODO and, screenshots]
+
+[TODO explain: screenshot - "before" & "after" & ...]
 
 [TODO explain: watch full video]
 
@@ -50,49 +58,45 @@ A fast, easy and reliable testing utility on top of integration_test, making wri
 
 [TODO p.s. tests may execute too fast and you want to re-watch the process again]
 
-### Screenshots
+#### Fast re-execution
 
-[TODO]
+[TODO Change tests quickly: change your test code, save it. then run it using one click. nothing more.]
 
-### Flaky tests
+#### Run selected tests
+
+[TODO run one single test / a group of tests]
+
+#### Interactive mode
+
+[TODO only time of a hot restart. no need to recompile]
+
+#### Visually see target regions
+
+[TODO a. the Marks are explicitly drawn with indicator rects]
+
+[TODO b. taps have visual feedbacks, can be seen in recorded video]
+
+### Maintain tests
+
+#### Flaky tests
 
 [TODO e2e tests tend to be flaky sometimes. we auto retry and report. no need to be alermed by such false positives.]
 
 [TODO also explicitly show which tests are flaky]
 
-### Raw logs
+#### CI mode
+
+[TODO explain]
+
+### Misc
+
+#### Raw logs
+
+[TODO explain]
+
+## Getting started
 
 [TODO]
-
-### Interactive mode
-
-[TODO only time of a hot restart. no need to recompile]
-
-### Run only selected tests
-
-[TODO run one single test / a group of tests]
-
-### Run test quickly
-
-[TODO hot restart]
-
-### Change tests quickly
-
-[TODO change your test code, then click run in Manager, then it runs. no need to recompile.]
-
-### Easy to set up
-
-[TODO just run your app + run the manager (a normal Flutter app), nothing else]
-
-### CI mode
-
-[TODO]
-
-### Visually see target regions
-
-[TODO a. the Marks are explicitly drawn with indicator rects]
-
-[TODO b. taps have visual feedbacks, can be seen in recorded video]
 
 ---
 
