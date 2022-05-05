@@ -67,7 +67,10 @@ class _VideoRecorderServiceIosSimulator extends VideoRecorderService {
 
     final process = _process;
     _process = null;
-    if (process == null) return;
+    if (process == null) {
+      Log.w(_kTag, 'stopRecord skip since process==null');
+      return;
+    }
 
     Log.i(_kTag, 'stopRecord send signals');
     process.kill(ProcessSignal.sigint);
