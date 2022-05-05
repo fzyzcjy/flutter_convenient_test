@@ -88,15 +88,17 @@ void main() {
       tTestWidgets('timer page', (t) async {
         await t.visit('/timer');
 
-        final log = t.log('HELLO', 'Let us just wait a few seconds to look at the timer');
-        await log.snapshot(name: 'before');
+        for (var iter = 0; iter < 5; ++iter) {
+          final log = t.log('HELLO', 'Wait a second to have a look (#$iter)');
+          await log.snapshot(name: 'before');
 
-        final stopwatch = Stopwatch()..start();
-        while (stopwatch.elapsed < const Duration(seconds: 5)) {
-          await t.tester.pump();
+          final stopwatch = Stopwatch()..start();
+          while (stopwatch.elapsed < const Duration(seconds: 1)) {
+            await t.tester.pump();
+          }
+
+          await log.snapshot(name: 'after');
         }
-
-        await log.snapshot(name: 'after');
 
         await t.pageBack();
       });
