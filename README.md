@@ -8,45 +8,50 @@ A fast, easy and reliable testing utility on top of integration_test, making wri
 
 [TODO not only *write* tests more conventiently, but also *debug* them and *run* them more conveniently]
 
-## Advantages
-
-[TODO]
-
 ## Features
 
 #### Time travel and action history...
 
-[TODO explain it - command panel]
+See what actions and assertions are done:
 
-[TODO clearly see what steps are taken]
-
-[TODO tap a step to see screenshots]
+[TODO video: execute a test, and see how the log grows]
 
 #### ... with videos and screenshots
 
-[TODO when playing, auto highlight corresponding command entry]
+Tap an action to see screenshot(s):
 
-[TODO and, screenshots]
+[TODO screenshot: tap a step like "click button A", and see "before" and "after" screenshots]
 
-[TODO explain: screenshot - "before" & "after" & ...]
+Watch video recordings:
 
-[TODO explain: watch full video]
+* The corresponding action will be highlighted as video plays.
+* Tap an action to jump to that video timestamp.
+* Play videos using any player you like.
 
-[TODO explain: watch video for a single test]
+[TODO video: play the video recording of some specific test. then tap an action to jump. then open it using any player.]
 
-[TODO explain: open the video file and watch it using any player you like]
+#### Simpler and shorter code...
 
-[TODO p.s. tests may execute too fast and you want to re-watch the process again]
+* No manual `pump`
+* No manual wait and retry
 
-#### Fluent grammar, no more `pump`
+```dart
+await t.get(find.byTooltip('Fetch Data From Backend')).tap();
+// OK even if "fetch data" needs undeterministic time interval. Will automatically pump, wait and retry.
+await t.get(find.text('New Data')).should(findsOneWidget);
+```
 
-[TODO No more `pump`: Automatic wait and retry. no need to manually pump or wait. All done automatically.]
+More in quickstart and tutorials below.
 
-[TODO the more natural grammar]
+#### ... with `integration_test` still there
 
-#### Use everything from `integration_test`
+Though not necessarily needed, you can still use everything from `integration_test`. This package is not a reinvented wheel.
 
-[TODO use *everything* - we expose the underlying `tester` so you can do anything with it]
+```dart
+// surely OK
+final Finder fab = find.byTooltip('Increment');
+expect(find.text('1'), findsOneWidget);
+```
 
 #### Rapidly re-execute after changing code
 
