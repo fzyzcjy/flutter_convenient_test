@@ -37,6 +37,7 @@ dependencies:
   mobx: ^2.0.7
   path_provider: ^2.0.9
   protobuf: ^2.0.0
+  scrollable_positioned_list: ^0.2.3
   test_api: ^0.4.2
   vm_service: ^7.0.0
   web_socket_channel: ^2.1.0
