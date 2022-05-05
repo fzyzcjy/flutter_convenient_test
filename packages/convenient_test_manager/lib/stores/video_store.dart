@@ -1,5 +1,6 @@
 import 'package:convenient_test_manager/components/misc/video_player.dart';
 import 'package:convenient_test_manager/services/screen_video_recorder_service.dart';
+import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -25,9 +26,19 @@ abstract class _VideoStore with Store {
     return absoluteTime.difference(displayVideoInfo.startTime);
   }
 
+  DateTime videoToAbsoluteTime(Duration videoTime) {
+    final displayVideoInfo = this.displayVideoInfo;
+    if (displayVideoInfo == null) return DateTime.fromMicrosecondsSinceEpoch(0);
+    return displayVideoInfo.startTime.add(videoTime);
+  }
+
+  @observable
+  int? playerPositionCorrespondingLogEntryId;
+
   void clear() {
     recordingVideoInfo = null;
     displayVideoInfo = null;
+    playerPositionCorrespondingLogEntryId = null;
   }
 
   @action
@@ -47,6 +58,20 @@ abstract class _VideoStore with Store {
   Future<String> _createVideoPath() async {
     final stem = DateFormat('yyyyMMdd_hhmmss').format(DateTime.now());
     return '${(await getTemporaryDirectory()).path}/ConvenientTest_Video_$stem.mov';
+  }
+
+  _VideoStore() {
+    _setupSyncPlayerPositionCorrespondingLogEntryId();
+  }
+
+  void _setupSyncPlayerPositionCorrespondingLogEntryId() {
+    mainPlayerController.positionStream.listen((position) {
+      final absoluteTime = videoToAbsoluteTime(position);
+      final logEntryId = GetIt.I.get<LogStore>().calcLogEntryAtTime(absoluteTime);
+
+      // this "if" will avoid unnecessary mobx updates
+      if (logEntryId != playerPositionCorrespondingLogEntryId) playerPositionCorrespondingLogEntryId = logEntryId;
+    });
   }
 }
 

@@ -26,6 +26,10 @@ abstract class _LogStore with Store {
           .length >
       1;
 
+  int calcLogEntryAtTime(DateTime time) {
+    return TODO;
+  }
+
   void clear() {
     logEntryInTest.clear();
     logSubEntryInEntry.clear();

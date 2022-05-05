@@ -41,6 +41,24 @@ mixin _$VideoStore on _VideoStore, Store {
     });
   }
 
+  late final _$playerPositionCorrespondingLogEntryIdAtom = Atom(
+      name: '_VideoStore.playerPositionCorrespondingLogEntryId',
+      context: context);
+
+  @override
+  int? get playerPositionCorrespondingLogEntryId {
+    _$playerPositionCorrespondingLogEntryIdAtom.reportRead();
+    return super.playerPositionCorrespondingLogEntryId;
+  }
+
+  @override
+  set playerPositionCorrespondingLogEntryId(int? value) {
+    _$playerPositionCorrespondingLogEntryIdAtom
+        .reportWrite(value, super.playerPositionCorrespondingLogEntryId, () {
+      super.playerPositionCorrespondingLogEntryId = value;
+    });
+  }
+
   late final _$startRecordAsyncAction =
       AsyncAction('_VideoStore.startRecord', context: context);
 
@@ -61,7 +79,8 @@ mixin _$VideoStore on _VideoStore, Store {
   String toString() {
     return '''
 recordingVideoInfo: ${recordingVideoInfo},
-displayVideoInfo: ${displayVideoInfo}
+displayVideoInfo: ${displayVideoInfo},
+playerPositionCorrespondingLogEntryId: ${playerPositionCorrespondingLogEntryId}
     ''';
   }
 }
