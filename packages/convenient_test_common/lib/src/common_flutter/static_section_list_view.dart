@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
 class StaticSectionListViewAdapter {
+  List<StaticSection> get sections => _sections;
   final _sections = <StaticSection>[];
 
   StaticSectionListViewAdapter();
@@ -24,8 +25,9 @@ class StaticSectionListViewAdapter {
 class StaticSection {
   final int count;
   final IndexedWidgetBuilder builder;
+  final Object? metadata;
 
-  StaticSection({required this.count, required this.builder});
+  StaticSection({required this.count, required this.builder, this.metadata});
 
   StaticSection.single({required Widget child}) : this(count: 1, builder: (context, index) => child);
 }

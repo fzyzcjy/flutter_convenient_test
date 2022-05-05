@@ -18,8 +18,6 @@ class HomePageCommandInfoPanel extends StatelessWidget {
     return Observer(builder: (_) {
       final adapter = StaticSectionListViewAdapter();
 
-      homePageStore.rdtListViewIndexOfFirstLogEntryOfTestIdMap.clear();
-
       adapter.add(StaticSection.single(child: const SizedBox(height: 8)));
       adapter.addAll(HomePageGroupEntryInfoSectionBuilder(
         groupEntryId: suiteInfoStore.suiteInfo!.rootGroupId,
@@ -28,6 +26,10 @@ class HomePageCommandInfoPanel extends StatelessWidget {
       ).build());
       adapter.add(StaticSection.single(child: const SizedBox(height: 8)));
 
+      homePageStore.rdtListViewIndexOfFirstLogEntryOfTestIdMap
+        ..clear()
+        ..addEntries(_calcListViewIndexOfFirstLogEntryOfTestIdMap(adapter));
+
       return ScrollablePositionedList.builder(
         itemScrollController: homePageStore.itemScrollController,
         itemPositionsListener: homePageStore.itemPositionsListener,
@@ -35,5 +37,16 @@ class HomePageCommandInfoPanel extends StatelessWidget {
         itemCount: adapter.itemCount,
       );
     });
+  }
+
+  Iterable<MapEntry<int, int>> _calcListViewIndexOfFirstLogEntryOfTestIdMap(
+      StaticSectionListViewAdapter adapter) sync* {
+    var currCount = 0;
+    for (final section in adapter.sections) {
+      final metadata = section.metadata;
+      if (metadata is TestInfoLogEntrySectionMetadata) yield MapEntry(metadata.testInfoId, currCount);
+
+      currCount += section.count;
+    }
   }
 }
