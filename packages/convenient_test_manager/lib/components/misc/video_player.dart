@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
@@ -8,18 +9,24 @@ import 'package:flutter/material.dart';
 class VideoPlayerController {
   static const _kTag = 'VideoPlayerController';
 
-  Stream<Duration> get positionStream => TODO;
+  Stream<Duration> get positionStream => _positionStreamController.stream;
+  final _positionStreamController = StreamController<Duration>.broadcast();
 
   Future<void> seek(Duration position) async {
     Log.d(_kTag, 'seek position=$position');
     TODO;
   }
+
+  void dispose() {
+    _positionStreamController.close();
+  }
 }
 
 class VideoPlayer extends StatefulWidget {
   final String videoPath;
+  final VideoPlayerController controller;
 
-  const VideoPlayer({Key? key, required this.videoPath}) : super(key: key);
+  const VideoPlayer({Key? key, required this.videoPath, required this.controller}) : super(key: key);
 
   @override
   State<VideoPlayer> createState() => _VideoPlayerState();
@@ -33,12 +40,24 @@ class _VideoPlayerState extends State<VideoPlayer> {
   double get playbackRate => _kPlaybackRates[playbackRateIndex];
   var playbackRateIndex = 0;
 
+  late final StreamSubscription<PositionState> _upstreamPositionListenerDisposer;
+
   static const _kPlaybackRates = [1.0, 0.2, 0.4];
 
   @override
   void initState() {
     super.initState();
     _init();
+
+    _upstreamPositionListenerDisposer = player.positionStream.listen((e) {
+      final position = e.position;
+      if (position == null) {
+        Log.d(_kTag, 'player.positionStream receive position==null thus do not forward to downstream');
+        return;
+      }
+
+      widget.controller._positionStreamController.add(position);
+    });
   }
 
   @override
@@ -48,11 +67,16 @@ class _VideoPlayerState extends State<VideoPlayer> {
       _deInit();
       _init();
     }
+    if (oldWidget.controller != widget.controller) {
+      // should not happen
+      throw Exception('Does not support change `controller` yet');
+    }
   }
 
   @override
   void dispose() {
     _deInit();
+    _upstreamPositionListenerDisposer.cancel();
     player.dispose();
     super.dispose();
   }
