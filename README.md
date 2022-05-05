@@ -8,47 +8,33 @@ A fast, easy and reliable testing utility on top of `integration_test`, making w
 
 ## Quick demo
 
-[video: Prepare - a test like "assert 0, tap, assert 1, tap, wrongly assert 1". Click "run (that one) test" to run that single test, and see time travel and log etc, and see failure. Tap that failed step to see screenshots. Open VSCode and change that wrong line. Click "run (that) test" again, and see it go green.]
+[merge things below into one video. especially good, because the first several subsections *is just a continuous story*!]
 
 [TODO what is this? notice "video" is not here, need to introduce separately]
 
 ## Features
 
-#### Time travel and action history...
+#### Action history
 
-See what actions and assertions are done:
+[TODO video: Prepare - a test like "assert 0, tap, input text, etc, assert 1, tap, wrongly assert 1", notice need to have ~10 steps so more beautiful. Click "run (that one) test" to run that single test, and see time travel and log etc, and see failure.]
 
-[TODO video: execute a test, and see how the log grows]
+#### Time travel with screenshots
 
-#### ... with screenshots
+[TODO video: Hover through each step, especially the "tap/inputtext" steps, and see screenshots.]
 
-Tap an action to see screenshot(s):
+#### Rapidly re-execute
 
-[TODO screenshot: tap a step like "click button A", and see "before" and "after" screenshots]
+[TODO video: Open VSCode and change that wrong line. Click "run (that) test" again, and see it immediately re-run and go green.]
 
-#### ... and videos
+#### Videos recorded
 
-[TODO no need to be this detailed?]
+[TODO video: Tap "video" icon button. Then see the video recording.]
 
-* The corresponding action will be highlighted as video plays.
-* Tap an action to jump to that video timestamp.
-* Play videos using any player you like.
-
-[TODO video: play the video recording of some specific test. then tap an action to jump. then open it using any player.]
+P.S. Highlighted action is in sync with the playing video. Tap action to seek video.
 
 #### `integration_test` is still there
 
 Though not necessarily needed, you can still use everything from `integration_test`. This package is not a reinvented wheel.
-
-#### Rapidly re-execute after changing code
-
-[TODO video: ]
-
-[TODO should we make this example the first one? or merge multiple?]
-
-[TODO Change tests quickly: change your test code, save it. then run it using one click. nothing more.]
-
-[TODO can run one single test / a group of tests. all in one click. no need to run all.]
 
 #### Flaky tests awareness
 
@@ -87,6 +73,10 @@ Useful when replaying videos and screenshots
 This tool can be run without GUI and only produce log data, making it suitable to be run in a CI. Just run `flutter run integration_test/main_test.dart --dart-define CONVENIENT_TEST_CI_MODE=true`.
 
 If you want to examine the details with GUI, just open the generated artifact in the GUI using `Open File` button.
+
+#### Run single test/group
+
+Tap "Run" icon button after each test or group to re-run *only* that test/group, without running anything else.
 
 #### Raw logs
 
