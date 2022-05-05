@@ -29,7 +29,7 @@ class HomePageHeaderPanel extends StatelessWidget {
           const SizedBox(width: 20),
           TextButton(
             onPressed: miscService.hotRestartAndRunInAppMode,
-            child: const Text('Run In App Mode'),
+            child: const Text('Interactive Mode'),
           ),
           const SizedBox(width: 20),
           TextButton(
@@ -44,7 +44,7 @@ class HomePageHeaderPanel extends StatelessWidget {
           const SizedBox(width: 20),
           TextButton(
             onPressed: miscService.pickFileAndReadReport,
-            child: const Text('Read From File'),
+            child: const Text('Open File'),
           ),
           Expanded(child: Container()),
           TextButton(
