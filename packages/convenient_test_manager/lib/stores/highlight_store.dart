@@ -55,20 +55,23 @@ abstract class _HighlightStore with Store {
 
   void _setupSyncVideoPositionToHighlight() {
     final videoStore = GetIt.I.get<VideoStore>();
-    final logStore = GetIt.I.get<LogStore>();
 
     reaction<int?>(
       (_) => videoStore.playerPositionCorrespondingLogEntryId,
-      (logEntryId) {
-        if (logEntryId == null) return;
-        Log.d(_kTag, 'update highlight since playerPositionCorrespondingLogEntryId=$logEntryId');
-
-        final testEntryId = logStore.testIdOfLogEntry[logEntryId]!;
-        expandSeriesForTest(testInfoId: testEntryId);
-        highlightTestEntryId = testEntryId;
-        highlightLogEntryId = logEntryId;
-      },
+      _handlePlayerPositionCorrespondingLogEntryIdChange,
     );
+  }
+
+  void _handlePlayerPositionCorrespondingLogEntryIdChange(int? logEntryId) {
+    final logStore = GetIt.I.get<LogStore>();
+   
+    if (logEntryId == null) return;
+    Log.d(_kTag, 'update highlight since playerPositionCorrespondingLogEntryId=$logEntryId');
+
+    final testEntryId = logStore.testIdOfLogEntry[logEntryId]!;
+    expandSeriesForTest(testInfoId: testEntryId);
+    highlightTestEntryId = testEntryId;
+    highlightLogEntryId = logEntryId;
   }
 
   final _logStore = GetIt.I.get<LogStore>();

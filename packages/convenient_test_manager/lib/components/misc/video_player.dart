@@ -57,15 +57,17 @@ class _VideoPlayerState extends State<VideoPlayer> {
     super.initState();
     _init();
 
-    _upstreamPositionListenerDisposer = player.positionStream.listen((e) {
-      final position = e.position;
-      if (position == null) {
-        Log.d(_kTag, 'player.positionStream receive position==null thus do not forward to downstream');
-        return;
-      }
+    _upstreamPositionListenerDisposer = player.positionStream.listen(_handleUpstreamPositionEvent);
+  }
 
-      widget.controller._positionStreamController.add(position);
-    });
+  void _handleUpstreamPositionEvent(PositionState e) {
+    final position = e.position;
+    if (position == null) {
+      Log.d(_kTag, 'player.positionStream receive position==null thus do not forward to downstream');
+      return;
+    }
+
+    widget.controller._positionStreamController.add(position);
   }
 
   @override

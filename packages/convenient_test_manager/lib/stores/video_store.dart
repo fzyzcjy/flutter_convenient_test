@@ -65,13 +65,15 @@ abstract class _VideoStore with Store {
   }
 
   void _setupSyncPlayerPositionCorrespondingLogEntryId() {
-    mainPlayerController.positionStream.listen((position) {
-      final absoluteTime = videoToAbsoluteTime(position);
-      final logEntryId = GetIt.I.get<LogStore>().calcLogEntryAtTime(absoluteTime);
+    mainPlayerController.positionStream.listen(_handlePositionStreamEvent);
+  }
 
-      // this "if" will avoid unnecessary mobx updates
-      if (logEntryId != playerPositionCorrespondingLogEntryId) playerPositionCorrespondingLogEntryId = logEntryId;
-    });
+  void _handlePositionStreamEvent(Duration position) {
+    final absoluteTime = videoToAbsoluteTime(position);
+    final logEntryId = GetIt.I.get<LogStore>().calcLogEntryAtTime(absoluteTime);
+
+    // this "if" will avoid unnecessary mobx updates
+    if (logEntryId != playerPositionCorrespondingLogEntryId) playerPositionCorrespondingLogEntryId = logEntryId;
   }
 }
 
