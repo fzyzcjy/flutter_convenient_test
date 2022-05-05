@@ -6,19 +6,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   convenientTestMain(MyConvenientTestSlot(), () {
-    group('sample group one', () {
-      tTestWidgets('empty test', (t) async {});
-
-      group('sample sub-group', () {
-        tTestWidgets('another empty test', (t) async {});
-
-        group('sample sub-sub-group', () {
-          tTestWidgets('yet another empty test', (t) async {});
-        });
-      });
+    group('quickstart tests', () {
+      TODO;
     });
 
-    group('sample group two', () {
+    group('other tests', () {
       tTestWidgets('deliberately failing test', (t) async {
         expect(1, 0, reason: 'this expect should deliberately fail');
       });
@@ -101,6 +93,14 @@ void main() {
         }
 
         await t.pageBack();
+      });
+    });
+
+    group('sample sub-group', () {
+      tTestWidgets('empty test', (t) async {});
+
+      group('sample sub-sub-group', () {
+        tTestWidgets('another empty test', (t) async {});
       });
     });
   });
