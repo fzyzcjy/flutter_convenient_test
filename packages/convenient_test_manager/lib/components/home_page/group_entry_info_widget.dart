@@ -22,14 +22,14 @@ class HomePageGroupEntryInfoSectionBuilder extends StaticSectionBuilder {
   });
 
   @override
-  Iterable<StaticSection> build() sync* {
+  Iterable<StaticSection> build() {
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
     final info = suiteInfoStore.suiteInfo?.entryMap[groupEntryId];
-    if (info == null) return;
+    if (info == null) return const [];
 
-    if (info is GroupInfo) yield* _GroupInfoSectionBuilder(info: info, depth: depth, showHeader: showHeader).build();
-    if (info is TestInfo) yield* _TestInfoSectionBuilder(info: info, depth: depth).build();
+    if (info is GroupInfo) return _GroupInfoSectionBuilder(info: info, depth: depth, showHeader: showHeader).build();
+    if (info is TestInfo) return _TestInfoSectionBuilder(info: info, depth: depth).build();
     throw Exception('unknown info=$info');
   }
 }
