@@ -14,6 +14,10 @@ class LogSubEntryType extends $pb.ProtobufEnum {
       LogSubEntryType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INVALID');
   static const LogSubEntryType GENERAL_MESSAGE =
       LogSubEntryType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERAL_MESSAGE');
+  static const LogSubEntryType SET_UP_ALL =
+      LogSubEntryType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SET_UP_ALL');
+  static const LogSubEntryType TEAR_DOWN_ALL =
+      LogSubEntryType._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEAR_DOWN_ALL');
   static const LogSubEntryType TEST_START =
       LogSubEntryType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEST_START');
   static const LogSubEntryType TEST_BODY =
@@ -30,6 +34,8 @@ class LogSubEntryType extends $pb.ProtobufEnum {
   static const $core.List<LogSubEntryType> values = <LogSubEntryType>[
     INVALID,
     GENERAL_MESSAGE,
+    SET_UP_ALL,
+    TEAR_DOWN_ALL,
     TEST_START,
     TEST_BODY,
     TEST_END,

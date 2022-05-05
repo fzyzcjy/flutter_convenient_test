@@ -41,6 +41,8 @@ message LogSubEntry {
 enum LogSubEntryType {
   INVALID = 0;
   GENERAL_MESSAGE = 1;
+  SET_UP_ALL = 8;
+  TEAR_DOWN_ALL = 9;
   TEST_START = 2;
   TEST_BODY = 3;
   TEST_END = 4;

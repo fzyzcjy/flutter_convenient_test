@@ -15,6 +15,8 @@ const LogSubEntryType$json = const {
   '2': const [
     const {'1': 'INVALID', '2': 0},
     const {'1': 'GENERAL_MESSAGE', '2': 1},
+    const {'1': 'SET_UP_ALL', '2': 8},
+    const {'1': 'TEAR_DOWN_ALL', '2': 9},
     const {'1': 'TEST_START', '2': 2},
     const {'1': 'TEST_BODY', '2': 3},
     const {'1': 'TEST_END', '2': 4},
@@ -26,7 +28,7 @@ const LogSubEntryType$json = const {
 
 /// Descriptor for `LogSubEntryType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List logSubEntryTypeDescriptor = $convert.base64Decode(
-    'Cg9Mb2dTdWJFbnRyeVR5cGUSCwoHSU5WQUxJRBAAEhMKD0dFTkVSQUxfTUVTU0FHRRABEg4KClRFU1RfU1RBUlQQAhINCglURVNUX0JPRFkQAxIMCghURVNUX0VORBAEEgoKBkFTU0VSVBAFEg8KC0FTU0VSVF9GQUlMEAYSCwoHU0VDVElPThAH');
+    'Cg9Mb2dTdWJFbnRyeVR5cGUSCwoHSU5WQUxJRBAAEhMKD0dFTkVSQUxfTUVTU0FHRRABEg4KClNFVF9VUF9BTEwQCBIRCg1URUFSX0RPV05fQUxMEAkSDgoKVEVTVF9TVEFSVBACEg0KCVRFU1RfQk9EWRADEgwKCFRFU1RfRU5EEAQSCgoGQVNTRVJUEAUSDwoLQVNTRVJUX0ZBSUwQBhILCgdTRUNUSU9OEAc=');
 @$core.Deprecated('Use reportCollectionDescriptor instead')
 const ReportCollection$json = const {
   '1': 'ReportCollection',
