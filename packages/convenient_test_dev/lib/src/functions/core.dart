@@ -83,7 +83,7 @@ Future<void> _lastTearDownAll() async {
   const _kTag = 'LastTearDownAll';
 
   // need to `await` to ensure it is sent
-  await LogHandle.create().update('TEAR_DOWN_ALL', '', type: LogSubEntryType.TEAR_DOWN_ALL);
+  await myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(overallExecution: OverallExecution.TEAR_DOWN_ALL));
 
   if (CompileTimeConfig.kCIMode) {
     Log.i(_kTag, 'wait for a few seconds, hoping everything is really finished');
