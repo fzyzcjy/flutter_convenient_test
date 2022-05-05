@@ -19,7 +19,11 @@ abstract class _VideoStore with Store {
 
   final mainPlayerController = VideoPlayerController();
 
-  Duration absoluteToVideoTime(DateTime absoluteTime) => TODO;
+  Duration absoluteToVideoTime(DateTime absoluteTime) {
+    final displayVideoInfo = this.displayVideoInfo;
+    if (displayVideoInfo == null) return Duration.zero;
+    return absoluteTime.difference(displayVideoInfo.startTime);
+  }
 
   void clear() {
     recordingVideoInfo = null;
