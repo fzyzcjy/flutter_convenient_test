@@ -46,7 +46,7 @@ class ReportHandlerService {
 
     if (overallExecution == OverallExecution.SET_UP_ALL) {
       Log.d(_kTag, 'reset cache since see SET_UP_ALL');
-      GetIt.I.get<MiscService>().resetCache();
+      GetIt.I.get<MiscService>().clearAll();
     }
 
     if (!offlineFile) {
@@ -75,7 +75,7 @@ class ReportHandlerService {
       _organizationStore.expandGroupEntryMap.clear();
       for (var i = 1; i <= request.entryLocators.length; ++i) {
         _organizationStore.expandGroupEntryMap[
-            _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))!] = true;
+        _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators.sublist(0, i))!] = true;
       }
     }
   }

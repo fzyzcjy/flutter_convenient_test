@@ -15,6 +15,11 @@ abstract class _VideoStore with Store {
   @observable
   String? displayVideoPath;
 
+  void clear() {
+    recordingVideoPath = null;
+    displayVideoPath = null;
+  }
+
   @action
   Future<void> startRecord() async {
     recordingVideoPath = await _createVideoPath();

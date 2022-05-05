@@ -7,6 +7,7 @@ import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
+import 'package:convenient_test_manager/stores/video_store.dart';
 import 'package:convenient_test_manager/stores/worker_mode_store.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get_it/get_it.dart';
@@ -34,13 +35,14 @@ class MiscService {
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 
-  void resetCache() {
-    Log.d(_kTag, 'resetCache');
+  void clearAll() {
+    Log.d(_kTag, 'clearAll');
 
     GetIt.I.get<OrganizationStore>().clear();
     GetIt.I.get<SuiteInfoStore>().clear();
     GetIt.I.get<LogStore>().clear();
     GetIt.I.get<RawLogStore>().clear();
+    GetIt.I.get<VideoStore>().clear();
   }
 
   Future<void> pickFileAndReadReport() async {
@@ -55,7 +57,7 @@ class MiscService {
   Future<void> readReportFromFile(String path) async {
     Log.d(_kTag, 'readReportFromFile start path=$path');
 
-    resetCache();
+    clearAll();
     final reportCollection = ReportCollection.fromBuffer(await File(path).readAsBytes());
     await GetIt.I.get<ReportHandlerService>().handle(reportCollection, offlineFile: true);
 
