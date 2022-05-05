@@ -81,7 +81,9 @@ class _VideoPlayerState extends State<VideoPlayer> {
   @override
   void didUpdateWidget(covariant VideoPlayer oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.videoPath != widget.videoPath) {
+    if (oldWidget.videoPath != widget.videoPath ||
+        oldWidget.startTime != widget.startTime ||
+        oldWidget.stopTime != widget.stopTime) {
       _deInit();
       _init();
     }
