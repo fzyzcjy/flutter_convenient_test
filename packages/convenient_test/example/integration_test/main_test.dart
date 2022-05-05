@@ -90,7 +90,12 @@ void main() {
 
         final log = t.log('HELLO', 'Let us just wait a few seconds to look at the timer');
         await log.snapshot(name: 'before');
-        await Future.delayed(const Duration(seconds: 5));
+
+        final stopwatch = Stopwatch()..start();
+        while (stopwatch.elapsed < const Duration(seconds: 5)) {
+          await t.tester.pump();
+        }
+
         await log.snapshot(name: 'after');
 
         await t.pageBack();
