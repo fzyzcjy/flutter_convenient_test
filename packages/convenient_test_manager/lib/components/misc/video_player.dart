@@ -32,9 +32,17 @@ class VideoPlayerController with AttachableStateMixin<_VideoPlayerState> {
 
 class VideoPlayer extends StatefulWidget {
   final String videoPath;
+  final Duration startTime;
+  final Duration stopTime;
   final VideoPlayerController controller;
 
-  const VideoPlayer({Key? key, required this.videoPath, required this.controller}) : super(key: key);
+  const VideoPlayer({
+    Key? key,
+    required this.videoPath,
+    required this.startTime,
+    required this.stopTime,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   State<VideoPlayer> createState() => _VideoPlayerState();
@@ -73,7 +81,9 @@ class _VideoPlayerState extends State<VideoPlayer> {
   @override
   void didUpdateWidget(covariant VideoPlayer oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.videoPath != widget.videoPath) {
+    if (oldWidget.videoPath != widget.videoPath ||
+        oldWidget.startTime != widget.startTime ||
+        oldWidget.stopTime != widget.stopTime) {
       _deInit();
       _init();
     }
@@ -92,7 +102,11 @@ class _VideoPlayerState extends State<VideoPlayer> {
   }
 
   void _init() {
-    player.open(Media.file(File(widget.videoPath)));
+    player.open(Media.file(
+      File(widget.videoPath),
+      startTime: widget.startTime,
+      stopTime: widget.stopTime,
+    ));
   }
 
   void _deInit() {

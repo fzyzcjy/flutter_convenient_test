@@ -1,14 +1,17 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/home_page/log_entry_widget.dart';
 import 'package:convenient_test_manager/components/misc/state_indicator.dart';
+import 'package:convenient_test_manager/misc/protobuf_extensions.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
+import 'package:convenient_test_manager/stores/video_store.dart';
 import 'package:convenient_test_manager/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:tuple/tuple.dart';
 
 class HomePageGroupEntryInfoSectionBuilder extends StaticSectionBuilder {
   final int groupEntryId;
@@ -178,6 +181,7 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
                   style: const TextStyle(),
                 ),
                 Expanded(child: Container()),
+                _buildPlayVideoButton(),
                 _RunTestButton(filterNameRegex: '^${info.name}\$'),
               ],
             ),
@@ -187,10 +191,43 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     });
   }
 
-  Iterable<StaticSection> _buildLogEntries(SimplifiedStateEnum state) sync* {
+  Widget _buildPlayVideoButton() {
+    if (logEntryIds.isEmpty) return const SizedBox.shrink();
+
+    return IconButton(
+      visualDensity: VisualDensity.compact,
+      onPressed: _handleTapPlayVideoButton,
+      icon: const Icon(
+        Icons.movie,
+        color: Colors.teal,
+        size: 16,
+      ),
+    );
+  }
+
+  void _handleTapPlayVideoButton() {
+    final videoStore = GetIt.I.get<VideoStore>();
     final logStore = GetIt.I.get<LogStore>();
 
-    final logEntryIds = logStore.logEntryInTest[info.id] ?? <int>[];
+    final logSubEntryIds = logStore.logSubEntryInTest(info.id);
+    if (logSubEntryIds.isEmpty) return;
+
+    final logSubEntryTimes =
+        logSubEntryIds.map((logSubEntryId) => logStore.logSubEntryMap[logSubEntryId]!.timeTyped).toList();
+
+    final startTime = logSubEntryTimes.reduce((a, b) => a.isBefore(b) ? a : b);
+    final endTime = logSubEntryTimes.reduce((a, b) => a.isAfter(b) ? a : b);
+
+    videoStore.displayRange = Tuple2(
+      videoStore.absoluteToVideoTime(startTime),
+      videoStore.absoluteToVideoTime(endTime),
+    );
+  }
+
+  List<int> get logEntryIds => GetIt.I.get<LogStore>().logEntryInTest[info.id] ?? <int>[];
+
+  Iterable<StaticSection> _buildLogEntries(SimplifiedStateEnum state) sync* {
+    final logEntryIds = this.logEntryIds;
 
     if (logEntryIds.isEmpty) {
       yield StaticSection.single(

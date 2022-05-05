@@ -41,6 +41,22 @@ mixin _$VideoStore on _VideoStore, Store {
     });
   }
 
+  late final _$displayRangeAtom =
+      Atom(name: '_VideoStore.displayRange', context: context);
+
+  @override
+  Tuple2<Duration, Duration> get displayRange {
+    _$displayRangeAtom.reportRead();
+    return super.displayRange;
+  }
+
+  @override
+  set displayRange(Tuple2<Duration, Duration> value) {
+    _$displayRangeAtom.reportWrite(value, super.displayRange, () {
+      super.displayRange = value;
+    });
+  }
+
   late final _$playerPositionCorrespondingLogEntryIdAtom = Atom(
       name: '_VideoStore.playerPositionCorrespondingLogEntryId',
       context: context);
@@ -80,6 +96,7 @@ mixin _$VideoStore on _VideoStore, Store {
     return '''
 recordingVideoInfo: ${recordingVideoInfo},
 displayVideoInfo: ${displayVideoInfo},
+displayRange: ${displayRange},
 playerPositionCorrespondingLogEntryId: ${playerPositionCorrespondingLogEntryId}
     ''';
   }
