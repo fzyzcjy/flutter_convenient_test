@@ -3,6 +3,7 @@ export 'package:convenient_test_common/src/common_flutter/collections.dart';
 export 'package:convenient_test_common/src/common_flutter/counter.dart';
 export 'package:convenient_test_common/src/common_flutter/front_log.dart';
 export 'package:convenient_test_common/src/common_flutter/get_set.dart';
+export 'package:convenient_test_common/src/common_flutter/non_ballistic_clamping_scroll_physics.dart';
 export 'package:convenient_test_common/src/common_flutter/relations.dart';
 export 'package:convenient_test_common/src/common_flutter/static_section_list_view.dart';
 export 'package:convenient_test_common/src/common_flutter/sync_text_field.dart';
