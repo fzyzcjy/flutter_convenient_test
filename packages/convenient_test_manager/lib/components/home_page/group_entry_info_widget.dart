@@ -3,6 +3,7 @@ import 'package:convenient_test_manager/components/home_page/log_entry_widget.da
 import 'package:convenient_test_manager/components/misc/state_indicator.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
+import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/utils/utils.dart';
@@ -188,9 +189,12 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
   }
 
   Iterable<StaticSection> _buildLogEntries(SimplifiedStateEnum state) sync* {
+    final homePageStore = GetIt.I.get<HomePageStore>();
     final logStore = GetIt.I.get<LogStore>();
 
     final logEntryIds = logStore.logEntryInTest[info.id] ?? <int>[];
+
+    homePageStore.rdtListViewIndexOfFirstLogEntryOfTestIdMap[info.id] = TODO;
 
     if (logEntryIds.isEmpty) {
       yield StaticSection.single(

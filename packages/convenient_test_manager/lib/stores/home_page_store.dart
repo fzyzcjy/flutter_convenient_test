@@ -11,6 +11,9 @@ abstract class _HomePageStore with Store {
 
   final itemScrollController = ItemScrollController();
   final itemPositionsListener = ItemPositionsListener.create();
+ 
+  /// key: testId; value: ListView index of *first* log entry of that test
+  final rdtListViewIndexOfFirstLogEntryOfTestIdMap = ObservableMap<int, int>();
 }
 
 enum HomePageSecondaryPanelTab {

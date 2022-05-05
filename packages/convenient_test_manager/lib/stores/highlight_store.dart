@@ -6,7 +6,6 @@ import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/video_store.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -109,7 +108,15 @@ abstract class _HighlightStore with Store {
   }
 
   int? _calcListViewIndexForLogEntry({required int logEntryId}) {
-    return TODO;
+    final homePageStore = GetIt.I.get<HomePageStore>();
+
+    final testInfoId = _logStore.testIdOfLogEntry[logEntryId]!;
+    final listViewIndexOfFirstLogEntryOfTest = homePageStore.rdtListViewIndexOfFirstLogEntryOfTestIdMap[testInfoId]!;
+
+    final logEntryOffset = _logStore.logEntryInTest[testInfoId]!.indexOf(logEntryId);
+    assert(logEntryOffset != -1);
+
+    return listViewIndexOfFirstLogEntryOfTest + logEntryOffset;
   }
 
   final _logStore = GetIt.I.get<LogStore>();
