@@ -1,4 +1,4 @@
-# [WIP] flutter_convenient_test
+# [WIP] convenient_test
 
 A fast, easy and reliable testing utility on top of integration_test, making writing tests as simple as speaking
 
@@ -20,7 +20,7 @@ A fast, easy and reliable testing utility on top of integration_test, making wri
 
 [TODO use *everything* - we expose the underlying `tester` so you can do anything with it]
 
-### Retryability
+### Automatic wait and retry
 
 [TODO no need to manually pump or wait. All done automatically.]
 
@@ -30,7 +30,9 @@ A fast, easy and reliable testing utility on top of integration_test, making wri
 
 ### Command panel
 
-[TODO]
+[TODO explain it]
+
+[TODO "time travel"]
 
 [TODO clearly see what steps are taken]
 
@@ -38,7 +40,15 @@ A fast, easy and reliable testing utility on top of integration_test, making wri
 
 ### Video records
 
-[TODO]
+[TODO when playing, auto highlight corresponding command entry]
+
+[TODO explain: watch full video]
+
+[TODO explain: watch video for a single test]
+
+[TODO explain: open the video file and watch it using any player you like]
+
+[TODO p.s. tests may execute too fast and you want to re-watch the process again]
 
 ### Screenshots
 
