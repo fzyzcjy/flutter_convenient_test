@@ -7,6 +7,7 @@ import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
+import 'package:convenient_test_manager/stores/video_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -49,12 +50,9 @@ class ReportHandlerService {
     }
 
     if (!offlineFile) {
-      if (overallExecution == OverallExecution.SET_UP_ALL) {
-        TODO_record_video;
-      }
-      if (overallExecution == OverallExecution.TEAR_DOWN_ALL) {
-        TODO_record_video;
-      }
+      final videoStore = GetIt.I.get<VideoStore>();
+      if (overallExecution == OverallExecution.SET_UP_ALL) await videoStore.startRecord();
+      if (overallExecution == OverallExecution.TEAR_DOWN_ALL) await videoStore.stopRecord();
     }
   }
 
