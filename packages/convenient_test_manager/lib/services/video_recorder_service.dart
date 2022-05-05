@@ -73,8 +73,8 @@ class _VideoRecorderServiceIosSimulator extends VideoRecorderService {
     }
 
     Log.i(_kTag, 'stopRecord send signals');
-    process.kill(ProcessSignal.sigint);
-    process.kill(ProcessSignal.sigterm);
+    process.kill(ProcessSignal.sigint); // simulate Ctrl+C
+    // process.kill(ProcessSignal.sigterm);
 
     Log.i(_kTag, 'stopRecord await exitCode');
     final exitCode = await process.exitCode;
