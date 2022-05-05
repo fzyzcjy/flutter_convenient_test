@@ -62,9 +62,17 @@ class SuiteInfo {
 
   void traverse(GroupEntryInfoTraverseCallback callback) => rootGroup.traverse(this, callback);
 
-  List<int> ancestors(int entryId) {
-    return TODO;
+  Iterable<int> ancestors(int entryId) sync* {
+    var currEntryId = entryId;
+
+    while (isIdValid(currEntryId)) {
+      yield currEntryId;
+      currEntryId = entryMap[currEntryId]!.parentId;
+    }
   }
+
+// TODO improve the way to check whether the id is valid
+  bool isIdValid(int id) => id > 0;
 }
 
 typedef GroupEntryInfoTraverseCallback = void Function(GroupEntryInfo groupEntryInfo);
