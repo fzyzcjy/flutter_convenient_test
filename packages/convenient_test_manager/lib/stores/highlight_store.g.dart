@@ -34,6 +34,22 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
+  late final _$enableHoverModeAtom =
+      Atom(name: '_HighlightStore.enableHoverMode', context: context);
+
+  @override
+  bool get enableHoverMode {
+    _$enableHoverModeAtom.reportRead();
+    return super.enableHoverMode;
+  }
+
+  @override
+  set enableHoverMode(bool value) {
+    _$enableHoverModeAtom.reportWrite(value, super.enableHoverMode, () {
+      super.enableHoverMode = value;
+    });
+  }
+
   late final _$highlightTestEntryIdAtom =
       Atom(name: '_HighlightStore.highlightTestEntryId', context: context);
 
@@ -102,6 +118,7 @@ mixin _$HighlightStore on _HighlightStore, Store {
   String toString() {
     return '''
 enableAutoExpand: ${enableAutoExpand},
+enableHoverMode: ${enableHoverMode},
 highlightTestEntryId: ${highlightTestEntryId},
 highlightLogEntryId: ${highlightLogEntryId},
 highlightSnapshotName: ${highlightSnapshotName},

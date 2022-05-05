@@ -53,6 +53,16 @@ class HomePageHeaderPanel extends StatelessWidget {
           ),
           const SizedBox(width: 20),
           const Text(
+            'Hover Mode',
+            style: TextStyle(fontSize: 12, height: 1.2),
+          ),
+          Observer(
+            builder: (_) => Switch(
+              value: highlightStore.enableHoverMode,
+              onChanged: (v) => highlightStore.enableHoverMode = v,
+            ),
+          ),
+          const Text(
             'Auto Expand',
             style: TextStyle(fontSize: 12, height: 1.2),
           ),

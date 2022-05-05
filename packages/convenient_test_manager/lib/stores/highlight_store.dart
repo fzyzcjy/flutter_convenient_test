@@ -15,8 +15,12 @@ class HighlightStore = _HighlightStore with _$HighlightStore;
 
 abstract class _HighlightStore with Store {
   static const _kTag = 'HighlightStore';
+
   @observable
   bool enableAutoExpand = true;
+
+  @observable
+  bool enableHoverMode = true;
 
   /// key: [GroupEntryInfo].id
   final expandGroupEntryMap = ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
