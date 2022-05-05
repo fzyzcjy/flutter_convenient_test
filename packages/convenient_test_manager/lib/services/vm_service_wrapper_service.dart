@@ -101,5 +101,10 @@ abstract class __ServiceConnectionManager with Store {
 
     service.onEvent(EventStreams.kService).listen(handleServiceEvent);
     unawaited(service.streamListen(EventStreams.kService));
+
+    service.onDone.then((Object? _) {
+      Log.i(_kTag, 'VMService.onDone called');
+      this.service = null;
+    });
   }
 }
