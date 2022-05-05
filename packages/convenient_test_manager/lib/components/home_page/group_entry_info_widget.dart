@@ -80,8 +80,9 @@ class _GroupInfoWidget extends StatelessWidget {
       },
       child: SizedBox(
         width: double.infinity,
+        height: 48,
         child: Padding(
-          padding: const EdgeInsets.only(left: 8, right: 8, top: 12, bottom: 12) + EdgeInsets.only(left: depth * 12),
+          padding: const EdgeInsets.only(left: 8) + EdgeInsets.only(left: depth * 12),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -100,6 +101,7 @@ class _GroupInfoWidget extends StatelessWidget {
                 ),
               ),
               ..._buildGroupStat(),
+              _RunTestButton(filterNameRegex: '^${info.name}.*'),
             ],
           ),
         ),
@@ -166,7 +168,7 @@ class _TestInfoWidget extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4) + EdgeInsets.only(left: depth * 12),
+                padding: const EdgeInsets.symmetric(vertical: 4) + EdgeInsets.only(left: 16 + depth * 12),
                 child: Row(
                   children: [
                     StateIndicatorWidget(
@@ -234,6 +236,7 @@ class _RunTestButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      visualDensity: VisualDensity.compact,
       onPressed: () {
         GetIt.I.get<OrganizationStore>().enableAutoExpand = true;
         GetIt.I.get<MiscService>().hotRestartAndRunTests(filterNameRegex: filterNameRegex);
