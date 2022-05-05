@@ -13,16 +13,16 @@ import 'package:mobx/mobx.dart';
 class ReportHandlerService {
   static const _kTag = 'ReportHandlerService';
 
-  Future<void> handle(ReportCollection reportCollection) async {
+  Future<void> handle(ReportCollection reportCollection, {required bool offlineFile}) async {
     for (final item in reportCollection.items) {
-      await _handleItem(item);
+      await _handleItem(item, offlineFile: offlineFile);
     }
   }
 
-  Future<void> _handleItem(ReportItem item) async {
+  Future<void> _handleItem(ReportItem item, {required bool offlineFile}) async {
     switch (item.whichSubType()) {
       case ReportItem_SubType.overallExecution:
-        return _handleOverallExecution(item.overallExecution);
+        return _handleOverallExecution(item.overallExecution, offlineFile: offlineFile);
       case ReportItem_SubType.suiteInfoProto:
         return _handleSuiteInfoProto(item.suiteInfoProto);
       case ReportItem_SubType.logEntry:
@@ -40,12 +40,21 @@ class ReportHandlerService {
     }
   }
 
-  Future<void> _handleOverallExecution(OverallExecution overallExecution) async {
+  Future<void> _handleOverallExecution(OverallExecution overallExecution, {required bool offlineFile}) async {
     Log.d(_kTag, 'handleOverallExecution $overallExecution');
 
     if (overallExecution == OverallExecution.SET_UP_ALL) {
       Log.d(_kTag, 'reset cache since see SET_UP_ALL');
       GetIt.I.get<MiscService>().resetCache();
+    }
+
+    if (!offlineFile) {
+      if (overallExecution == OverallExecution.SET_UP_ALL) {
+        TODO_record_video;
+      }
+      if (overallExecution == OverallExecution.TEAR_DOWN_ALL) {
+        TODO_record_video;
+      }
     }
   }
 

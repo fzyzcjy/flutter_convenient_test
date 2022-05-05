@@ -57,7 +57,7 @@ class MiscService {
 
     resetCache();
     final reportCollection = ReportCollection.fromBuffer(await File(path).readAsBytes());
-    await GetIt.I.get<ReportHandlerService>().handle(reportCollection);
+    await GetIt.I.get<ReportHandlerService>().handle(reportCollection, offlineFile: true);
 
     Log.d(_kTag, 'readReportFromFile end');
   }
