@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
@@ -99,18 +97,24 @@ abstract class _HighlightStore with Store {
         'handleHighlightLogEntryIdChange highlightLogEntryId=$highlightLogEntryId listViewIndexForHighlight=$listViewIndexForHighlight');
     if (listViewIndexForHighlight == null) return;
 
-    final itemPositions = homePageStore.itemPositionsListener.itemPositions.value.map((e) => e.index).toList();
-    final visibleMaxIndex = itemPositions.fold(0, max);
-    final visibleMinIndex = itemPositions.fold(2147483647, min);
+    final itemPositions = homePageStore.itemPositionsListener.itemPositions.value;
+    final visibleIndices = itemPositions.map((e) => e.index).toList();
+    final itemPositionForHighlight = itemPositions.firstWhereOrNull((e) => e.index == listViewIndexForHighlight);
 
-    if (visibleMaxIndex < listViewIndexForHighlight) {
-      Log.d(_kTag, 'scroll DOWN to make index=$listViewIndexForHighlight visible');
-      homePageStore.itemScrollController.jumpTo(index: listViewIndexForHighlight, alignment: .9);
+    // why this logic: also see #90
+
+    if (itemPositionForHighlight != null) {
+      // It is *fully* visible
+      if (itemPositionForHighlight.itemLeadingEdge >= 0.0 && itemPositionForHighlight.itemTrailingEdge <= 1.0) return;
+
+      // There are only few elements there
+      if (itemPositions.length <= 3) return;
     }
-    if (visibleMinIndex > listViewIndexForHighlight) {
-      Log.d(_kTag, 'scroll UP to make index=$listViewIndexForHighlight visible');
-      homePageStore.itemScrollController.jumpTo(index: listViewIndexForHighlight, alignment: .0);
-    }
+
+    final middleVisibleIndex = visibleIndices[visibleIndices.length ~/ 2];
+    final alignment = listViewIndexForHighlight < middleVisibleIndex ? .0 : .9;
+    Log.d(_kTag, 'jump to make index=$listViewIndexForHighlight at alignment=$alignment');
+    homePageStore.itemScrollController.jumpTo(index: listViewIndexForHighlight, alignment: alignment);
   }
 
   int? _calcListViewIndexForLogEntry({required int logEntryId}) {
