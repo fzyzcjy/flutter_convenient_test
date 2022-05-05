@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,8 @@ class VideoPlayer extends StatefulWidget {
 }
 
 class _VideoPlayerState extends State<VideoPlayer> {
+  static const _kTag = 'VideoPlayerState';
+
   final player = Player(id: Random().nextInt(100000000));
 
   double get playbackRate => _kPlaybackRates[playbackRateIndex];
@@ -86,8 +89,20 @@ class _VideoPlayerState extends State<VideoPlayer> {
           },
           child: Text('Speed ${playbackRate.toStringAsFixed(1)}x'),
         ),
+        Expanded(child: Container()),
+        TextButton(
+          onPressed: _openExternally,
+          child: const Text('Open Externally'),
+        ),
       ],
     );
+  }
+
+  Future<void> _openExternally() async {
+    // TODO add support for other platforms
+    Log.i(_kTag, 'open externally start');
+    final result = await Process.run('open', ['--reveal', widget.videoPath]);
+    Log.i(_kTag, 'open externally end exitCode=${result.exitCode} stdout=${result.stdout} stderr=${result.stderr}');
   }
 
   Widget _buildPositionBar() {
