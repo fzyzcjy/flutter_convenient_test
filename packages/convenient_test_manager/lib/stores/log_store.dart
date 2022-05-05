@@ -29,9 +29,8 @@ abstract class _LogStore with Store {
     return snapshotInLog[activeLogEntryId]?.keys.firstOrNull;
   }
 
-  List<int> logSubEntryInTest(int testInfoId) => (logEntryInTest[testInfoId] ?? <int>[])
-      .expand((logEntryId) => logSubEntryInEntry[logEntryId] ?? <int>[])
-      .toList();
+  Iterable<int> logSubEntryInTest(int testInfoId) =>
+      (logEntryInTest[testInfoId] ?? <int>[]).expand((logEntryId) => logSubEntryInEntry[logEntryId] ?? <int>[]);
 
   bool isTestFlaky(int testInfoId) =>
       // If see multiple TEST_START, then this test is flaky

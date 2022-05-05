@@ -1,6 +1,7 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/misc/enhanced_selectable_text.dart';
 import 'package:convenient_test_manager/components/misc/rotate_animation.dart';
+import 'package:convenient_test_manager/misc/protobuf_extensions.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +34,8 @@ class HomePageLogEntryWidget extends StatelessWidget {
     // ];
 
     return Observer(builder: (_) {
-      final interestLogSubEntryId = logStore.logSubEntryInEntry[logEntryId]!.last;
-      final interestLogSubEntry = logStore.logSubEntryMap[interestLogSubEntryId]!;
+      final logSubEntryIds = logStore.logSubEntryInEntry[logEntryId]!;
+      final interestLogSubEntry = logStore.logSubEntryMap[logSubEntryIds.last]!;
 
       // if (kSkipTypes.contains(logEntry.type)) {
       //   return Container();
@@ -96,6 +97,10 @@ class HomePageLogEntryWidget extends StatelessWidget {
                       enableCopyAllButton: false,
                     ),
                   ),
+                  Container(width: 4),
+                  _buildTime(logSubEntryIds: logSubEntryIds),
+                  Container(width: 4),
+                  Container(width: 4),
                 ],
               ),
             ),
@@ -165,4 +170,28 @@ class HomePageLogEntryWidget extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildTime({required List<int> logSubEntryIds}) {
+    final logStore = GetIt.I.get<LogStore>();
+
+    final testStartTime = logStore.logSubEntryMap[logStore.logSubEntryInTest(testEntryId).first]!.timeTyped;
+    final logEntryStartTime = logStore.logSubEntryMap[logSubEntryIds.first]!.timeTyped;
+    final logEntryEndTime = logStore.logSubEntryMap[logSubEntryIds.last]!.timeTyped;
+
+    final logEntryStartDisplay = _formatDuration(logEntryStartTime.difference(testStartTime));
+    final logEntryEndDisplay = _formatDuration(logEntryEndTime.difference(testStartTime));
+
+    final shouldShowLogEndDisplay = logEntryEndTime.difference(logEntryStartTime) > const Duration(milliseconds: 300);
+
+    return Text(
+      '$logEntryStartDisplay${shouldShowLogEndDisplay ? '-$logEntryEndDisplay' : ''}s',
+      style: const TextStyle(
+        fontSize: 10,
+        color: Colors.grey,
+        fontFamily: 'RobotoMono',
+      ),
+    );
+  }
+
+  String _formatDuration(Duration d) => (d.inMilliseconds / 1000).toStringAsFixed(1);
 }
