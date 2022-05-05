@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
 
-class VideoPlayerController {
+class VideoPlayerController with AttachableStateMixin<_VideoPlayerState> {
   static const _kTag = 'VideoPlayerController';
 
   Stream<Duration> get positionStream => _positionStreamController.stream;
@@ -14,7 +15,14 @@ class VideoPlayerController {
 
   Future<void> seek(Duration position) async {
     Log.d(_kTag, 'seek position=$position');
-    TODO;
+
+    final state = states.singleOrNull;
+    if (state == null) {
+      Log.d(_kTag, 'seek skip since state==null');
+      return;
+    }
+
+    state.player.seek(position);
   }
 
   void dispose() {
@@ -91,25 +99,29 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        children: [
-          const SizedBox(height: 8),
-          _buildControlRow(),
-          const SizedBox(height: 8),
-          Expanded(
-            child: Center(
-              child: Video(
-                player: player,
-                playlistLength: 1,
+    return AttachableStateAttacherWidget(
+      target: widget.controller,
+      state: this,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          children: [
+            const SizedBox(height: 8),
+            _buildControlRow(),
+            const SizedBox(height: 8),
+            Expanded(
+              child: Center(
+                child: Video(
+                  player: player,
+                  playlistLength: 1,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 8),
-          _buildPositionBar(),
-          const SizedBox(height: 8),
-        ],
+            const SizedBox(height: 8),
+            _buildPositionBar(),
+            const SizedBox(height: 8),
+          ],
+        ),
       ),
     );
   }
