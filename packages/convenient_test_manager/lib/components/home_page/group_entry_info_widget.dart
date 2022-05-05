@@ -178,17 +178,7 @@ class _TestInfoWidget extends StatelessWidget {
                       style: const TextStyle(),
                     ),
                     Expanded(child: Container()),
-                    IconButton(
-                      onPressed: () {
-                        organizationStore.enableAutoExpand = true;
-                        GetIt.I.get<MiscService>().hotRestartAndRunTests(filterNameRegex: '^${info.name}\$');
-                      },
-                      icon: const Icon(
-                        Icons.play_arrow,
-                        color: Colors.blue,
-                        size: 16,
-                      ),
-                    ),
+                    _RunTestButton(filterNameRegex: '^${info.name}\$'),
                   ],
                 ),
               ),
@@ -234,4 +224,25 @@ class _TestInfoWidget extends StatelessWidget {
   }
 
   bool get expanding => GetIt.I.get<OrganizationStore>().expandGroupEntryMap[info.id];
+}
+
+class _RunTestButton extends StatelessWidget {
+  final String filterNameRegex;
+
+  const _RunTestButton({Key? key, required this.filterNameRegex}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        GetIt.I.get<OrganizationStore>().enableAutoExpand = true;
+        GetIt.I.get<MiscService>().hotRestartAndRunTests(filterNameRegex: filterNameRegex);
+      },
+      icon: const Icon(
+        Icons.play_arrow,
+        color: Colors.blue,
+        size: 16,
+      ),
+    );
+  }
 }
