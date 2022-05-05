@@ -16,6 +16,18 @@ abstract class _LogStore with Store {
   /// `snapshotInLog[logEntryId][name] == snapshot bytes`
   final snapshotInLog = ObservableMap<int, ObservableMap<String, Uint8List>>();
 
+  void addLogEntry({required int testEntryId, required int logEntryId, required List<LogSubEntry> subEntries}) {
+    for (final subEntry in subEntries) {
+      logSubEntryMap[subEntry.id] = subEntry;
+    }
+
+    (logSubEntryInEntry[logEntryId] ??= ObservableList()).addAll(subEntries.map((subEntry) => subEntry.id));
+
+    if (!(logEntryInTest[testEntryId]?.contains(logEntryId) ?? false)) {
+      logEntryInTest.addRelation(testEntryId, logEntryId);
+    }
+  }
+
   Iterable<int> logSubEntryInTest(int testInfoId) =>
       (logEntryInTest[testInfoId] ?? <int>[]).expand((logEntryId) => logSubEntryInEntry[logEntryId] ?? <int>[]);
 

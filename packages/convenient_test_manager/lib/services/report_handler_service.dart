@@ -62,14 +62,7 @@ class ReportHandlerService {
     final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators);
     if (testEntryId == null) return;
 
-    for (final subEntry in request.subEntries) {
-      _logStore.logSubEntryMap.addToIdObjMap(subEntry);
-    }
-    (_logStore.logSubEntryInEntry[request.id] ??= ObservableList())
-        .addAll(request.subEntries.map((subEntry) => subEntry.id));
-    if (!(_logStore.logEntryInTest[testEntryId]?.contains(request.id) ?? false)) {
-      _logStore.logEntryInTest.addRelation(testEntryId, request.id);
-    }
+    _logStore.addLogEntry(testEntryId: testEntryId, logEntryId: request.id, subEntries: request.subEntries);
 
     if (_highlightStore.enableAutoExpand) {
       _highlightStore
@@ -122,11 +115,4 @@ class ReportHandlerService {
   final _highlightStore = GetIt.I.get<HighlightStore>();
   final _suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
   final _rawLogStore = GetIt.I.get<RawLogStore>();
-}
-
-extension<T> on Map<int, T> {
-  void addToIdObjMap(T obj) {
-    // ignore: avoid_dynamic_calls
-    this[(obj as dynamic).id as int] = obj;
-  }
 }
