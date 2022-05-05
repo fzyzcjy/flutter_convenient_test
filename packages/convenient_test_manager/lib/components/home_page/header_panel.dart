@@ -1,3 +1,4 @@
+import 'package:convenient_test_manager/components/home_page/misc_dialog.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
@@ -46,6 +47,11 @@ class HomePageHeaderPanel extends StatelessWidget {
             child: const Text('Read From File'),
           ),
           Expanded(child: Container()),
+          TextButton(
+            onPressed: () => showDialog<dynamic>(context: context, builder: (_) => const HomePageMiscDialog()),
+            child: const Text('Misc'),
+          ),
+          const SizedBox(width: 20),
           const Text(
             'Auto Expand',
             style: TextStyle(fontSize: 12, height: 1.2),
