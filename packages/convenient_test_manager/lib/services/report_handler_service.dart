@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/organization_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
@@ -20,6 +21,8 @@ class ReportHandlerService {
 
   Future<void> _handleItem(ReportItem item) async {
     switch (item.whichSubType()) {
+      case ReportItem_SubType.overallExecution:
+        return _handleOverallExecution(item.overallExecution);
       case ReportItem_SubType.suiteInfoProto:
         return _handleSuiteInfoProto(item.suiteInfoProto);
       case ReportItem_SubType.logEntry:
@@ -34,6 +37,15 @@ class ReportHandlerService {
         return _handleSnapshot(item.snapshot);
       case ReportItem_SubType.notSet:
         throw Exception('unknown $item');
+    }
+  }
+
+  Future<void> _handleOverallExecution(OverallExecution overallExecution) async {
+    Log.d(_kTag, 'handleOverallExecution $overallExecution');
+
+    if (overallExecution == OverallExecution.SET_UP_ALL) {
+      Log.d(_kTag, 'reset cache since see SET_UP_ALL');
+      GetIt.I.get<MiscService>().resetCache();
     }
   }
 

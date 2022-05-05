@@ -31,13 +31,6 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   }
 
   @override
-  Future<Empty> resetManagerCache(ServiceCall call, Empty request) async {
-    Log.d(_kTag, 'resetManagerCache called');
-    GetIt.I.get<MiscService>().resetCache();
-    return Empty();
-  }
-
-  @override
   Future<WorkerMode> getWorkerMode(grpc.ServiceCall call, Empty request) async {
     Log.d(_kTag, 'getWorkerMode active=${_workerModeStore.activeWorkerMode}');
     return _workerModeStore.activeWorkerMode;
