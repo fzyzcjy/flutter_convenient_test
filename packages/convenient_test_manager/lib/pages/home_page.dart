@@ -27,16 +27,21 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      return Stack(
         children: [
-          const HomePageHeaderPanel(),
-          Divider(height: 1, thickness: 1, color: Colors.grey[200]),
-          Expanded(
-            child: _buildBody(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const HomePageHeaderPanel(),
+              Divider(height: 1, thickness: 1, color: Colors.grey[200]),
+              Expanded(
+                child: _buildBody(),
+              ),
+              // temporarily disable because of #25
+              // const HomePageInputKeyHandler(),
+            ],
           ),
-          // temporarily disable because of #25
-          // const HomePageInputKeyHandler(),
+          _buildHotRestartHint(),
         ],
       );
     });
@@ -119,6 +124,38 @@ class _Body extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHotRestartHint() {
+    final vmServiceWrapperService = GetIt.I.get<VmServiceWrapperService>();
+
+    return Positioned(
+      top: 48,
+      left: 0,
+      right: 0,
+      child: Center(
+        child: Observer(
+          builder: (_) => vmServiceWrapperService.hotRestartActing
+              ? Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: const Text(
+                    'Worker Restarting...',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                      // fontWeight: FontWeight.w600,
+                      height: 1.05,
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
         ),
       ),
     );
