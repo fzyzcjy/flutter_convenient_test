@@ -1,6 +1,9 @@
-# [WIP] convenient_test
+# convenient_test
 
-A fast, easy and reliable testing utility on top of `integration_test`, making writing tests as simple as speaking [TODO this sentence does not show most important things]
+[![Flutter Package](https://img.shields.io/pub/v/convenient_test.svg)](https://pub.dev/packages/convenient_test)
+[![CI](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/ci.yaml/badge.svg)](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/ci.yaml)
+
+[TODO rm A fast, easy and reliable testing utility on top of `integration_test`, making writing tests as simple as speaking]
 
 [TODO write overview and intro]
 
