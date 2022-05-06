@@ -9,7 +9,7 @@
 
 # Features
 
-## Action history
+### Action history
 
 > See what actions are taken in the tests
 
@@ -17,7 +17,7 @@
 
 <br>
 
-## Time travel with screenshots
+### Time travel with screenshots
 
 > Look at each action back in time
 
@@ -25,7 +25,7 @@
 
 <br>
 
-## Rapidly re-execute
+### Rapidly re-execute
 
 > Edit code, save, run - within seconds
 
@@ -33,7 +33,7 @@
 
 <br>
 
-## Videos recorded
+### Videos recorded
 
 > Watch what has happened in full detail
 
@@ -43,7 +43,7 @@ P.S. Highlighted action is in sync with the playing video. Tap action to seek vi
 
 <br>
 
-## Being interactive
+### Being interactive
 
 > Temporarily play with the app, interactively.
 
@@ -51,19 +51,19 @@ P.S. Highlighted action is in sync with the playing video. Tap action to seek vi
 
 <br>
 
-## `integration_test` is still there
+### `integration_test` is still there
 
 You can still use everything from `integration_test`, `mockito`,  `test`, etc. This package is not a reinvented wheel, and has exposed the underlying `integration_test` to you.
 
 If you want to migrate to this package from raw `integration_test`, have a look at Getting Started section below.
 
-## Flaky tests awareness
+### Flaky tests awareness
 
 Flaky is flaky, and we are aware of it. It is neither failed nor success, so you will not be alarmed by false positives, and not completely ignore it.
 
 [TODO screenshot: Several tests, one failed, one flaky, one success]
 
-## Simpler and shorter code
+### Simpler and shorter code
 
 * No manual `pump`
 * No manual wait and retry
@@ -76,24 +76,24 @@ await t.get(find.text('New Data')).should(findsOneWidget);
 
 More in quickstart and tutorials below.
 
-## Visually see target regions
+### Visually see target regions
 
 Useful when replaying videos and screenshots
 
 * `Mark`s have colored borders
 * Gestures have visual feedbacks
 
-## CI / headless mode
+### CI / headless mode
 
 This tool can be run without GUI and only produce log data, making it suitable to be run in a CI. Just run `flutter run integration_test/main_test.dart --dart-define CONVENIENT_TEST_CI_MODE=true`.
 
 If you want to examine the details with GUI, just open the generated artifact in the GUI using `Open File` button.
 
-## Run single test/group
+### Run single test/group
 
 Tap "Run" icon button after each test or group to re-run *only* that test/group, without running anything else.
 
-## Raw logs
+### Raw logs
 
 Tap "Raw Logs" in the right panel to see raw outputs of a test.
 
