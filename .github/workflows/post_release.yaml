@@ -1,0 +1,39 @@
+# NOTE: Please keep in sync with `ci.yaml`
+#
+# Ensure README.md's steps can work correctly, where users use the released versions
+# instead of the code in master branch
+name: Post-release
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0,30 * * * *'
+
+jobs:
+  flutter:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        channel:
+          # - beta # too different from stable, thus analyzer will complain
+          - stable
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: ${{ matrix.channel }}
+
+      - name: Use pubspec pointing to release versions
+        run: |
+          cp ./packages/convenient_test/example/pubspec.yaml.release ./packages/convenient_test/example/pubspec.yaml
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: packages/convenient_test/example
+
+      - name: Run tests
+        run: flutter test
+        working-directory: packages/convenient_test/example
