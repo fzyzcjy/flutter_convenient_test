@@ -1,3 +1,7 @@
+## 1.0.1+2
+
+* Use an image instead of video in pub.dev doc
+
 ## 1.0.1+1
 
 * Further attempt to add preview video to pub.dev
