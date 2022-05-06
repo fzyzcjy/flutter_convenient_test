@@ -32,9 +32,14 @@ generate-gif:
 all: pub-get build-runner format analyze
 
 publish_all:
+    # NOTE: before publish, need to change some patches in README.md #15
+    cp README.md README.md.bak
+    sed -i '' 's,<!--README_VIDEO_REPLACEMENT_PLACEHOLDER_ONE-->,Click to watch it in [YouTube](https://www.youtube.com/watch?v=RPi7bfnPQow):,g' README.md
+    sed -i '' 's,<!--README_VIDEO_REPLACEMENT_PLACEHOLDER_TWO-->,[![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/images/youtube_screenshot.png)](https://www.youtube.com/watch?v=RPi7bfnPQow),g' README.md
     (cd packages/convenient_test_common && flutter pub publish --force --server=https://pub.dartlang.org)
     (cd packages/convenient_test && flutter pub publish --force --server=https://pub.dartlang.org)
     (cd packages/convenient_test_dev && flutter pub publish --force --server=https://pub.dartlang.org)
+    cp README.md.bak README.md && rm README.md.bak
 
 release old_version new_version:
     grep -q 'version: {{old_version}}' packages/convenient_test_common/pubspec.yaml
@@ -46,9 +51,9 @@ release old_version new_version:
     sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test/pubspec.yaml
     sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test_dev/pubspec.yaml
 
-    just pub-get
-    just build-runner
-    just format
+    # just pub-get
+    # just build-runner
+    # just format
 
     git add --all
     git status && git diff --staged | grep ''
@@ -57,6 +62,6 @@ release old_version new_version:
 
     awk '/## {{new_version}}/{flag=1; next} /## {{old_version}}/{flag=0} flag' CHANGELOG.md | gh release create v{{new_version}} --notes-file "-" --draft --title v{{new_version}}
     echo 'A *DRAFT* release has been created. Please go to the webpage and really release if you find it correct.'
-    open https://github.com/fzyzcjy/flutter_rust_bridge/releases
+    open https://github.com/fzyzcjy/flutter_convenient_test/releases
 
     just publish_all

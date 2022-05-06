@@ -6,9 +6,11 @@
 
 # Quick demo
 
-https://user-images.githubusercontent.com/5236035/167066810-d0aa36ba-0113-4140-92f9-cec0a9e77ed1.mov
+<!--README_VIDEO_REPLACEMENT_PLACEHOLDER_ONE-->
 
-[![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/images/youtube_screenshot.png)](https://www.youtube.com/watch?v=RPi7bfnPQow)
+<!--README_VIDEO_REPLACEMENT_PLACEHOLDER_TWO-->
+
+https://user-images.githubusercontent.com/5236035/167066810-d0aa36ba-0113-4140-92f9-cec0a9e77ed1.mov
 
 # Features
 
