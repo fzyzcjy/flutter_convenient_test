@@ -239,7 +239,7 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
         child: const Padding(
           padding: EdgeInsets.only(left: 16, right: 16, bottom: 12),
           child: Text(
-            'No log entries for this test',
+            'No log entries for this test. This is usually because the test is not executed.',
             style: TextStyle(fontSize: 11, color: Colors.grey),
           ),
         ),
