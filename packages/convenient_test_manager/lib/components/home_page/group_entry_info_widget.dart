@@ -4,6 +4,7 @@ import 'package:convenient_test_manager/components/misc/state_indicator.dart';
 import 'package:convenient_test_manager/misc/protobuf_extensions.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
+import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
 import 'package:convenient_test_manager/stores/video_store.dart';
@@ -209,6 +210,7 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
   void _handleTapPlayVideoButton() {
     final videoStore = GetIt.I.get<VideoStore>();
     final logStore = GetIt.I.get<LogStore>();
+    final homePageStore = GetIt.I.get<HomePageStore>();
 
     final logSubEntryIds = logStore.logSubEntryInTest(info.id);
     if (logSubEntryIds.isEmpty) return;
@@ -223,6 +225,8 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
       videoStore.absoluteToVideoTime(startTime),
       videoStore.absoluteToVideoTime(endTime),
     );
+
+    homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.video;
   }
 
   List<int> get logEntryIds => GetIt.I.get<LogStore>().logEntryInTest[info.id] ?? <int>[];

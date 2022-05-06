@@ -18,7 +18,7 @@ A fast, easy and reliable testing utility on top of `integration_test`, making w
 
 [TODO video: Prepare - a test like "assert 0, tap, input text, etc, assert 1, tap, wrongly assert 1", notice need to have ~10 steps so more beautiful. Click "run (that one) test" to run that single test, and see time travel and log etc, and see failure.]
 
-[TODO about the video screen: just screenshot the exact size of the Manager, do not be bigger. Otherwise, the ppt looks bad. When needing VSCode, just let it be (partially) inside this region.]
+[TODO about the video screen: just screenshot the exact size of the Manager + the app simulator. When needing VSCode, just let it be (partially) inside this region.]
 
 ### Time travel with screenshots
 
@@ -42,9 +42,9 @@ Temporarily play with the app interactively.
 
 ### `integration_test` is still there
 
-Though not necessarily needed, you can still use everything from `integration_test`. This package is not a reinvented wheel.
+You can still use everything from `integration_test`, `mockito`,  `test`, etc. This package is not a reinvented wheel, and has exposed the underlying `integration_test` to you.
 
-A few places need to be changed for an app using `integration_test`: Change `testWidgets` to `tTestWidgets`, and wrap `main` with `convenientTestMain`.
+If you want to migrate to this package from raw `integration_test`, have a look at Getting Started section below.
 
 ### Flaky tests awareness
 
@@ -90,7 +90,7 @@ Tap "Raw Logs" in the right panel to see raw outputs of a test.
 
 1. Clone this repository and enter the `packages/convenient_test/example` folder.
 2. Run the example app (e.g. using iOS simulator) via `flutter run /path/to/flutter_convenient_test/packages/convenient_test/example/integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes`. Can also be run via VSCode or Android Studio with similar commands.
-3. Run the GUI located in `packages/convenient_test_manager`. It is nothing but a normal Flutter (desktop) app, so run it follow Flutter official doc. May run in `profile` mode to speed up.
+3. Run the GUI located in `packages/convenient_test_manager`. It is nothing but a normal Flutter Windows/MacOS/Linux app, so run it follow Flutter official doc. May run in `profile` mode to speed up.
 4. Enjoy the GUI!
 
 ## Getting started
@@ -98,7 +98,7 @@ Tap "Raw Logs" in the right panel to see raw outputs of a test.
 1. In `pubspec.yaml`, add `convenient_test: ^1.0.0` to the `dependencies` section, and `convenient_test_dev: ^1.0.0` to the `dev_dependencies` section. As normal, we need to `flutter pub get`.
 2. Create `integration_test/main_test.dart` file in your app. Fill it like `void main() => convenientTestMain(MyConvenientTestSlot(), () { ... the normal test code you write });`. See [the example package](https://github.com/fzyzcjy/flutter_convenient_test/blob/master/packages/convenient_test/example/integration_test/main_test.dart) for demonstration.
 3. Run your app (e.g. using iOS simulator) via `flutter run /path/to/your/app/integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes`. Can also be run via VSCode or Android Studio with similar commands.
-4. Run the GUI located in `packages/convenient_test_manager`. It is nothing but a normal Flutter (desktop) app, so run it follow Flutter official doc. May run in `profile` mode to speed up.
+4. Run the GUI located in `packages/convenient_test_manager`. It is nothing but a normal Flutter Windows/MacOS/Linux app, so run it follow Flutter official doc. May run in `profile` mode to speed up.
 5. Enjoy the GUI!
 
 ---
