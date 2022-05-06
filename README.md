@@ -5,7 +5,7 @@
 
 # Quick demo
 
-[![Watch the video](https://img.youtube.com/vi/RPi7bfnPQow/maxresdefault.jpg)](https://youtu.be/RPi7bfnPQow)
+https://user-images.githubusercontent.com/5236035/167066810-d0aa36ba-0113-4140-92f9-cec0a9e77ed1.mov
 
 # Features
 
