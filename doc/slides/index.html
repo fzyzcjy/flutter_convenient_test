@@ -20,23 +20,27 @@
 
         .my-sub-title {
             color: white;
-            font-size: 20px;
+            font-size: 24px;
             margin-top: -15px !important;
             margin-bottom: 20px !important;
         }
 
         .li-primary {
-            font-size: 24px;
+            font-size: 28px;
             line-height: 1.0 !important;
             margin: 0 !important;
-            margin-bottom: 16px !important;
+            margin-bottom: 8px !important;
         }
 
         .li-secondary {
-            font-size: 18px;
+            font-size: 22px;
             line-height: 1.5 !important;
             margin: 0 !important;
-            margin-bottom: 12px !important;
+            margin-bottom: 24px !important;
+        }
+
+        .li-secondary-empty {
+            margin-bottom: 24px !important;
         }
     </style>
 </head>
@@ -45,20 +49,19 @@
 <div class="reveal">
     <div class="slides">
         <section data-background-color="#2196f3">
-            Flutter Convenient Test
-            <br>
-            <p style="font-size: 22px">TODO here is a sentence describing it</p>
+            <p style="font-size: 52px">Flutter Convenient Test</p>
+            <p style="font-size: 26px">Write and debug tests easily, built on <code>integration_test</code></p>
         </section>
 
         <section data-background-color="#4caf50">
             <p class="my-title">Action History</p>
-            <p class="my-sub-title">See what actions are taken in the tests</p>
+            <p class="my-sub-title">See what actions are taken in the tests (in the left panel)</p>
             <video data-autoplay src="../videos/a_action_history.mov"></video>
         </section>
 
         <section data-background-color="#2196f3">
             <p class="my-title">Time Travel & Screenshots</p>
-            <p class="my-sub-title">Look at each action back in time</p>
+            <p class="my-sub-title">Tap an action to see its screenshots</p>
             <video data-autoplay src="../videos/b_time_travel_screenshot.mov"></video>
         </section>
 
@@ -70,46 +73,56 @@
 
         <section data-background-color="#2196f3">
             <p class="my-title">Videos Recorded</p>
-            <p class="my-sub-title">Watch what has happened in full detail</p>
+            <p class="my-sub-title">Watch what has happened in full detail (in right panel)</p>
             <video data-autoplay src="../videos/d_video_record.mov"></video>
         </section>
 
         <section data-background-color="#4caf50">
             <p class="my-title">Being Interactive</p>
-            <p class="my-sub-title">Temporarily play with the app, interactively</p>
+            <p class="my-sub-title">Temporarily play with the app, interactively. (Flutter originally cannot interact with app in test mode)</p>
             <video data-autoplay src="../videos/e_interactive.mov"></video>
         </section>
 
-        <section data-background-color="#2196f3">
-            <p class="my-title">... And More</p>
+        <section data-background-color="#bbdefb">
+            <p class="my-title" style="color: black; margin-bottom: 72px">
+                <!-- <span style="color: #f44336">.</span><span style="color: #4caf50">.</span><span style="color: #2196f3">.</span> -->
+                ... And More
+            </p>
 
             <ul style="font-size: 26px">
                 <li>
-                    <p class="li-primary">The integration_test is still there</p>
-                    <p class="li-secondary">You can still use everything from `integration_test`, `mockito`,  `test`, etc. This package is not a reinvented wheel, and has exposed the underlying `integration_test` to you.</p>
+                    <p class="li-primary">🎉 The integration_test is still there</p>
+                    <p class="li-secondary">You can still use everything from `integration_test`, `mockito`,  `test`, etc.<br>
+                    This package is not a reinvented wheel, and has exposed the underlying `integration_test` to you.</p>
                 </li>
                 <li>
-                    <p class="li-primary">Flaky test awareness</p>
-                    <p class="li-secondary">Flaky is flaky, and we are aware of it. It is neither failed nor success, so you will not be alarmed by false positives, and not completely ignore it.</p>
+                    <p class="li-primary">🚦 Flaky test awareness</p>
+                    <p class="li-secondary">Flaky is flaky, and we are aware of it. It is neither failed nor success,<br>
+                    so you will not be alarmed by false positives, and not completely ignore it.</p>
                 </li>
                 <li>
-                    <p class="li-primary">Simpler and shorter code</p>
+                    <p class="li-primary">🚲 Simpler and shorter code</p>
                     <p class="li-secondary">No manual pump. No manual wait and retry.</p>
                 </li>
                 <li>
-                    <p class="li-primary">Visually see target regions</p>
+                    <p class="li-primary">⚽ Visually see target regions</p>
+                    <p class="li-secondary-empty"></p>
                 </li>
                 <li>
-                    <p class="li-primary">CI / headless mode</p>
+                    <p class="li-primary">⛵ CI / headless mode</p>
+                    <p class="li-secondary-empty"></p>
                 </li>
                 <li>
-                    <p class="li-primary">Run single test/group</p>
+                    <p class="li-primary">🕑 Run single test/group</p>
+                    <p class="li-secondary-empty"></p>
                 </li>
                 <li>
-                    <p class="li-primary">Raw logs</p>
+                    <p class="li-primary">📘 Raw logs</p>
+                    <p class="li-secondary-empty"></p>
                 </li>
                 <li>
                     <p class="li-primary">...</p>
+                    <p class="li-secondary-empty"></p>
                 </li>
             </ul>
         </section>
@@ -134,8 +147,8 @@
         backgroundTransition: 'none',
 
         // together with: make the window 1000x675, then the UI looks ok
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: 1200,
+        height: 900,
     });
 </script>
 </body>

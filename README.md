@@ -11,7 +11,7 @@
 
 ### Action history
 
-> See what actions are taken in the tests
+> See what actions are taken in the tests (in the left panel)
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/a_action_history.gif)
 
@@ -19,7 +19,7 @@
 
 ### Time travel with screenshots
 
-> Look at each action back in time
+> Tap an action to see its screenshots
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/b_time_travel_screenshot.gif)
 
@@ -35,7 +35,7 @@
 
 ### Videos recorded
 
-> Watch what has happened in full detail
+> Watch what has happened in full detail (in right panel)
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/d_video_record.gif)
 
@@ -45,7 +45,7 @@ P.S. Highlighted action is in sync with the playing video. Tap action to seek vi
 
 ### Being interactive
 
-> Temporarily play with the app, interactively.
+> Temporarily play with the app, interactively. (Flutter originally cannot interact with app in test mode)
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/e_interactive.gif)
 
@@ -61,7 +61,7 @@ If you want to migrate to this package from raw `integration_test`, have a look 
 
 Flaky is flaky, and we are aware of it. It is neither failed nor success, so you will not be alarmed by false positives, and not completely ignore it.
 
-[TODO screenshot: Several tests, one failed, one flaky, one success]
+<!--[TODO screenshot: Several tests, one failed, one flaky, one success]-->
 
 ### Simpler and shorter code
 
