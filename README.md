@@ -8,7 +8,7 @@
 
 https://user-images.githubusercontent.com/5236035/167066810-d0aa36ba-0113-4140-92f9-cec0a9e77ed1.mov
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RPi7bfnPQow" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/images/youtube_screenshot.png)](https://www.youtube.com/watch?v=RPi7bfnPQow)
 
 # Features
 
