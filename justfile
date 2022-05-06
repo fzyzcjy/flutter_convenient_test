@@ -37,14 +37,14 @@ publish_all:
     (cd packages/convenient_test_dev && flutter pub publish --force --server=https://pub.dartlang.org)
 
 release old_version new_version:
-    grep -q 'version = "{{old_version}}"' packages/convenient_test_common
-    grep -q 'version = "{{old_version}}"' packages/convenient_test
-    grep -q 'version = "{{old_version}}"' packages/convenient_test_dev
+    grep -q 'version: {{old_version}}' packages/convenient_test_common/pubspec.yaml
+    grep -q 'version: {{old_version}}' packages/convenient_test/pubspec.yaml
+    grep -q 'version: {{old_version}}' packages/convenient_test_dev/pubspec.yaml
     grep -q '{{new_version}}' CHANGELOG.md
 
-    sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test_common
-    sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test
-    sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test_dev
+    sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test_common/pubspec.yaml
+    sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test/pubspec.yaml
+    sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test_dev/pubspec.yaml
 
     just pub-get
     just build-runner
