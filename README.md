@@ -18,7 +18,7 @@ A fast, easy and reliable testing utility on top of `integration_test`, making w
 
 [TODO video: Prepare - a test like "assert 0, tap, input text, etc, assert 1, tap, wrongly assert 1", notice need to have ~10 steps so more beautiful. Click "run (that one) test" to run that single test, and see time travel and log etc, and see failure.]
 
-[TODO about the video screen: just screenshot the exact size of the Manager, do not be bigger. Otherwise, the ppt looks bad. When needing VSCode, just let it be (partially) inside this region.]
+[TODO about the video screen: just screenshot the exact size of the Manager + the app simulator. When needing VSCode, just let it be (partially) inside this region.]
 
 ### Time travel with screenshots
 
