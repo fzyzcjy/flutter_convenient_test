@@ -1,5 +1,5 @@
 name: convenient_test_manager
-description: A new Flutter project.
+description: Write and debug tests easily, built on integration_test
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.

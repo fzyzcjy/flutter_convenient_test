@@ -1,4 +1,4 @@
-# [flutter_convenient_test](https://github.com/fzyzcjy/flutter_convenient_test): Write and debug tests faster, built on `integration_test`
+# [flutter_convenient_test](https://github.com/fzyzcjy/flutter_convenient_test): Write and debug tests easily, built on `integration_test`
 
 [![Flutter Package](https://img.shields.io/pub/v/convenient_test.svg)](https://pub.dev/packages/convenient_test)
 [![CI](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/ci.yaml/badge.svg)](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/ci.yaml)
