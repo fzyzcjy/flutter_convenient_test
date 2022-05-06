@@ -3,5 +3,5 @@ class IdGenerator {
 
   IdGenerator._();
 
-// TODO
+  int nextId() => TODO;
 }
