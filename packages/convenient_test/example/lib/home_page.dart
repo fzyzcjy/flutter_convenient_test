@@ -10,7 +10,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var fetching = false;
-  List<String>? fruitNames;
+  List<String>? fruits;
+  final chosenFruits = <String>{};
 
   // TODO remove
   // var count = 0;
@@ -20,23 +21,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('HomePage')),
-      body: fetching
-          ? const Center(
-              child: Text('Fetching now... (Imagine some network latency here)'),
-            )
-          : fruitNames == null
-              ? Center(
-                  child: TextButton(
-                    onPressed: _fetchFruits,
-                    child: const Text('Tap to fetch fruits'),
-                  ),
-                )
-              : ListView.builder(
-                  itemCount: fruitNames!.length,
-                  itemBuilder: (_, i) => ListTile(
-                    title: Text(fruitNames![i]),
-                  ),
-                ),
+      body: _buildBody(),
       // TODO remove
       // body: Center(
       //   child: Column(
@@ -75,13 +60,55 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _buildBody() {
+    if (fetching) {
+      return const Center(
+        child: Text('Fetching now... (Imagine some network latency here)'),
+      );
+    }
+
+    if (fruits == null) {
+      return Center(
+        child: TextButton(
+          onPressed: _fetchFruits,
+          child: const Text('Tap to fetch fruits'),
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 16, bottom: 4, left: 16, right: 16),
+          child: Text(
+            chosenFruits.isEmpty ? 'You chose nothing' : 'You chose: ${chosenFruits.join(', ')}',
+            style: const TextStyle(fontSize: 16),
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: fruits!.length,
+            itemBuilder: (_, i) {
+              final fruit = fruits![i];
+              return ListTile(
+                onTap: () => setState(() => chosenFruits.toggle(fruit)),
+                title: Text(fruit),
+                trailing: chosenFruits.contains(fruit) ? const Icon(Icons.star, color: Colors.blue) : null,
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
   void _fetchFruits() {
     setState(() {
       fetching = true;
     });
-    FruitStore().fetchFruitNamesFromBackendApi().then((fruits) {
+    FruitStore().fetchFruitNamesFromBackendApi().then((fetchedFruits) {
       setState(() {
-        fruitNames = fruits;
+        fruits = fetchedFruits;
         fetching = false;
       });
     });
@@ -92,4 +119,14 @@ enum HomePageMark {
   button,
   row,
   star,
+}
+
+extension<T> on Set<T> {
+  void toggle(T value) {
+    if (contains(value)) {
+      remove(value);
+    } else {
+      add(value);
+    }
+  }
 }
