@@ -5,12 +5,15 @@ class SecondPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments;
+    final chosenFruits = arguments is List<String> ? arguments : <String>[];
+
     return Scaffold(
       appBar: AppBar(title: const Text('SecondPage')),
-      body: const Center(
+      body: Center(
         child: Text(
-          'I am second page',
-          style: TextStyle(fontSize: 18, height: 1.5),
+          'See fruits: ${chosenFruits.join(', ')}',
+          style: const TextStyle(fontSize: 18, height: 1.5),
         ),
       ),
     );

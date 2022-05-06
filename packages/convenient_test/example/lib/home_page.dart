@@ -1,3 +1,4 @@
+import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_example/fruit_store.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var fetching = false;
   List<String>? fruits;
-  final chosenFruits = <String>{};
+  final chosenFruits = <String>[];
 
   // TODO remove
   // var count = 0;
@@ -22,6 +23,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(title: const Text('HomePage')),
       body: _buildBody(),
+      floatingActionButton: Mark(
+        name: HomePageMark.button,
+        child: FloatingActionButton(
+          onPressed: () => Navigator.pushNamed(context, '/second', arguments: chosenFruits),
+          child: const Icon(Icons.done),
+        ),
+      ),
       // TODO remove
       // body: Center(
       //   child: Column(
@@ -48,13 +56,6 @@ class _HomePageState extends State<HomePage> {
       //           ),
       //         ),
       //     ],
-      //   ),
-      // ),
-      // floatingActionButton: Mark(
-      //   name: HomePageMark.button,
-      //   child: FloatingActionButton(
-      //     onPressed: () => setState(() => count++),
-      //     child: const Icon(Icons.add),
       //   ),
       // ),
     );
@@ -121,7 +122,7 @@ enum HomePageMark {
   star,
 }
 
-extension<T> on Set<T> {
+extension<T> on List<T> {
   void toggle(T value) {
     if (contains(value)) {
       remove(value);
