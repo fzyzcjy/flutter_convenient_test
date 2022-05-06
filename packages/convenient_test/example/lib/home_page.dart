@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(title: const Text('HomePage')),
       body: _buildBody(),
       floatingActionButton: Mark(
-        name: HomePageMark.button,
+        name: HomePageMark.fab,
         child: FloatingActionButton(
           onPressed: () => Navigator.pushNamed(context, '/second', arguments: chosenFruits),
           child: const Icon(Icons.done),
@@ -70,9 +70,12 @@ class _HomePageState extends State<HomePage> {
 
     if (fruits == null) {
       return Center(
-        child: TextButton(
-          onPressed: _fetchFruits,
-          child: const Text('Tap to fetch fruits'),
+        child: Mark(
+          name: HomePageMark.fetchFruits,
+          child: TextButton(
+            onPressed: _fetchFruits,
+            child: const Text('Tap to fetch fruits'),
+          ),
         ),
       );
     }
@@ -117,9 +120,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 enum HomePageMark {
-  button,
-  row,
-  star,
+  fetchFruits,
+  fab,
 }
 
 extension<T> on List<T> {
