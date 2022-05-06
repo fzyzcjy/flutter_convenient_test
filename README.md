@@ -11,25 +11,25 @@
 
 ## Action history
 
-See what actions are taken in the tests
+> See what actions are taken in the tests
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/a_action_history.gif)
 
 ## Time travel with screenshots
 
-Look at each action back in time
+> Look at each action back in time
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/b_time_travel_screenshot.gif)
 
 ## Rapidly re-execute
 
-Edit code, save, run - within seconds
+> Edit code, save, run - within seconds
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/c_rapid_execute.gif)
 
 ## Videos recorded
 
-Watch what has happened in full detail
+> Watch what has happened in full detail
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/d_video_record.gif)
 
@@ -37,7 +37,7 @@ P.S. Highlighted action is in sync with the playing video. Tap action to seek vi
 
 ## Being interactive
 
-Temporarily play with the app, interactively.
+> Temporarily play with the app, interactively.
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/e_interactive.gif)
 
