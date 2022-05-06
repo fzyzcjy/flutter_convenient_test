@@ -29,6 +29,9 @@ generate-gif:
     ffmpeg -y -i doc/videos/d_video_record.mov -r 24 doc/gif/d_video_record.gif
     ffmpeg -y -i doc/videos/e_interactive.mov -r 24 doc/gif/e_interactive.gif
 
+generate-4k:
+     ffmpeg -i doc/videos/full_video.mov -vf scale=3018:2160 doc/videos/full_video_4k.mov
+
 all: pub-get build-runner format analyze
 
 publish_all:
