@@ -1,5 +1,6 @@
 pub-get:
     cd packages/convenient_test && flutter pub get
+    cd packages/convenient_test/example && flutter pub get
     cd packages/convenient_test_common && flutter pub get
     cd packages/convenient_test_dev && flutter pub get
     cd packages/convenient_test_manager && flutter pub get
@@ -9,12 +10,14 @@ build-runner:
 
 format:
     cd packages/convenient_test && flutter format . --line-length 120
+    cd packages/convenient_test/example && flutter format . --line-length 120
     cd packages/convenient_test_common && flutter format . --line-length 120
     cd packages/convenient_test_dev && flutter format . --line-length 120
     cd packages/convenient_test_manager && flutter format . --line-length 120
 
 analyze:
     cd packages/convenient_test && flutter analyze
+    cd packages/convenient_test/example && flutter analyze
     cd packages/convenient_test_common && flutter analyze
     cd packages/convenient_test_dev && flutter analyze
     cd packages/convenient_test_manager && flutter analyze

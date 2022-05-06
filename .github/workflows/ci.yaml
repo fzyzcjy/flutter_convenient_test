@@ -17,6 +17,7 @@ jobs:
           - stable
         package_name:
           - convenient_test
+          - convenient_test/example
           - convenient_test_common
           - convenient_test_dev
           - convenient_test_manager
