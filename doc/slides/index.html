@@ -12,35 +12,62 @@
 
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+    <style>
+        .my-title {
+            color: white;
+        }
+        .my-sub-title {
+            color: white;
+            font-size: 20px;
+            margin-top: -15px !important;
+            margin-bottom: 20px !important;
+        }
+    </style>
 </head>
 <body>
 
 <div class="reveal">
     <div class="slides">
-        <section data-background-color="white" data-transition="none">
-            Convenient Test
+        <section data-background-color="#2196f3">
+            Flutter Convenient Test
             <br>
-            TODO here is a sentence describing it
+            <p style="font-size: 22px">TODO here is a sentence describing it</p>
         </section>
 
-        <section data-background-color="#2196f3" data-transition="none">
-            Action history
+        <section data-background-color="#4caf50">
+            <p class="my-title">Action history</p>
+            <p class="my-sub-title">See what actions are taken in the tests</p>
             <video data-autoplay src="../videos/a_action_history.mov"></video>
         </section>
 
-        <section data-background-color="#4caf50" data-transition="none">
-            Time travel with screenshots
+        <section data-background-color="#2196f3">
+            <p class="my-title">Time travel & screenshots</p>
+            <p class="my-sub-title">Look at each action back in time</p>
             <video data-autoplay src="../videos/b_time_travel_screenshot.mov"></video>
         </section>
 
-        <section data-background-color="#009688" data-transition="none">
-            Rapidly re-execute
+        <section data-background-color="#4caf50">
+            <p class="my-title">Rapidly re-execute</p>
+            <p class="my-sub-title">Edit code, save, run - within seconds</p>
             <video data-autoplay src="../videos/c_rapid_execute.mov"></video>
         </section>
 
-        <section data-background-color="#00bcd4" data-transition="none">
-            Videos recorded
+        <section data-background-color="#2196f3">
+            <p class="my-title">Videos recorded</p>
+            <p class="my-sub-title">Watch what has happened in full detail</p>
             <video data-autoplay src="../videos/d_video_record.mov"></video>
+        </section>
+
+        <section data-background-color="#4caf50">
+            <p class="my-title">Being interactive</p>
+            <p class="my-sub-title">Temporarily play with the app, interactively</p>
+            <video data-autoplay src="../videos/e_interactive.mov"></video>
+        </section>
+
+        <section data-background-color="#2196f3">
+            <p class="my-title">... and more</p>
+            TODO
         </section>
     </div>
 </div>
@@ -57,7 +84,14 @@
         hash: true,
 
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+
+        transition: 'none',
+        backgroundTransition: 'none',
+
+        // together with: make the window 1000x675, then the UI looks ok
+        width: window.innerWidth,
+        height: window.innerHeight,
     });
 </script>
 </body>
