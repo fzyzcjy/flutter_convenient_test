@@ -1,3 +1,7 @@
+## 1.0.1+3
+
+* Use high resolution intro video
+
 ## 1.0.1+2
 
 * Use an image instead of video in pub.dev doc

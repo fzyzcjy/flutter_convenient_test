@@ -37,8 +37,8 @@ all: pub-get build-runner format analyze
 publish_all:
     # NOTE: before publish, need to change some patches in README.md #15
     cp README.md README.md.bak
-    sed -i '' 's,<!--README_VIDEO_REPLACEMENT_PLACEHOLDER_ONE-->,Click to watch it in [YouTube](https://www.youtube.com/watch?v=RPi7bfnPQow):,g' README.md
-    sed -i '' 's,<!--README_VIDEO_REPLACEMENT_PLACEHOLDER_TWO-->,[![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/images/youtube_screenshot.png)](https://www.youtube.com/watch?v=RPi7bfnPQow),g' README.md
+    sed -i '' 's,<!--README_VIDEO_REPLACEMENT_PLACEHOLDER_ONE-->,Click to watch it in [YouTube](https://www.youtube.com/watch?v=z-Hr_TSOpUQ):,g' README.md
+    sed -i '' 's,<!--README_VIDEO_REPLACEMENT_PLACEHOLDER_TWO-->,[![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/images/youtube_screenshot.png)](https://www.youtube.com/watch?v=z-Hr_TSOpUQ),g' README.md
     (cd packages/convenient_test_common && flutter pub publish --force --server=https://pub.dartlang.org)
     (cd packages/convenient_test && flutter pub publish --force --server=https://pub.dartlang.org)
     (cd packages/convenient_test_dev && flutter pub publish --force --server=https://pub.dartlang.org)
