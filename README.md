@@ -5,7 +5,7 @@
 
 # Quick demo
 
-[TODO]
+[![Watch the video](https://img.youtube.com/vi/RPi7bfnPQow/maxresdefault.jpg)](https://youtu.be/RPi7bfnPQow)
 
 # Features
 
