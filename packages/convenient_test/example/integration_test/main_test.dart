@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   convenientTestMain(MyConvenientTestSlot(), () {
-    group('sample test group', () {
+    group('simple test group', () {
       tTestWidgets('choose some fruits', (t) async {
         await t.get(HomePageMark.fetchFruits).tap();
         await t.get(find.text('HomePage')).should(findsOneWidget);
@@ -98,12 +98,16 @@ void main() {
 
         await t.pageBack();
       });
+    });
+
+    group('some other test group', () {
+      tTestWidgets('empty test', (t) async {});
 
       group('sample sub-group', () {
-        tTestWidgets('empty test', (t) async {});
+        tTestWidgets('another empty test', (t) async {});
 
         group('sample sub-sub-group', () {
-          tTestWidgets('another empty test', (t) async {});
+          tTestWidgets('yet another empty test', (t) async {});
         });
       });
     });
