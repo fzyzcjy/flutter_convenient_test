@@ -8,37 +8,41 @@ A fast, easy and reliable testing utility on top of `integration_test`, making w
 
 ## Quick demo
 
-[TODO merge things below into one video. especially good, because the first several subsections *is just a continuous story*!]
-
-[TODO note: let's make each page have a different background color]
+[TODO]
 
 ## Features
 
 ### Action history
 
-[TODO video: Prepare - a test like "assert 0, tap, input text, etc, assert 1, tap, wrongly assert 1", notice need to have ~10 steps so more beautiful. Click "run (that one) test" to run that single test, and see time travel and log etc, and see failure.]
+See what actions are taken in the tests
 
-[TODO about the video screen: just screenshot the exact size of the Manager + the app simulator. When needing VSCode, just let it be (partially) inside this region.]
+[TODO gif]
 
 ### Time travel with screenshots
 
-[TODO video: Hover through each step, especially the "tap/inputtext" steps, and see screenshots.]
+Look at each action back in time
+
+[TODO gif]
 
 ### Rapidly re-execute
 
-[TODO video: Open VSCode and change that wrong line. Click "run (that) test" again, and see it immediately re-run and go green.]
+Edit code, save, run - within seconds
+
+[TODO gif]
 
 ### Videos recorded
 
-[TODO video: Tap "video" icon button. Then see the video recording.]
+Watch what has happened in full detail
+
+[TODO gif]
 
 P.S. Highlighted action is in sync with the playing video. Tap action to seek video.
 
 ### Being interactive
 
-Temporarily play with the app interactively.
+Temporarily play with the app, interactively.
 
-[TODO video: tap "interactive mode", and then play with the app in the simulator]
+[TODO gif]
 
 ### `integration_test` is still there
 

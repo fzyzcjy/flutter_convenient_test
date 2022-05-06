@@ -1,40 +1,142 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+    <title>reveal.js</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/black.css">
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+    <style>
+        .my-title {
+            color: white;
+        }
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+        .my-sub-title {
+            color: white;
+            font-size: 20px;
+            margin-top: -15px !important;
+            margin-bottom: 20px !important;
+        }
+
+        .li-primary {
+            font-size: 24px;
+            line-height: 1.0 !important;
+            margin: 0 !important;
+            margin-bottom: 16px !important;
+        }
+
+        .li-secondary {
+            font-size: 18px;
+            line-height: 1.5 !important;
+            margin: 0 !important;
+            margin-bottom: 12px !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section data-background-color="#2196f3">
+            Flutter Convenient Test
+            <br>
+            <p style="font-size: 22px">TODO here is a sentence describing it</p>
+        </section>
+
+        <section data-background-color="#4caf50">
+            <p class="my-title">Action History</p>
+            <p class="my-sub-title">See what actions are taken in the tests</p>
+            <video data-autoplay src="../videos/a_action_history.mov"></video>
+        </section>
+
+        <section data-background-color="#2196f3">
+            <p class="my-title">Time Travel & Screenshots</p>
+            <p class="my-sub-title">Look at each action back in time</p>
+            <video data-autoplay src="../videos/b_time_travel_screenshot.mov"></video>
+        </section>
+
+        <section data-background-color="#4caf50">
+            <p class="my-title">Rapidly Re-execute</p>
+            <p class="my-sub-title">Edit code, save, run - within seconds</p>
+            <video data-autoplay src="../videos/c_rapid_execute.mov"></video>
+        </section>
+
+        <section data-background-color="#2196f3">
+            <p class="my-title">Videos Recorded</p>
+            <p class="my-sub-title">Watch what has happened in full detail</p>
+            <video data-autoplay src="../videos/d_video_record.mov"></video>
+        </section>
+
+        <section data-background-color="#4caf50">
+            <p class="my-title">Being Interactive</p>
+            <p class="my-sub-title">Temporarily play with the app, interactively</p>
+            <video data-autoplay src="../videos/e_interactive.mov"></video>
+        </section>
+
+        <section data-background-color="#2196f3">
+            <p class="my-title">... And More</p>
+
+            <ul style="font-size: 26px">
+                <li>
+                    <p class="li-primary">The integration_test is still there</p>
+                    <p class="li-secondary">You can still use everything from `integration_test`, `mockito`,  `test`, etc. This package is not a reinvented wheel, and has exposed the underlying `integration_test` to you.</p>
+                </li>
+                <li>
+                    <p class="li-primary">Flaky test awareness</p>
+                    <p class="li-secondary">Flaky is flaky, and we are aware of it. It is neither failed nor success, so you will not be alarmed by false positives, and not completely ignore it.</p>
+                </li>
+                <li>
+                    <p class="li-primary">Simpler and shorter code</p>
+                    <p class="li-secondary">No manual pump. No manual wait and retry.</p>
+                </li>
+                <li>
+                    <p class="li-primary">Visually see target regions</p>
+                </li>
+                <li>
+                    <p class="li-primary">CI / headless mode</p>
+                </li>
+                <li>
+                    <p class="li-primary">Run single test/group</p>
+                </li>
+                <li>
+                    <p class="li-primary">Raw logs</p>
+                </li>
+                <li>
+                    <p class="li-primary">...</p>
+                </li>
+            </ul>
+        </section>
+    </div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+
+        transition: 'none',
+        backgroundTransition: 'none',
+
+        // together with: make the window 1000x675, then the UI looks ok
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
+</script>
+</body>
 </html>
