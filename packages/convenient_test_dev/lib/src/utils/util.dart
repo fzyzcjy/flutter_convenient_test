@@ -43,12 +43,6 @@ class DelegatingFinder implements Finder {
   String toString() => target.toString();
 }
 
-class ConvenientTestIdGen {
-  static var _nextId = 10000;
-
-  static int nextId() => _nextId++;
-}
-
 extension ExtState on State {
   TestEntryState toProto() {
     return TestEntryState(
