@@ -91,7 +91,15 @@ abstract class GroupEntryInfo {
 
   List<int> get childrenGroupEntryIds;
 
-  String calcBriefName(SuiteInfo suiteInfo);
+  String calcBriefName(SuiteInfo suiteInfo) {
+    final parentGroup = suiteInfo.entryMap[parentId];
+    if (parentGroup is! GroupInfo) return name;
+
+    final prefix = parentGroup.name;
+    if (name.startsWith(prefix)) return name.substring(prefix.length);
+
+    return name;
+  }
 
   void traverse(SuiteInfo suiteInfo, GroupEntryInfoTraverseCallback callback) {
     callback(this);
@@ -120,9 +128,6 @@ class GroupInfo extends GroupEntryInfo {
       );
 
   @override
-  String calcBriefName(SuiteInfo suiteInfo) => name;
-
-  @override
   List<int> get childrenGroupEntryIds => entryIds;
 }
 
@@ -139,17 +144,6 @@ class TestInfo extends GroupEntryInfo {
         name: proto.name,
         parentId: proto.parentId,
       );
-
-  @override
-  String calcBriefName(SuiteInfo suiteInfo) {
-    final parentGroup = suiteInfo.entryMap[parentId];
-    if (parentGroup is! GroupInfo) return name;
-
-    final prefix = parentGroup.name;
-    if (name.startsWith(prefix)) return name.substring(prefix.length);
-
-    return name;
-  }
 
   @override
   List<int> get childrenGroupEntryIds => const [];
