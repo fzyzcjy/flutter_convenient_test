@@ -15,17 +15,23 @@
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/a_action_history.gif)
 
+<br>
+
 ## Time travel with screenshots
 
 > Look at each action back in time
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/b_time_travel_screenshot.gif)
 
+<br>
+
 ## Rapidly re-execute
 
 > Edit code, save, run - within seconds
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/c_rapid_execute.gif)
+
+<br>
 
 ## Videos recorded
 
@@ -35,11 +41,15 @@
 
 P.S. Highlighted action is in sync with the playing video. Tap action to seek video.
 
+<br>
+
 ## Being interactive
 
 > Temporarily play with the app, interactively.
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/e_interactive.gif)
+
+<br>
 
 ## `integration_test` is still there
 
