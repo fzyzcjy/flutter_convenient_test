@@ -1,6 +1,6 @@
 name: convenient_test
 description: Write and debug tests easily, built on integration_test
-version: 1.0.1
+version: 1.0.1+1
 repository: https://github.com/fzyzcjy/flutter_convenient_test
 
 environment:
