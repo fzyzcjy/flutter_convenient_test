@@ -34,6 +34,22 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
+  late final _$enableAutoJumpAtom =
+      Atom(name: '_HighlightStore.enableAutoJump', context: context);
+
+  @override
+  bool get enableAutoJump {
+    _$enableAutoJumpAtom.reportRead();
+    return super.enableAutoJump;
+  }
+
+  @override
+  set enableAutoJump(bool value) {
+    _$enableAutoJumpAtom.reportWrite(value, super.enableAutoJump, () {
+      super.enableAutoJump = value;
+    });
+  }
+
   late final _$enableHoverModeAtom =
       Atom(name: '_HighlightStore.enableHoverMode', context: context);
 
@@ -118,6 +134,7 @@ mixin _$HighlightStore on _HighlightStore, Store {
   String toString() {
     return '''
 enableAutoExpand: ${enableAutoExpand},
+enableAutoJump: ${enableAutoJump},
 enableHoverMode: ${enableHoverMode},
 highlightTestEntryId: ${highlightTestEntryId},
 highlightLogEntryId: ${highlightLogEntryId},

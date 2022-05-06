@@ -63,6 +63,16 @@ class HomePageHeaderPanel extends StatelessWidget {
             ),
           ),
           const Text(
+            'Auto Jump',
+            style: TextStyle(fontSize: 12, height: 1.2),
+          ),
+          Observer(
+            builder: (_) => Switch(
+              value: highlightStore.enableAutoJump,
+              onChanged: (v) => highlightStore.enableAutoJump = v,
+            ),
+          ),
+          const Text(
             'Auto Expand',
             style: TextStyle(fontSize: 12, height: 1.2),
           ),

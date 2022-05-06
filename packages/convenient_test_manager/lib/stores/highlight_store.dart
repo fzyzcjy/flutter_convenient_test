@@ -18,6 +18,9 @@ abstract class _HighlightStore with Store {
   bool enableAutoExpand = true;
 
   @observable
+  bool enableAutoJump = true;
+
+  @observable
   bool enableHoverMode = true;
 
   /// key: [GroupEntryInfo].id
@@ -88,8 +91,10 @@ abstract class _HighlightStore with Store {
   }
 
   void _handleHighlightLogEntryIdChange(int? highlightLogEntryId) {
+    final highlightStore = GetIt.I.get<HighlightStore>();
     final homePageStore = GetIt.I.get<HomePageStore>();
 
+    if (!highlightStore.enableAutoJump) return;
     if (highlightLogEntryId == null) return;
 
     final listViewIndexForHighlight = _calcListViewIndexForLogEntry(logEntryId: highlightLogEntryId);
