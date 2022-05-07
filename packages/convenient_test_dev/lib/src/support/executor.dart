@@ -7,6 +7,7 @@ import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:test_api/src/backend/declarer.dart';
 import 'package:test_api/src/backend/group.dart';
+import 'package:test_api/src/backend/group_entry.dart';
 
 class ConvenientTestExecutor {
   // static const _kTag = 'ConvenientTestExecutor';
@@ -27,8 +28,12 @@ class ConvenientTestExecutor {
       onGroupBuilt: (group) {
         if (reportSuiteInfo) _reportSuiteInfo(group);
       },
-      shouldSkip: (entry) async => !filterNameRegex.hasMatch(entry.name),
+      shouldSkip: (entry) async => !_allowExecute(entry),
     );
+  }
+
+  bool _allowExecute(GroupEntry entry) {
+    return filterNameRegex.hasMatch(entry.name);
   }
 
   static void _reportSuiteInfo(Group group) {
