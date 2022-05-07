@@ -5,10 +5,10 @@ pub-get:
     cd packages/convenient_test_common_dart && flutter pub get
     cd packages/convenient_test_dev && flutter pub get
     cd packages/convenient_test_manager && flutter pub get
-    cd packages/convenient_test_manager_core && flutter pub get
+    cd packages/convenient_test_manager_dart && flutter pub get
 
 build-runner:
-    cd packages/convenient_test_manager_core && flutter pub run build_runner build --delete-conflicting-outputs
+    cd packages/convenient_test_manager_dart && flutter pub run build_runner build --delete-conflicting-outputs
     cd packages/convenient_test_manager && flutter pub run build_runner build --delete-conflicting-outputs
 
 format:
@@ -18,7 +18,7 @@ format:
     cd packages/convenient_test_common_dart && flutter format . --line-length 120
     cd packages/convenient_test_dev && flutter format . --line-length 120
     cd packages/convenient_test_manager && flutter format . --line-length 120
-    cd packages/convenient_test_manager_core && flutter format . --line-length 120
+    cd packages/convenient_test_manager_dart && flutter format . --line-length 120
 
 analyze:
     cd packages/convenient_test && flutter analyze
@@ -27,7 +27,7 @@ analyze:
     cd packages/convenient_test_common_dart && flutter analyze
     cd packages/convenient_test_dev && flutter analyze
     cd packages/convenient_test_manager && flutter analyze
-    cd packages/convenient_test_manager_core && flutter analyze
+    cd packages/convenient_test_manager_dart && flutter analyze
 
 generate-gif:
     ffmpeg -y -i doc/videos/a_action_history.mov -r 24 doc/gif/a_action_history.gif

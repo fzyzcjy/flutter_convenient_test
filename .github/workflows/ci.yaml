@@ -22,7 +22,7 @@ jobs:
           - convenient_test_common_dart
           - convenient_test_dev
           - convenient_test_manager
-          - convenient_test_manager_core
+          - convenient_test_manager_dart
 
     steps:
       - uses: actions/checkout@v2
