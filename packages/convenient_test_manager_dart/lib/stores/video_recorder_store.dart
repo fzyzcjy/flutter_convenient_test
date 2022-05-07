@@ -51,4 +51,8 @@ class VideoInfo {
 
   @override
   String toString() => 'VideoInfo{path: $path, startTime: $startTime}';
+
+  Duration absoluteToVideoTime(DateTime absoluteTime) => absoluteTime.difference(startTime);
+
+  DateTime videoToAbsoluteTime(Duration videoTime) => startTime.add(videoTime);
 }

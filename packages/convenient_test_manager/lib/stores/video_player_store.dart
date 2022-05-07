@@ -25,18 +25,6 @@ abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
 
   final mainPlayerController = VideoPlayerController();
 
-  Duration absoluteToVideoTime(DateTime absoluteTime) {
-    final activeVideo = this.activeVideo;
-    if (activeVideo == null) return Duration.zero;
-    return absoluteTime.difference(activeVideo.startTime);
-  }
-
-  DateTime videoToAbsoluteTime(Duration videoTime) {
-    final activeVideo = this.activeVideo;
-    if (activeVideo == null) return DateTime.fromMicrosecondsSinceEpoch(0);
-    return activeVideo.startTime.add(videoTime);
-  }
-
   @observable
   int? playerPositionCorrespondingLogEntryId;
 
@@ -60,7 +48,7 @@ abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
   }
 
   void _handlePositionStreamEvent(Duration position) {
-    final absoluteTime = videoToAbsoluteTime(position);
+    final absoluteTime = activeVideo?.videoToAbsoluteTime(position) ?? DateTime.fromMicrosecondsSinceEpoch(0);
     final logEntryId = GetIt.I.get<LogStore>().calcLogEntryAtTime(absoluteTime);
 
     // this "if" will avoid unnecessary mobx updates

@@ -111,8 +111,12 @@ class HomePageLogEntryWidget extends StatelessWidget {
 
     highlightStore.highlightLogEntryId = targetState ? logEntryId : null;
     highlightStore.highlightTestEntryId = targetState ? testEntryId : null;
+
     if (targetState) {
-      videoPlayerStore.mainPlayerController.seek(videoPlayerStore.absoluteToVideoTime(interestLogSubEntry.timeTyped));
+      final activeVideo = videoPlayerStore.activeVideo;
+      if (activeVideo != null) {
+        videoPlayerStore.mainPlayerController.seek(activeVideo.absoluteToVideoTime(interestLogSubEntry.timeTyped));
+      }
     }
   }
 

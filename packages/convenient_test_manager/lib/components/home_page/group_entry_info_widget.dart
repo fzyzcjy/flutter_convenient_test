@@ -220,10 +220,13 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     final startTime = logSubEntryTimes.reduce((a, b) => a.isBefore(b) ? a : b);
     final endTime = logSubEntryTimes.reduce((a, b) => a.isAfter(b) ? a : b);
 
-    videoPlayerStore.displayRange = Tuple2(
-      videoPlayerStore.absoluteToVideoTime(startTime),
-      videoPlayerStore.absoluteToVideoTime(endTime),
-    );
+    final activeVideo = videoPlayerStore.activeVideo;
+    if (activeVideo != null) {
+      videoPlayerStore.displayRange = Tuple2(
+        activeVideo.absoluteToVideoTime(startTime),
+        activeVideo.absoluteToVideoTime(endTime),
+      );
+    }
 
     homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.video;
   }
