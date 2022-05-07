@@ -1,7 +1,7 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/home_page/group_entry_info_widget.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
-import 'package:convenient_test_manager/stores/suite_info_store.dart';
+import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';

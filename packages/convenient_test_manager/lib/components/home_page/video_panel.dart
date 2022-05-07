@@ -1,5 +1,5 @@
 import 'package:convenient_test_manager/components/misc/video_player.dart';
-import 'package:convenient_test_manager/stores/video_store.dart';
+import 'package:convenient_test_manager/stores/video_player_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -9,10 +9,10 @@ class HomePageVideoPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final videoStore = GetIt.I.get<VideoStore>();
+    final videoPlayerStore = GetIt.I.get<VideoPlayerStore>();
 
     return Observer(builder: (_) {
-      final displayVideoPath = videoStore.displayVideoInfo?.path;
+      final displayVideoPath = videoPlayerStore.displayVideoInfo?.path;
       if (displayVideoPath == null) {
         return const Center(
           child: Text('No video or still recording'),
@@ -21,9 +21,9 @@ class HomePageVideoPanel extends StatelessWidget {
 
       return VideoPlayer(
         videoPath: displayVideoPath,
-        startTime: videoStore.displayRange.item1,
-        stopTime: videoStore.displayRange.item2,
-        controller: videoStore.mainPlayerController,
+        startTime: videoPlayerStore.displayRange.item1,
+        stopTime: videoPlayerStore.displayRange.item2,
+        controller: videoPlayerStore.mainPlayerController,
       );
     });
   }
