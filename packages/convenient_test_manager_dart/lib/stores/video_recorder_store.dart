@@ -33,6 +33,11 @@ abstract class _VideoRecorderStore with Store {
 
   @action
   Future<void> stopRecord() async {
+    if (recordingVideoInfo == null) {
+      Log.i(_kTag, 'stopRecord skip since recordingVideoInfo==null');
+      return;
+    }
+
     Log.d(_kTag, 'stopRecord call ScreenVideoRecorderService begin');
     await GetIt.I.get<ScreenVideoRecorderService>().stopRecord();
     Log.d(_kTag, 'stopRecord call ScreenVideoRecorderService end');
