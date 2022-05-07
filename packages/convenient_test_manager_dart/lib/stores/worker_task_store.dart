@@ -13,7 +13,20 @@ abstract class _WorkerTaskStore with Store {
   var filterNameRegex = kRegexMatchNothing;
 
   WorkerCurrentRunConfig calcCurrentRunConfig() {
-    return TODO;
+    switch (runMode) {
+      case WorkerRunMode.interactiveApp:
+        return WorkerCurrentRunConfig(interactiveApp: WorkerCurrentRunConfig_InteractiveApp());
+      case WorkerRunMode.integrationTest:
+        return WorkerCurrentRunConfig(
+          integrationTest: WorkerCurrentRunConfig_IntegrationTest(
+            reportSuiteInfo: TODO,
+            executionFilter: ExecutionFilter(
+              filterNameRegex: filterNameRegex,
+              strategy: TODO,
+            ),
+          ),
+        );
+    }
   }
 }
 
