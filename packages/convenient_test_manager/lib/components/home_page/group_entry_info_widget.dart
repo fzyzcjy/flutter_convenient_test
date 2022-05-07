@@ -166,7 +166,7 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
           highlightStore
             ..enableAutoExpand = false
             ..expandGroupEntryMap[info.id] = !expanding
-            ..highlightTestEntryId = info.id;
+            ..highlightTestEntryName = info.id;
         },
         child: SizedBox(
           width: double.infinity,

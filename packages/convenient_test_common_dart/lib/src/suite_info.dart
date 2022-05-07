@@ -6,42 +6,37 @@ import 'package:meta/meta.dart';
 class SuiteInfo {
   static const _kTag = 'SuiteInfo';
 
-  final int rootGroupId;
-  final Map<int, GroupEntryInfo> entryMap;
-  final Map<String, int> entryIdOfName;
+  final String rootGroupName;
+  final Map<String, GroupEntryInfo> entryMap;
 
   const SuiteInfo._({
-    required this.rootGroupId,
+    required this.rootGroupName,
     required this.entryMap,
-    required this.entryIdOfName,
   });
 
   factory SuiteInfo.fromProto(SuiteInfoProto proto) {
     final entryMap = Map.fromEntries([
-      ...proto.groups.map((group) => MapEntry(group.id.toInt(), GroupInfo.fromProto(group))),
-      ...proto.tests.map((test) => MapEntry(test.id.toInt(), TestInfo.fromProto(test))),
+      ...proto.groups.map((group) => MapEntry(group.name, GroupInfo.fromProto(group))),
+      ...proto.tests.map((test) => MapEntry(test.name, TestInfo.fromProto(test))),
     ]);
-    final entryIdOfName = Map.fromEntries(entryMap.entries.map((e) => MapEntry(e.value.name, e.key)));
 
-    if (entryIdOfName.length != entryMap.length) {
+    final entryNames = entryMap.keys.toList();
+    if (entryNames.toSet().length != entryNames.length) {
       Log.d(
           _kTag,
           '#groups=${proto.groups.length} #tests=${proto.tests.length} '
-          'entryIdOfName.keys.length=${entryIdOfName.keys.length} entryIdOfName.keys=${entryIdOfName.keys.toList()} '
+          'entryNames=$entryNames '
           'groups.name=${proto.groups.map((e) => e.name).toList()} tests.name=${proto.tests.map((e) => e.name).toList()} ');
       throw Exception('Sanity check failed: Suite tests should have no duplicate names');
     }
 
     return SuiteInfo._(
-      rootGroupId: proto.groupId.toInt(),
+      rootGroupName: proto.groupName,
       entryMap: entryMap,
-      entryIdOfName: entryIdOfName,
     );
   }
 
-  int? getEntryIdFromName(String entryName) => entryIdOfName[entryName];
-
-  GroupInfo get rootGroup => entryMap[rootGroupId]! as GroupInfo;
+  GroupInfo get rootGroup => entryMap[rootGroupName]! as GroupInfo;
 
   void traverse(GroupEntryInfoTraverseCallback callback) => rootGroup.traverse(this, callback);
 

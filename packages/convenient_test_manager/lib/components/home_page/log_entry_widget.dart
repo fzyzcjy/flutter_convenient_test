@@ -110,7 +110,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
     final videoPlayerStore = GetIt.I.get<VideoPlayerStore>();
 
     highlightStore.highlightLogEntryId = targetState ? logEntryId : null;
-    highlightStore.highlightTestEntryId = targetState ? testEntryId : null;
+    highlightStore.highlightTestEntryName = targetState ? testEntryId : null;
 
     if (targetState) {
       final activeVideo = videoPlayerStore.activeVideo;

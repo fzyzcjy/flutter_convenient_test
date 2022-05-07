@@ -14,7 +14,7 @@ class HomePageRawLogPanel extends StatelessWidget {
     final rawLogStore = GetIt.I.get<RawLogStore>();
 
     return Observer(builder: (_) {
-      final highlightTestEntryId = highlightStore.highlightTestEntryId;
+      final highlightTestEntryId = highlightStore.highlightTestEntryName;
       if (highlightTestEntryId == null) {
         return const Center(
           child: Text('Tap log entries on the left to view screenshots'),

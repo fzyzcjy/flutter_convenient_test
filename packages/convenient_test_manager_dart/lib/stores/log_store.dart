@@ -9,10 +9,10 @@ part 'log_store.g.dart';
 class LogStore = _LogStore with _$LogStore;
 
 abstract class _LogStore with Store {
-  final logEntryInTest = RelationOneToMany();
-  final testIdOfLogEntry = ObservableMap<int, int>();
+  final logEntryInTest = RelationOneToMany<String>();
+  final testIdOfLogEntry = ObservableMap<String, int>();
 
-  final logSubEntryInEntry = RelationOneToMany();
+  final logSubEntryInEntry = RelationOneToMany<int>();
   final logEntryIdOfLogSubEntry = ObservableMap<int, int>();
 
   final logSubEntryMap = ObservableMap<int, LogSubEntry>();
@@ -23,7 +23,7 @@ abstract class _LogStore with Store {
   /// `snapshotInLog[logEntryId][name] == snapshot bytes`
   final snapshotInLog = ObservableMap<int, ObservableMap<String, Uint8List>>();
 
-  void addLogEntry({required int testEntryId, required int logEntryId, required List<LogSubEntry> subEntries}) {
+  void addLogEntry({required String testName, required int logEntryId, required List<LogSubEntry> subEntries}) {
     logSubEntryInEntry[logEntryId] ??= ObservableList();
 
     for (final subEntry in subEntries) {
@@ -34,9 +34,9 @@ abstract class _LogStore with Store {
       logSubEntryIdOfTime[subEntry.time.toInt()] = subEntryId;
     }
 
-    if (!(logEntryInTest[testEntryId]?.contains(logEntryId) ?? false)) {
-      logEntryInTest.addRelation(testEntryId, logEntryId);
-      testIdOfLogEntry[logEntryId] = testEntryId;
+    if (!(logEntryInTest[testName]?.contains(logEntryId) ?? false)) {
+      logEntryInTest.addRelation(testName, logEntryId);
+      testIdOfLogEntry[logEntryId] = testName;
     }
   }
 
