@@ -264,12 +264,72 @@ const WorkerModeIntegrationTest$json = const {
   '2': const [
     const {'1': 'filter_name_regex', '3': 1, '4': 1, '5': 9, '10': 'filterNameRegex'},
     const {'1': 'report_suite_info', '3': 2, '4': 1, '5': 8, '10': 'reportSuiteInfo'},
+    const {'1': 'execution_mode', '3': 3, '4': 1, '5': 11, '6': '.ExecutionMode', '10': 'executionMode'},
   ],
 };
 
 /// Descriptor for `WorkerModeIntegrationTest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List workerModeIntegrationTestDescriptor = $convert.base64Decode(
-    'ChlXb3JrZXJNb2RlSW50ZWdyYXRpb25UZXN0EioKEWZpbHRlcl9uYW1lX3JlZ2V4GAEgASgJUg9maWx0ZXJOYW1lUmVnZXgSKgoRcmVwb3J0X3N1aXRlX2luZm8YAiABKAhSD3JlcG9ydFN1aXRlSW5mbw==');
+    'ChlXb3JrZXJNb2RlSW50ZWdyYXRpb25UZXN0EioKEWZpbHRlcl9uYW1lX3JlZ2V4GAEgASgJUg9maWx0ZXJOYW1lUmVnZXgSKgoRcmVwb3J0X3N1aXRlX2luZm8YAiABKAhSD3JlcG9ydFN1aXRlSW5mbxI1Cg5leGVjdXRpb25fbW9kZRgDIAEoCzIOLkV4ZWN1dGlvbk1vZGVSDWV4ZWN1dGlvbk1vZGU=');
+@$core.Deprecated('Use executionModeDescriptor instead')
+const ExecutionMode$json = const {
+  '1': 'ExecutionMode',
+  '2': const [
+    const {
+      '1': 'first_matching',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.ExecutionMode.FirstMatching',
+      '9': 0,
+      '10': 'firstMatching'
+    },
+    const {
+      '1': 'next_matching',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.ExecutionMode.NextMatching',
+      '9': 0,
+      '10': 'nextMatching'
+    },
+    const {
+      '1': 'all_matching',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.ExecutionMode.AllMatching',
+      '9': 0,
+      '10': 'allMatching'
+    },
+  ],
+  '3': const [ExecutionMode_FirstMatching$json, ExecutionMode_NextMatching$json, ExecutionMode_AllMatching$json],
+  '8': const [
+    const {'1': 'sub_type'},
+  ],
+};
+
+@$core.Deprecated('Use executionModeDescriptor instead')
+const ExecutionMode_FirstMatching$json = const {
+  '1': 'FirstMatching',
+};
+
+@$core.Deprecated('Use executionModeDescriptor instead')
+const ExecutionMode_NextMatching$json = const {
+  '1': 'NextMatching',
+  '2': const [
+    const {'1': 'prev_test_name', '3': 1, '4': 1, '5': 9, '10': 'prevTestName'},
+  ],
+};
+
+@$core.Deprecated('Use executionModeDescriptor instead')
+const ExecutionMode_AllMatching$json = const {
+  '1': 'AllMatching',
+};
+
+/// Descriptor for `ExecutionMode`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List executionModeDescriptor = $convert.base64Decode(
+    'Cg1FeGVjdXRpb25Nb2RlEkUKDmZpcnN0X21hdGNoaW5nGAEgASgLMhwuRXhlY3V0aW9uTW9kZS5GaXJzdE1hdGNoaW5nSABSDWZpcnN0TWF0Y2hpbmcSQgoNbmV4dF9tYXRjaGluZxgCIAEoCzIbLkV4ZWN1dGlvbk1vZGUuTmV4dE1hdGNoaW5nSABSDG5leHRNYXRjaGluZxI/CgxhbGxfbWF0Y2hpbmcYAyABKAsyGi5FeGVjdXRpb25Nb2RlLkFsbE1hdGNoaW5nSABSC2FsbE1hdGNoaW5nGg8KDUZpcnN0TWF0Y2hpbmcaNAoMTmV4dE1hdGNoaW5nEiQKDnByZXZfdGVzdF9uYW1lGAEgASgJUgxwcmV2VGVzdE5hbWUaDQoLQWxsTWF0Y2hpbmdCCgoIc3ViX3R5cGU=');
 @$core.Deprecated('Use emptyDescriptor instead')
 const Empty$json = const {
   '1': 'Empty',
