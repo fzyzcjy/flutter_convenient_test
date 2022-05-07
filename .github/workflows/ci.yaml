@@ -19,6 +19,7 @@ jobs:
           - convenient_test
           - convenient_test/example
           - convenient_test_common
+          - convenient_test_common_dart
           - convenient_test_dev
           - convenient_test_manager
           - convenient_test_manager_core
