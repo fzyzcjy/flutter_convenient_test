@@ -17,7 +17,7 @@ class SuiteInfoConverter {
       id: id.toInt64(),
       name: entry.name,
       parentId: parentId.toInt64(),
-      entryIds: entry.entries.map((child) => _convertGroupEntry(child, target, id).toInt64()),
+      entryIds: entry.entries.map((child) => _convertGroupEntry(child, target, id).toInt64()).toList(),
     ));
     return id;
   }
