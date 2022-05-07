@@ -15,7 +15,7 @@ https://user-images.githubusercontent.com/5236035/167066810-d0aa36ba-0113-4140-9
 
 ## Have questions?
 
-Though used in production environment in my own 200kloc Flutter app, this package (especially the doc) is still not yet perfect. Just [create an issue](https://github.com/fzyzcjy/flutter_convenient_test/issues) and I usually reply quite quickly.
+Though used in production environment in my own 200kloc Flutter app, this package - especially the doc - is surely not yet perfect. Just [create an issue](https://github.com/fzyzcjy/flutter_convenient_test/issues) and I usually reply quite quickly.
 
 ## Features
 
