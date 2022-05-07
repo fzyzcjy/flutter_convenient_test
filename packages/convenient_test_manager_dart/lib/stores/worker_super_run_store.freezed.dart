@@ -19,21 +19,30 @@ mixin _$_ITIMState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String lastFinishedTestName) middle,
+    required TResult Function(String lastExecutedTestName) goOn,
+    required TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)
+        retryLast,
     required TResult Function() finished,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String lastFinishedTestName)? middle,
+    TResult Function(String lastExecutedTestName)? goOn,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String lastFinishedTestName)? middle,
+    TResult Function(String lastExecutedTestName)? goOn,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
     required TResult orElse(),
   }) =>
@@ -41,21 +50,24 @@ mixin _$_ITIMState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ITIMStateInitial value) initial,
-    required TResult Function(_ITIMStateMiddle value) middle,
+    required TResult Function(_ITIMStateGoOn value) goOn,
+    required TResult Function(_ITIMStateRetryLast value) retryLast,
     required TResult Function(_ITIMStateFinished value) finished,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_ITIMStateInitial value)? initial,
-    TResult Function(_ITIMStateMiddle value)? middle,
+    TResult Function(_ITIMStateGoOn value)? goOn,
+    TResult Function(_ITIMStateRetryLast value)? retryLast,
     TResult Function(_ITIMStateFinished value)? finished,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ITIMStateInitial value)? initial,
-    TResult Function(_ITIMStateMiddle value)? middle,
+    TResult Function(_ITIMStateGoOn value)? goOn,
+    TResult Function(_ITIMStateRetryLast value)? retryLast,
     TResult Function(_ITIMStateFinished value)? finished,
     required TResult orElse(),
   }) =>
@@ -120,7 +132,10 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String lastFinishedTestName) middle,
+    required TResult Function(String lastExecutedTestName) goOn,
+    required TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)
+        retryLast,
     required TResult Function() finished,
   }) {
     return initial();
@@ -130,7 +145,10 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String lastFinishedTestName)? middle,
+    TResult Function(String lastExecutedTestName)? goOn,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
   }) {
     return initial?.call();
@@ -140,7 +158,10 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String lastFinishedTestName)? middle,
+    TResult Function(String lastExecutedTestName)? goOn,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
     required TResult orElse(),
   }) {
@@ -154,7 +175,8 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ITIMStateInitial value) initial,
-    required TResult Function(_ITIMStateMiddle value) middle,
+    required TResult Function(_ITIMStateGoOn value) goOn,
+    required TResult Function(_ITIMStateRetryLast value) retryLast,
     required TResult Function(_ITIMStateFinished value) finished,
   }) {
     return initial(this);
@@ -164,7 +186,8 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_ITIMStateInitial value)? initial,
-    TResult Function(_ITIMStateMiddle value)? middle,
+    TResult Function(_ITIMStateGoOn value)? goOn,
+    TResult Function(_ITIMStateRetryLast value)? retryLast,
     TResult Function(_ITIMStateFinished value)? finished,
   }) {
     return initial?.call(this);
@@ -174,7 +197,8 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ITIMStateInitial value)? initial,
-    TResult Function(_ITIMStateMiddle value)? middle,
+    TResult Function(_ITIMStateGoOn value)? goOn,
+    TResult Function(_ITIMStateRetryLast value)? retryLast,
     TResult Function(_ITIMStateFinished value)? finished,
     required TResult orElse(),
   }) {
@@ -190,32 +214,32 @@ abstract class _ITIMStateInitial implements _ITIMState {
 }
 
 /// @nodoc
-abstract class _$$_ITIMStateMiddleCopyWith<$Res> {
-  factory _$$_ITIMStateMiddleCopyWith(
-          _$_ITIMStateMiddle value, $Res Function(_$_ITIMStateMiddle) then) =
-      __$$_ITIMStateMiddleCopyWithImpl<$Res>;
-  $Res call({String lastFinishedTestName});
+abstract class _$$_ITIMStateGoOnCopyWith<$Res> {
+  factory _$$_ITIMStateGoOnCopyWith(
+          _$_ITIMStateGoOn value, $Res Function(_$_ITIMStateGoOn) then) =
+      __$$_ITIMStateGoOnCopyWithImpl<$Res>;
+  $Res call({String lastExecutedTestName});
 }
 
 /// @nodoc
-class __$$_ITIMStateMiddleCopyWithImpl<$Res>
+class __$$_ITIMStateGoOnCopyWithImpl<$Res>
     extends __$ITIMStateCopyWithImpl<$Res>
-    implements _$$_ITIMStateMiddleCopyWith<$Res> {
-  __$$_ITIMStateMiddleCopyWithImpl(
-      _$_ITIMStateMiddle _value, $Res Function(_$_ITIMStateMiddle) _then)
-      : super(_value, (v) => _then(v as _$_ITIMStateMiddle));
+    implements _$$_ITIMStateGoOnCopyWith<$Res> {
+  __$$_ITIMStateGoOnCopyWithImpl(
+      _$_ITIMStateGoOn _value, $Res Function(_$_ITIMStateGoOn) _then)
+      : super(_value, (v) => _then(v as _$_ITIMStateGoOn));
 
   @override
-  _$_ITIMStateMiddle get _value => super._value as _$_ITIMStateMiddle;
+  _$_ITIMStateGoOn get _value => super._value as _$_ITIMStateGoOn;
 
   @override
   $Res call({
-    Object? lastFinishedTestName = freezed,
+    Object? lastExecutedTestName = freezed,
   }) {
-    return _then(_$_ITIMStateMiddle(
-      lastFinishedTestName: lastFinishedTestName == freezed
-          ? _value.lastFinishedTestName
-          : lastFinishedTestName // ignore: cast_nullable_to_non_nullable
+    return _then(_$_ITIMStateGoOn(
+      lastExecutedTestName: lastExecutedTestName == freezed
+          ? _value.lastExecutedTestName
+          : lastExecutedTestName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -223,65 +247,74 @@ class __$$_ITIMStateMiddleCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ITIMStateMiddle implements _ITIMStateMiddle {
-  const _$_ITIMStateMiddle({required this.lastFinishedTestName});
+class _$_ITIMStateGoOn implements _ITIMStateGoOn {
+  const _$_ITIMStateGoOn({required this.lastExecutedTestName});
 
   @override
-  final String lastFinishedTestName;
+  final String lastExecutedTestName;
 
   @override
   String toString() {
-    return '_ITIMState.middle(lastFinishedTestName: $lastFinishedTestName)';
+    return '_ITIMState.goOn(lastExecutedTestName: $lastExecutedTestName)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ITIMStateMiddle &&
+            other is _$_ITIMStateGoOn &&
             const DeepCollectionEquality()
-                .equals(other.lastFinishedTestName, lastFinishedTestName));
+                .equals(other.lastExecutedTestName, lastExecutedTestName));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(lastFinishedTestName));
+      runtimeType, const DeepCollectionEquality().hash(lastExecutedTestName));
 
   @JsonKey(ignore: true)
   @override
-  _$$_ITIMStateMiddleCopyWith<_$_ITIMStateMiddle> get copyWith =>
-      __$$_ITIMStateMiddleCopyWithImpl<_$_ITIMStateMiddle>(this, _$identity);
+  _$$_ITIMStateGoOnCopyWith<_$_ITIMStateGoOn> get copyWith =>
+      __$$_ITIMStateGoOnCopyWithImpl<_$_ITIMStateGoOn>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String lastFinishedTestName) middle,
+    required TResult Function(String lastExecutedTestName) goOn,
+    required TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)
+        retryLast,
     required TResult Function() finished,
   }) {
-    return middle(lastFinishedTestName);
+    return goOn(lastExecutedTestName);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String lastFinishedTestName)? middle,
+    TResult Function(String lastExecutedTestName)? goOn,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
   }) {
-    return middle?.call(lastFinishedTestName);
+    return goOn?.call(lastExecutedTestName);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String lastFinishedTestName)? middle,
+    TResult Function(String lastExecutedTestName)? goOn,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
     required TResult orElse(),
   }) {
-    if (middle != null) {
-      return middle(lastFinishedTestName);
+    if (goOn != null) {
+      return goOn(lastExecutedTestName);
     }
     return orElse();
   }
@@ -290,44 +323,217 @@ class _$_ITIMStateMiddle implements _ITIMStateMiddle {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ITIMStateInitial value) initial,
-    required TResult Function(_ITIMStateMiddle value) middle,
+    required TResult Function(_ITIMStateGoOn value) goOn,
+    required TResult Function(_ITIMStateRetryLast value) retryLast,
     required TResult Function(_ITIMStateFinished value) finished,
   }) {
-    return middle(this);
+    return goOn(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_ITIMStateInitial value)? initial,
-    TResult Function(_ITIMStateMiddle value)? middle,
+    TResult Function(_ITIMStateGoOn value)? goOn,
+    TResult Function(_ITIMStateRetryLast value)? retryLast,
     TResult Function(_ITIMStateFinished value)? finished,
   }) {
-    return middle?.call(this);
+    return goOn?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ITIMStateInitial value)? initial,
-    TResult Function(_ITIMStateMiddle value)? middle,
+    TResult Function(_ITIMStateGoOn value)? goOn,
+    TResult Function(_ITIMStateRetryLast value)? retryLast,
     TResult Function(_ITIMStateFinished value)? finished,
     required TResult orElse(),
   }) {
-    if (middle != null) {
-      return middle(this);
+    if (goOn != null) {
+      return goOn(this);
     }
     return orElse();
   }
 }
 
-abstract class _ITIMStateMiddle implements _ITIMState {
-  const factory _ITIMStateMiddle({required final String lastFinishedTestName}) =
-      _$_ITIMStateMiddle;
+abstract class _ITIMStateGoOn implements _ITIMState {
+  const factory _ITIMStateGoOn({required final String lastExecutedTestName}) =
+      _$_ITIMStateGoOn;
 
-  String get lastFinishedTestName => throw _privateConstructorUsedError;
+  String get lastExecutedTestName => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$$_ITIMStateMiddleCopyWith<_$_ITIMStateMiddle> get copyWith =>
+  _$$_ITIMStateGoOnCopyWith<_$_ITIMStateGoOn> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_ITIMStateRetryLastCopyWith<$Res> {
+  factory _$$_ITIMStateRetryLastCopyWith(_$_ITIMStateRetryLast value,
+          $Res Function(_$_ITIMStateRetryLast) then) =
+      __$$_ITIMStateRetryLastCopyWithImpl<$Res>;
+  $Res call({String lastExecutedTestName, int lastExecutedTestFailCount});
+}
+
+/// @nodoc
+class __$$_ITIMStateRetryLastCopyWithImpl<$Res>
+    extends __$ITIMStateCopyWithImpl<$Res>
+    implements _$$_ITIMStateRetryLastCopyWith<$Res> {
+  __$$_ITIMStateRetryLastCopyWithImpl(
+      _$_ITIMStateRetryLast _value, $Res Function(_$_ITIMStateRetryLast) _then)
+      : super(_value, (v) => _then(v as _$_ITIMStateRetryLast));
+
+  @override
+  _$_ITIMStateRetryLast get _value => super._value as _$_ITIMStateRetryLast;
+
+  @override
+  $Res call({
+    Object? lastExecutedTestName = freezed,
+    Object? lastExecutedTestFailCount = freezed,
+  }) {
+    return _then(_$_ITIMStateRetryLast(
+      lastExecutedTestName: lastExecutedTestName == freezed
+          ? _value.lastExecutedTestName
+          : lastExecutedTestName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastExecutedTestFailCount: lastExecutedTestFailCount == freezed
+          ? _value.lastExecutedTestFailCount
+          : lastExecutedTestFailCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ITIMStateRetryLast implements _ITIMStateRetryLast {
+  const _$_ITIMStateRetryLast(
+      {required this.lastExecutedTestName,
+      required this.lastExecutedTestFailCount});
+
+  @override
+  final String lastExecutedTestName;
+  @override
+  final int lastExecutedTestFailCount;
+
+  @override
+  String toString() {
+    return '_ITIMState.retryLast(lastExecutedTestName: $lastExecutedTestName, lastExecutedTestFailCount: $lastExecutedTestFailCount)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ITIMStateRetryLast &&
+            const DeepCollectionEquality()
+                .equals(other.lastExecutedTestName, lastExecutedTestName) &&
+            const DeepCollectionEquality().equals(
+                other.lastExecutedTestFailCount, lastExecutedTestFailCount));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(lastExecutedTestName),
+      const DeepCollectionEquality().hash(lastExecutedTestFailCount));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_ITIMStateRetryLastCopyWith<_$_ITIMStateRetryLast> get copyWith =>
+      __$$_ITIMStateRetryLastCopyWithImpl<_$_ITIMStateRetryLast>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String lastExecutedTestName) goOn,
+    required TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)
+        retryLast,
+    required TResult Function() finished,
+  }) {
+    return retryLast(lastExecutedTestName, lastExecutedTestFailCount);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String lastExecutedTestName)? goOn,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
+    TResult Function()? finished,
+  }) {
+    return retryLast?.call(lastExecutedTestName, lastExecutedTestFailCount);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String lastExecutedTestName)? goOn,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
+    TResult Function()? finished,
+    required TResult orElse(),
+  }) {
+    if (retryLast != null) {
+      return retryLast(lastExecutedTestName, lastExecutedTestFailCount);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ITIMStateInitial value) initial,
+    required TResult Function(_ITIMStateGoOn value) goOn,
+    required TResult Function(_ITIMStateRetryLast value) retryLast,
+    required TResult Function(_ITIMStateFinished value) finished,
+  }) {
+    return retryLast(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ITIMStateInitial value)? initial,
+    TResult Function(_ITIMStateGoOn value)? goOn,
+    TResult Function(_ITIMStateRetryLast value)? retryLast,
+    TResult Function(_ITIMStateFinished value)? finished,
+  }) {
+    return retryLast?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ITIMStateInitial value)? initial,
+    TResult Function(_ITIMStateGoOn value)? goOn,
+    TResult Function(_ITIMStateRetryLast value)? retryLast,
+    TResult Function(_ITIMStateFinished value)? finished,
+    required TResult orElse(),
+  }) {
+    if (retryLast != null) {
+      return retryLast(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ITIMStateRetryLast implements _ITIMState {
+  const factory _ITIMStateRetryLast(
+      {required final String lastExecutedTestName,
+      required final int lastExecutedTestFailCount}) = _$_ITIMStateRetryLast;
+
+  String get lastExecutedTestName => throw _privateConstructorUsedError;
+  int get lastExecutedTestFailCount => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_ITIMStateRetryLastCopyWith<_$_ITIMStateRetryLast> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -373,7 +579,10 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String lastFinishedTestName) middle,
+    required TResult Function(String lastExecutedTestName) goOn,
+    required TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)
+        retryLast,
     required TResult Function() finished,
   }) {
     return finished();
@@ -383,7 +592,10 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String lastFinishedTestName)? middle,
+    TResult Function(String lastExecutedTestName)? goOn,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
   }) {
     return finished?.call();
@@ -393,7 +605,10 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String lastFinishedTestName)? middle,
+    TResult Function(String lastExecutedTestName)? goOn,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
     required TResult orElse(),
   }) {
@@ -407,7 +622,8 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ITIMStateInitial value) initial,
-    required TResult Function(_ITIMStateMiddle value) middle,
+    required TResult Function(_ITIMStateGoOn value) goOn,
+    required TResult Function(_ITIMStateRetryLast value) retryLast,
     required TResult Function(_ITIMStateFinished value) finished,
   }) {
     return finished(this);
@@ -417,7 +633,8 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_ITIMStateInitial value)? initial,
-    TResult Function(_ITIMStateMiddle value)? middle,
+    TResult Function(_ITIMStateGoOn value)? goOn,
+    TResult Function(_ITIMStateRetryLast value)? retryLast,
     TResult Function(_ITIMStateFinished value)? finished,
   }) {
     return finished?.call(this);
@@ -427,7 +644,8 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ITIMStateInitial value)? initial,
-    TResult Function(_ITIMStateMiddle value)? middle,
+    TResult Function(_ITIMStateGoOn value)? goOn,
+    TResult Function(_ITIMStateRetryLast value)? retryLast,
     TResult Function(_ITIMStateFinished value)? finished,
     required TResult orElse(),
   }) {

@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/misc/compile_time_config.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
+import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -9,6 +10,8 @@ import 'package:mobx/mobx.dart';
 part 'worker_super_run_store.freezed.dart';
 
 part 'worker_super_run_store.g.dart';
+
+const _kFlakyTestTotalAttemptCount = 2;
 
 /// A "worker run" is the code execution from worker hot-restart to the next hot-restart
 /// A "worker super run" is one or multiple "worker run"s
@@ -107,7 +110,7 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
         reportSuiteInfo: true,
         // this is for flaky test detection. set to non-zero,
         // such that the flaky tests are retried at the worker automatically
-        defaultRetryCount: 1,
+        defaultRetryCount: _kFlakyTestTotalAttemptCount - 1,
         executionFilter: ExecutionFilter(
           filterNameRegex: filterNameRegex,
           strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
@@ -147,13 +150,18 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
           filterNameRegex: filterNameRegex,
           strategy: ExecutionFilter_Strategy(firstMatch: ExecutionFilter_Strategy_FirstMatch()),
         ),
-        middle: (s) => ExecutionFilter(
+        goOn: (s) => ExecutionFilter(
           filterNameRegex: filterNameRegex,
           strategy: ExecutionFilter_Strategy(
             nextMatch: ExecutionFilter_Strategy_NextMatch(
-              prevTestName: s.lastFinishedTestName,
+              prevTestName: s.lastExecutedTestName,
             ),
           ),
+        ),
+        retryLast: (s) => ExecutionFilter(
+          // retry this test again (flaky test handling)
+          filterNameRegex: s.lastExecutedTestName,
+          strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
         ),
         finished: (_) => ExecutionFilter(
           // NOTE use "regex match nothing"
@@ -164,6 +172,8 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
 
   @override
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {
+    final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
+
     final allowExecuteTestNames = resolvedExecutionFilter.allowExecuteTestNames;
     final oldState = state;
 
@@ -174,14 +184,44 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
     }
 
     final executedTestName = allowExecuteTestNames.firstOrNull;
-    if (executedTestName == null) {
-      state = const _ITIMState.finished();
-    } else {
-      state = _ITIMState.middle(lastFinishedTestName: executedTestName);
-    }
-    Log.d(_kTag, 'handleTearDownAll oldState=$oldState newState=$state allowExecuteTestNames=$allowExecuteTestNames');
+    final bool executedTestSucceeded = suiteInfoStore.testEntryStateMap[TODO]!.TODO();
 
-    TODO_handle_flaky_tests;
+    state = _calcNextState(
+      oldState: oldState,
+      executedTestName: executedTestName,
+      executedTestSucceeded: executedTestSucceeded,
+    );
+
+    Log.d(
+        _kTag,
+        'handleTearDownAll end oldState=$oldState newState=$state '
+        'allowExecuteTestNames=$allowExecuteTestNames executedTestSucceeded=$executedTestSucceeded');
+  }
+
+  static _ITIMState _calcNextState({
+    required _ITIMState oldState,
+    required String? executedTestName,
+    required bool executedTestSucceeded,
+  }) {
+    if (oldState is _ITIMStateFinished && executedTestName != null) throw AssertionError();
+
+    if (executedTestName == null) {
+      return const _ITIMState.finished();
+    }
+
+    if (!executedTestSucceeded) {
+      final lastExecutedTestFailCount = oldState is _ITIMStateRetryLast ? (oldState.lastExecutedTestFailCount + 1) : 1;
+      final shouldRetry = lastExecutedTestFailCount < _kFlakyTestTotalAttemptCount;
+
+      if (shouldRetry) {
+        return _ITIMState.retryLast(
+          lastExecutedTestName: executedTestName,
+          lastExecutedTestFailCount: lastExecutedTestFailCount,
+        );
+      }
+    }
+
+    return _ITIMState.goOn(lastExecutedTestName: executedTestName);
   }
 }
 
@@ -191,9 +231,14 @@ class _ITIMState with _$_ITIMState {
   /// Before first test finished
   const factory _ITIMState.initial() = _ITIMStateInitial;
 
-  const factory _ITIMState.middle({
-    required String lastFinishedTestName,
-  }) = _ITIMStateMiddle;
+  const factory _ITIMState.goOn({
+    required String lastExecutedTestName,
+  }) = _ITIMStateGoOn;
+
+  const factory _ITIMState.retryLast({
+    required String lastExecutedTestName,
+    required int lastExecutedTestFailCount,
+  }) = _ITIMStateRetryLast;
 
   const factory _ITIMState.finished() = _ITIMStateFinished;
 }
