@@ -33,6 +33,8 @@ abstract class WorkerSuperRunController {
 
   WorkerCurrentRunConfig calcCurrentRunConfig();
 
+  void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter);
+
   bool get isInteractiveApp => this is _WorkerSuperRunControllerInteractiveApp;
 }
 
@@ -43,6 +45,9 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
   WorkerCurrentRunConfig calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(interactiveApp: WorkerCurrentRunConfig_InteractiveApp());
   }
+
+  @override
+  void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
 }
 
 /// "classical mode": no hot-restart between running two tests
@@ -63,10 +68,15 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
       ),
     );
   }
+
+  @override
+  void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
 }
 
 /// "isolation mode": *has* hot-restart between running two tests
 class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperRunController {
+  static const _kTag = 'WorkerSuperRunControllerIntegrationTestIsolationMode';
+
   final String filterNameRegex;
 
   var state = const _ITIMState.initial();
@@ -102,6 +112,19 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
           strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
         ),
       );
+
+  @override
+  void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {
+    final allowExecuteTestNames = resolvedExecutionFilter.allowExecuteTestNames;
+    final oldState = state;
+
+    if (allowExecuteTestNames.isEmpty) {
+      state = const _ITIMState.finished();
+    } else {
+      state = _ITIMState.middle(lastFinishedTestName: allowExecuteTestNames.single);
+    }
+    Log.d(_kTag, 'handleTearDownAll oldState=$oldState newState=$state allowExecuteTestNames=$allowExecuteTestNames');
+  }
 }
 
 // ITIM := IntegrationTestIsolationMode
