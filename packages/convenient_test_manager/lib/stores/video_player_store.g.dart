@@ -9,6 +9,14 @@ part of 'video_player_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$VideoPlayerStore on _VideoPlayerStore, Store {
+  Computed<VideoInfo?>? _$activeVideoComputed;
+
+  @override
+  VideoInfo? get activeVideo =>
+      (_$activeVideoComputed ??= Computed<VideoInfo?>(() => super.activeVideo,
+              name: '_VideoPlayerStore.activeVideo'))
+          .value;
+
   late final _$activeVideoIdAtom =
       Atom(name: '_VideoPlayerStore.activeVideoId', context: context);
 
@@ -64,7 +72,8 @@ mixin _$VideoPlayerStore on _VideoPlayerStore, Store {
     return '''
 activeVideoId: ${activeVideoId},
 displayRange: ${displayRange},
-playerPositionCorrespondingLogEntryId: ${playerPositionCorrespondingLogEntryId}
+playerPositionCorrespondingLogEntryId: ${playerPositionCorrespondingLogEntryId},
+activeVideo: ${activeVideo}
     ''';
   }
 }

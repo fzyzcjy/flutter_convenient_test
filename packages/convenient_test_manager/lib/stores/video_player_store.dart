@@ -17,21 +17,24 @@ abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
   @observable
   int? activeVideoId;
 
+  @computed
+  VideoInfo? get activeVideo => videoMap[activeVideoId];
+
   @observable
   var displayRange = const Tuple2(Duration.zero, Duration.zero);
 
   final mainPlayerController = VideoPlayerController();
 
   Duration absoluteToVideoTime(DateTime absoluteTime) {
-    final displayVideoInfo = this.displayVideoInfo;
-    if (displayVideoInfo == null) return Duration.zero;
-    return absoluteTime.difference(displayVideoInfo.startTime);
+    final activeVideo = this.activeVideo;
+    if (activeVideo == null) return Duration.zero;
+    return absoluteTime.difference(activeVideo.startTime);
   }
 
   DateTime videoToAbsoluteTime(Duration videoTime) {
-    final displayVideoInfo = this.displayVideoInfo;
-    if (displayVideoInfo == null) return DateTime.fromMicrosecondsSinceEpoch(0);
-    return displayVideoInfo.startTime.add(videoTime);
+    final activeVideo = this.activeVideo;
+    if (activeVideo == null) return DateTime.fromMicrosecondsSinceEpoch(0);
+    return activeVideo.startTime.add(videoTime);
   }
 
   @observable
