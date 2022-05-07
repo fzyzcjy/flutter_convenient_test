@@ -24,6 +24,7 @@ dependencies:
   collection: ^1.15.0
   convenient_test_common: ^1.0.0
   convenient_test_common_dart: ^1.0.0
+  convenient_test_manager_dart: ^1.0.0
   cupertino_icons: ^1.0.2
   dart_vlc: ^0.1.9
   file_picker: ^4.5.1
@@ -46,6 +47,8 @@ dependency_overrides:
     path: ../convenient_test_common
   convenient_test_common_dart:
     path: ../convenient_test_common_dart
+  convenient_test_manager_dart:
+    path: ../convenient_test_manager_dart
   grpc:
     git:
       url: https://github.com/fzyzcjy/grpc-dart # #3761
