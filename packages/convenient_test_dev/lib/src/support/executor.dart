@@ -28,11 +28,13 @@ class ConvenientTestExecutor {
     runTestsInDeclarer(
       declarer,
       onGroupBuilt: (group) {
+        if (reportSuiteInfo) _reportSuiteInfo(group);
+
         resolvedExecutionFilter = _ExecutionFilterResolver.resolve(
           root: group,
           executionFilter: executionFilter,
         );
-        if (reportSuiteInfo) _reportSuiteInfo(group);
+        _reportResolvedExecutionFilter(resolvedExecutionFilter);
       },
       shouldSkip: (entry) async => !resolvedExecutionFilter.allowExecute(entry),
     );
@@ -41,6 +43,10 @@ class ConvenientTestExecutor {
   static void _reportSuiteInfo(Group group) {
     final suiteInfo = SuiteInfoConverter().convert(group);
     myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(suiteInfoProto: suiteInfo));
+  }
+
+  static void _reportResolvedExecutionFilter(ResolvedExecutionFilter info) {
+    myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(resolvedExecutionFilter: info.toProto()));
   }
 }
 
@@ -54,6 +60,10 @@ class ResolvedExecutionFilter {
     if (entry is! Test) throw Exception('allowExecute only supports Test, but entry=$entry');
     return allowExecuteTestNames.contains(entry.name);
   }
+
+  ResolvedExecutionFilterProto toProto() => ResolvedExecutionFilterProto(
+        allowExecuteTestNames: allowExecuteTestNames,
+      );
 }
 
 class _ExecutionFilterResolver {

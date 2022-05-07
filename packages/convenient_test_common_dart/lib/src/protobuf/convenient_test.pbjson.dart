@@ -65,6 +65,15 @@ const ReportItem$json = const {
       '10': 'overallExecution'
     },
     const {'1': 'suite_info_proto', '3': 1, '4': 1, '5': 11, '6': '.SuiteInfoProto', '9': 0, '10': 'suiteInfoProto'},
+    const {
+      '1': 'resolved_execution_filter',
+      '3': 8,
+      '4': 1,
+      '5': 11,
+      '6': '.ResolvedExecutionFilterProto',
+      '9': 0,
+      '10': 'resolvedExecutionFilter'
+    },
     const {'1': 'log_entry', '3': 2, '4': 1, '5': 11, '6': '.LogEntry', '9': 0, '10': 'logEntry'},
     const {
       '1': 'runner_state_change',
@@ -86,7 +95,7 @@ const ReportItem$json = const {
 
 /// Descriptor for `ReportItem`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List reportItemDescriptor = $convert.base64Decode(
-    'CgpSZXBvcnRJdGVtEkAKEW92ZXJhbGxfZXhlY3V0aW9uGAcgASgOMhEuT3ZlcmFsbEV4ZWN1dGlvbkgAUhBvdmVyYWxsRXhlY3V0aW9uEjsKEHN1aXRlX2luZm9fcHJvdG8YASABKAsyDy5TdWl0ZUluZm9Qcm90b0gAUg5zdWl0ZUluZm9Qcm90bxIoCglsb2dfZW50cnkYAiABKAsyCS5Mb2dFbnRyeUgAUghsb2dFbnRyeRJEChNydW5uZXJfc3RhdGVfY2hhbmdlGAMgASgLMhIuUnVubmVyU3RhdGVDaGFuZ2VIAFIRcnVubmVyU3RhdGVDaGFuZ2USMQoMcnVubmVyX2Vycm9yGAQgASgLMgwuUnVubmVyRXJyb3JIAFILcnVubmVyRXJyb3ISNwoOcnVubmVyX21lc3NhZ2UYBSABKAsyDi5SdW5uZXJNZXNzYWdlSABSDXJ1bm5lck1lc3NhZ2USJwoIc25hcHNob3QYBiABKAsyCS5TbmFwc2hvdEgAUghzbmFwc2hvdEIKCghzdWJfdHlwZQ==');
+    'CgpSZXBvcnRJdGVtEkAKEW92ZXJhbGxfZXhlY3V0aW9uGAcgASgOMhEuT3ZlcmFsbEV4ZWN1dGlvbkgAUhBvdmVyYWxsRXhlY3V0aW9uEjsKEHN1aXRlX2luZm9fcHJvdG8YASABKAsyDy5TdWl0ZUluZm9Qcm90b0gAUg5zdWl0ZUluZm9Qcm90bxJbChlyZXNvbHZlZF9leGVjdXRpb25fZmlsdGVyGAggASgLMh0uUmVzb2x2ZWRFeGVjdXRpb25GaWx0ZXJQcm90b0gAUhdyZXNvbHZlZEV4ZWN1dGlvbkZpbHRlchIoCglsb2dfZW50cnkYAiABKAsyCS5Mb2dFbnRyeUgAUghsb2dFbnRyeRJEChNydW5uZXJfc3RhdGVfY2hhbmdlGAMgASgLMhIuUnVubmVyU3RhdGVDaGFuZ2VIAFIRcnVubmVyU3RhdGVDaGFuZ2USMQoMcnVubmVyX2Vycm9yGAQgASgLMgwuUnVubmVyRXJyb3JIAFILcnVubmVyRXJyb3ISNwoOcnVubmVyX21lc3NhZ2UYBSABKAsyDi5SdW5uZXJNZXNzYWdlSABSDXJ1bm5lck1lc3NhZ2USJwoIc25hcHNob3QYBiABKAsyCS5TbmFwc2hvdEgAUghzbmFwc2hvdEIKCghzdWJfdHlwZQ==');
 @$core.Deprecated('Use logEntryDescriptor instead')
 const LogEntry$json = const {
   '1': 'LogEntry',
@@ -330,6 +339,17 @@ const ExecutionFilter_AllMatching$json = const {
 /// Descriptor for `ExecutionFilter`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List executionFilterDescriptor = $convert.base64Decode(
     'Cg9FeGVjdXRpb25GaWx0ZXISKgoRZmlsdGVyX25hbWVfcmVnZXgYASABKAlSD2ZpbHRlck5hbWVSZWdleBJHCg5maXJzdF9tYXRjaGluZxgCIAEoCzIeLkV4ZWN1dGlvbkZpbHRlci5GaXJzdE1hdGNoaW5nSABSDWZpcnN0TWF0Y2hpbmcSRAoNbmV4dF9tYXRjaGluZxgDIAEoCzIdLkV4ZWN1dGlvbkZpbHRlci5OZXh0TWF0Y2hpbmdIAFIMbmV4dE1hdGNoaW5nEkEKDGFsbF9tYXRjaGluZxgEIAEoCzIcLkV4ZWN1dGlvbkZpbHRlci5BbGxNYXRjaGluZ0gAUgthbGxNYXRjaGluZxoPCg1GaXJzdE1hdGNoaW5nGjQKDE5leHRNYXRjaGluZxIkCg5wcmV2X3Rlc3RfbmFtZRgBIAEoCVIMcHJldlRlc3ROYW1lGg0KC0FsbE1hdGNoaW5nQgoKCHN1Yl90eXBl');
+@$core.Deprecated('Use resolvedExecutionFilterProtoDescriptor instead')
+const ResolvedExecutionFilterProto$json = const {
+  '1': 'ResolvedExecutionFilterProto',
+  '2': const [
+    const {'1': 'allow_execute_test_names', '3': 1, '4': 3, '5': 9, '10': 'allowExecuteTestNames'},
+  ],
+};
+
+/// Descriptor for `ResolvedExecutionFilterProto`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedExecutionFilterProtoDescriptor = $convert.base64Decode(
+    'ChxSZXNvbHZlZEV4ZWN1dGlvbkZpbHRlclByb3RvEjcKGGFsbG93X2V4ZWN1dGVfdGVzdF9uYW1lcxgBIAMoCVIVYWxsb3dFeGVjdXRlVGVzdE5hbWVz');
 @$core.Deprecated('Use emptyDescriptor instead')
 const Empty$json = const {
   '1': 'Empty',

@@ -14,6 +14,7 @@ message ReportItem {
   oneof sub_type {
     OverallExecution overall_execution = 7;
     SuiteInfoProto suite_info_proto = 1;
+    ResolvedExecutionFilterProto resolved_execution_filter = 8;
     LogEntry log_entry = 2;
     RunnerStateChange runner_state_change = 3;
     RunnerError runner_error = 4;
@@ -132,6 +133,11 @@ message ExecutionFilter {
     string prev_test_name = 1;
   }
   message AllMatching {}
+}
+
+// Information after `ExecutionFilter` is resolved
+message ResolvedExecutionFilterProto {
+  repeated string allow_execute_test_names = 1;
 }
 
 // https://stackoverflow.com/questions/31768665/can-i-define-a-grpc-call-with-a-null-request-or-response

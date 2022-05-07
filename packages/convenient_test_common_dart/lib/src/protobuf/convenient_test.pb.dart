@@ -70,6 +70,7 @@ enum ReportItem_SubType {
   runnerMessage,
   snapshot,
   overallExecution,
+  resolvedExecutionFilter,
   notSet
 }
 
@@ -82,12 +83,13 @@ class ReportItem extends $pb.GeneratedMessage {
     5: ReportItem_SubType.runnerMessage,
     6: ReportItem_SubType.snapshot,
     7: ReportItem_SubType.overallExecution,
+    8: ReportItem_SubType.resolvedExecutionFilter,
     0: ReportItem_SubType.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ReportItem',
       createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5, 6, 7])
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8])
     ..aOM<SuiteInfoProto>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'suiteInfoProto',
         subBuilder: SuiteInfoProto.create)
     ..aOM<LogEntry>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'logEntry',
@@ -106,6 +108,9 @@ class ReportItem extends $pb.GeneratedMessage {
         defaultOrMaker: OverallExecution.OVERALL_EXECUTION_INVALID,
         valueOf: OverallExecution.valueOf,
         enumValues: OverallExecution.values)
+    ..aOM<ResolvedExecutionFilterProto>(
+        8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'resolvedExecutionFilter',
+        subBuilder: ResolvedExecutionFilterProto.create)
     ..hasRequiredFields = false;
 
   ReportItem._() : super();
@@ -117,6 +122,7 @@ class ReportItem extends $pb.GeneratedMessage {
     RunnerMessage? runnerMessage,
     Snapshot? snapshot,
     OverallExecution? overallExecution,
+    ResolvedExecutionFilterProto? resolvedExecutionFilter,
   }) {
     final _result = create();
     if (suiteInfoProto != null) {
@@ -139,6 +145,9 @@ class ReportItem extends $pb.GeneratedMessage {
     }
     if (overallExecution != null) {
       _result.overallExecution = overallExecution;
+    }
+    if (resolvedExecutionFilter != null) {
+      _result.resolvedExecutionFilter = resolvedExecutionFilter;
     }
     return _result;
   }
@@ -262,6 +271,20 @@ class ReportItem extends $pb.GeneratedMessage {
   $core.bool hasOverallExecution() => $_has(6);
   @$pb.TagNumber(7)
   void clearOverallExecution() => clearField(7);
+
+  @$pb.TagNumber(8)
+  ResolvedExecutionFilterProto get resolvedExecutionFilter => $_getN(7);
+  @$pb.TagNumber(8)
+  set resolvedExecutionFilter(ResolvedExecutionFilterProto v) {
+    setField(8, v);
+  }
+
+  @$pb.TagNumber(8)
+  $core.bool hasResolvedExecutionFilter() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearResolvedExecutionFilter() => clearField(8);
+  @$pb.TagNumber(8)
+  ResolvedExecutionFilterProto ensureResolvedExecutionFilter() => $_ensure(7);
 }
 
 class LogEntry extends $pb.GeneratedMessage {
@@ -1560,6 +1583,53 @@ class ExecutionFilter extends $pb.GeneratedMessage {
   void clearAllMatching() => clearField(4);
   @$pb.TagNumber(4)
   ExecutionFilter_AllMatching ensureAllMatching() => $_ensure(3);
+}
+
+class ResolvedExecutionFilterProto extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ResolvedExecutionFilterProto',
+      createEmptyInstance: create)
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'allowExecuteTestNames')
+    ..hasRequiredFields = false;
+
+  ResolvedExecutionFilterProto._() : super();
+  factory ResolvedExecutionFilterProto({
+    $core.Iterable<$core.String>? allowExecuteTestNames,
+  }) {
+    final _result = create();
+    if (allowExecuteTestNames != null) {
+      _result.allowExecuteTestNames.addAll(allowExecuteTestNames);
+    }
+    return _result;
+  }
+  factory ResolvedExecutionFilterProto.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ResolvedExecutionFilterProto.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ResolvedExecutionFilterProto clone() => ResolvedExecutionFilterProto()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ResolvedExecutionFilterProto copyWith(void Function(ResolvedExecutionFilterProto) updates) =>
+      super.copyWith((message) => updates(message as ResolvedExecutionFilterProto))
+          as ResolvedExecutionFilterProto; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ResolvedExecutionFilterProto create() => ResolvedExecutionFilterProto._();
+  ResolvedExecutionFilterProto createEmptyInstance() => create();
+  static $pb.PbList<ResolvedExecutionFilterProto> createRepeated() => $pb.PbList<ResolvedExecutionFilterProto>();
+  @$core.pragma('dart2js:noInline')
+  static ResolvedExecutionFilterProto getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResolvedExecutionFilterProto>(create);
+  static ResolvedExecutionFilterProto? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.String> get allowExecuteTestNames => $_getList(0);
 }
 
 class Empty extends $pb.GeneratedMessage {
