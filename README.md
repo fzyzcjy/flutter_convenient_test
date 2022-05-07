@@ -5,7 +5,7 @@
 [![Post-release](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/post_release.yaml/badge.svg)](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/post_release.yaml)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/45204254806b4790a2d6403b81156e42)](https://app.codacy.com/gh/fzyzcjy/flutter_convenient_test?utm_source=github.com&utm_medium=referral&utm_content=fzyzcjy/flutter_convenient_test&utm_campaign=Badge_Grade_Settings)
 
-# Quick demo
+## Quick demo
 
 <!--README_VIDEO_REPLACEMENT_PLACEHOLDER_ONE-->
 
@@ -13,7 +13,11 @@
 
 https://user-images.githubusercontent.com/5236035/167066810-d0aa36ba-0113-4140-92f9-cec0a9e77ed1.mov
 
-# Features
+## Have questions?
+
+Though used in production environment in my own 200kloc Flutter app, this package (especially the doc) is still not yet perfect. Just [create an issue](https://github.com/fzyzcjy/flutter_convenient_test/issues) and I usually reply quite quickly.
+
+## Features
 
 ### Action history
 
@@ -103,14 +107,14 @@ Tap "Run" icon button after each test or group to re-run *only* that test/group,
 
 Tap "Raw Logs" in the right panel to see raw outputs of a test.
 
-# Tutorial: Run examples
+## Tutorial: Run examples
 
 1. Clone this repository and enter the `packages/convenient_test/example` folder.
 2. Run the example app (e.g. using iOS simulator) via `flutter run /path/to/flutter_convenient_test/packages/convenient_test/example/integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes`. Can also be run via VSCode or Android Studio with similar commands.
 3. Run the GUI located in `packages/convenient_test_manager`. It is nothing but a normal Flutter Windows/MacOS/Linux app, so run it follow Flutter official doc. May run in `profile` mode to speed up.
 4. Enjoy the GUI!
 
-# Getting started
+## Getting started
 
 1. In `pubspec.yaml`, add `convenient_test: ^1.0.0` to the `dependencies` section, and `convenient_test_dev: ^1.0.0` to the `dev_dependencies` section. As normal, we need to `flutter pub get`.
 2. Create `integration_test/main_test.dart` file in your app. Fill it like `void main() => convenientTestMain(MyConvenientTestSlot(), () { ... the normal test code you write });`. See [the example package](https://github.com/fzyzcjy/flutter_convenient_test/blob/master/packages/convenient_test/example/integration_test/main_test.dart) for demonstration.
