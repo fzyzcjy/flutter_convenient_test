@@ -115,6 +115,7 @@ message WorkerModeInteractiveApp {}
 
 message WorkerModeIntegrationTest {
   string filter_name_regex = 1;
+  bool report_suite_info = 2;
 }
 
 // https://stackoverflow.com/questions/31768665/can-i-define-a-grpc-call-with-a-null-request-or-response

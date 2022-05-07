@@ -16,7 +16,7 @@ class MiscDartService {
   Future<void> hotRestartAndRunTests({required String filterNameRegex}) async {
     Log.d(_kTag, 'hotRestartAndRunTests filterNameRegex=$filterNameRegex');
     GetIt.I.get<WorkerModeStore>().activeWorkerMode =
-        WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: filterNameRegex));
+        WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: filterNameRegex, reportSuiteInfo: TODO));
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 
@@ -27,8 +27,8 @@ class MiscDartService {
   }
 
   Future<void> reloadInfo() async {
-    GetIt.I.get<WorkerModeStore>().activeWorkerMode =
-        WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: kRegexMatchNothing));
+    GetIt.I.get<WorkerModeStore>().activeWorkerMode = WorkerMode(
+        integrationTest: WorkerModeIntegrationTest(filterNameRegex: kRegexMatchNothing, reportSuiteInfo: TODO));
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 

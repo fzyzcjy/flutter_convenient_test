@@ -263,12 +263,13 @@ const WorkerModeIntegrationTest$json = const {
   '1': 'WorkerModeIntegrationTest',
   '2': const [
     const {'1': 'filter_name_regex', '3': 1, '4': 1, '5': 9, '10': 'filterNameRegex'},
+    const {'1': 'report_suite_info', '3': 2, '4': 1, '5': 8, '10': 'reportSuiteInfo'},
   ],
 };
 
 /// Descriptor for `WorkerModeIntegrationTest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List workerModeIntegrationTestDescriptor = $convert
-    .base64Decode('ChlXb3JrZXJNb2RlSW50ZWdyYXRpb25UZXN0EioKEWZpbHRlcl9uYW1lX3JlZ2V4GAEgASgJUg9maWx0ZXJOYW1lUmVnZXg=');
+final $typed_data.Uint8List workerModeIntegrationTestDescriptor = $convert.base64Decode(
+    'ChlXb3JrZXJNb2RlSW50ZWdyYXRpb25UZXN0EioKEWZpbHRlcl9uYW1lX3JlZ2V4GAEgASgJUg9maWx0ZXJOYW1lUmVnZXgSKgoRcmVwb3J0X3N1aXRlX2luZm8YAiABKAhSD3JlcG9ydFN1aXRlSW5mbw==');
 @$core.Deprecated('Use emptyDescriptor instead')
 const Empty$json = const {
   '1': 'Empty',

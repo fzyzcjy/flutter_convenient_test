@@ -1,4 +1,10 @@
 ///
+//  Generated code. Do not modify.
+//  source: convenient_test.proto
+//
+// @dart = 2.12
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+
 import 'dart:core' as $core;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
@@ -18,7 +24,6 @@ class ReportCollection extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   ReportCollection._() : super();
-
   factory ReportCollection({
     $core.Iterable<ReportItem>? items,
   }) {
@@ -28,19 +33,15 @@ class ReportCollection extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory ReportCollection.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory ReportCollection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   ReportCollection clone() => ReportCollection()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
@@ -48,14 +49,10 @@ class ReportCollection extends $pb.GeneratedMessage {
       super.copyWith((message) => updates(message as ReportCollection))
           as ReportCollection; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ReportCollection create() => ReportCollection._();
-
   ReportCollection createEmptyInstance() => create();
-
   static $pb.PbList<ReportCollection> createRepeated() => $pb.PbList<ReportCollection>();
-
   @$core.pragma('dart2js:noInline')
   static ReportCollection getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReportCollection>(create);
@@ -112,7 +109,6 @@ class ReportItem extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   ReportItem._() : super();
-
   factory ReportItem({
     SuiteInfoProto? suiteInfoProto,
     LogEntry? logEntry,
@@ -146,43 +142,33 @@ class ReportItem extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory ReportItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory ReportItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   ReportItem clone() => ReportItem()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ReportItem copyWith(void Function(ReportItem) updates) =>
       super.copyWith((message) => updates(message as ReportItem)) as ReportItem; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ReportItem create() => ReportItem._();
-
   ReportItem createEmptyInstance() => create();
-
   static $pb.PbList<ReportItem> createRepeated() => $pb.PbList<ReportItem>();
-
   @$core.pragma('dart2js:noInline')
   static ReportItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReportItem>(create);
   static ReportItem? _defaultInstance;
 
   ReportItem_SubType whichSubType() => _ReportItem_SubTypeByTag[$_whichOneof(0)]!;
-
   void clearSubType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   SuiteInfoProto get suiteInfoProto => $_getN(0);
-
   @$pb.TagNumber(1)
   set suiteInfoProto(SuiteInfoProto v) {
     setField(1, v);
@@ -190,16 +176,13 @@ class ReportItem extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.bool hasSuiteInfoProto() => $_has(0);
-
   @$pb.TagNumber(1)
   void clearSuiteInfoProto() => clearField(1);
-
   @$pb.TagNumber(1)
   SuiteInfoProto ensureSuiteInfoProto() => $_ensure(0);
 
   @$pb.TagNumber(2)
   LogEntry get logEntry => $_getN(1);
-
   @$pb.TagNumber(2)
   set logEntry(LogEntry v) {
     setField(2, v);
@@ -207,16 +190,13 @@ class ReportItem extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.bool hasLogEntry() => $_has(1);
-
   @$pb.TagNumber(2)
   void clearLogEntry() => clearField(2);
-
   @$pb.TagNumber(2)
   LogEntry ensureLogEntry() => $_ensure(1);
 
   @$pb.TagNumber(3)
   RunnerStateChange get runnerStateChange => $_getN(2);
-
   @$pb.TagNumber(3)
   set runnerStateChange(RunnerStateChange v) {
     setField(3, v);
@@ -224,16 +204,13 @@ class ReportItem extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(3)
   $core.bool hasRunnerStateChange() => $_has(2);
-
   @$pb.TagNumber(3)
   void clearRunnerStateChange() => clearField(3);
-
   @$pb.TagNumber(3)
   RunnerStateChange ensureRunnerStateChange() => $_ensure(2);
 
   @$pb.TagNumber(4)
   RunnerError get runnerError => $_getN(3);
-
   @$pb.TagNumber(4)
   set runnerError(RunnerError v) {
     setField(4, v);
@@ -241,16 +218,13 @@ class ReportItem extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(4)
   $core.bool hasRunnerError() => $_has(3);
-
   @$pb.TagNumber(4)
   void clearRunnerError() => clearField(4);
-
   @$pb.TagNumber(4)
   RunnerError ensureRunnerError() => $_ensure(3);
 
   @$pb.TagNumber(5)
   RunnerMessage get runnerMessage => $_getN(4);
-
   @$pb.TagNumber(5)
   set runnerMessage(RunnerMessage v) {
     setField(5, v);
@@ -258,16 +232,13 @@ class ReportItem extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(5)
   $core.bool hasRunnerMessage() => $_has(4);
-
   @$pb.TagNumber(5)
   void clearRunnerMessage() => clearField(5);
-
   @$pb.TagNumber(5)
   RunnerMessage ensureRunnerMessage() => $_ensure(4);
 
   @$pb.TagNumber(6)
   Snapshot get snapshot => $_getN(5);
-
   @$pb.TagNumber(6)
   set snapshot(Snapshot v) {
     setField(6, v);
@@ -275,16 +246,13 @@ class ReportItem extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(6)
   $core.bool hasSnapshot() => $_has(5);
-
   @$pb.TagNumber(6)
   void clearSnapshot() => clearField(6);
-
   @$pb.TagNumber(6)
   Snapshot ensureSnapshot() => $_ensure(5);
 
   @$pb.TagNumber(7)
   OverallExecution get overallExecution => $_getN(6);
-
   @$pb.TagNumber(7)
   set overallExecution(OverallExecution v) {
     setField(7, v);
@@ -292,7 +260,6 @@ class ReportItem extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(7)
   $core.bool hasOverallExecution() => $_has(6);
-
   @$pb.TagNumber(7)
   void clearOverallExecution() => clearField(7);
 }
@@ -309,7 +276,6 @@ class LogEntry extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   LogEntry._() : super();
-
   factory LogEntry({
     $core.int? id,
     $core.Iterable<$core.String>? entryLocators,
@@ -327,39 +293,30 @@ class LogEntry extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory LogEntry.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory LogEntry.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   LogEntry clone() => LogEntry()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   LogEntry copyWith(void Function(LogEntry) updates) =>
       super.copyWith((message) => updates(message as LogEntry)) as LogEntry; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static LogEntry create() => LogEntry._();
-
   LogEntry createEmptyInstance() => create();
-
   static $pb.PbList<LogEntry> createRepeated() => $pb.PbList<LogEntry>();
-
   @$core.pragma('dart2js:noInline')
   static LogEntry getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogEntry>(create);
   static LogEntry? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get id => $_getIZ(0);
-
   @$pb.TagNumber(1)
   set id($core.int v) {
     $_setSignedInt32(0, v);
@@ -367,7 +324,6 @@ class LogEntry extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.bool hasId() => $_has(0);
-
   @$pb.TagNumber(1)
   void clearId() => clearField(1);
 
@@ -394,7 +350,6 @@ class LogSubEntry extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   LogSubEntry._() : super();
-
   factory LogSubEntry({
     $core.int? id,
     $fixnum.Int64? time,
@@ -428,39 +383,30 @@ class LogSubEntry extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory LogSubEntry.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory LogSubEntry.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   LogSubEntry clone() => LogSubEntry()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   LogSubEntry copyWith(void Function(LogSubEntry) updates) =>
       super.copyWith((message) => updates(message as LogSubEntry)) as LogSubEntry; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static LogSubEntry create() => LogSubEntry._();
-
   LogSubEntry createEmptyInstance() => create();
-
   static $pb.PbList<LogSubEntry> createRepeated() => $pb.PbList<LogSubEntry>();
-
   @$core.pragma('dart2js:noInline')
   static LogSubEntry getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogSubEntry>(create);
   static LogSubEntry? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get id => $_getIZ(0);
-
   @$pb.TagNumber(1)
   set id($core.int v) {
     $_setSignedInt32(0, v);
@@ -468,13 +414,11 @@ class LogSubEntry extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.bool hasId() => $_has(0);
-
   @$pb.TagNumber(1)
   void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
   $fixnum.Int64 get time => $_getI64(1);
-
   @$pb.TagNumber(2)
   set time($fixnum.Int64 v) {
     $_setInt64(1, v);
@@ -482,13 +426,11 @@ class LogSubEntry extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.bool hasTime() => $_has(1);
-
   @$pb.TagNumber(2)
   void clearTime() => clearField(2);
 
   @$pb.TagNumber(3)
   LogSubEntryType get type => $_getN(2);
-
   @$pb.TagNumber(3)
   set type(LogSubEntryType v) {
     setField(3, v);
@@ -496,13 +438,11 @@ class LogSubEntry extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(3)
   $core.bool hasType() => $_has(2);
-
   @$pb.TagNumber(3)
   void clearType() => clearField(3);
 
   @$pb.TagNumber(4)
   $core.String get title => $_getSZ(3);
-
   @$pb.TagNumber(4)
   set title($core.String v) {
     $_setString(3, v);
@@ -510,13 +450,11 @@ class LogSubEntry extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(4)
   $core.bool hasTitle() => $_has(3);
-
   @$pb.TagNumber(4)
   void clearTitle() => clearField(4);
 
   @$pb.TagNumber(5)
   $core.String get message => $_getSZ(4);
-
   @$pb.TagNumber(5)
   set message($core.String v) {
     $_setString(4, v);
@@ -524,13 +462,11 @@ class LogSubEntry extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(5)
   $core.bool hasMessage() => $_has(4);
-
   @$pb.TagNumber(5)
   void clearMessage() => clearField(5);
 
   @$pb.TagNumber(6)
   $core.String get error => $_getSZ(5);
-
   @$pb.TagNumber(6)
   set error($core.String v) {
     $_setString(5, v);
@@ -538,13 +474,11 @@ class LogSubEntry extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(6)
   $core.bool hasError() => $_has(5);
-
   @$pb.TagNumber(6)
   void clearError() => clearField(6);
 
   @$pb.TagNumber(7)
   $core.String get stackTrace => $_getSZ(6);
-
   @$pb.TagNumber(7)
   set stackTrace($core.String v) {
     $_setString(6, v);
@@ -552,7 +486,6 @@ class LogSubEntry extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(7)
   $core.bool hasStackTrace() => $_has(6);
-
   @$pb.TagNumber(7)
   void clearStackTrace() => clearField(7);
 }
@@ -572,7 +505,6 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   SuiteInfoProto._() : super();
-
   factory SuiteInfoProto({
     $core.int? groupId,
     $core.Iterable<GroupInfoProto>? groups,
@@ -590,18 +522,14 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory SuiteInfoProto.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory SuiteInfoProto.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   SuiteInfoProto clone() => SuiteInfoProto()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
@@ -609,21 +537,16 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
       super.copyWith((message) => updates(message as SuiteInfoProto))
           as SuiteInfoProto; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SuiteInfoProto create() => SuiteInfoProto._();
-
   SuiteInfoProto createEmptyInstance() => create();
-
   static $pb.PbList<SuiteInfoProto> createRepeated() => $pb.PbList<SuiteInfoProto>();
-
   @$core.pragma('dart2js:noInline')
   static SuiteInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SuiteInfoProto>(create);
   static SuiteInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get groupId => $_getIZ(0);
-
   @$pb.TagNumber(1)
   set groupId($core.int v) {
     $_setSignedInt32(0, v);
@@ -631,7 +554,6 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.bool hasGroupId() => $_has(0);
-
   @$pb.TagNumber(1)
   void clearGroupId() => clearField(1);
 
@@ -655,7 +577,6 @@ class GroupInfoProto extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   GroupInfoProto._() : super();
-
   factory GroupInfoProto({
     $core.int? id,
     $core.String? name,
@@ -677,18 +598,14 @@ class GroupInfoProto extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory GroupInfoProto.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory GroupInfoProto.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   GroupInfoProto clone() => GroupInfoProto()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
@@ -696,21 +613,16 @@ class GroupInfoProto extends $pb.GeneratedMessage {
       super.copyWith((message) => updates(message as GroupInfoProto))
           as GroupInfoProto; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static GroupInfoProto create() => GroupInfoProto._();
-
   GroupInfoProto createEmptyInstance() => create();
-
   static $pb.PbList<GroupInfoProto> createRepeated() => $pb.PbList<GroupInfoProto>();
-
   @$core.pragma('dart2js:noInline')
   static GroupInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupInfoProto>(create);
   static GroupInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get id => $_getIZ(0);
-
   @$pb.TagNumber(1)
   set id($core.int v) {
     $_setSignedInt32(0, v);
@@ -718,13 +630,11 @@ class GroupInfoProto extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.bool hasId() => $_has(0);
-
   @$pb.TagNumber(1)
   void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get name => $_getSZ(1);
-
   @$pb.TagNumber(2)
   set name($core.String v) {
     $_setString(1, v);
@@ -732,13 +642,11 @@ class GroupInfoProto extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.bool hasName() => $_has(1);
-
   @$pb.TagNumber(2)
   void clearName() => clearField(2);
 
   @$pb.TagNumber(3)
   $core.int get parentId => $_getIZ(2);
-
   @$pb.TagNumber(3)
   set parentId($core.int v) {
     $_setSignedInt32(2, v);
@@ -746,7 +654,6 @@ class GroupInfoProto extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(3)
   $core.bool hasParentId() => $_has(2);
-
   @$pb.TagNumber(3)
   void clearParentId() => clearField(3);
 
@@ -765,7 +672,6 @@ class TestInfoProto extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   TestInfoProto._() : super();
-
   factory TestInfoProto({
     $core.int? id,
     $core.String? name,
@@ -783,39 +689,30 @@ class TestInfoProto extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory TestInfoProto.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory TestInfoProto.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   TestInfoProto clone() => TestInfoProto()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   TestInfoProto copyWith(void Function(TestInfoProto) updates) =>
       super.copyWith((message) => updates(message as TestInfoProto)) as TestInfoProto; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static TestInfoProto create() => TestInfoProto._();
-
   TestInfoProto createEmptyInstance() => create();
-
   static $pb.PbList<TestInfoProto> createRepeated() => $pb.PbList<TestInfoProto>();
-
   @$core.pragma('dart2js:noInline')
   static TestInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestInfoProto>(create);
   static TestInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get id => $_getIZ(0);
-
   @$pb.TagNumber(1)
   set id($core.int v) {
     $_setSignedInt32(0, v);
@@ -823,13 +720,11 @@ class TestInfoProto extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.bool hasId() => $_has(0);
-
   @$pb.TagNumber(1)
   void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get name => $_getSZ(1);
-
   @$pb.TagNumber(2)
   set name($core.String v) {
     $_setString(1, v);
@@ -837,13 +732,11 @@ class TestInfoProto extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.bool hasName() => $_has(1);
-
   @$pb.TagNumber(2)
   void clearName() => clearField(2);
 
   @$pb.TagNumber(3)
   $core.int get parentId => $_getIZ(2);
-
   @$pb.TagNumber(3)
   set parentId($core.int v) {
     $_setSignedInt32(2, v);
@@ -851,7 +744,6 @@ class TestInfoProto extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(3)
   $core.bool hasParentId() => $_has(2);
-
   @$pb.TagNumber(3)
   void clearParentId() => clearField(3);
 }
@@ -866,7 +758,6 @@ class RunnerStateChange extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   RunnerStateChange._() : super();
-
   factory RunnerStateChange({
     $core.Iterable<$core.String>? entryLocators,
     TestEntryState? state,
@@ -880,19 +771,15 @@ class RunnerStateChange extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory RunnerStateChange.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory RunnerStateChange.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   RunnerStateChange clone() => RunnerStateChange()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
@@ -900,14 +787,10 @@ class RunnerStateChange extends $pb.GeneratedMessage {
       super.copyWith((message) => updates(message as RunnerStateChange))
           as RunnerStateChange; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static RunnerStateChange create() => RunnerStateChange._();
-
   RunnerStateChange createEmptyInstance() => create();
-
   static $pb.PbList<RunnerStateChange> createRepeated() => $pb.PbList<RunnerStateChange>();
-
   @$core.pragma('dart2js:noInline')
   static RunnerStateChange getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RunnerStateChange>(create);
@@ -918,7 +801,6 @@ class RunnerStateChange extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   TestEntryState get state => $_getN(1);
-
   @$pb.TagNumber(2)
   set state(TestEntryState v) {
     setField(2, v);
@@ -926,10 +808,8 @@ class RunnerStateChange extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.bool hasState() => $_has(1);
-
   @$pb.TagNumber(2)
   void clearState() => clearField(2);
-
   @$pb.TagNumber(2)
   TestEntryState ensureState() => $_ensure(1);
 }
@@ -943,7 +823,6 @@ class TestEntryState extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   TestEntryState._() : super();
-
   factory TestEntryState({
     $core.String? status,
     $core.String? result,
@@ -957,18 +836,14 @@ class TestEntryState extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory TestEntryState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory TestEntryState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   TestEntryState clone() => TestEntryState()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
@@ -976,21 +851,16 @@ class TestEntryState extends $pb.GeneratedMessage {
       super.copyWith((message) => updates(message as TestEntryState))
           as TestEntryState; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static TestEntryState create() => TestEntryState._();
-
   TestEntryState createEmptyInstance() => create();
-
   static $pb.PbList<TestEntryState> createRepeated() => $pb.PbList<TestEntryState>();
-
   @$core.pragma('dart2js:noInline')
   static TestEntryState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestEntryState>(create);
   static TestEntryState? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get status => $_getSZ(0);
-
   @$pb.TagNumber(1)
   set status($core.String v) {
     $_setString(0, v);
@@ -998,13 +868,11 @@ class TestEntryState extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.bool hasStatus() => $_has(0);
-
   @$pb.TagNumber(1)
   void clearStatus() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get result => $_getSZ(1);
-
   @$pb.TagNumber(2)
   set result($core.String v) {
     $_setString(1, v);
@@ -1012,7 +880,6 @@ class TestEntryState extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.bool hasResult() => $_has(1);
-
   @$pb.TagNumber(2)
   void clearResult() => clearField(2);
 }
@@ -1027,7 +894,6 @@ class RunnerError extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   RunnerError._() : super();
-
   factory RunnerError({
     $core.Iterable<$core.String>? entryLocators,
     $core.String? error,
@@ -1045,32 +911,24 @@ class RunnerError extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory RunnerError.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory RunnerError.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   RunnerError clone() => RunnerError()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   RunnerError copyWith(void Function(RunnerError) updates) =>
       super.copyWith((message) => updates(message as RunnerError)) as RunnerError; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static RunnerError create() => RunnerError._();
-
   RunnerError createEmptyInstance() => create();
-
   static $pb.PbList<RunnerError> createRepeated() => $pb.PbList<RunnerError>();
-
   @$core.pragma('dart2js:noInline')
   static RunnerError getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RunnerError>(create);
   static RunnerError? _defaultInstance;
@@ -1080,7 +938,6 @@ class RunnerError extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.String get error => $_getSZ(1);
-
   @$pb.TagNumber(2)
   set error($core.String v) {
     $_setString(1, v);
@@ -1088,13 +945,11 @@ class RunnerError extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.bool hasError() => $_has(1);
-
   @$pb.TagNumber(2)
   void clearError() => clearField(2);
 
   @$pb.TagNumber(3)
   $core.String get stackTrace => $_getSZ(2);
-
   @$pb.TagNumber(3)
   set stackTrace($core.String v) {
     $_setString(2, v);
@@ -1102,7 +957,6 @@ class RunnerError extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(3)
   $core.bool hasStackTrace() => $_has(2);
-
   @$pb.TagNumber(3)
   void clearStackTrace() => clearField(3);
 }
@@ -1116,7 +970,6 @@ class RunnerMessage extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   RunnerMessage._() : super();
-
   factory RunnerMessage({
     $core.Iterable<$core.String>? entryLocators,
     $core.String? message,
@@ -1130,32 +983,24 @@ class RunnerMessage extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory RunnerMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory RunnerMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   RunnerMessage clone() => RunnerMessage()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   RunnerMessage copyWith(void Function(RunnerMessage) updates) =>
       super.copyWith((message) => updates(message as RunnerMessage)) as RunnerMessage; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static RunnerMessage create() => RunnerMessage._();
-
   RunnerMessage createEmptyInstance() => create();
-
   static $pb.PbList<RunnerMessage> createRepeated() => $pb.PbList<RunnerMessage>();
-
   @$core.pragma('dart2js:noInline')
   static RunnerMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RunnerMessage>(create);
   static RunnerMessage? _defaultInstance;
@@ -1165,7 +1010,6 @@ class RunnerMessage extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.String get message => $_getSZ(1);
-
   @$pb.TagNumber(2)
   set message($core.String v) {
     $_setString(1, v);
@@ -1173,7 +1017,6 @@ class RunnerMessage extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.bool hasMessage() => $_has(1);
-
   @$pb.TagNumber(2)
   void clearMessage() => clearField(2);
 }
@@ -1190,7 +1033,6 @@ class Snapshot extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   Snapshot._() : super();
-
   factory Snapshot({
     $core.int? logEntryId,
     $core.String? name,
@@ -1208,39 +1050,30 @@ class Snapshot extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory Snapshot.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory Snapshot.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   Snapshot clone() => Snapshot()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Snapshot copyWith(void Function(Snapshot) updates) =>
       super.copyWith((message) => updates(message as Snapshot)) as Snapshot; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Snapshot create() => Snapshot._();
-
   Snapshot createEmptyInstance() => create();
-
   static $pb.PbList<Snapshot> createRepeated() => $pb.PbList<Snapshot>();
-
   @$core.pragma('dart2js:noInline')
   static Snapshot getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Snapshot>(create);
   static Snapshot? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get logEntryId => $_getIZ(0);
-
   @$pb.TagNumber(1)
   set logEntryId($core.int v) {
     $_setSignedInt32(0, v);
@@ -1248,13 +1081,11 @@ class Snapshot extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.bool hasLogEntryId() => $_has(0);
-
   @$pb.TagNumber(1)
   void clearLogEntryId() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get name => $_getSZ(1);
-
   @$pb.TagNumber(2)
   set name($core.String v) {
     $_setString(1, v);
@@ -1262,13 +1093,11 @@ class Snapshot extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.bool hasName() => $_has(1);
-
   @$pb.TagNumber(2)
   void clearName() => clearField(2);
 
   @$pb.TagNumber(3)
   $core.List<$core.int> get image => $_getN(2);
-
   @$pb.TagNumber(3)
   set image($core.List<$core.int> v) {
     $_setBytes(2, v);
@@ -1276,7 +1105,6 @@ class Snapshot extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(3)
   $core.bool hasImage() => $_has(2);
-
   @$pb.TagNumber(3)
   void clearImage() => clearField(3);
 }
@@ -1302,7 +1130,6 @@ class WorkerMode extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   WorkerMode._() : super();
-
   factory WorkerMode({
     WorkerModeInteractiveApp? interactiveApp,
     WorkerModeIntegrationTest? integrationTest,
@@ -1316,43 +1143,33 @@ class WorkerMode extends $pb.GeneratedMessage {
     }
     return _result;
   }
-
   factory WorkerMode.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory WorkerMode.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   WorkerMode clone() => WorkerMode()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   WorkerMode copyWith(void Function(WorkerMode) updates) =>
       super.copyWith((message) => updates(message as WorkerMode)) as WorkerMode; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static WorkerMode create() => WorkerMode._();
-
   WorkerMode createEmptyInstance() => create();
-
   static $pb.PbList<WorkerMode> createRepeated() => $pb.PbList<WorkerMode>();
-
   @$core.pragma('dart2js:noInline')
   static WorkerMode getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerMode>(create);
   static WorkerMode? _defaultInstance;
 
   WorkerMode_SubType whichSubType() => _WorkerMode_SubTypeByTag[$_whichOneof(0)]!;
-
   void clearSubType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   WorkerModeInteractiveApp get interactiveApp => $_getN(0);
-
   @$pb.TagNumber(1)
   set interactiveApp(WorkerModeInteractiveApp v) {
     setField(1, v);
@@ -1360,16 +1177,13 @@ class WorkerMode extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.bool hasInteractiveApp() => $_has(0);
-
   @$pb.TagNumber(1)
   void clearInteractiveApp() => clearField(1);
-
   @$pb.TagNumber(1)
   WorkerModeInteractiveApp ensureInteractiveApp() => $_ensure(0);
 
   @$pb.TagNumber(2)
   WorkerModeIntegrationTest get integrationTest => $_getN(1);
-
   @$pb.TagNumber(2)
   set integrationTest(WorkerModeIntegrationTest v) {
     setField(2, v);
@@ -1377,10 +1191,8 @@ class WorkerMode extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.bool hasIntegrationTest() => $_has(1);
-
   @$pb.TagNumber(2)
   void clearIntegrationTest() => clearField(2);
-
   @$pb.TagNumber(2)
   WorkerModeIntegrationTest ensureIntegrationTest() => $_ensure(1);
 }
@@ -1392,21 +1204,16 @@ class WorkerModeInteractiveApp extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   WorkerModeInteractiveApp._() : super();
-
   factory WorkerModeInteractiveApp() => create();
-
   factory WorkerModeInteractiveApp.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory WorkerModeInteractiveApp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   WorkerModeInteractiveApp clone() => WorkerModeInteractiveApp()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
@@ -1414,14 +1221,10 @@ class WorkerModeInteractiveApp extends $pb.GeneratedMessage {
       super.copyWith((message) => updates(message as WorkerModeInteractiveApp))
           as WorkerModeInteractiveApp; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static WorkerModeInteractiveApp create() => WorkerModeInteractiveApp._();
-
   WorkerModeInteractiveApp createEmptyInstance() => create();
-
   static $pb.PbList<WorkerModeInteractiveApp> createRepeated() => $pb.PbList<WorkerModeInteractiveApp>();
-
   @$core.pragma('dart2js:noInline')
   static WorkerModeInteractiveApp getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerModeInteractiveApp>(create);
@@ -1433,32 +1236,32 @@ class WorkerModeIntegrationTest extends $pb.GeneratedMessage {
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WorkerModeIntegrationTest',
       createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filterNameRegex')
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'reportSuiteInfo')
     ..hasRequiredFields = false;
 
   WorkerModeIntegrationTest._() : super();
-
   factory WorkerModeIntegrationTest({
     $core.String? filterNameRegex,
+    $core.bool? reportSuiteInfo,
   }) {
     final _result = create();
     if (filterNameRegex != null) {
       _result.filterNameRegex = filterNameRegex;
     }
+    if (reportSuiteInfo != null) {
+      _result.reportSuiteInfo = reportSuiteInfo;
+    }
     return _result;
   }
-
   factory WorkerModeIntegrationTest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory WorkerModeIntegrationTest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   WorkerModeIntegrationTest clone() => WorkerModeIntegrationTest()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
@@ -1466,14 +1269,10 @@ class WorkerModeIntegrationTest extends $pb.GeneratedMessage {
       super.copyWith((message) => updates(message as WorkerModeIntegrationTest))
           as WorkerModeIntegrationTest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static WorkerModeIntegrationTest create() => WorkerModeIntegrationTest._();
-
   WorkerModeIntegrationTest createEmptyInstance() => create();
-
   static $pb.PbList<WorkerModeIntegrationTest> createRepeated() => $pb.PbList<WorkerModeIntegrationTest>();
-
   @$core.pragma('dart2js:noInline')
   static WorkerModeIntegrationTest getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerModeIntegrationTest>(create);
@@ -1481,7 +1280,6 @@ class WorkerModeIntegrationTest extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.String get filterNameRegex => $_getSZ(0);
-
   @$pb.TagNumber(1)
   set filterNameRegex($core.String v) {
     $_setString(0, v);
@@ -1489,9 +1287,20 @@ class WorkerModeIntegrationTest extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.bool hasFilterNameRegex() => $_has(0);
-
   @$pb.TagNumber(1)
   void clearFilterNameRegex() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get reportSuiteInfo => $_getBF(1);
+  @$pb.TagNumber(2)
+  set reportSuiteInfo($core.bool v) {
+    $_setBool(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasReportSuiteInfo() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearReportSuiteInfo() => clearField(2);
 }
 
 class Empty extends $pb.GeneratedMessage {
@@ -1501,34 +1310,25 @@ class Empty extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   Empty._() : super();
-
   factory Empty() => create();
-
   factory Empty.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-
   factory Empty.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   Empty clone() => Empty()..mergeFromMessage(this);
-
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Empty copyWith(void Function(Empty) updates) =>
       super.copyWith((message) => updates(message as Empty)) as Empty; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Empty create() => Empty._();
-
   Empty createEmptyInstance() => create();
-
   static $pb.PbList<Empty> createRepeated() => $pb.PbList<Empty>();
-
   @$core.pragma('dart2js:noInline')
   static Empty getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Empty>(create);
   static Empty? _defaultInstance;

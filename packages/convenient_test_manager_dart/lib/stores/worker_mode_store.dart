@@ -4,7 +4,7 @@ import 'package:mobx/mobx.dart';
 part 'worker_mode_store.g.dart';
 
 final _kFallbackWorkerMode =
-    WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: kRegexMatchNothing));
+    WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: kRegexMatchNothing, reportSuiteInfo: TODO));
 
 class WorkerModeStore = _WorkerModeStore with _$WorkerModeStore;
 

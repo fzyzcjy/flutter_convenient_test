@@ -11,15 +11,21 @@ import 'package:test_api/src/backend/group.dart';
 class ConvenientTestExecutor {
   // static const _kTag = 'ConvenientTestExecutor';
 
-  static void execute(Declarer declarer, {required RegExp filterNameRegex}) {
+  static void execute(
+    Declarer declarer, {
+    required RegExp filterNameRegex,
+    required bool reportSuiteInfo,
+  }) {
     runTestsInDeclarer(
       declarer,
-      onGroupBuilt: _reportTestInfoPack,
+      onGroupBuilt: (group) {
+        if (reportSuiteInfo) _reportSuiteInfo(group);
+      },
       shouldSkip: (entry) async => !filterNameRegex.hasMatch(entry.name),
     );
   }
 
-  static void _reportTestInfoPack(Group group) {
+  static void _reportSuiteInfo(Group group) {
     final suiteInfo = SuiteInfoConverter().convert(group);
     myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(suiteInfoProto: suiteInfo));
   }
