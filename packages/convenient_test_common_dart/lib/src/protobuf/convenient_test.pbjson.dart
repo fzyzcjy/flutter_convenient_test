@@ -228,16 +228,16 @@ const Snapshot$json = const {
 /// Descriptor for `Snapshot`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List snapshotDescriptor = $convert.base64Decode(
     'CghTbmFwc2hvdBIgCgxsb2dfZW50cnlfaWQYASABKAVSCmxvZ0VudHJ5SWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIUCgVpbWFnZRgDIAEoDFIFaW1hZ2U=');
-@$core.Deprecated('Use workerModeDescriptor instead')
-const WorkerMode$json = const {
-  '1': 'WorkerMode',
+@$core.Deprecated('Use workerCurrentRunConfigDescriptor instead')
+const WorkerCurrentRunConfig$json = const {
+  '1': 'WorkerCurrentRunConfig',
   '2': const [
     const {
       '1': 'interactive_app',
       '3': 1,
       '4': 1,
       '5': 11,
-      '6': '.WorkerModeInteractiveApp',
+      '6': '.WorkerCurrentRunConfig.InteractiveApp',
       '9': 0,
       '10': 'interactiveApp'
     },
@@ -246,39 +246,34 @@ const WorkerMode$json = const {
       '3': 2,
       '4': 1,
       '5': 11,
-      '6': '.WorkerModeIntegrationTest',
+      '6': '.WorkerCurrentRunConfig.IntegrationTest',
       '9': 0,
       '10': 'integrationTest'
     },
   ],
+  '3': const [WorkerCurrentRunConfig_InteractiveApp$json, WorkerCurrentRunConfig_IntegrationTest$json],
   '8': const [
     const {'1': 'sub_type'},
   ],
 };
 
-/// Descriptor for `WorkerMode`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List workerModeDescriptor = $convert.base64Decode(
-    'CgpXb3JrZXJNb2RlEkQKD2ludGVyYWN0aXZlX2FwcBgBIAEoCzIZLldvcmtlck1vZGVJbnRlcmFjdGl2ZUFwcEgAUg5pbnRlcmFjdGl2ZUFwcBJHChBpbnRlZ3JhdGlvbl90ZXN0GAIgASgLMhouV29ya2VyTW9kZUludGVncmF0aW9uVGVzdEgAUg9pbnRlZ3JhdGlvblRlc3RCCgoIc3ViX3R5cGU=');
-@$core.Deprecated('Use workerModeInteractiveAppDescriptor instead')
-const WorkerModeInteractiveApp$json = const {
-  '1': 'WorkerModeInteractiveApp',
+@$core.Deprecated('Use workerCurrentRunConfigDescriptor instead')
+const WorkerCurrentRunConfig_InteractiveApp$json = const {
+  '1': 'InteractiveApp',
 };
 
-/// Descriptor for `WorkerModeInteractiveApp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List workerModeInteractiveAppDescriptor =
-    $convert.base64Decode('ChhXb3JrZXJNb2RlSW50ZXJhY3RpdmVBcHA=');
-@$core.Deprecated('Use workerModeIntegrationTestDescriptor instead')
-const WorkerModeIntegrationTest$json = const {
-  '1': 'WorkerModeIntegrationTest',
+@$core.Deprecated('Use workerCurrentRunConfigDescriptor instead')
+const WorkerCurrentRunConfig_IntegrationTest$json = const {
+  '1': 'IntegrationTest',
   '2': const [
     const {'1': 'report_suite_info', '3': 1, '4': 1, '5': 8, '10': 'reportSuiteInfo'},
     const {'1': 'execution_filter', '3': 2, '4': 1, '5': 11, '6': '.ExecutionFilter', '10': 'executionFilter'},
   ],
 };
 
-/// Descriptor for `WorkerModeIntegrationTest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List workerModeIntegrationTestDescriptor = $convert.base64Decode(
-    'ChlXb3JrZXJNb2RlSW50ZWdyYXRpb25UZXN0EioKEXJlcG9ydF9zdWl0ZV9pbmZvGAEgASgIUg9yZXBvcnRTdWl0ZUluZm8SOwoQZXhlY3V0aW9uX2ZpbHRlchgCIAEoCzIQLkV4ZWN1dGlvbkZpbHRlclIPZXhlY3V0aW9uRmlsdGVy');
+/// Descriptor for `WorkerCurrentRunConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List workerCurrentRunConfigDescriptor = $convert.base64Decode(
+    'ChZXb3JrZXJDdXJyZW50UnVuQ29uZmlnElEKD2ludGVyYWN0aXZlX2FwcBgBIAEoCzImLldvcmtlckN1cnJlbnRSdW5Db25maWcuSW50ZXJhY3RpdmVBcHBIAFIOaW50ZXJhY3RpdmVBcHASVAoQaW50ZWdyYXRpb25fdGVzdBgCIAEoCzInLldvcmtlckN1cnJlbnRSdW5Db25maWcuSW50ZWdyYXRpb25UZXN0SABSD2ludGVncmF0aW9uVGVzdBoQCg5JbnRlcmFjdGl2ZUFwcBp6Cg9JbnRlZ3JhdGlvblRlc3QSKgoRcmVwb3J0X3N1aXRlX2luZm8YASABKAhSD3JlcG9ydFN1aXRlSW5mbxI7ChBleGVjdXRpb25fZmlsdGVyGAIgASgLMhAuRXhlY3V0aW9uRmlsdGVyUg9leGVjdXRpb25GaWx0ZXJCCgoIc3ViX3R5cGU=');
 @$core.Deprecated('Use executionFilterDescriptor instead')
 const ExecutionFilter$json = const {
   '1': 'ExecutionFilter',

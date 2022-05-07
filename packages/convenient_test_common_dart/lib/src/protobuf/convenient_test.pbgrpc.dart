@@ -18,8 +18,10 @@ class ConvenientTestManagerClient extends $grpc.Client {
       '/ConvenientTestManager/Report',
       ($0.ReportCollection value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
-  static final _$getWorkerMode = $grpc.ClientMethod<$0.Empty, $0.WorkerMode>('/ConvenientTestManager/GetWorkerMode',
-      ($0.Empty value) => value.writeToBuffer(), ($core.List<$core.int> value) => $0.WorkerMode.fromBuffer(value));
+  static final _$getWorkerCurrentRunConfig = $grpc.ClientMethod<$0.Empty, $0.WorkerCurrentRunConfig>(
+      '/ConvenientTestManager/GetWorkerCurrentRunConfig',
+      ($0.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.WorkerCurrentRunConfig.fromBuffer(value));
 
   ConvenientTestManagerClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options, $core.Iterable<$grpc.ClientInterceptor>? interceptors})
@@ -29,8 +31,9 @@ class ConvenientTestManagerClient extends $grpc.Client {
     return $createUnaryCall(_$report, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.WorkerMode> getWorkerMode($0.Empty request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$getWorkerMode, request, options: options);
+  $grpc.ResponseFuture<$0.WorkerCurrentRunConfig> getWorkerCurrentRunConfig($0.Empty request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getWorkerCurrentRunConfig, request, options: options);
   }
 }
 
@@ -45,18 +48,24 @@ abstract class ConvenientTestManagerServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.ReportCollection.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.Empty, $0.WorkerMode>('GetWorkerMode', getWorkerMode_Pre, false, false,
-        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value), ($0.WorkerMode value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Empty, $0.WorkerCurrentRunConfig>(
+        'GetWorkerCurrentRunConfig',
+        getWorkerCurrentRunConfig_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($0.WorkerCurrentRunConfig value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Empty> report_Pre($grpc.ServiceCall call, $async.Future<$0.ReportCollection> request) async {
     return report(call, await request);
   }
 
-  $async.Future<$0.WorkerMode> getWorkerMode_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
-    return getWorkerMode(call, await request);
+  $async.Future<$0.WorkerCurrentRunConfig> getWorkerCurrentRunConfig_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+    return getWorkerCurrentRunConfig(call, await request);
   }
 
   $async.Future<$0.Empty> report($grpc.ServiceCall call, $0.ReportCollection request);
-  $async.Future<$0.WorkerMode> getWorkerMode($grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$0.WorkerCurrentRunConfig> getWorkerCurrentRunConfig($grpc.ServiceCall call, $0.Empty request);
 }

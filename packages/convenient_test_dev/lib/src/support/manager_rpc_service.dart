@@ -22,7 +22,7 @@ abstract class ManagerRpcService {
 
   Future<void> report(ReportCollection request);
 
-  Future<WorkerMode> getWorkerMode();
+  Future<WorkerCurrentRunConfig> getWorkerCurrentRunConfig();
 
   Future<void> reportSingle(ReportItem item) => report(ReportCollection(items: [item]));
 }
@@ -32,7 +32,7 @@ class ManagerRpcServiceRealConnect extends ManagerRpcService {
       createConvenientTestManagerClientStub(host: kConvenientTestManagerHost, port: kConvenientTestManagerPort);
 
   @override
-  Future<WorkerMode> getWorkerMode() => _client.getWorkerMode(Empty());
+  Future<WorkerCurrentRunConfig> getWorkerCurrentRunConfig() => _client.getWorkerCurrentRunConfig(Empty());
 
   @override
   Future<void> report(ReportCollection request) => _client.report(request);
@@ -51,8 +51,8 @@ class ManagerRpcServiceLocalFile extends ManagerRpcService {
   late final Future<String> reportPath = _createReportPath();
 
   @override
-  Future<WorkerMode> getWorkerMode() async {
-    return WorkerMode(
+  Future<WorkerCurrentRunConfig> getWorkerCurrentRunConfig() async {
+    return WorkerCurrentRunConfig(
       integrationTest: WorkerModeIntegrationTest(
         // run all tests
         filterNameRegex: '.*',

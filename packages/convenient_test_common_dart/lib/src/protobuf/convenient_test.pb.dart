@@ -1132,139 +1132,53 @@ class Snapshot extends $pb.GeneratedMessage {
   void clearImage() => clearField(3);
 }
 
-enum WorkerMode_SubType { interactiveApp, integrationTest, notSet }
-
-class WorkerMode extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, WorkerMode_SubType> _WorkerMode_SubTypeByTag = {
-    1: WorkerMode_SubType.interactiveApp,
-    2: WorkerMode_SubType.integrationTest,
-    0: WorkerMode_SubType.notSet
-  };
+class WorkerCurrentRunConfig_InteractiveApp extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WorkerMode',
-      createEmptyInstance: create)
-    ..oo(0, [1, 2])
-    ..aOM<WorkerModeInteractiveApp>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'interactiveApp',
-        subBuilder: WorkerModeInteractiveApp.create)
-    ..aOM<WorkerModeIntegrationTest>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'integrationTest',
-        subBuilder: WorkerModeIntegrationTest.create)
-    ..hasRequiredFields = false;
-
-  WorkerMode._() : super();
-  factory WorkerMode({
-    WorkerModeInteractiveApp? interactiveApp,
-    WorkerModeIntegrationTest? integrationTest,
-  }) {
-    final _result = create();
-    if (interactiveApp != null) {
-      _result.interactiveApp = interactiveApp;
-    }
-    if (integrationTest != null) {
-      _result.integrationTest = integrationTest;
-    }
-    return _result;
-  }
-  factory WorkerMode.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory WorkerMode.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
-  WorkerMode clone() => WorkerMode()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  WorkerMode copyWith(void Function(WorkerMode) updates) =>
-      super.copyWith((message) => updates(message as WorkerMode)) as WorkerMode; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static WorkerMode create() => WorkerMode._();
-  WorkerMode createEmptyInstance() => create();
-  static $pb.PbList<WorkerMode> createRepeated() => $pb.PbList<WorkerMode>();
-  @$core.pragma('dart2js:noInline')
-  static WorkerMode getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerMode>(create);
-  static WorkerMode? _defaultInstance;
-
-  WorkerMode_SubType whichSubType() => _WorkerMode_SubTypeByTag[$_whichOneof(0)]!;
-  void clearSubType() => clearField($_whichOneof(0));
-
-  @$pb.TagNumber(1)
-  WorkerModeInteractiveApp get interactiveApp => $_getN(0);
-  @$pb.TagNumber(1)
-  set interactiveApp(WorkerModeInteractiveApp v) {
-    setField(1, v);
-  }
-
-  @$pb.TagNumber(1)
-  $core.bool hasInteractiveApp() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearInteractiveApp() => clearField(1);
-  @$pb.TagNumber(1)
-  WorkerModeInteractiveApp ensureInteractiveApp() => $_ensure(0);
-
-  @$pb.TagNumber(2)
-  WorkerModeIntegrationTest get integrationTest => $_getN(1);
-  @$pb.TagNumber(2)
-  set integrationTest(WorkerModeIntegrationTest v) {
-    setField(2, v);
-  }
-
-  @$pb.TagNumber(2)
-  $core.bool hasIntegrationTest() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearIntegrationTest() => clearField(2);
-  @$pb.TagNumber(2)
-  WorkerModeIntegrationTest ensureIntegrationTest() => $_ensure(1);
-}
-
-class WorkerModeInteractiveApp extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WorkerModeInteractiveApp',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WorkerCurrentRunConfig.InteractiveApp',
       createEmptyInstance: create)
     ..hasRequiredFields = false;
 
-  WorkerModeInteractiveApp._() : super();
-  factory WorkerModeInteractiveApp() => create();
-  factory WorkerModeInteractiveApp.fromBuffer($core.List<$core.int> i,
+  WorkerCurrentRunConfig_InteractiveApp._() : super();
+  factory WorkerCurrentRunConfig_InteractiveApp() => create();
+  factory WorkerCurrentRunConfig_InteractiveApp.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory WorkerModeInteractiveApp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory WorkerCurrentRunConfig_InteractiveApp.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  WorkerModeInteractiveApp clone() => WorkerModeInteractiveApp()..mergeFromMessage(this);
+  WorkerCurrentRunConfig_InteractiveApp clone() => WorkerCurrentRunConfig_InteractiveApp()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  WorkerModeInteractiveApp copyWith(void Function(WorkerModeInteractiveApp) updates) =>
-      super.copyWith((message) => updates(message as WorkerModeInteractiveApp))
-          as WorkerModeInteractiveApp; // ignore: deprecated_member_use
+  WorkerCurrentRunConfig_InteractiveApp copyWith(void Function(WorkerCurrentRunConfig_InteractiveApp) updates) =>
+      super.copyWith((message) => updates(message as WorkerCurrentRunConfig_InteractiveApp))
+          as WorkerCurrentRunConfig_InteractiveApp; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static WorkerModeInteractiveApp create() => WorkerModeInteractiveApp._();
-  WorkerModeInteractiveApp createEmptyInstance() => create();
-  static $pb.PbList<WorkerModeInteractiveApp> createRepeated() => $pb.PbList<WorkerModeInteractiveApp>();
+  static WorkerCurrentRunConfig_InteractiveApp create() => WorkerCurrentRunConfig_InteractiveApp._();
+  WorkerCurrentRunConfig_InteractiveApp createEmptyInstance() => create();
+  static $pb.PbList<WorkerCurrentRunConfig_InteractiveApp> createRepeated() =>
+      $pb.PbList<WorkerCurrentRunConfig_InteractiveApp>();
   @$core.pragma('dart2js:noInline')
-  static WorkerModeInteractiveApp getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerModeInteractiveApp>(create);
-  static WorkerModeInteractiveApp? _defaultInstance;
+  static WorkerCurrentRunConfig_InteractiveApp getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerCurrentRunConfig_InteractiveApp>(create);
+  static WorkerCurrentRunConfig_InteractiveApp? _defaultInstance;
 }
 
-class WorkerModeIntegrationTest extends $pb.GeneratedMessage {
+class WorkerCurrentRunConfig_IntegrationTest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WorkerModeIntegrationTest',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WorkerCurrentRunConfig.IntegrationTest',
       createEmptyInstance: create)
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'reportSuiteInfo')
     ..aOM<ExecutionFilter>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'executionFilter',
         subBuilder: ExecutionFilter.create)
     ..hasRequiredFields = false;
 
-  WorkerModeIntegrationTest._() : super();
-  factory WorkerModeIntegrationTest({
+  WorkerCurrentRunConfig_IntegrationTest._() : super();
+  factory WorkerCurrentRunConfig_IntegrationTest({
     $core.bool? reportSuiteInfo,
     ExecutionFilter? executionFilter,
   }) {
@@ -1277,30 +1191,32 @@ class WorkerModeIntegrationTest extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory WorkerModeIntegrationTest.fromBuffer($core.List<$core.int> i,
+  factory WorkerCurrentRunConfig_IntegrationTest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory WorkerModeIntegrationTest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory WorkerCurrentRunConfig_IntegrationTest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  WorkerModeIntegrationTest clone() => WorkerModeIntegrationTest()..mergeFromMessage(this);
+  WorkerCurrentRunConfig_IntegrationTest clone() => WorkerCurrentRunConfig_IntegrationTest()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  WorkerModeIntegrationTest copyWith(void Function(WorkerModeIntegrationTest) updates) =>
-      super.copyWith((message) => updates(message as WorkerModeIntegrationTest))
-          as WorkerModeIntegrationTest; // ignore: deprecated_member_use
+  WorkerCurrentRunConfig_IntegrationTest copyWith(void Function(WorkerCurrentRunConfig_IntegrationTest) updates) =>
+      super.copyWith((message) => updates(message as WorkerCurrentRunConfig_IntegrationTest))
+          as WorkerCurrentRunConfig_IntegrationTest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static WorkerModeIntegrationTest create() => WorkerModeIntegrationTest._();
-  WorkerModeIntegrationTest createEmptyInstance() => create();
-  static $pb.PbList<WorkerModeIntegrationTest> createRepeated() => $pb.PbList<WorkerModeIntegrationTest>();
+  static WorkerCurrentRunConfig_IntegrationTest create() => WorkerCurrentRunConfig_IntegrationTest._();
+  WorkerCurrentRunConfig_IntegrationTest createEmptyInstance() => create();
+  static $pb.PbList<WorkerCurrentRunConfig_IntegrationTest> createRepeated() =>
+      $pb.PbList<WorkerCurrentRunConfig_IntegrationTest>();
   @$core.pragma('dart2js:noInline')
-  static WorkerModeIntegrationTest getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerModeIntegrationTest>(create);
-  static WorkerModeIntegrationTest? _defaultInstance;
+  static WorkerCurrentRunConfig_IntegrationTest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerCurrentRunConfig_IntegrationTest>(create);
+  static WorkerCurrentRunConfig_IntegrationTest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.bool get reportSuiteInfo => $_getBF(0);
@@ -1327,6 +1243,97 @@ class WorkerModeIntegrationTest extends $pb.GeneratedMessage {
   void clearExecutionFilter() => clearField(2);
   @$pb.TagNumber(2)
   ExecutionFilter ensureExecutionFilter() => $_ensure(1);
+}
+
+enum WorkerCurrentRunConfig_SubType { interactiveApp, integrationTest, notSet }
+
+class WorkerCurrentRunConfig extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, WorkerCurrentRunConfig_SubType> _WorkerCurrentRunConfig_SubTypeByTag = {
+    1: WorkerCurrentRunConfig_SubType.interactiveApp,
+    2: WorkerCurrentRunConfig_SubType.integrationTest,
+    0: WorkerCurrentRunConfig_SubType.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WorkerCurrentRunConfig',
+      createEmptyInstance: create)
+    ..oo(0, [1, 2])
+    ..aOM<WorkerCurrentRunConfig_InteractiveApp>(
+        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'interactiveApp',
+        subBuilder: WorkerCurrentRunConfig_InteractiveApp.create)
+    ..aOM<WorkerCurrentRunConfig_IntegrationTest>(
+        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'integrationTest',
+        subBuilder: WorkerCurrentRunConfig_IntegrationTest.create)
+    ..hasRequiredFields = false;
+
+  WorkerCurrentRunConfig._() : super();
+  factory WorkerCurrentRunConfig({
+    WorkerCurrentRunConfig_InteractiveApp? interactiveApp,
+    WorkerCurrentRunConfig_IntegrationTest? integrationTest,
+  }) {
+    final _result = create();
+    if (interactiveApp != null) {
+      _result.interactiveApp = interactiveApp;
+    }
+    if (integrationTest != null) {
+      _result.integrationTest = integrationTest;
+    }
+    return _result;
+  }
+  factory WorkerCurrentRunConfig.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory WorkerCurrentRunConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  WorkerCurrentRunConfig clone() => WorkerCurrentRunConfig()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  WorkerCurrentRunConfig copyWith(void Function(WorkerCurrentRunConfig) updates) =>
+      super.copyWith((message) => updates(message as WorkerCurrentRunConfig))
+          as WorkerCurrentRunConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static WorkerCurrentRunConfig create() => WorkerCurrentRunConfig._();
+  WorkerCurrentRunConfig createEmptyInstance() => create();
+  static $pb.PbList<WorkerCurrentRunConfig> createRepeated() => $pb.PbList<WorkerCurrentRunConfig>();
+  @$core.pragma('dart2js:noInline')
+  static WorkerCurrentRunConfig getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerCurrentRunConfig>(create);
+  static WorkerCurrentRunConfig? _defaultInstance;
+
+  WorkerCurrentRunConfig_SubType whichSubType() => _WorkerCurrentRunConfig_SubTypeByTag[$_whichOneof(0)]!;
+  void clearSubType() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  WorkerCurrentRunConfig_InteractiveApp get interactiveApp => $_getN(0);
+  @$pb.TagNumber(1)
+  set interactiveApp(WorkerCurrentRunConfig_InteractiveApp v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasInteractiveApp() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearInteractiveApp() => clearField(1);
+  @$pb.TagNumber(1)
+  WorkerCurrentRunConfig_InteractiveApp ensureInteractiveApp() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  WorkerCurrentRunConfig_IntegrationTest get integrationTest => $_getN(1);
+  @$pb.TagNumber(2)
+  set integrationTest(WorkerCurrentRunConfig_IntegrationTest v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasIntegrationTest() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearIntegrationTest() => clearField(2);
+  @$pb.TagNumber(2)
+  WorkerCurrentRunConfig_IntegrationTest ensureIntegrationTest() => $_ensure(1);
 }
 
 class ExecutionFilter_FirstMatching extends $pb.GeneratedMessage {

@@ -30,14 +30,14 @@ Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback testBody) 
   // MUST do it this early, because we really need the rpc client immediately
   myGetIt.registerSingleton<ManagerRpcService>(ManagerRpcService.create());
 
-  final workerMode = await myGetIt.get<ManagerRpcService>().getWorkerMode();
-  switch (workerMode.whichSubType()) {
-    case WorkerMode_SubType.interactiveApp:
+  final currentRunConfig = await myGetIt.get<ManagerRpcService>().getWorkerCurrentRunConfig();
+  switch (currentRunConfig.whichSubType()) {
+    case WorkerCurrentRunConfig_SubType.interactiveApp:
       return _runModeInteractiveApp();
-    case WorkerMode_SubType.integrationTest:
-      return _runModeIntegrationTest(testBody, workerMode.integrationTest);
-    case WorkerMode_SubType.notSet:
-      throw Exception('Unknown WorkerMode: $workerMode');
+    case WorkerCurrentRunConfig_SubType.integrationTest:
+      return _runModeIntegrationTest(testBody, currentRunConfig.integrationTest);
+    case WorkerCurrentRunConfig_SubType.notSet:
+      throw Exception('Unknown WorkerCurrentRunConfig_SubType: $currentRunConfig');
   }
 }
 
@@ -45,7 +45,10 @@ Future<void> _runModeInteractiveApp() async {
   await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.interactiveApp);
 }
 
-Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegrationTest workerModeIntegrationTest) async {
+Future<void> _runModeIntegrationTest(
+  VoidCallback testBody,
+  WorkerCurrentRunConfig_IntegrationTest currentRunConfig,
+) async {
   runZonedGuarded(() {
     ConvenientTestWrapperWidget.convenientTestActive = true;
 
@@ -76,8 +79,8 @@ Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegratio
 
     ConvenientTestExecutor(
       declarer: declarer,
-      reportSuiteInfo: workerModeIntegrationTest.reportSuiteInfo,
-      executionFilter: workerModeIntegrationTest.executionFilter,
+      reportSuiteInfo: currentRunConfig.reportSuiteInfo,
+      executionFilter: currentRunConfig.executionFilter,
     ).execute();
   }, (e, s) {
     Log.w('ConvenientTestMain',

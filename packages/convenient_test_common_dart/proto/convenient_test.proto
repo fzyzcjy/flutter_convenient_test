@@ -2,7 +2,7 @@ syntax = "proto3";
 
 service ConvenientTestManager {
   rpc Report (ReportCollection) returns (Empty);
-  rpc GetWorkerMode (Empty) returns (WorkerMode);
+  rpc GetWorkerCurrentRunConfig (Empty) returns (WorkerCurrentRunConfig);
 }
 
 message ReportCollection {
@@ -105,18 +105,19 @@ message Snapshot {
   bytes image = 3;
 }
 
-message WorkerMode {
+// The config for `worker` in the current run (current hot-restart)
+message WorkerCurrentRunConfig {
   oneof sub_type {
-    WorkerModeInteractiveApp interactive_app = 1;
-    WorkerModeIntegrationTest integration_test = 2;
+    InteractiveApp interactive_app = 1;
+    IntegrationTest integration_test = 2;
   }
-}
 
-message WorkerModeInteractiveApp {}
+  message InteractiveApp {}
 
-message WorkerModeIntegrationTest {
-  bool report_suite_info = 1;
-  ExecutionFilter execution_filter = 2;
+  message IntegrationTest {
+    bool report_suite_info = 1;
+    ExecutionFilter execution_filter = 2;
+  }
 }
 
 message ExecutionFilter {
