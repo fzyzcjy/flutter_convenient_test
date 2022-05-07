@@ -4,7 +4,7 @@ import 'package:convenient_test_manager/components/home_page/secondary_panel.dar
 import 'package:convenient_test_manager/services/misc_flutter_service.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
-import 'package:convenient_test_manager_dart/stores/worker_task_store.dart';
+import 'package:convenient_test_manager_dart/stores/worker_super_run_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -49,7 +49,7 @@ class _Body extends StatelessWidget {
   Widget _buildBody() {
     final vmServiceWrapperService = GetIt.I.get<VmServiceWrapperService>();
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
-    final workerTaskStore = GetIt.I.get<WorkerTaskStore>();
+    final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
 
     if (!vmServiceWrapperService.connected) {
       return _buildFullscreenHint(
@@ -71,7 +71,7 @@ class _Body extends StatelessWidget {
       );
     }
 
-    if (workerTaskStore.runMode == WorkerRunMode.interactiveApp) {
+    if (workerSuperRunStore.currSuperRunController.isInteractiveApp) {
       return _buildFullscreenHint(
         onTap: () => GetIt.I.get<MiscFlutterService>().reloadInfo(),
         tapHint: const Text('Tap here to end the mode and reload information'),

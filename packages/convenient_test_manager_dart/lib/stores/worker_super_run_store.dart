@@ -29,6 +29,8 @@ abstract class WorkerSuperRunController {
           : _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: filterNameRegex);
 
   WorkerCurrentRunConfig calcCurrentRunConfig();
+
+  bool get isInteractiveApp => this is _WorkerSuperRunControllerInteractiveApp;
 }
 
 class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
