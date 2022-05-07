@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class SuiteInfo {
-  static const _kTag = 'SuiteInfo';
+  // static const _kTag = 'SuiteInfo';
 
   final int rootGroupId;
   final Map<int, GroupEntryInfo> entryMap;
