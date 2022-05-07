@@ -1,22 +1,31 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 
 class IdGenerator {
-  static final instance = IdGenerator._();
+  static final instance = IdGenerator.raw(
+    dataCenterId: 0,
+    workerId: Random().nextInt(1 << _kDefaultConfig.workerIdBits),
+  );
 
   final SnowflakeConfig config;
   final int dataCenterId;
   final int workerId;
+  final int Function() currentTimeSupplier;
+
   int sequence = 0;
   int lastTimestamp = -1;
 
-  IdGenerator._({
-    required this.config,
+  @visibleForTesting
+  IdGenerator.raw({
+    this.config = _kDefaultConfig,
     required this.dataCenterId,
     required this.workerId,
+    this.currentTimeSupplier = _realCurrentTimeSupplier,
   });
 
   int nextId() {
-    var timestamp = _currentTimeSupplier();
+    var timestamp = currentTimeSupplier();
 
     if (timestamp < lastTimestamp) throw Exception('Clock moved backwards.');
 
@@ -39,12 +48,10 @@ class IdGenerator {
     );
   }
 
-  static int _currentTimeSupplier() => DateTime.now().millisecondsSinceEpoch;
-
-  static int _tilNextMillis(int lastTimestamp) {
-    var timestamp = _currentTimeSupplier();
+  int _tilNextMillis(int lastTimestamp) {
+    var timestamp = currentTimeSupplier();
     while (timestamp <= lastTimestamp) {
-      timestamp = _currentTimeSupplier();
+      timestamp = currentTimeSupplier();
     }
     return timestamp;
   }
@@ -69,6 +76,15 @@ class IdGenerator {
         sequence;
   }
 }
+
+int _realCurrentTimeSupplier() => DateTime.now().millisecondsSinceEpoch;
+
+const _kDefaultConfig = SnowflakeConfig(
+  twEpoch: 1640995200000,
+  workerIdBits: 10,
+  dataCenterIdBits: 0,
+  sequenceBits: 5,
+);
 
 @immutable
 class SnowflakeConfig {
