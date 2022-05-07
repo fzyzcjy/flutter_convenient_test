@@ -1,3 +1,4 @@
+import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // ignore: implementation_imports
@@ -22,14 +23,15 @@ class MyDeclarer extends Declarer {
     bool solo = false,
   }) {
     super.test(
-      name,
+      // NOTE
+      TestNameTransformer.assemble(name, IdGenerator.instance.nextId()),
       body,
       testOn: testOn,
       timeout: timeout,
       skip: skip,
       onPlatform: onPlatform,
       tags: tags,
-      // NOTE use this for flaky test retrying, see #16
+      // NOTE
       retry: retry ?? defaultRetry,
       solo: solo,
     );
@@ -48,14 +50,15 @@ class MyDeclarer extends Declarer {
     bool solo = false,
   }) {
     super.group(
-      name,
+      // NOTE
+      TestNameTransformer.assemble(name, IdGenerator.instance.nextId()),
       body,
       testOn: testOn,
       timeout: timeout,
       skip: skip,
       onPlatform: onPlatform,
       tags: tags,
-      // NOTE use this for flaky test retrying, see #16
+      // NOTE
       retry: retry ?? defaultRetry,
       solo: solo,
     );
