@@ -67,6 +67,7 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
   WorkerCurrentRunConfig calcCurrentRunConfig() => WorkerCurrentRunConfig(
         integrationTest: WorkerCurrentRunConfig_IntegrationTest(
           reportSuiteInfo: false,
+          defaultRetryCount: 0,
           executionFilter: ExecutionFilter(
             filterNameRegex: kRegexMatchNothing,
             strategy: ExecutionFilter_Strategy(
@@ -103,6 +104,9 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
     return WorkerCurrentRunConfig(
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
         reportSuiteInfo: true,
+        // this is for flaky test detection. set to non-zero,
+        // such that the flaky tests are retried at the worker automatically
+        defaultRetryCount: 1,
         executionFilter: ExecutionFilter(
           filterNameRegex: filterNameRegex,
           strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
@@ -130,6 +134,8 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
     return WorkerCurrentRunConfig(
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
         reportSuiteInfo: state is _ITIMStateInitial,
+        // do *not* handle flaky tests at worker level; instead, handle it at manager level
+        defaultRetryCount: 0,
         executionFilter: _calcExecutionFilter(),
       ),
     );
@@ -166,6 +172,8 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
       state = _ITIMState.middle(lastFinishedTestName: allowExecuteTestNames.single);
     }
     Log.d(_kTag, 'handleTearDownAll oldState=$oldState newState=$state allowExecuteTestNames=$allowExecuteTestNames');
+   
+    TODO_handle_flaky_tests;
   }
 }
 
