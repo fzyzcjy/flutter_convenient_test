@@ -6,6 +6,7 @@ import 'package:convenient_test_manager/stores/video_player_store.dart';
 import 'package:convenient_test_manager_dart/misc/setup.dart' as convenient_test_manager_dart_setup;
 import 'package:convenient_test_manager_dart/services/fs_service.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
+import 'package:convenient_test_manager_dart/stores/highlight_store.dart';
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -23,8 +24,8 @@ void setup() {
   getIt.registerSingleton<HighlightStore>(HighlightStore());
   getIt.registerSingleton<HomePageStore>(HomePageStore());
   getIt.registerSingleton<FsService>(FsServiceFlutter());
-
-  final miscFlutterService = MiscFlutterService();
-  getIt.registerSingleton<MiscDartService>(miscFlutterService);
-  getIt.registerSingleton<MiscFlutterService>(miscFlutterService);
+  getIt.registerSingleton<MiscFlutterService>(MiscFlutterService());
+ 
+  getIt.registerSingleton<HighlightStoreBase>(GetIt.I.get<HighlightStore>());
+  getIt.registerSingleton<MiscDartService>(GetIt.I.get<MiscFlutterService>());
 }

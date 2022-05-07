@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
+import 'package:convenient_test_manager_dart/stores/highlight_store.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:convenient_test_manager_dart/stores/video_store.dart';
@@ -11,7 +12,7 @@ part 'highlight_store.g.dart';
 
 class HighlightStore = _HighlightStore with _$HighlightStore;
 
-abstract class _HighlightStore with Store {
+abstract class _HighlightStore extends HighlightStoreBase with Store {
   static const _kTag = 'HighlightStore';
 
   @observable
@@ -32,6 +33,16 @@ abstract class _HighlightStore with Store {
 
     for (final entryId in suiteInfoStore.suiteInfo!.ancestors(testInfoId)) {
       expandGroupEntryMap[entryId] = true;
+    }
+  }
+
+  @override
+  void handleLogEntry({required int testEntryId, required int logEntryId}) {
+    if (enableAutoExpand) {
+      expandGroupEntryMap.clear();
+      expandSeriesForTest(testInfoId: testEntryId);
+      highlightTestEntryId = testEntryId;
+      highlightLogEntryId = logEntryId;
     }
   }
 

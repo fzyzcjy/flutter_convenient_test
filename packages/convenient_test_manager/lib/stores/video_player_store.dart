@@ -1,5 +1,6 @@
 import 'package:convenient_test_manager/components/misc/video_player.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
+import 'package:convenient_test_manager_dart/stores/video_player_store.dart';
 import 'package:convenient_test_manager_dart/stores/video_recorder_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -9,7 +10,7 @@ part 'video_player_store.g.dart';
 
 class VideoPlayerStore = _VideoPlayerStore with _$VideoPlayerStore;
 
-abstract class _VideoPlayerStore with Store {
+abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
   @observable
   VideoInfo? displayVideoInfo;
 
@@ -36,6 +37,11 @@ abstract class _VideoPlayerStore with Store {
   void clear() {
     displayVideoInfo = null;
     playerPositionCorrespondingLogEntryId = null;
+  }
+
+  @override
+  void handleRecorderFinished(VideoInfo info) {
+    displayVideoInfo = info;
   }
 
   _VideoPlayerStore() {

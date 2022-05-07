@@ -1,5 +1,7 @@
 import 'package:convenient_test_manager_dart/services/fs_service.dart';
 import 'package:convenient_test_manager_dart/services/screen_video_recorder_service.dart';
+import 'package:convenient_test_manager_dart/stores/video_player_store.dart';
+import 'package:convenient_test_manager_dart/utils/get_it_utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
@@ -27,7 +29,7 @@ abstract class _VideoRecorderStore with Store {
   @action
   Future<void> stopRecord() async {
     await GetIt.I.get<ScreenVideoRecorderService>().stopRecord();
-    displayVideoInfo = recordingVideoInfo;
+    GetIt.I.getIfRegistered<VideoPlayerStoreBase>()?.handleRecorderFinished(recordingVideoInfo!);
     recordingVideoInfo = null;
   }
 
