@@ -30,6 +30,11 @@ class HomePageHeaderPanel extends StatelessWidget {
           ),
           const SizedBox(width: 20),
           TextButton(
+            onPressed: miscFlutterService.haltWorker,
+            child: const Text('Halt'),
+          ),
+          const SizedBox(width: 20),
+          TextButton(
             onPressed: miscFlutterService.hotRestartAndRunInAppMode,
             child: const Text('Interactive Mode'),
           ),

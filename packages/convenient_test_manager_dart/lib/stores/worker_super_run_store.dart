@@ -23,11 +23,13 @@ abstract class _WorkerSuperRunStore with Store {
   WorkerSuperRunController currSuperRunController =
       _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: kRegexMatchNothing);
 
-  void setInteractiveApp() => currSuperRunController = _WorkerSuperRunControllerInteractiveApp();
+  void setControllerInteractiveApp() => currSuperRunController = const _WorkerSuperRunControllerInteractiveApp();
 
-  void setIntegrationTest({required String filterNameRegex}) => currSuperRunController = isolationMode
+  void setControllerIntegrationTest({required String filterNameRegex}) => currSuperRunController = isolationMode
       ? _WorkerSuperRunControllerIntegrationTestIsolationMode(filterNameRegex: filterNameRegex)
       : _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: filterNameRegex);
+
+  void setControllerHalt() => currSuperRunController = const _WorkerSuperRunControllerHalt();
 
   _WorkerSuperRunStore() {
     Log.d(_kTag, 'CompileTimeConfig.kDefaultEnableIsolationMode=${CompileTimeConfig.kDefaultEnableIsolationMode}');
@@ -56,12 +58,30 @@ abstract class WorkerSuperRunController {
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter);
 
   bool get isInteractiveApp => this is _WorkerSuperRunControllerInteractiveApp;
+}
 
-  bool? get isolationModeForIntegrationTest;
+class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
+  const _WorkerSuperRunControllerHalt() : super._();
+
+  @override
+  WorkerCurrentRunConfig calcCurrentRunConfig() => WorkerCurrentRunConfig(
+        integrationTest: WorkerCurrentRunConfig_IntegrationTest(
+          reportSuiteInfo: false,
+          executionFilter: ExecutionFilter(
+            filterNameRegex: kRegexMatchNothing,
+            strategy: ExecutionFilter_Strategy(
+              allMatch: ExecutionFilter_Strategy_AllMatch(),
+            ),
+          ),
+        ),
+      );
+
+  @override
+  void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
 }
 
 class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
-  _WorkerSuperRunControllerInteractiveApp() : super._();
+  const _WorkerSuperRunControllerInteractiveApp() : super._();
 
   @override
   WorkerCurrentRunConfig calcCurrentRunConfig() {
@@ -70,9 +90,6 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
 
   @override
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
-
-  @override
-  bool? get isolationModeForIntegrationTest => null;
 }
 
 /// "classical mode": no hot-restart between running two tests
@@ -96,9 +113,6 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
 
   @override
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
-
-  @override
-  bool? get isolationModeForIntegrationTest => false;
 }
 
 /// "isolation mode": *has* hot-restart between running two tests
@@ -153,9 +167,6 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
     }
     Log.d(_kTag, 'handleTearDownAll oldState=$oldState newState=$state allowExecuteTestNames=$allowExecuteTestNames');
   }
-
-  @override
-  bool? get isolationModeForIntegrationTest => true;
 }
 
 // ITIM := IntegrationTestIsolationMode
