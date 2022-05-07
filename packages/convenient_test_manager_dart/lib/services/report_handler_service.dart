@@ -9,7 +9,6 @@ import 'package:convenient_test_manager_dart/stores/raw_log_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:convenient_test_manager_dart/stores/video_recorder_store.dart';
 import 'package:convenient_test_manager_dart/stores/worker_super_run_store.dart';
-import 'package:convenient_test_manager_dart/utils/get_it_utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -68,7 +67,7 @@ class ReportHandlerService {
     final requestId = request.id.toInt();
     _logStore.addLogEntry(testEntryId: testEntryId, logEntryId: requestId, subEntries: request.subEntries);
 
-    GetIt.I.getIfRegistered<HighlightStoreBase>()?.handleLogEntry(testEntryId: testEntryId, logEntryId: requestId);
+    GetIt.I.get<HighlightStoreBase>().handleLogEntry(testEntryId: testEntryId, logEntryId: requestId);
   }
 
   Future<void> _handleRunnerError(RunnerError request) async {

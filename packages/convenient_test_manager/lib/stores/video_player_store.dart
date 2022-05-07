@@ -13,6 +13,8 @@ part 'video_player_store.g.dart';
 class VideoPlayerStore = _VideoPlayerStore with _$VideoPlayerStore;
 
 abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
+  static const _kTag = 'VideoPlayerStore';
+
   final videoMap = ObservableMap<int, VideoInfo>();
 
   @observable
@@ -37,7 +39,9 @@ abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
 
   @override
   void handleRecorderFinished(VideoInfo info) {
-    videoMap[IdGenerator.instance.nextId()] = info;
+    final id = IdGenerator.instance.nextId();
+    Log.d(_kTag, 'handleRecorderFinished info=$info id=$id');
+    videoMap[id] = info;
   }
 
   _VideoPlayerStore() {
