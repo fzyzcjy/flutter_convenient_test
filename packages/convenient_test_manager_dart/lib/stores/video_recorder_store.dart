@@ -22,14 +22,21 @@ abstract class _VideoRecorderStore with Store {
   @action
   Future<void> startRecord() async {
     final path = await _createVideoPath();
-    recordingVideoInfo = VideoInfo(path: path, startTime: DateTime.now());
+    recordingVideoInfo = VideoInfo(path: path, startTime: DateTime.now(), endTime: _kInvalidTime);
     await GetIt.I.get<ScreenVideoRecorderService>().startRecord(path);
   }
 
   @action
   Future<void> stopRecord() async {
     await GetIt.I.get<ScreenVideoRecorderService>().stopRecord();
-    GetIt.I.getIfRegistered<VideoPlayerStoreBase>()?.handleRecorderFinished(recordingVideoInfo!);
+
+    GetIt.I.getIfRegistered<VideoPlayerStoreBase>()?.handleRecorderFinished(VideoInfo(
+          path: recordingVideoInfo!.path,
+          startTime: recordingVideoInfo!.startTime,
+          // the [recordingVideoInfo!.endTime] is dummy value
+          endTime: DateTime.now(),
+        ));
+
     recordingVideoInfo = null;
   }
 
@@ -39,18 +46,22 @@ abstract class _VideoRecorderStore with Store {
   }
 }
 
+final _kInvalidTime = DateTime.fromMicrosecondsSinceEpoch(-1);
+
 @immutable
 class VideoInfo {
   final String path;
   final DateTime startTime;
+  final DateTime endTime;
 
   const VideoInfo({
     required this.path,
     required this.startTime,
+    required this.endTime,
   });
 
   @override
-  String toString() => 'VideoInfo{path: $path, startTime: $startTime}';
+  String toString() => 'VideoInfo{path: $path, startTime: $startTime, endTime: $endTime}';
 
   Duration absoluteToVideoTime(DateTime absoluteTime) => absoluteTime.difference(startTime);
 
