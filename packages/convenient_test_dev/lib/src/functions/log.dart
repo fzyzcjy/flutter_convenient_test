@@ -6,8 +6,8 @@ import 'package:convenient_test_dev/src/functions/core.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
+import 'package:convenient_test_dev/src/utils/id_generator.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
-import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
@@ -68,7 +68,7 @@ class LogHandle {
     LiveTest? liveTest,
   }) {
     return LogHandle._(
-      ConvenientTestIdGen.nextId(),
+      IdGenerator.instance.nextId(),
       SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest ?? Invoker.current!.liveTest),
     );
   }
@@ -91,7 +91,7 @@ class LogHandle {
           entryLocators: _entryLocators,
           subEntries: [
             LogSubEntry(
-              id: ConvenientTestIdGen.nextId(),
+              id: IdGenerator.instance.nextId(),
               type: type,
               time: Int64(DateTime.now().microsecondsSinceEpoch),
               title: title,

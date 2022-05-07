@@ -1,5 +1,6 @@
 // ignore_for_file: implementation_imports
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/utils/id_generator.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/group_entry.dart';
 import 'package:test_api/src/backend/live_test.dart';
@@ -13,9 +14,6 @@ class SuiteInfoUtils {
 }
 
 class SuiteInfoConverter {
-  var _unoccupiedId = 100; // initial id should be >0 to avoid confusion
-  int _nextId() => _unoccupiedId++;
-
   SuiteInfoProto convert(Group root) {
     final target = SuiteInfoProto();
     target.groupId = _convertGroup(root, target, -1);
@@ -23,7 +21,7 @@ class SuiteInfoConverter {
   }
 
   int _convertGroup(Group entry, SuiteInfoProto target, int parentId) {
-    final id = _nextId();
+    final id = IdGenerator.instance.nextId();
     target.groups.add(GroupInfoProto(
       id: id,
       name: entry.name,
@@ -34,7 +32,7 @@ class SuiteInfoConverter {
   }
 
   int _convertTest(Test entry, SuiteInfoProto target, int parentId) {
-    final id = _nextId();
+    final id = IdGenerator.instance.nextId();
     target.tests.add(TestInfoProto(
       id: id,
       name: entry.name,
