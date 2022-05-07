@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   collection: ^1.15.0
-  convenient_test_common: ^1.0.0
+  convenient_test_common_dart: ^1.0.0
   fixnum: ^1.0.0
   get_it: ^6.0.0
   grpc: ^3.0.0
@@ -20,8 +20,8 @@ dependencies:
   test_api: ^0.4.2
 
 dependency_overrides:
-  convenient_test_common:
-    path: ../convenient_test_common
+  convenient_test_common_dart:
+    path: ../convenient_test_common_dart
   grpc:
     git:
       url: https://github.com/fzyzcjy/grpc-dart # #3761
