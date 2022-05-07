@@ -11,11 +11,17 @@ import 'package:test_api/src/backend/group.dart';
 class ConvenientTestExecutor {
   // static const _kTag = 'ConvenientTestExecutor';
 
-  static void execute(
-    Declarer declarer, {
-    required RegExp filterNameRegex,
-    required bool reportSuiteInfo,
-  }) {
+  final Declarer declarer;
+  final RegExp filterNameRegex;
+  final bool reportSuiteInfo;
+
+  ConvenientTestExecutor({
+    required this.declarer,
+    required this.filterNameRegex,
+    required this.reportSuiteInfo,
+  });
+
+  void execute() {
     runTestsInDeclarer(
       declarer,
       onGroupBuilt: (group) {

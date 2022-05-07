@@ -74,11 +74,11 @@ Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegratio
       testBody();
     });
 
-    ConvenientTestExecutor.execute(
-      declarer,
+    ConvenientTestExecutor(
+      declarer: declarer,
       filterNameRegex: RegExp(workerModeIntegrationTest.filterNameRegex),
       reportSuiteInfo: workerModeIntegrationTest.reportSuiteInfo,
-    );
+    ).execute();
   }, (e, s) {
     Log.w('ConvenientTestMain',
         'ConvenientTest captured error (via runZonedGuarded). type(e)=${e.runtimeType} exception=$e stackTrace=$s');
