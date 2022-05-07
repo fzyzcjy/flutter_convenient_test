@@ -85,7 +85,7 @@ class LogHandle {
       Log.i(_kTag, '${_typeToLeading(type)} $title $message $error $stackTrace');
     }
 
-    await myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
+    await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
             logEntry: LogEntry(
           id: _id,
           entryLocators: _entryLocators,
@@ -105,7 +105,7 @@ class LogHandle {
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
     image ??= await takeSnapshot();
-    await myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
+    await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
             snapshot: Snapshot(
           logEntryId: _id,
           name: name,

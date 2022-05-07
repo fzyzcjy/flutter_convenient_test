@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
-import 'package:convenient_test_dev/src/support/compile_time_config.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
@@ -29,9 +27,9 @@ class ConvenientTest {
 Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback testBody) async {
   myGetIt.registerSingleton<ConvenientTestSlot>(slot);
   // MUST do it this early, because we really need the rpc client immediately
-  myGetIt.registerSingleton<ManagerRpcService>(ManagerRpcService.create());
+  myGetIt.registerSingleton<ConvenientTestManagerClient>(ExtConvenientTestManagerClient.create());
 
-  final currentRunConfig = await myGetIt.get<ManagerRpcService>().getWorkerCurrentRunConfig();
+  final currentRunConfig = await myGetIt.get<ConvenientTestManagerClient>().getWorkerCurrentRunConfig(Empty());
   switch (currentRunConfig.whichSubType()) {
     case WorkerCurrentRunConfig_SubType.interactiveApp:
       return _runModeInteractiveApp();
@@ -69,7 +67,7 @@ Future<void> _runModeIntegrationTest(
       }
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-      unawaited(myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(setUpAll: SetUpAll())));
+      unawaited(myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(setUpAll: SetUpAll())));
 
       setup();
 
@@ -91,22 +89,23 @@ Future<void> _runModeIntegrationTest(
 }
 
 Future<void> _lastTearDownAll() async {
-  const _kTag = 'LastTearDownAll';
+  // const _kTag = 'LastTearDownAll';
 
   // need to `await` to ensure it is sent
-  await myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
+  await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
         tearDownAll: TearDownAll(
           resolvedExecutionFilter: GetIt.I.get<ConvenientTestExecutor>().resolvedExecutionFilter.toProto(),
         ),
       ));
 
-  if (CompileTimeConfig.kCIMode) {
-    Log.i(_kTag, 'wait for a few seconds, hoping everything is really finished');
-    await Future<void>.delayed(const Duration(seconds: 3));
-
-    Log.i(_kTag, 'exit the process');
-    exit(0);
-  }
+  // TODO
+  // if (CompileTimeConfig.kCIMode) {
+  //   Log.i(_kTag, 'wait for a few seconds, hoping everything is really finished');
+  //   await Future<void>.delayed(const Duration(seconds: 3));
+  //
+  //   Log.i(_kTag, 'exit the process');
+  //   exit(0);
+  // }
 }
 
 typedef TWidgetTesterCallback = Future<void> Function(ConvenientTest t);

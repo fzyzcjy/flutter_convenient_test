@@ -199,7 +199,7 @@ class _Reporter {
       print(text);
 
       // NOTE XXX add
-      myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
+      myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
               runnerMessage: RunnerMessage(
             entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
             message: message.text,
@@ -210,7 +210,7 @@ class _Reporter {
   /// A callback called when [liveTest]'s state becomes [state].
   void _onStateChange(LiveTest liveTest, State state) {
     // NOTE XXX add
-    myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
+    myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
             runnerStateChange: RunnerStateChange(
           entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
           state: state.toProto(),
@@ -224,7 +224,7 @@ class _Reporter {
   /// A callback called when [liveTest] throws [error].
   void _onError(LiveTest liveTest, Object error, StackTrace stackTrace) {
     // NOTE XXX add
-    myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
+    myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
             runnerError: RunnerError(
           entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
           error: error.toString(),
