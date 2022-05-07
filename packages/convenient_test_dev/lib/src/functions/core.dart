@@ -76,9 +76,8 @@ Future<void> _runModeIntegrationTest(VoidCallback testBody, WorkerModeIntegratio
 
     ConvenientTestExecutor(
       declarer: declarer,
-      filterNameRegex: RegExp(workerModeIntegrationTest.filterNameRegex),
       reportSuiteInfo: workerModeIntegrationTest.reportSuiteInfo,
-      executionMode: workerModeIntegrationTest.executionMode,
+      executionFilter: workerModeIntegrationTest.executionFilter,
     ).execute();
   }, (e, s) {
     Log.w('ConvenientTestMain',

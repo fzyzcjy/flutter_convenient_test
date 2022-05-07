@@ -14,29 +14,26 @@ class ConvenientTestExecutor {
 
   final Declarer declarer;
   final bool reportSuiteInfo;
-  final RegExp filterNameRegex;
-  final ExecutionMode executionMode;
-  late final _ExecutionFilter _executionFilter;
+  final ExecutionFilter executionFilter;
+  late final _ExecutionFilterService _executionFilterService;
 
   ConvenientTestExecutor({
     required this.declarer,
     required this.reportSuiteInfo,
-    required this.filterNameRegex,
-    required this.executionMode,
+    required this.executionFilter,
   });
 
   void execute() {
     runTestsInDeclarer(
       declarer,
       onGroupBuilt: (group) {
-        _executionFilter = _ExecutionFilter(
+        _executionFilterService = _ExecutionFilterService(
           root: group,
-          filterNameRegex: filterNameRegex,
-          executionMode: executionMode,
+          executionFilter: executionFilter,
         );
         if (reportSuiteInfo) _reportSuiteInfo(group);
       },
-      shouldSkip: (entry) async => !_executionFilter.allowExecute(entry),
+      shouldSkip: (entry) async => !_executionFilterService.allowExecute(entry),
     );
   }
 
@@ -46,36 +43,36 @@ class ConvenientTestExecutor {
   }
 }
 
-class _ExecutionFilter {
+class _ExecutionFilterService {
   final Set<String> allowExecuteTestNames;
 
-  factory _ExecutionFilter({
+  factory _ExecutionFilterService({
     required Group root,
-    required RegExp filterNameRegex,
-    required ExecutionMode executionMode,
+    required ExecutionFilter executionFilter,
   }) {
+    final filterNameRegex = RegExp(executionFilter.filterNameRegex);
     final flattenedTestsMatchingFilter = traverseTests(root) //
         .where((test) => filterNameRegex.hasMatch(test.name))
         .toList();
 
-    switch (executionMode.whichSubType()) {
-      case ExecutionMode_SubType.firstMatching:
-        return _ExecutionFilter._([flattenedTestsMatchingFilter.first]);
-      case ExecutionMode_SubType.nextMatching:
-        final nextMatchingInfo = executionMode.nextMatching;
+    switch (executionFilter.whichSubType()) {
+      case ExecutionFilter_SubType.firstMatching:
+        return _ExecutionFilterService._([flattenedTestsMatchingFilter.first]);
+      case ExecutionFilter_SubType.nextMatching:
+        final nextMatchingInfo = executionFilter.nextMatching;
 
         final prevTestIndex = flattenedTestsMatchingFilter.indexWhere((e) => e.name == nextMatchingInfo.prevTestName);
         if (prevTestIndex == -1) throw Exception;
 
-        return _ExecutionFilter._([flattenedTestsMatchingFilter[prevTestIndex + 1]]);
-      case ExecutionMode_SubType.allMatching:
-        return _ExecutionFilter._(flattenedTestsMatchingFilter);
-      case ExecutionMode_SubType.notSet:
-        throw Exception('unknown $executionMode');
+        return _ExecutionFilterService._([flattenedTestsMatchingFilter[prevTestIndex + 1]]);
+      case ExecutionFilter_SubType.allMatching:
+        return _ExecutionFilterService._(flattenedTestsMatchingFilter);
+      case ExecutionFilter_SubType.notSet:
+        throw Exception('unknown $executionFilter');
     }
   }
 
-  _ExecutionFilter._(List<Test> allowExecuteTests)
+  _ExecutionFilterService._(List<Test> allowExecuteTests)
       : allowExecuteTestNames = allowExecuteTests.map((e) => e.name).toSet();
 
   static Iterable<Test> traverseTests(GroupEntry entry) sync* {

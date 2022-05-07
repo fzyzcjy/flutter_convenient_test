@@ -114,23 +114,24 @@ message WorkerMode {
 message WorkerModeInteractiveApp {}
 
 message WorkerModeIntegrationTest {
-  string filter_name_regex = 1;
-  bool report_suite_info = 2;
-  ExecutionMode execution_mode = 3;
+  bool report_suite_info = 1;
+  ExecutionFilter execution_filter = 2;
 }
 
-message ExecutionMode {
+message ExecutionFilter {
+  string filter_name_regex = 1;
+
+  oneof sub_type {
+    FirstMatching first_matching = 2;
+    NextMatching next_matching = 3;
+    AllMatching all_matching = 4;
+  }
+
   message FirstMatching {}
   message NextMatching {
     string prev_test_name = 1;
   }
   message AllMatching {}
-
-  oneof sub_type {
-    FirstMatching first_matching = 1;
-    NextMatching next_matching = 2;
-    AllMatching all_matching = 3;
-  }
 }
 
 // https://stackoverflow.com/questions/31768665/can-i-define-a-grpc-call-with-a-null-request-or-response

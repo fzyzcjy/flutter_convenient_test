@@ -1235,27 +1235,22 @@ class WorkerModeIntegrationTest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WorkerModeIntegrationTest',
       createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filterNameRegex')
-    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'reportSuiteInfo')
-    ..aOM<ExecutionMode>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'executionMode',
-        subBuilder: ExecutionMode.create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'reportSuiteInfo')
+    ..aOM<ExecutionFilter>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'executionFilter',
+        subBuilder: ExecutionFilter.create)
     ..hasRequiredFields = false;
 
   WorkerModeIntegrationTest._() : super();
   factory WorkerModeIntegrationTest({
-    $core.String? filterNameRegex,
     $core.bool? reportSuiteInfo,
-    ExecutionMode? executionMode,
+    ExecutionFilter? executionFilter,
   }) {
     final _result = create();
-    if (filterNameRegex != null) {
-      _result.filterNameRegex = filterNameRegex;
-    }
     if (reportSuiteInfo != null) {
       _result.reportSuiteInfo = reportSuiteInfo;
     }
-    if (executionMode != null) {
-      _result.executionMode = executionMode;
+    if (executionFilter != null) {
+      _result.executionFilter = executionFilter;
     }
     return _result;
   }
@@ -1285,88 +1280,76 @@ class WorkerModeIntegrationTest extends $pb.GeneratedMessage {
   static WorkerModeIntegrationTest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get filterNameRegex => $_getSZ(0);
+  $core.bool get reportSuiteInfo => $_getBF(0);
   @$pb.TagNumber(1)
-  set filterNameRegex($core.String v) {
-    $_setString(0, v);
-  }
-
-  @$pb.TagNumber(1)
-  $core.bool hasFilterNameRegex() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearFilterNameRegex() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.bool get reportSuiteInfo => $_getBF(1);
-  @$pb.TagNumber(2)
   set reportSuiteInfo($core.bool v) {
-    $_setBool(1, v);
+    $_setBool(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasReportSuiteInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearReportSuiteInfo() => clearField(1);
+
+  @$pb.TagNumber(2)
+  ExecutionFilter get executionFilter => $_getN(1);
+  @$pb.TagNumber(2)
+  set executionFilter(ExecutionFilter v) {
+    setField(2, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasReportSuiteInfo() => $_has(1);
+  $core.bool hasExecutionFilter() => $_has(1);
   @$pb.TagNumber(2)
-  void clearReportSuiteInfo() => clearField(2);
-
-  @$pb.TagNumber(3)
-  ExecutionMode get executionMode => $_getN(2);
-  @$pb.TagNumber(3)
-  set executionMode(ExecutionMode v) {
-    setField(3, v);
-  }
-
-  @$pb.TagNumber(3)
-  $core.bool hasExecutionMode() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearExecutionMode() => clearField(3);
-  @$pb.TagNumber(3)
-  ExecutionMode ensureExecutionMode() => $_ensure(2);
+  void clearExecutionFilter() => clearField(2);
+  @$pb.TagNumber(2)
+  ExecutionFilter ensureExecutionFilter() => $_ensure(1);
 }
 
-class ExecutionMode_FirstMatching extends $pb.GeneratedMessage {
+class ExecutionFilter_FirstMatching extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ExecutionMode.FirstMatching',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ExecutionFilter.FirstMatching',
       createEmptyInstance: create)
     ..hasRequiredFields = false;
 
-  ExecutionMode_FirstMatching._() : super();
-  factory ExecutionMode_FirstMatching() => create();
-  factory ExecutionMode_FirstMatching.fromBuffer($core.List<$core.int> i,
+  ExecutionFilter_FirstMatching._() : super();
+  factory ExecutionFilter_FirstMatching() => create();
+  factory ExecutionFilter_FirstMatching.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ExecutionMode_FirstMatching.fromJson($core.String i,
+  factory ExecutionFilter_FirstMatching.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ExecutionMode_FirstMatching clone() => ExecutionMode_FirstMatching()..mergeFromMessage(this);
+  ExecutionFilter_FirstMatching clone() => ExecutionFilter_FirstMatching()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ExecutionMode_FirstMatching copyWith(void Function(ExecutionMode_FirstMatching) updates) =>
-      super.copyWith((message) => updates(message as ExecutionMode_FirstMatching))
-          as ExecutionMode_FirstMatching; // ignore: deprecated_member_use
+  ExecutionFilter_FirstMatching copyWith(void Function(ExecutionFilter_FirstMatching) updates) =>
+      super.copyWith((message) => updates(message as ExecutionFilter_FirstMatching))
+          as ExecutionFilter_FirstMatching; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ExecutionMode_FirstMatching create() => ExecutionMode_FirstMatching._();
-  ExecutionMode_FirstMatching createEmptyInstance() => create();
-  static $pb.PbList<ExecutionMode_FirstMatching> createRepeated() => $pb.PbList<ExecutionMode_FirstMatching>();
+  static ExecutionFilter_FirstMatching create() => ExecutionFilter_FirstMatching._();
+  ExecutionFilter_FirstMatching createEmptyInstance() => create();
+  static $pb.PbList<ExecutionFilter_FirstMatching> createRepeated() => $pb.PbList<ExecutionFilter_FirstMatching>();
   @$core.pragma('dart2js:noInline')
-  static ExecutionMode_FirstMatching getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionMode_FirstMatching>(create);
-  static ExecutionMode_FirstMatching? _defaultInstance;
+  static ExecutionFilter_FirstMatching getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionFilter_FirstMatching>(create);
+  static ExecutionFilter_FirstMatching? _defaultInstance;
 }
 
-class ExecutionMode_NextMatching extends $pb.GeneratedMessage {
+class ExecutionFilter_NextMatching extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ExecutionMode.NextMatching',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ExecutionFilter.NextMatching',
       createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'prevTestName')
     ..hasRequiredFields = false;
 
-  ExecutionMode_NextMatching._() : super();
-  factory ExecutionMode_NextMatching({
+  ExecutionFilter_NextMatching._() : super();
+  factory ExecutionFilter_NextMatching({
     $core.String? prevTestName,
   }) {
     final _result = create();
@@ -1375,31 +1358,31 @@ class ExecutionMode_NextMatching extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ExecutionMode_NextMatching.fromBuffer($core.List<$core.int> i,
+  factory ExecutionFilter_NextMatching.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ExecutionMode_NextMatching.fromJson($core.String i,
+  factory ExecutionFilter_NextMatching.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ExecutionMode_NextMatching clone() => ExecutionMode_NextMatching()..mergeFromMessage(this);
+  ExecutionFilter_NextMatching clone() => ExecutionFilter_NextMatching()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ExecutionMode_NextMatching copyWith(void Function(ExecutionMode_NextMatching) updates) =>
-      super.copyWith((message) => updates(message as ExecutionMode_NextMatching))
-          as ExecutionMode_NextMatching; // ignore: deprecated_member_use
+  ExecutionFilter_NextMatching copyWith(void Function(ExecutionFilter_NextMatching) updates) =>
+      super.copyWith((message) => updates(message as ExecutionFilter_NextMatching))
+          as ExecutionFilter_NextMatching; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ExecutionMode_NextMatching create() => ExecutionMode_NextMatching._();
-  ExecutionMode_NextMatching createEmptyInstance() => create();
-  static $pb.PbList<ExecutionMode_NextMatching> createRepeated() => $pb.PbList<ExecutionMode_NextMatching>();
+  static ExecutionFilter_NextMatching create() => ExecutionFilter_NextMatching._();
+  ExecutionFilter_NextMatching createEmptyInstance() => create();
+  static $pb.PbList<ExecutionFilter_NextMatching> createRepeated() => $pb.PbList<ExecutionFilter_NextMatching>();
   @$core.pragma('dart2js:noInline')
-  static ExecutionMode_NextMatching getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionMode_NextMatching>(create);
-  static ExecutionMode_NextMatching? _defaultInstance;
+  static ExecutionFilter_NextMatching getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionFilter_NextMatching>(create);
+  static ExecutionFilter_NextMatching? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get prevTestName => $_getSZ(0);
@@ -1414,71 +1397,77 @@ class ExecutionMode_NextMatching extends $pb.GeneratedMessage {
   void clearPrevTestName() => clearField(1);
 }
 
-class ExecutionMode_AllMatching extends $pb.GeneratedMessage {
+class ExecutionFilter_AllMatching extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ExecutionMode.AllMatching',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ExecutionFilter.AllMatching',
       createEmptyInstance: create)
     ..hasRequiredFields = false;
 
-  ExecutionMode_AllMatching._() : super();
-  factory ExecutionMode_AllMatching() => create();
-  factory ExecutionMode_AllMatching.fromBuffer($core.List<$core.int> i,
+  ExecutionFilter_AllMatching._() : super();
+  factory ExecutionFilter_AllMatching() => create();
+  factory ExecutionFilter_AllMatching.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ExecutionMode_AllMatching.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory ExecutionFilter_AllMatching.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ExecutionMode_AllMatching clone() => ExecutionMode_AllMatching()..mergeFromMessage(this);
+  ExecutionFilter_AllMatching clone() => ExecutionFilter_AllMatching()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ExecutionMode_AllMatching copyWith(void Function(ExecutionMode_AllMatching) updates) =>
-      super.copyWith((message) => updates(message as ExecutionMode_AllMatching))
-          as ExecutionMode_AllMatching; // ignore: deprecated_member_use
+  ExecutionFilter_AllMatching copyWith(void Function(ExecutionFilter_AllMatching) updates) =>
+      super.copyWith((message) => updates(message as ExecutionFilter_AllMatching))
+          as ExecutionFilter_AllMatching; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ExecutionMode_AllMatching create() => ExecutionMode_AllMatching._();
-  ExecutionMode_AllMatching createEmptyInstance() => create();
-  static $pb.PbList<ExecutionMode_AllMatching> createRepeated() => $pb.PbList<ExecutionMode_AllMatching>();
+  static ExecutionFilter_AllMatching create() => ExecutionFilter_AllMatching._();
+  ExecutionFilter_AllMatching createEmptyInstance() => create();
+  static $pb.PbList<ExecutionFilter_AllMatching> createRepeated() => $pb.PbList<ExecutionFilter_AllMatching>();
   @$core.pragma('dart2js:noInline')
-  static ExecutionMode_AllMatching getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionMode_AllMatching>(create);
-  static ExecutionMode_AllMatching? _defaultInstance;
+  static ExecutionFilter_AllMatching getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionFilter_AllMatching>(create);
+  static ExecutionFilter_AllMatching? _defaultInstance;
 }
 
-enum ExecutionMode_SubType { firstMatching, nextMatching, allMatching, notSet }
+enum ExecutionFilter_SubType { firstMatching, nextMatching, allMatching, notSet }
 
-class ExecutionMode extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, ExecutionMode_SubType> _ExecutionMode_SubTypeByTag = {
-    1: ExecutionMode_SubType.firstMatching,
-    2: ExecutionMode_SubType.nextMatching,
-    3: ExecutionMode_SubType.allMatching,
-    0: ExecutionMode_SubType.notSet
+class ExecutionFilter extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, ExecutionFilter_SubType> _ExecutionFilter_SubTypeByTag = {
+    2: ExecutionFilter_SubType.firstMatching,
+    3: ExecutionFilter_SubType.nextMatching,
+    4: ExecutionFilter_SubType.allMatching,
+    0: ExecutionFilter_SubType.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ExecutionMode',
+      const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ExecutionFilter',
       createEmptyInstance: create)
-    ..oo(0, [1, 2, 3])
-    ..aOM<ExecutionMode_FirstMatching>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'firstMatching',
-        subBuilder: ExecutionMode_FirstMatching.create)
-    ..aOM<ExecutionMode_NextMatching>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nextMatching',
-        subBuilder: ExecutionMode_NextMatching.create)
-    ..aOM<ExecutionMode_AllMatching>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'allMatching',
-        subBuilder: ExecutionMode_AllMatching.create)
+    ..oo(0, [2, 3, 4])
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filterNameRegex')
+    ..aOM<ExecutionFilter_FirstMatching>(
+        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'firstMatching',
+        subBuilder: ExecutionFilter_FirstMatching.create)
+    ..aOM<ExecutionFilter_NextMatching>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nextMatching',
+        subBuilder: ExecutionFilter_NextMatching.create)
+    ..aOM<ExecutionFilter_AllMatching>(
+        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'allMatching',
+        subBuilder: ExecutionFilter_AllMatching.create)
     ..hasRequiredFields = false;
 
-  ExecutionMode._() : super();
-  factory ExecutionMode({
-    ExecutionMode_FirstMatching? firstMatching,
-    ExecutionMode_NextMatching? nextMatching,
-    ExecutionMode_AllMatching? allMatching,
+  ExecutionFilter._() : super();
+  factory ExecutionFilter({
+    $core.String? filterNameRegex,
+    ExecutionFilter_FirstMatching? firstMatching,
+    ExecutionFilter_NextMatching? nextMatching,
+    ExecutionFilter_AllMatching? allMatching,
   }) {
     final _result = create();
+    if (filterNameRegex != null) {
+      _result.filterNameRegex = filterNameRegex;
+    }
     if (firstMatching != null) {
       _result.firstMatching = firstMatching;
     }
@@ -1490,72 +1479,87 @@ class ExecutionMode extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ExecutionMode.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory ExecutionFilter.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ExecutionMode.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory ExecutionFilter.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ExecutionMode clone() => ExecutionMode()..mergeFromMessage(this);
+  ExecutionFilter clone() => ExecutionFilter()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ExecutionMode copyWith(void Function(ExecutionMode) updates) =>
-      super.copyWith((message) => updates(message as ExecutionMode)) as ExecutionMode; // ignore: deprecated_member_use
+  ExecutionFilter copyWith(void Function(ExecutionFilter) updates) =>
+      super.copyWith((message) => updates(message as ExecutionFilter))
+          as ExecutionFilter; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ExecutionMode create() => ExecutionMode._();
-  ExecutionMode createEmptyInstance() => create();
-  static $pb.PbList<ExecutionMode> createRepeated() => $pb.PbList<ExecutionMode>();
+  static ExecutionFilter create() => ExecutionFilter._();
+  ExecutionFilter createEmptyInstance() => create();
+  static $pb.PbList<ExecutionFilter> createRepeated() => $pb.PbList<ExecutionFilter>();
   @$core.pragma('dart2js:noInline')
-  static ExecutionMode getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionMode>(create);
-  static ExecutionMode? _defaultInstance;
+  static ExecutionFilter getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionFilter>(create);
+  static ExecutionFilter? _defaultInstance;
 
-  ExecutionMode_SubType whichSubType() => _ExecutionMode_SubTypeByTag[$_whichOneof(0)]!;
+  ExecutionFilter_SubType whichSubType() => _ExecutionFilter_SubTypeByTag[$_whichOneof(0)]!;
   void clearSubType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  ExecutionMode_FirstMatching get firstMatching => $_getN(0);
+  $core.String get filterNameRegex => $_getSZ(0);
   @$pb.TagNumber(1)
-  set firstMatching(ExecutionMode_FirstMatching v) {
-    setField(1, v);
+  set filterNameRegex($core.String v) {
+    $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasFirstMatching() => $_has(0);
+  $core.bool hasFilterNameRegex() => $_has(0);
   @$pb.TagNumber(1)
-  void clearFirstMatching() => clearField(1);
-  @$pb.TagNumber(1)
-  ExecutionMode_FirstMatching ensureFirstMatching() => $_ensure(0);
+  void clearFilterNameRegex() => clearField(1);
 
   @$pb.TagNumber(2)
-  ExecutionMode_NextMatching get nextMatching => $_getN(1);
+  ExecutionFilter_FirstMatching get firstMatching => $_getN(1);
   @$pb.TagNumber(2)
-  set nextMatching(ExecutionMode_NextMatching v) {
+  set firstMatching(ExecutionFilter_FirstMatching v) {
     setField(2, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasNextMatching() => $_has(1);
+  $core.bool hasFirstMatching() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNextMatching() => clearField(2);
+  void clearFirstMatching() => clearField(2);
   @$pb.TagNumber(2)
-  ExecutionMode_NextMatching ensureNextMatching() => $_ensure(1);
+  ExecutionFilter_FirstMatching ensureFirstMatching() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  ExecutionMode_AllMatching get allMatching => $_getN(2);
+  ExecutionFilter_NextMatching get nextMatching => $_getN(2);
   @$pb.TagNumber(3)
-  set allMatching(ExecutionMode_AllMatching v) {
+  set nextMatching(ExecutionFilter_NextMatching v) {
     setField(3, v);
   }
 
   @$pb.TagNumber(3)
-  $core.bool hasAllMatching() => $_has(2);
+  $core.bool hasNextMatching() => $_has(2);
   @$pb.TagNumber(3)
-  void clearAllMatching() => clearField(3);
+  void clearNextMatching() => clearField(3);
   @$pb.TagNumber(3)
-  ExecutionMode_AllMatching ensureAllMatching() => $_ensure(2);
+  ExecutionFilter_NextMatching ensureNextMatching() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  ExecutionFilter_AllMatching get allMatching => $_getN(3);
+  @$pb.TagNumber(4)
+  set allMatching(ExecutionFilter_AllMatching v) {
+    setField(4, v);
+  }
+
+  @$pb.TagNumber(4)
+  $core.bool hasAllMatching() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAllMatching() => clearField(4);
+  @$pb.TagNumber(4)
+  ExecutionFilter_AllMatching ensureAllMatching() => $_ensure(3);
 }
 
 class Empty extends $pb.GeneratedMessage {
