@@ -21,6 +21,7 @@ jobs:
           - convenient_test_common
           - convenient_test_dev
           - convenient_test_manager
+          - convenient_test_manager_core
 
     steps:
       - uses: actions/checkout@v2
