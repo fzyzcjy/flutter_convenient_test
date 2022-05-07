@@ -4,6 +4,7 @@ import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
+import 'package:meta/meta.dart';
 import 'package:test_api/src/backend/declarer.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/group_entry.dart';
@@ -15,7 +16,7 @@ class ConvenientTestExecutor {
   final Declarer declarer;
   final bool reportSuiteInfo;
   final ExecutionFilter executionFilter;
-  late final _ExecutionFilterService _executionFilterService;
+  late final ResolvedExecutionFilter resolvedExecutionFilter;
 
   ConvenientTestExecutor({
     required this.declarer,
@@ -27,13 +28,13 @@ class ConvenientTestExecutor {
     runTestsInDeclarer(
       declarer,
       onGroupBuilt: (group) {
-        _executionFilterService = _ExecutionFilterService(
+        resolvedExecutionFilter = _ExecutionFilterResolver.resolve(
           root: group,
           executionFilter: executionFilter,
         );
         if (reportSuiteInfo) _reportSuiteInfo(group);
       },
-      shouldSkip: (entry) async => !_executionFilterService.allowExecute(entry),
+      shouldSkip: (entry) async => !resolvedExecutionFilter.allowExecute(entry),
     );
   }
 
@@ -43,10 +44,20 @@ class ConvenientTestExecutor {
   }
 }
 
-class _ExecutionFilterService {
-  final Set<String> allowExecuteTestNames;
+@immutable
+class ResolvedExecutionFilter {
+  final List<String> allowExecuteTestNames;
 
-  factory _ExecutionFilterService({
+  const ResolvedExecutionFilter({required this.allowExecuteTestNames});
+
+  bool allowExecute(GroupEntry entry) {
+    if (entry is! Test) throw Exception('allowExecute only supports Test, but entry=$entry');
+    return allowExecuteTestNames.contains(entry.name);
+  }
+}
+
+class _ExecutionFilterResolver {
+  static ResolvedExecutionFilter resolve({
     required Group root,
     required ExecutionFilter executionFilter,
   }) {
@@ -57,23 +68,23 @@ class _ExecutionFilterService {
 
     switch (executionFilter.whichSubType()) {
       case ExecutionFilter_SubType.firstMatching:
-        return _ExecutionFilterService._([flattenedTestsMatchingFilter.first]);
+        return _createOutput([flattenedTestsMatchingFilter.first]);
       case ExecutionFilter_SubType.nextMatching:
         final nextMatchingInfo = executionFilter.nextMatching;
 
         final prevTestIndex = flattenedTestsMatchingFilter.indexWhere((e) => e.name == nextMatchingInfo.prevTestName);
         if (prevTestIndex == -1) throw Exception;
 
-        return _ExecutionFilterService._([flattenedTestsMatchingFilter[prevTestIndex + 1]]);
+        return _createOutput([flattenedTestsMatchingFilter[prevTestIndex + 1]]);
       case ExecutionFilter_SubType.allMatching:
-        return _ExecutionFilterService._(flattenedTestsMatchingFilter);
+        return _createOutput(flattenedTestsMatchingFilter);
       case ExecutionFilter_SubType.notSet:
         throw Exception('unknown $executionFilter');
     }
   }
 
-  _ExecutionFilterService._(List<Test> allowExecuteTests)
-      : allowExecuteTestNames = allowExecuteTests.map((e) => e.name).toSet();
+  static ResolvedExecutionFilter _createOutput(List<Test> allowExecuteTests) =>
+      ResolvedExecutionFilter(allowExecuteTestNames: allowExecuteTests.map((e) => e.name).toList());
 
   static Iterable<Test> traverseTests(GroupEntry entry) sync* {
     if (entry is Group) {
@@ -85,10 +96,5 @@ class _ExecutionFilterService {
     } else {
       throw Exception('unknown $entry');
     }
-  }
-
-  bool allowExecute(GroupEntry entry) {
-    if (entry is! Test) throw Exception('allowExecute only supports Test, but entry=$entry');
-    return allowExecuteTestNames.contains(entry.name);
   }
 }
