@@ -9,7 +9,7 @@ class WorkerSuperRunStore = _WorkerSuperRunStore with _$WorkerSuperRunStore;
 
 abstract class _WorkerSuperRunStore with Store {
   @observable
-  WorkerSuperRunController superRunController =
+  WorkerSuperRunController currSuperRunController =
       _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: kRegexMatchNothing);
 }
 

@@ -15,7 +15,7 @@ class MiscDartService {
 
   Future<void> hotRestartAndRunTests({required String filterNameRegex}) async {
     Log.d(_kTag, 'hotRestartAndRunTests filterNameRegex=$filterNameRegex');
-    GetIt.I.get<WorkerSuperRunStore>().superRunController = WorkerSuperRunController.integrationTest(
+    GetIt.I.get<WorkerSuperRunStore>().currSuperRunController = WorkerSuperRunController.integrationTest(
       filterNameRegex: filterNameRegex,
       isolationMode: TODO,
     );
@@ -24,12 +24,12 @@ class MiscDartService {
 
   Future<void> hotRestartAndRunInAppMode() async {
     Log.d(_kTag, 'hotRestartAndRunInAppMode');
-    GetIt.I.get<WorkerSuperRunStore>().superRunController = WorkerSuperRunController.interactiveApp();
+    GetIt.I.get<WorkerSuperRunStore>().currSuperRunController = WorkerSuperRunController.interactiveApp();
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 
   Future<void> reloadInfo() async {
-    GetIt.I.get<WorkerSuperRunStore>().superRunController = WorkerSuperRunController.integrationTest(
+    GetIt.I.get<WorkerSuperRunStore>().currSuperRunController = WorkerSuperRunController.integrationTest(
       filterNameRegex: kRegexMatchNothing,
       isolationMode: TODO,
     );
