@@ -6,7 +6,7 @@ import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/raw_log_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
-import 'package:convenient_test_manager_dart/stores/video_store.dart';
+import 'package:convenient_test_manager_dart/stores/video_recorder_store.dart';
 import 'package:convenient_test_manager_dart/stores/worker_mode_store.dart';
 import 'package:get_it/get_it.dart';
 
@@ -38,7 +38,7 @@ class MiscDartService {
     GetIt.I.get<SuiteInfoStore>().clear();
     GetIt.I.get<LogStore>().clear();
     GetIt.I.get<RawLogStore>().clear();
-    GetIt.I.get<VideoStore>().clear();
+    GetIt.I.get<VideoRecorderStore>().clear();
   }
 
   Future<void> readReportFromFile(String path) async {

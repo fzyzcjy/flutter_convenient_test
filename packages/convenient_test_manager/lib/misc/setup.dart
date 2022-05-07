@@ -9,6 +9,7 @@ import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/log_store.dart';
 import 'package:convenient_test_manager/stores/raw_log_store.dart';
 import 'package:convenient_test_manager/stores/suite_info_store.dart';
+import 'package:convenient_test_manager/stores/video_player_store.dart';
 import 'package:convenient_test_manager/stores/video_store.dart';
 import 'package:convenient_test_manager/stores/worker_mode_store.dart';
 import 'package:dart_vlc/dart_vlc.dart';
@@ -23,7 +24,8 @@ void setup() {
   getIt.registerSingleton<SuiteInfoStore>(SuiteInfoStore());
   getIt.registerSingleton<RawLogStore>(RawLogStore());
   getIt.registerSingleton<WorkerModeStore>(WorkerModeStore());
-  getIt.registerSingleton<VideoStore>(VideoStore());
+  getIt.registerSingleton<VideoRecorderStore>(VideoRecorderStore());
+  getIt.registerSingleton<VideoPlayerStore>(VideoPlayerStore());
   getIt.registerSingleton<HighlightStore>(HighlightStore());
   getIt.registerSingleton<ConvenientTestManagerService>(ConvenientTestManagerService());
   getIt.registerSingleton<VmServiceWrapperService>(VmServiceWrapperService());

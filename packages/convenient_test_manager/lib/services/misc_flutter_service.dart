@@ -1,4 +1,5 @@
 import 'package:convenient_test_manager/stores/highlight_store.dart';
+import 'package:convenient_test_manager/stores/video_player_store.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get_it/get_it.dart';
@@ -14,6 +15,7 @@ class MiscFlutterService extends MiscDartService {
   void clearAll() {
     super.clearAll();
     GetIt.I.get<HighlightStore>().clear();
+    GetIt.I.get<VideoPlayerStore>().clear();
   }
 
   Future<void> pickFileAndReadReport() async {

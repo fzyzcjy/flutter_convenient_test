@@ -2,15 +2,13 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
-import 'package:convenient_test_manager_dart/services/misc_service.dart';
+import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/raw_log_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
-import 'package:convenient_test_manager_dart/stores/video_store.dart';
+import 'package:convenient_test_manager_dart/stores/video_recorder_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-
-import '../../../convenient_test_manager/lib/stores/highlight_store.dart';
 
 class ReportHandlerService {
   static const _kTag = 'ReportHandlerService';
@@ -47,13 +45,13 @@ class ReportHandlerService {
 
     if (overallExecution == OverallExecution.SET_UP_ALL) {
       Log.d(_kTag, 'reset cache since see SET_UP_ALL');
-      GetIt.I.get<MiscService>().clearAll();
+      GetIt.I.get<MiscDartService>().clearAll();
     }
 
     if (!offlineFile) {
-      final videoStore = GetIt.I.get<VideoStore>();
-      if (overallExecution == OverallExecution.SET_UP_ALL) await videoStore.startRecord();
-      if (overallExecution == OverallExecution.TEAR_DOWN_ALL) await videoStore.stopRecord();
+      final videoRecorderStore = GetIt.I.get<VideoRecorderStore>();
+      if (overallExecution == OverallExecution.SET_UP_ALL) await videoRecorderStore.startRecord();
+      if (overallExecution == OverallExecution.TEAR_DOWN_ALL) await videoRecorderStore.stopRecord();
     }
   }
 

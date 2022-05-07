@@ -1,3 +1,4 @@
+import 'package:convenient_test_manager/components/misc/video_player.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/video_recorder_store.dart';
 import 'package:get_it/get_it.dart';
