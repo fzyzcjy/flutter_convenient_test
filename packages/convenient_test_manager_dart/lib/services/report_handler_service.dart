@@ -23,12 +23,12 @@ class ReportHandlerService {
 
   Future<void> _handleItem(ReportItem item, {required bool offlineFile}) async {
     switch (item.whichSubType()) {
-      case ReportItem_SubType.overallExecution:
-        return _handleOverallExecution(item.overallExecution, offlineFile: offlineFile);
+      case ReportItem_SubType.setUpAll:
+        return _handleSetUpAll(item.setUpAll, offlineFile: offlineFile);
+      case ReportItem_SubType.tearDownAll:
+        return _handleTearDownAll(item.tearDownAll, offlineFile: offlineFile);
       case ReportItem_SubType.suiteInfoProto:
         return _handleSuiteInfoProto(item.suiteInfoProto);
-      case ReportItem_SubType.resolvedExecutionFilter:
-        return _handleResolvedExecutionFilter(item.resolvedExecutionFilter);
       case ReportItem_SubType.logEntry:
         return _handleLogEntry(item.logEntry);
       case ReportItem_SubType.runnerStateChange:
@@ -44,19 +44,21 @@ class ReportHandlerService {
     }
   }
 
-  Future<void> _handleOverallExecution(OverallExecution overallExecution, {required bool offlineFile}) async {
-    Log.d(_kTag, 'handleOverallExecution $overallExecution');
+  Future<void> _handleSetUpAll(SetUpAll request, {required bool offlineFile}) async {
+    Log.d(_kTag, 'handleSetUpAll $request');
 
-    if (overallExecution == OverallExecution.SET_UP_ALL) {
-      Log.d(_kTag, 'reset cache since see SET_UP_ALL');
-      GetIt.I.get<MiscDartService>().clearAll();
-    }
+    Log.d(_kTag, 'reset cache since see SET_UP_ALL');
+    GetIt.I.get<MiscDartService>().clearAll();
 
-    if (!offlineFile) {
-      final videoRecorderStore = GetIt.I.get<VideoRecorderStore>();
-      if (overallExecution == OverallExecution.SET_UP_ALL) await videoRecorderStore.startRecord();
-      if (overallExecution == OverallExecution.TEAR_DOWN_ALL) await videoRecorderStore.stopRecord();
-    }
+    if (!offlineFile) await GetIt.I.get<VideoRecorderStore>().startRecord();
+  }
+
+  Future<void> _handleTearDownAll(TearDownAll request, {required bool offlineFile}) async {
+    Log.d(_kTag, 'handleTearDownAll $request');
+
+    if (!offlineFile) await GetIt.I.get<VideoRecorderStore>().stopRecord();
+
+    TODO(request.resolvedExecutionFilter);
   }
 
   Future<void> _handleLogEntry(LogEntry request) async {
