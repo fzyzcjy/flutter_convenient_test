@@ -1,4 +1,5 @@
 import 'package:convenient_test_manager/services/convenient_test_manager_service.dart';
+import 'package:convenient_test_manager/services/misc_flutter_service.dart';
 import 'package:convenient_test_manager/services/misc_service.dart';
 import 'package:convenient_test_manager/services/report_handler_service.dart';
 import 'package:convenient_test_manager/services/screen_video_recorder_service.dart';
@@ -26,10 +27,13 @@ void setup() {
   getIt.registerSingleton<HighlightStore>(HighlightStore());
   getIt.registerSingleton<ConvenientTestManagerService>(ConvenientTestManagerService());
   getIt.registerSingleton<VmServiceWrapperService>(VmServiceWrapperService());
-  getIt.registerSingleton<MiscService>(MiscService());
   getIt.registerSingleton<HomePageStore>(HomePageStore());
   getIt.registerSingleton<ReportHandlerService>(ReportHandlerService());
   getIt.registerSingleton<ScreenVideoRecorderService>(ScreenVideoRecorderService.create());
+
+  final miscFlutterService = MiscFlutterService();
+  getIt.registerSingleton<MiscDartService>(miscFlutterService);
+  getIt.registerSingleton<MiscFlutterService>(miscFlutterService);
 
   GetIt.I.get<ConvenientTestManagerService>().serve();
 }

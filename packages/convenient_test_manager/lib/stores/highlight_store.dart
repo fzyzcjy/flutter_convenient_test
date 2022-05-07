@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
-import 'package:convenient_test_manager_dart/stores/home_page_store.dart';
+import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:convenient_test_manager_dart/stores/video_store.dart';

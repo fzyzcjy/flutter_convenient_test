@@ -3,13 +3,14 @@ import 'dart:typed_data';
 
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/services/misc_service.dart';
-import 'package:convenient_test_manager_dart/stores/highlight_store.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/raw_log_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:convenient_test_manager_dart/stores/video_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../../convenient_test_manager/lib/stores/highlight_store.dart';
 
 class ReportHandlerService {
   static const _kTag = 'ReportHandlerService';
