@@ -1,9 +1,10 @@
+import 'package:convenient_test_common_dart/src/common_dart/front_log.dart';
 import 'package:convenient_test_common_dart/src/protobuf/convenient_test.pb.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class SuiteInfo {
-  // static const _kTag = 'SuiteInfo';
+  static const _kTag = 'SuiteInfo';
 
   final int rootGroupId;
   final Map<int, GroupEntryInfo> entryMap;
@@ -23,6 +24,11 @@ class SuiteInfo {
     final entryIdOfName = Map.fromEntries(entryMap.entries.map((e) => MapEntry(e.value.name, e.key)));
 
     if (entryIdOfName.length != entryMap.length) {
+      Log.d(
+          _kTag,
+          '#groups=${proto.groups.length} #tests=${proto.tests.length} '
+          'entryIdOfName.keys.length=${entryIdOfName.keys.length} entryIdOfName.keys=${entryIdOfName.keys.toList()} '
+          'groups.name=${proto.groups.map((e) => e.name).toList()} tests.name=${proto.tests.map((e) => e.name).toList()} ');
       throw Exception('Sanity check failed: Suite tests should have no duplicate names');
     }
 
