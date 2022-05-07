@@ -1,6 +1,6 @@
 // ignore_for_file: implementation_imports
 import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_dev/src/utils/id_generator.dart';
+import 'package:convenient_test_common_dart/src/id_generator.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/group_entry.dart';
 import 'package:test_api/src/backend/live_test.dart';

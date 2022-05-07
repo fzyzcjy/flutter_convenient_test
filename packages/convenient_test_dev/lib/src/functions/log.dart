@@ -6,7 +6,7 @@ import 'package:convenient_test_dev/src/functions/core.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
-import 'package:convenient_test_dev/src/utils/id_generator.dart';
+import 'package:convenient_test_common_dart/src/id_generator.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter_test/flutter_test.dart';
