@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/misc/video_player.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
@@ -54,4 +55,10 @@ abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
     // this "if" will avoid unnecessary mobx updates
     if (logEntryId != playerPositionCorrespondingLogEntryId) playerPositionCorrespondingLogEntryId = logEntryId;
   }
+}
+
+extension ExtObservableMapVideoInfo on ObservableMap<int, VideoInfo> {
+  int? findVideoAtTime(DateTime time) => entries
+      .firstWhereOrNull((entry) => entry.value.startTime.isBefore(time) && entry.value.endTime.isAfter(time))
+      ?.key;
 }
