@@ -116,6 +116,7 @@ message WorkerCurrentRunConfig {
 
   message IntegrationTest {
     bool report_suite_info = 1;
+    int32 default_retry_count = 3;
     ExecutionFilter execution_filter = 2;
   }
 }

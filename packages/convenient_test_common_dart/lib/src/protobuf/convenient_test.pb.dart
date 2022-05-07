@@ -1260,12 +1260,15 @@ class WorkerCurrentRunConfig_IntegrationTest extends $pb.GeneratedMessage {
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'reportSuiteInfo')
     ..aOM<ExecutionFilter>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'executionFilter',
         subBuilder: ExecutionFilter.create)
+    ..a<$core.int>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'defaultRetryCount', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
   WorkerCurrentRunConfig_IntegrationTest._() : super();
   factory WorkerCurrentRunConfig_IntegrationTest({
     $core.bool? reportSuiteInfo,
     ExecutionFilter? executionFilter,
+    $core.int? defaultRetryCount,
   }) {
     final _result = create();
     if (reportSuiteInfo != null) {
@@ -1273,6 +1276,9 @@ class WorkerCurrentRunConfig_IntegrationTest extends $pb.GeneratedMessage {
     }
     if (executionFilter != null) {
       _result.executionFilter = executionFilter;
+    }
+    if (defaultRetryCount != null) {
+      _result.defaultRetryCount = defaultRetryCount;
     }
     return _result;
   }
@@ -1328,6 +1334,18 @@ class WorkerCurrentRunConfig_IntegrationTest extends $pb.GeneratedMessage {
   void clearExecutionFilter() => clearField(2);
   @$pb.TagNumber(2)
   ExecutionFilter ensureExecutionFilter() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.int get defaultRetryCount => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set defaultRetryCount($core.int v) {
+    $_setSignedInt32(2, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasDefaultRetryCount() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDefaultRetryCount() => clearField(3);
 }
 
 enum WorkerCurrentRunConfig_SubType { interactiveApp, integrationTest, notSet }
