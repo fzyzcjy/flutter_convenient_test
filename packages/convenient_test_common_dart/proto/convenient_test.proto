@@ -122,18 +122,21 @@ message WorkerCurrentRunConfig {
 
 message ExecutionFilter {
   string filter_name_regex = 1;
+  Strategy strategy = 2;
 
-  oneof sub_type {
-    FirstMatching first_matching = 2;
-    NextMatching next_matching = 3;
-    AllMatching all_matching = 4;
-  }
+  message Strategy {
+    oneof sub_type {
+      FirstMatch first_match = 1;
+      NextMatch next_match = 2;
+      AllMatch all_match = 3;
+    }
 
-  message FirstMatching {}
-  message NextMatching {
-    string prev_test_name = 1;
+    message FirstMatch {}
+    message NextMatch {
+      string prev_test_name = 1;
+    }
+    message AllMatch {}
   }
-  message AllMatching {}
 }
 
 // Information after `ExecutionFilter` is resolved

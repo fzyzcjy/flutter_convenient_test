@@ -76,19 +76,20 @@ class _ExecutionFilterResolver {
         .where((test) => filterNameRegex.hasMatch(test.name))
         .toList();
 
-    switch (executionFilter.whichSubType()) {
-      case ExecutionFilter_SubType.firstMatching:
+    final strategy = executionFilter.strategy;
+    switch (strategy.whichSubType()) {
+      case ExecutionFilter_Strategy_SubType.firstMatch:
         return _createOutput([flattenedTestsMatchingFilter.first]);
-      case ExecutionFilter_SubType.nextMatching:
-        final nextMatchingInfo = executionFilter.nextMatching;
+      case ExecutionFilter_Strategy_SubType.nextMatch:
+        final info = strategy.nextMatch;
 
-        final prevTestIndex = flattenedTestsMatchingFilter.indexWhere((e) => e.name == nextMatchingInfo.prevTestName);
+        final prevTestIndex = flattenedTestsMatchingFilter.indexWhere((e) => e.name == info.prevTestName);
         if (prevTestIndex == -1) throw Exception;
 
         return _createOutput([flattenedTestsMatchingFilter[prevTestIndex + 1]]);
-      case ExecutionFilter_SubType.allMatching:
+      case ExecutionFilter_Strategy_SubType.allMatch:
         return _createOutput(flattenedTestsMatchingFilter);
-      case ExecutionFilter_SubType.notSet:
+      case ExecutionFilter_Strategy_SubType.notSet:
         throw Exception('unknown $executionFilter');
     }
   }

@@ -279,61 +279,74 @@ const ExecutionFilter$json = const {
   '1': 'ExecutionFilter',
   '2': const [
     const {'1': 'filter_name_regex', '3': 1, '4': 1, '5': 9, '10': 'filterNameRegex'},
+    const {'1': 'strategy', '3': 2, '4': 1, '5': 11, '6': '.ExecutionFilter.Strategy', '10': 'strategy'},
+  ],
+  '3': const [ExecutionFilter_Strategy$json],
+};
+
+@$core.Deprecated('Use executionFilterDescriptor instead')
+const ExecutionFilter_Strategy$json = const {
+  '1': 'Strategy',
+  '2': const [
     const {
-      '1': 'first_matching',
+      '1': 'first_match',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.ExecutionFilter.Strategy.FirstMatch',
+      '9': 0,
+      '10': 'firstMatch'
+    },
+    const {
+      '1': 'next_match',
       '3': 2,
       '4': 1,
       '5': 11,
-      '6': '.ExecutionFilter.FirstMatching',
+      '6': '.ExecutionFilter.Strategy.NextMatch',
       '9': 0,
-      '10': 'firstMatching'
+      '10': 'nextMatch'
     },
     const {
-      '1': 'next_matching',
+      '1': 'all_match',
       '3': 3,
       '4': 1,
       '5': 11,
-      '6': '.ExecutionFilter.NextMatching',
+      '6': '.ExecutionFilter.Strategy.AllMatch',
       '9': 0,
-      '10': 'nextMatching'
-    },
-    const {
-      '1': 'all_matching',
-      '3': 4,
-      '4': 1,
-      '5': 11,
-      '6': '.ExecutionFilter.AllMatching',
-      '9': 0,
-      '10': 'allMatching'
+      '10': 'allMatch'
     },
   ],
-  '3': const [ExecutionFilter_FirstMatching$json, ExecutionFilter_NextMatching$json, ExecutionFilter_AllMatching$json],
+  '3': const [
+    ExecutionFilter_Strategy_FirstMatch$json,
+    ExecutionFilter_Strategy_NextMatch$json,
+    ExecutionFilter_Strategy_AllMatch$json
+  ],
   '8': const [
     const {'1': 'sub_type'},
   ],
 };
 
 @$core.Deprecated('Use executionFilterDescriptor instead')
-const ExecutionFilter_FirstMatching$json = const {
-  '1': 'FirstMatching',
+const ExecutionFilter_Strategy_FirstMatch$json = const {
+  '1': 'FirstMatch',
 };
 
 @$core.Deprecated('Use executionFilterDescriptor instead')
-const ExecutionFilter_NextMatching$json = const {
-  '1': 'NextMatching',
+const ExecutionFilter_Strategy_NextMatch$json = const {
+  '1': 'NextMatch',
   '2': const [
     const {'1': 'prev_test_name', '3': 1, '4': 1, '5': 9, '10': 'prevTestName'},
   ],
 };
 
 @$core.Deprecated('Use executionFilterDescriptor instead')
-const ExecutionFilter_AllMatching$json = const {
-  '1': 'AllMatching',
+const ExecutionFilter_Strategy_AllMatch$json = const {
+  '1': 'AllMatch',
 };
 
 /// Descriptor for `ExecutionFilter`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List executionFilterDescriptor = $convert.base64Decode(
-    'Cg9FeGVjdXRpb25GaWx0ZXISKgoRZmlsdGVyX25hbWVfcmVnZXgYASABKAlSD2ZpbHRlck5hbWVSZWdleBJHCg5maXJzdF9tYXRjaGluZxgCIAEoCzIeLkV4ZWN1dGlvbkZpbHRlci5GaXJzdE1hdGNoaW5nSABSDWZpcnN0TWF0Y2hpbmcSRAoNbmV4dF9tYXRjaGluZxgDIAEoCzIdLkV4ZWN1dGlvbkZpbHRlci5OZXh0TWF0Y2hpbmdIAFIMbmV4dE1hdGNoaW5nEkEKDGFsbF9tYXRjaGluZxgEIAEoCzIcLkV4ZWN1dGlvbkZpbHRlci5BbGxNYXRjaGluZ0gAUgthbGxNYXRjaGluZxoPCg1GaXJzdE1hdGNoaW5nGjQKDE5leHRNYXRjaGluZxIkCg5wcmV2X3Rlc3RfbmFtZRgBIAEoCVIMcHJldlRlc3ROYW1lGg0KC0FsbE1hdGNoaW5nQgoKCHN1Yl90eXBl');
+    'Cg9FeGVjdXRpb25GaWx0ZXISKgoRZmlsdGVyX25hbWVfcmVnZXgYASABKAlSD2ZpbHRlck5hbWVSZWdleBI1CghzdHJhdGVneRgCIAEoCzIZLkV4ZWN1dGlvbkZpbHRlci5TdHJhdGVneVIIc3RyYXRlZ3katQIKCFN0cmF0ZWd5EkcKC2ZpcnN0X21hdGNoGAEgASgLMiQuRXhlY3V0aW9uRmlsdGVyLlN0cmF0ZWd5LkZpcnN0TWF0Y2hIAFIKZmlyc3RNYXRjaBJECgpuZXh0X21hdGNoGAIgASgLMiMuRXhlY3V0aW9uRmlsdGVyLlN0cmF0ZWd5Lk5leHRNYXRjaEgAUgluZXh0TWF0Y2gSQQoJYWxsX21hdGNoGAMgASgLMiIuRXhlY3V0aW9uRmlsdGVyLlN0cmF0ZWd5LkFsbE1hdGNoSABSCGFsbE1hdGNoGgwKCkZpcnN0TWF0Y2gaMQoJTmV4dE1hdGNoEiQKDnByZXZfdGVzdF9uYW1lGAEgASgJUgxwcmV2VGVzdE5hbWUaCgoIQWxsTWF0Y2hCCgoIc3ViX3R5cGU=');
 @$core.Deprecated('Use resolvedExecutionFilterProtoDescriptor instead')
 const ResolvedExecutionFilterProto$json = const {
   '1': 'ResolvedExecutionFilterProto',
