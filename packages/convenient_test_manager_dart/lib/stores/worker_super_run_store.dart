@@ -1,5 +1,7 @@
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
+import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 part 'worker_super_run_store.freezed.dart';
@@ -11,6 +13,8 @@ part 'worker_super_run_store.g.dart';
 class WorkerSuperRunStore = _WorkerSuperRunStore with _$WorkerSuperRunStore;
 
 abstract class _WorkerSuperRunStore with Store {
+  static const _kTag = 'WorkerSuperRunStore';
+
   @observable
   bool isolationMode = false;
 
@@ -23,6 +27,20 @@ abstract class _WorkerSuperRunStore with Store {
   void setIntegrationTest({required String filterNameRegex}) => currSuperRunController = isolationMode
       ? _WorkerSuperRunControllerIntegrationTestIsolationMode(filterNameRegex: filterNameRegex)
       : _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: filterNameRegex);
+
+  _WorkerSuperRunStore() {
+    reaction<bool>(
+      (_) => isolationMode,
+      (isolationMode) async {
+        Log.d(
+            _kTag, 'see isolationMode($isolationMode) changed, thus reloadInfo to make currSuperRunController updated');
+        await GetIt.I.get<MiscDartService>().reloadInfo();
+        assert(isolationMode
+            ? currSuperRunController is _WorkerSuperRunControllerIntegrationTestIsolationMode
+            : currSuperRunController is _WorkerSuperRunControllerIntegrationTestClassicalMode);
+      },
+    );
+  }
 }
 
 enum WorkerRunMode { interactiveApp, integrationTest }
