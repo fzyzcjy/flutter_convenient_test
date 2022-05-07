@@ -1,3 +1,4 @@
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/services/fs_service.dart';
 import 'package:convenient_test_manager_dart/services/screen_video_recorder_service.dart';
 import 'package:convenient_test_manager_dart/stores/video_player_store.dart';
@@ -12,6 +13,8 @@ part 'video_recorder_store.g.dart';
 class VideoRecorderStore = _VideoRecorderStore with _$VideoRecorderStore;
 
 abstract class _VideoRecorderStore with Store {
+  static const _kTag = 'VideoRecorderStore';
+
   @observable
   VideoInfo? recordingVideoInfo;
 
@@ -23,12 +26,17 @@ abstract class _VideoRecorderStore with Store {
   Future<void> startRecord() async {
     final path = await _createVideoPath();
     recordingVideoInfo = VideoInfo(path: path, startTime: DateTime.now(), endTime: _kInvalidTime);
+
+    Log.d(_kTag, 'startRecord call ScreenVideoRecorderService begin');
     await GetIt.I.get<ScreenVideoRecorderService>().startRecord(path);
+    Log.d(_kTag, 'startRecord call ScreenVideoRecorderService end');
   }
 
   @action
   Future<void> stopRecord() async {
+    Log.d(_kTag, 'stopRecord call ScreenVideoRecorderService begin');
     await GetIt.I.get<ScreenVideoRecorderService>().stopRecord();
+    Log.d(_kTag, 'stopRecord call ScreenVideoRecorderService end');
 
     GetIt.I.getIfRegistered<VideoPlayerStoreBase>()?.handleRecorderFinished(VideoInfo(
           path: recordingVideoInfo!.path,

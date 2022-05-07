@@ -133,6 +133,8 @@ class _GroupInfoSectionBuilder extends StaticSectionBuilder {
 }
 
 class _TestInfoSectionBuilder extends StaticSectionBuilder {
+  static const _kTag = 'TestInfoSectionBuilder';
+
   final TestInfo info;
   final int depth;
 
@@ -221,7 +223,10 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     final endTime = logSubEntryTimes.reduce((a, b) => a.isAfter(b) ? a : b);
 
     final anchorTime = startTime.add(endTime.difference(startTime) ~/ 5);
+    Log.d(_kTag, 'handleTapPlayVideoButton startTime=$startTime endTime=$endTime anchorTime=$anchorTime');
+
     final interestVideoId = videoPlayerStore.videoMap.findVideoAtTime(anchorTime);
+    Log.d(_kTag, 'handleTapPlayVideoButton interestVideoId=$interestVideoId videoInfos=${videoPlayerStore.videoMap}');
     if (interestVideoId != null) {
       final activeVideo = videoPlayerStore.videoMap[interestVideoId]!;
 
