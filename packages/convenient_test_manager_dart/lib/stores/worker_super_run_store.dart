@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/misc/compile_time_config.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
@@ -172,10 +173,11 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
           'However, currently it is allowExecuteTestNames=$allowExecuteTestNames.');
     }
 
-    if (allowExecuteTestNames.isEmpty) {
+    final executedTestName = allowExecuteTestNames.firstOrNull;
+    if (executedTestName == null) {
       state = const _ITIMState.finished();
     } else {
-      state = _ITIMState.middle(lastFinishedTestName: allowExecuteTestNames.single);
+      state = _ITIMState.middle(lastFinishedTestName: executedTestName);
     }
     Log.d(_kTag, 'handleTearDownAll oldState=$oldState newState=$state allowExecuteTestNames=$allowExecuteTestNames');
 
