@@ -1,9 +1,9 @@
-import 'package:convenient_test_manager/components/misc/video_player.dart';
-import 'package:convenient_test_manager/services/screen_video_recorder_service.dart';
-import 'package:convenient_test_manager/stores/log_store.dart';
-import 'package:flutter/foundation.dart';
+import 'package:convenient_test_manager_dart/components/misc/video_player.dart';
+import 'package:convenient_test_manager_dart/services/screen_video_recorder_service.dart';
+import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tuple/tuple.dart';

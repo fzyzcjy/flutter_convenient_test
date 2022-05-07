@@ -1,4 +1,4 @@
-import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:mobx/mobx.dart';
 
 part 'raw_log_store.g.dart';

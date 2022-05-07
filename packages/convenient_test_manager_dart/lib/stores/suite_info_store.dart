@@ -1,6 +1,6 @@
-import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_manager/stores/log_store.dart';
-import 'package:convenient_test_manager/utils/utils.dart';
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
+import 'package:convenient_test_manager_dart/stores/log_store.dart';
+import 'package:convenient_test_manager_dart/utils/utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
