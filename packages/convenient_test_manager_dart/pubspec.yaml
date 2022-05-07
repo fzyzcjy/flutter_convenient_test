@@ -10,6 +10,7 @@ dependencies:
   collection: ^1.15.0
   convenient_test_common_dart: ^1.0.0
   fixnum: ^1.0.0
+  freezed_annotation: ^2.0.3
   get_it: ^6.0.0
   grpc: ^3.0.0
   intl: ^0.17.0
@@ -27,8 +28,8 @@ dependency_overrides:
       url: https://github.com/fzyzcjy/grpc-dart # #3761
 
 dev_dependencies:
-  analyzer: ^2.3.0
   build_runner: ^2.1.2
   build_test: ^2.0.0
+  freezed: ^2.0.3
   lint: ^1.8.2
   mobx_codegen: ^2.0.6
