@@ -166,13 +166,19 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
     final allowExecuteTestNames = resolvedExecutionFilter.allowExecuteTestNames;
     final oldState = state;
 
+    if (allowExecuteTestNames.length > 1) {
+      throw Exception('$_kTag expect allowExecuteTestNames to have 0 or 1 entries, '
+          'since in this mode, a worker run only executes 0 or 1 tests. '
+          'However, currently it is allowExecuteTestNames=$allowExecuteTestNames.');
+    }
+
     if (allowExecuteTestNames.isEmpty) {
       state = const _ITIMState.finished();
     } else {
       state = _ITIMState.middle(lastFinishedTestName: allowExecuteTestNames.single);
     }
     Log.d(_kTag, 'handleTearDownAll oldState=$oldState newState=$state allowExecuteTestNames=$allowExecuteTestNames');
-   
+
     TODO_handle_flaky_tests;
   }
 }
