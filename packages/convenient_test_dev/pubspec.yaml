@@ -10,6 +10,7 @@ dependencies:
   collection: ^1.15.0
   convenient_test: ^1.0.0
   convenient_test_common: ^1.0.0
+  convenient_test_common_dart: ^1.0.0
   fixnum: ^1.0.0
   flutter:
     sdk: flutter
@@ -27,3 +28,9 @@ dependencies:
   recase: ^4.0.0
   test_api: ^0.4.2
   web_socket_channel: ^2.1.0
+
+dependency_overrides:
+  convenient_test_common:
+    path: ../convenient_test_common
+  convenient_test_common_dart:
+    path: ../convenient_test_common_dart
