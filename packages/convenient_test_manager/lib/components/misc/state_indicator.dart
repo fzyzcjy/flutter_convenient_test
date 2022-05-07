@@ -1,5 +1,5 @@
 import 'package:convenient_test_manager/components/misc/rotate_animation.dart';
-import 'package:convenient_test_manager/utils/utils.dart';
+import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:flutter/material.dart';
 
 class StateIndicatorWidget extends StatelessWidget {

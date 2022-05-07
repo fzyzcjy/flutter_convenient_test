@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:convenient_test_common/src/common_flutter/front_log.dart';
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';

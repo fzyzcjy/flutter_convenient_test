@@ -2,13 +2,12 @@ import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/home_page/log_entry_widget.dart';
 import 'package:convenient_test_manager/components/misc/state_indicator.dart';
 import 'package:convenient_test_manager/misc/protobuf_extensions.dart';
-import 'package:convenient_test_manager/services/misc_service.dart';
+import 'package:convenient_test_manager/services/misc_flutter_service.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
-import 'package:convenient_test_manager/stores/log_store.dart';
-import 'package:convenient_test_manager/stores/suite_info_store.dart';
-import 'package:convenient_test_manager/stores/video_store.dart';
-import 'package:convenient_test_manager/utils/utils.dart';
+import 'package:convenient_test_manager/stores/video_player_store.dart';
+import 'package:convenient_test_manager_dart/stores/log_store.dart';
+import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -208,7 +207,7 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
   }
 
   void _handleTapPlayVideoButton() {
-    final videoStore = GetIt.I.get<VideoStore>();
+    final videoPlayerStore = GetIt.I.get<VideoPlayerStore>();
     final logStore = GetIt.I.get<LogStore>();
     final homePageStore = GetIt.I.get<HomePageStore>();
 
@@ -221,9 +220,9 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     final startTime = logSubEntryTimes.reduce((a, b) => a.isBefore(b) ? a : b);
     final endTime = logSubEntryTimes.reduce((a, b) => a.isAfter(b) ? a : b);
 
-    videoStore.displayRange = Tuple2(
-      videoStore.absoluteToVideoTime(startTime),
-      videoStore.absoluteToVideoTime(endTime),
+    videoPlayerStore.displayRange = Tuple2(
+      videoPlayerStore.absoluteToVideoTime(startTime),
+      videoPlayerStore.absoluteToVideoTime(endTime),
     );
 
     homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.video;
@@ -281,7 +280,7 @@ class _RunTestButton extends StatelessWidget {
       visualDensity: VisualDensity.compact,
       onPressed: () {
         GetIt.I.get<HighlightStore>().enableAutoExpand = true;
-        GetIt.I.get<MiscService>().hotRestartAndRunTests(filterNameRegex: filterNameRegex);
+        GetIt.I.get<MiscFlutterService>().hotRestartAndRunTests(filterNameRegex: filterNameRegex);
       },
       tooltip: 'Run this test',
       icon: const Icon(

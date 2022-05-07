@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 
 abstract class ScreenVideoRecorderService {
   static ScreenVideoRecorderService create() {

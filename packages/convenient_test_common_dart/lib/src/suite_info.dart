@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
-import 'package:convenient_test_common/src/common_flutter/front_log.dart';
-import 'package:convenient_test_common/src/protobuf/convenient_test.pb.dart';
-import 'package:flutter/foundation.dart';
+import 'package:convenient_test_common_dart/src/common_dart/front_log.dart';
+import 'package:convenient_test_common_dart/src/protobuf/convenient_test.pb.dart';
+import 'package:meta/meta.dart';
 
 @immutable
 class SuiteInfo {

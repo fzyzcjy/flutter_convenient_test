@@ -1,5 +1,28 @@
-import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
+import 'package:convenient_test_manager_dart/stores/log_store.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 import 'package:test_api/src/backend/state.dart'; // ignore: implementation_imports
+
+part 'suite_info_store.g.dart';
+
+class SuiteInfoStore = _SuiteInfoStore with _$SuiteInfoStore;
+
+abstract class _SuiteInfoStore with Store {
+  @observable
+  SuiteInfo? suiteInfo;
+
+  final testEntryStateMap = ObservableDefaultMap<int, TestEntryState>(
+      createDefaultValue: (_) => TestEntryState(status: 'pending', result: 'success'));
+
+  SimplifiedStateEnum getSimplifiedState(int testInfoId) =>
+      testEntryStateMap[testInfoId].toSimplifiedStateEnum(isFlaky: GetIt.I.get<LogStore>().isTestFlaky(testInfoId));
+
+  void clear() {
+    suiteInfo = null;
+    testEntryStateMap.clear();
+  }
+}
 
 extension ExtTestEntryState on TestEntryState {
   State toState() => State(Status.parse(status), Result.parse(result));

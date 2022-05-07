@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_manager/services/misc_service.dart';
-import 'package:convenient_test_manager/stores/highlight_store.dart';
-import 'package:convenient_test_manager/stores/log_store.dart';
-import 'package:convenient_test_manager/stores/raw_log_store.dart';
-import 'package:convenient_test_manager/stores/suite_info_store.dart';
-import 'package:convenient_test_manager/stores/video_store.dart';
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
+import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
+import 'package:convenient_test_manager_dart/stores/highlight_store.dart';
+import 'package:convenient_test_manager_dart/stores/log_store.dart';
+import 'package:convenient_test_manager_dart/stores/raw_log_store.dart';
+import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
+import 'package:convenient_test_manager_dart/stores/video_recorder_store.dart';
+import 'package:convenient_test_manager_dart/utils/get_it_utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -46,13 +47,13 @@ class ReportHandlerService {
 
     if (overallExecution == OverallExecution.SET_UP_ALL) {
       Log.d(_kTag, 'reset cache since see SET_UP_ALL');
-      GetIt.I.get<MiscService>().clearAll();
+      GetIt.I.get<MiscDartService>().clearAll();
     }
 
     if (!offlineFile) {
-      final videoStore = GetIt.I.get<VideoStore>();
-      if (overallExecution == OverallExecution.SET_UP_ALL) await videoStore.startRecord();
-      if (overallExecution == OverallExecution.TEAR_DOWN_ALL) await videoStore.stopRecord();
+      final videoRecorderStore = GetIt.I.get<VideoRecorderStore>();
+      if (overallExecution == OverallExecution.SET_UP_ALL) await videoRecorderStore.startRecord();
+      if (overallExecution == OverallExecution.TEAR_DOWN_ALL) await videoRecorderStore.stopRecord();
     }
   }
 
@@ -64,13 +65,7 @@ class ReportHandlerService {
 
     _logStore.addLogEntry(testEntryId: testEntryId, logEntryId: request.id, subEntries: request.subEntries);
 
-    if (_highlightStore.enableAutoExpand) {
-      _highlightStore
-        ..expandGroupEntryMap.clear()
-        ..expandSeriesForTest(testInfoId: testEntryId)
-        ..highlightTestEntryId = testEntryId
-        ..highlightLogEntryId = request.id;
-    }
+    GetIt.I.getIfRegistered<HighlightStoreBase>()?.handleLogEntry(testEntryId: testEntryId, logEntryId: request.id);
   }
 
   Future<void> _handleRunnerError(RunnerError request) async {
@@ -114,7 +109,6 @@ class ReportHandlerService {
   }
 
   final _logStore = GetIt.I.get<LogStore>();
-  final _highlightStore = GetIt.I.get<HighlightStore>();
   final _suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
   final _rawLogStore = GetIt.I.get<RawLogStore>();
 }

@@ -1,7 +1,7 @@
 import 'package:convenient_test_manager/components/home_page/misc_dialog.dart';
-import 'package:convenient_test_manager/services/misc_service.dart';
-import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
+import 'package:convenient_test_manager/services/misc_flutter_service.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
+import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -12,7 +12,7 @@ class HomePageHeaderPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final highlightStore = GetIt.I.get<HighlightStore>();
-    final miscService = GetIt.I.get<MiscService>();
+    final miscFlutterService = GetIt.I.get<MiscFlutterService>();
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -22,18 +22,18 @@ class HomePageHeaderPanel extends StatelessWidget {
           TextButton(
             onPressed: () {
               highlightStore.enableAutoExpand = true;
-              miscService.hotRestartAndRunTests(filterNameRegex: '.*');
+              miscFlutterService.hotRestartAndRunTests(filterNameRegex: '.*');
             },
             child: const Text('Run All Tests'),
           ),
           const SizedBox(width: 20),
           TextButton(
-            onPressed: miscService.hotRestartAndRunInAppMode,
+            onPressed: miscFlutterService.hotRestartAndRunInAppMode,
             child: const Text('Interactive Mode'),
           ),
           const SizedBox(width: 20),
           TextButton(
-            onPressed: miscService.reloadInfo,
+            onPressed: miscFlutterService.reloadInfo,
             child: const Text('Reload Info'),
           ),
           const SizedBox(width: 20),
@@ -43,7 +43,7 @@ class HomePageHeaderPanel extends StatelessWidget {
           ),
           const SizedBox(width: 20),
           TextButton(
-            onPressed: miscService.pickFileAndReadReport,
+            onPressed: miscFlutterService.pickFileAndReadReport,
             child: const Text('Open File'),
           ),
           Expanded(child: Container()),

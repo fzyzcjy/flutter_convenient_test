@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+service ConvenientTestManager {
+  rpc Report (ReportCollection) returns (Empty);
+  rpc GetWorkerMode (Empty) returns (WorkerMode);
+}
+
+message ReportCollection {
+  // use "repeated" + single-field, thus can concat multiple ReportCollection together
+  repeated ReportItem items = 1;
+}
+
+message ReportItem {
+  oneof sub_type {
+    OverallExecution overall_execution = 7;
+    SuiteInfoProto suite_info_proto = 1;
+    LogEntry log_entry = 2;
+    RunnerStateChange runner_state_change = 3;
+    RunnerError runner_error = 4;
+    RunnerMessage runner_message = 5;
+    Snapshot snapshot = 6;
+  }
+}
+
+enum OverallExecution {
+  OVERALL_EXECUTION_INVALID = 0;
+  SET_UP_ALL = 1;
+  TEAR_DOWN_ALL = 2;
+}
+
+message LogEntry {
+  int32 id = 1;
+  repeated string entry_locators = 2;
+  repeated LogSubEntry sub_entries = 3;
+}
+
+message LogSubEntry {
+  int32 id = 1;
+  int64 time = 2;
+  LogSubEntryType type = 3;
+  string title = 4;
+  string message = 5;
+  string error = 6;
+  string stack_trace = 7;
+}
+
+enum LogSubEntryType {
+  INVALID = 0;
+  GENERAL_MESSAGE = 1;
+  TEST_START = 2;
+  TEST_BODY = 3;
+  TEST_END = 4;
+  ASSERT = 5;
+  ASSERT_FAIL = 6;
+  SECTION = 7;
+}
+
+// mimic test_api :: Suite
+message SuiteInfoProto {
+  int32 group_id = 1;
+  repeated GroupInfoProto groups = 2;
+  repeated TestInfoProto tests = 3;
+}
+
+// mimic test_api :: Group
+message GroupInfoProto {
+  int32 id = 1;
+  string name = 2;
+  int32 parent_id = 3;
+  repeated int32 entry_ids = 4;
+}
+
+// mimic test_api :: Test
+message TestInfoProto {
+  int32 id = 1;
+  string name = 2;
+  int32 parent_id = 3;
+}
+
+message RunnerStateChange {
+  repeated string entry_locators = 1;
+  TestEntryState state = 2;
+}
+
+message TestEntryState {
+  string status = 1;
+  string result = 2;
+}
+
+message RunnerError {
+  repeated string entry_locators = 1;
+  string error = 2;
+  string stack_trace = 3;
+}
+
+message RunnerMessage {
+  repeated string entry_locators = 1;
+  string message = 2;
+}
+
+message Snapshot {
+  int32 log_entry_id = 1;
+  string name = 2;
+  bytes image = 3;
+}
+
+message WorkerMode {
+  oneof sub_type {
+    WorkerModeInteractiveApp interactive_app = 1;
+    WorkerModeIntegrationTest integration_test = 2;
+  }
+}
+
+message WorkerModeInteractiveApp {}
+
+message WorkerModeIntegrationTest {
+  string filter_name_regex = 1;
+}
+
+// https://stackoverflow.com/questions/31768665/can-i-define-a-grpc-call-with-a-null-request-or-response
+message Empty {
+}

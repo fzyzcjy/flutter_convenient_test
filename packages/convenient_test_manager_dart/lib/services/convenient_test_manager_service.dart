@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_manager/services/report_handler_service.dart';
-import 'package:convenient_test_manager/stores/worker_mode_store.dart';
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
+import 'package:convenient_test_manager_dart/services/report_handler_service.dart';
+import 'package:convenient_test_manager_dart/stores/worker_mode_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:grpc/grpc.dart';
