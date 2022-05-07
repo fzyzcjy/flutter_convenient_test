@@ -1,5 +1,8 @@
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mobx/mobx.dart';
+
+part 'worker_super_run_store.freezed.dart';
 
 part 'worker_super_run_store.g.dart';
 
@@ -66,18 +69,50 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
 class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperRunController {
   final String filterNameRegex;
 
+  var state = const _ITIMState.initial();
+
   _WorkerSuperRunControllerIntegrationTestIsolationMode({required this.filterNameRegex}) : super._();
 
   @override
   WorkerCurrentRunConfig calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
-        reportSuiteInfo: TODO,
-        executionFilter: ExecutionFilter(
-          filterNameRegex: filterNameRegex,
-          strategy: TODO,
-        ),
+        reportSuiteInfo: state is _ITIMStateInitial,
+        executionFilter: _calcExecutionFilter(),
       ),
     );
   }
+
+  ExecutionFilter _calcExecutionFilter() => state.map(
+        initial: (_) => ExecutionFilter(
+          filterNameRegex: filterNameRegex,
+          strategy: ExecutionFilter_Strategy(firstMatch: ExecutionFilter_Strategy_FirstMatch()),
+        ),
+        middle: (s) => ExecutionFilter(
+          filterNameRegex: filterNameRegex,
+          strategy: ExecutionFilter_Strategy(
+            nextMatch: ExecutionFilter_Strategy_NextMatch(
+              prevTestName: s.lastFinishedTestName,
+            ),
+          ),
+        ),
+        finished: (_) => ExecutionFilter(
+          // NOTE use "regex match nothing"
+          filterNameRegex: kRegexMatchNothing,
+          strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
+        ),
+      );
+}
+
+// ITIM := IntegrationTestIsolationMode
+@freezed
+class _ITIMState with _$_ITIMState {
+  /// Before first test finished
+  const factory _ITIMState.initial() = _ITIMStateInitial;
+
+  const factory _ITIMState.middle({
+    required String lastFinishedTestName,
+  }) = _ITIMStateMiddle;
+
+  const factory _ITIMState.finished() = _ITIMStateFinished;
 }
