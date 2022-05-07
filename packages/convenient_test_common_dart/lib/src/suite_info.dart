@@ -86,8 +86,16 @@ abstract class GroupEntryInfo {
 
   void traverse(SuiteInfo suiteInfo, GroupEntryInfoTraverseCallback callback) {
     callback(this);
-    for (final entryId in childrenGroupEntryIds) {
-      suiteInfo.entryMap[entryId]!.traverse(suiteInfo, callback);
+    for (final childEntryId in childrenGroupEntryIds) {
+      final child = suiteInfo.entryMap[childEntryId];
+
+      // #135
+      if (child == null) {
+        throw Exception('cannot find entry for childEntryId=$childEntryId '
+            '(this.id=$id, this.name=$name, suiteInfo.entryMap=${suiteInfo.entryMap.keys.toList()})');
+      }
+
+      child.traverse(suiteInfo, callback);
     }
   }
 }
