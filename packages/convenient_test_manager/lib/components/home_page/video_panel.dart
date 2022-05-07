@@ -15,7 +15,10 @@ class HomePageVideoPanel extends StatelessWidget {
       final displayVideoPath = videoPlayerStore.activeVideo?.path;
       if (displayVideoPath == null) {
         return const Center(
-          child: Text('No video or still recording'),
+          child: Text(
+            'No selected video or still recording.\n'
+            'Tap a test in the left panel to choose a video.',
+          ),
         );
       }
 
