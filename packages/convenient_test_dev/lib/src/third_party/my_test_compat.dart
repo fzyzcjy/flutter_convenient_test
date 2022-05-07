@@ -7,7 +7,6 @@ import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/declarer.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
-import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:test_api/src/backend/declarer.dart';
 import 'package:test_api/src/backend/group.dart';
@@ -201,7 +200,7 @@ class _Reporter {
       // NOTE XXX add
       myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
               runnerMessage: RunnerMessage(
-            entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
+            testName: liveTest.test.name,
             message: message.text,
           )));
     }));
@@ -212,7 +211,7 @@ class _Reporter {
     // NOTE XXX add
     myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
             runnerStateChange: RunnerStateChange(
-          entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
+          testName: liveTest.test.name,
           state: state.toProto(),
         )));
 
@@ -226,7 +225,7 @@ class _Reporter {
     // NOTE XXX add
     myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
             runnerError: RunnerError(
-          entryLocators: SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest),
+          testName: liveTest.test.name,
           error: error.toString(),
           stackTrace: '$stackTrace',
         )));

@@ -5,7 +5,6 @@ import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/core.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
-import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -59,16 +58,16 @@ class LogHandle {
   static const _kTag = 'LogHandle';
 
   final int _id;
-  final List<String> _entryLocators;
+  final String _testName;
 
-  LogHandle._(this._id, this._entryLocators);
+  LogHandle._(this._id, this._testName);
 
   factory LogHandle.create({
     LiveTest? liveTest,
   }) {
     return LogHandle._(
       IdGenerator.instance.nextId(),
-      SuiteInfoUtils.entryLocatorsFromLiveTest(liveTest ?? Invoker.current!.liveTest),
+      (liveTest ?? Invoker.current!.liveTest).test.name,
     );
   }
 
@@ -87,7 +86,7 @@ class LogHandle {
     await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
             logEntry: LogEntry(
           id: _id,
-          entryLocators: _entryLocators,
+          testName: _testName,
           subEntries: [
             LogSubEntry(
               id: IdGenerator.instance.nextId(),

@@ -376,8 +376,8 @@ class LogEntry extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LogEntry',
       createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
-    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testName')
     ..pc<LogSubEntry>(
         3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'subEntries', $pb.PbFieldType.PM,
         subBuilder: LogSubEntry.create)
@@ -385,16 +385,16 @@ class LogEntry extends $pb.GeneratedMessage {
 
   LogEntry._() : super();
   factory LogEntry({
-    $core.int? id,
-    $core.Iterable<$core.String>? entryLocators,
+    $fixnum.Int64? id,
+    $core.String? testName,
     $core.Iterable<LogSubEntry>? subEntries,
   }) {
     final _result = create();
     if (id != null) {
       _result.id = id;
     }
-    if (entryLocators != null) {
-      _result.entryLocators.addAll(entryLocators);
+    if (testName != null) {
+      _result.testName = testName;
     }
     if (subEntries != null) {
       _result.subEntries.addAll(subEntries);
@@ -424,10 +424,10 @@ class LogEntry extends $pb.GeneratedMessage {
   static LogEntry? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get id => $_getIZ(0);
+  $fixnum.Int64 get id => $_getI64(0);
   @$pb.TagNumber(1)
-  set id($core.int v) {
-    $_setSignedInt32(0, v);
+  set id($fixnum.Int64 v) {
+    $_setInt64(0, v);
   }
 
   @$pb.TagNumber(1)
@@ -436,7 +436,16 @@ class LogEntry extends $pb.GeneratedMessage {
   void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<$core.String> get entryLocators => $_getList(1);
+  $core.String get testName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set testName($core.String v) {
+    $_setString(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasTestName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTestName() => clearField(2);
 
   @$pb.TagNumber(3)
   $core.List<LogSubEntry> get subEntries => $_getList(2);
@@ -446,7 +455,7 @@ class LogSubEntry extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LogSubEntry',
       createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time')
     ..e<LogSubEntryType>(
         3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE,
@@ -459,7 +468,7 @@ class LogSubEntry extends $pb.GeneratedMessage {
 
   LogSubEntry._() : super();
   factory LogSubEntry({
-    $core.int? id,
+    $fixnum.Int64? id,
     $fixnum.Int64? time,
     LogSubEntryType? type,
     $core.String? title,
@@ -514,10 +523,10 @@ class LogSubEntry extends $pb.GeneratedMessage {
   static LogSubEntry? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get id => $_getIZ(0);
+  $fixnum.Int64 get id => $_getI64(0);
   @$pb.TagNumber(1)
-  set id($core.int v) {
-    $_setSignedInt32(0, v);
+  set id($fixnum.Int64 v) {
+    $_setInt64(0, v);
   }
 
   @$pb.TagNumber(1)
@@ -602,8 +611,7 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SuiteInfoProto',
       createEmptyInstance: create)
-    ..a<$core.int>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupId', $pb.PbFieldType.O3)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupId')
     ..pc<GroupInfoProto>(
         2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.PM,
         subBuilder: GroupInfoProto.create)
@@ -614,7 +622,7 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
 
   SuiteInfoProto._() : super();
   factory SuiteInfoProto({
-    $core.int? groupId,
+    $fixnum.Int64? groupId,
     $core.Iterable<GroupInfoProto>? groups,
     $core.Iterable<TestInfoProto>? tests,
   }) {
@@ -654,10 +662,10 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
   static SuiteInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get groupId => $_getIZ(0);
+  $fixnum.Int64 get groupId => $_getI64(0);
   @$pb.TagNumber(1)
-  set groupId($core.int v) {
-    $_setSignedInt32(0, v);
+  set groupId($fixnum.Int64 v) {
+    $_setInt64(0, v);
   }
 
   @$pb.TagNumber(1)
@@ -676,20 +684,19 @@ class GroupInfoProto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupInfoProto',
       createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..a<$core.int>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parentId', $pb.PbFieldType.O3)
-    ..p<$core.int>(
-        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryIds', $pb.PbFieldType.P3)
+    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parentId')
+    ..p<$fixnum.Int64>(
+        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryIds', $pb.PbFieldType.P6)
     ..hasRequiredFields = false;
 
   GroupInfoProto._() : super();
   factory GroupInfoProto({
-    $core.int? id,
+    $fixnum.Int64? id,
     $core.String? name,
-    $core.int? parentId,
-    $core.Iterable<$core.int>? entryIds,
+    $fixnum.Int64? parentId,
+    $core.Iterable<$fixnum.Int64>? entryIds,
   }) {
     final _result = create();
     if (id != null) {
@@ -730,10 +737,10 @@ class GroupInfoProto extends $pb.GeneratedMessage {
   static GroupInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get id => $_getIZ(0);
+  $fixnum.Int64 get id => $_getI64(0);
   @$pb.TagNumber(1)
-  set id($core.int v) {
-    $_setSignedInt32(0, v);
+  set id($fixnum.Int64 v) {
+    $_setInt64(0, v);
   }
 
   @$pb.TagNumber(1)
@@ -754,10 +761,10 @@ class GroupInfoProto extends $pb.GeneratedMessage {
   void clearName() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.int get parentId => $_getIZ(2);
+  $fixnum.Int64 get parentId => $_getI64(2);
   @$pb.TagNumber(3)
-  set parentId($core.int v) {
-    $_setSignedInt32(2, v);
+  set parentId($fixnum.Int64 v) {
+    $_setInt64(2, v);
   }
 
   @$pb.TagNumber(3)
@@ -766,24 +773,23 @@ class GroupInfoProto extends $pb.GeneratedMessage {
   void clearParentId() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.List<$core.int> get entryIds => $_getList(3);
+  $core.List<$fixnum.Int64> get entryIds => $_getList(3);
 }
 
 class TestInfoProto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TestInfoProto',
       createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..a<$core.int>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parentId', $pb.PbFieldType.O3)
+    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parentId')
     ..hasRequiredFields = false;
 
   TestInfoProto._() : super();
   factory TestInfoProto({
-    $core.int? id,
+    $fixnum.Int64? id,
     $core.String? name,
-    $core.int? parentId,
+    $fixnum.Int64? parentId,
   }) {
     final _result = create();
     if (id != null) {
@@ -820,10 +826,10 @@ class TestInfoProto extends $pb.GeneratedMessage {
   static TestInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get id => $_getIZ(0);
+  $fixnum.Int64 get id => $_getI64(0);
   @$pb.TagNumber(1)
-  set id($core.int v) {
-    $_setSignedInt32(0, v);
+  set id($fixnum.Int64 v) {
+    $_setInt64(0, v);
   }
 
   @$pb.TagNumber(1)
@@ -844,10 +850,10 @@ class TestInfoProto extends $pb.GeneratedMessage {
   void clearName() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.int get parentId => $_getIZ(2);
+  $fixnum.Int64 get parentId => $_getI64(2);
   @$pb.TagNumber(3)
-  set parentId($core.int v) {
-    $_setSignedInt32(2, v);
+  set parentId($fixnum.Int64 v) {
+    $_setInt64(2, v);
   }
 
   @$pb.TagNumber(3)
@@ -860,19 +866,19 @@ class RunnerStateChange extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RunnerStateChange',
       createEmptyInstance: create)
-    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testName')
     ..aOM<TestEntryState>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state',
         subBuilder: TestEntryState.create)
     ..hasRequiredFields = false;
 
   RunnerStateChange._() : super();
   factory RunnerStateChange({
-    $core.Iterable<$core.String>? entryLocators,
+    $core.String? testName,
     TestEntryState? state,
   }) {
     final _result = create();
-    if (entryLocators != null) {
-      _result.entryLocators.addAll(entryLocators);
+    if (testName != null) {
+      _result.testName = testName;
     }
     if (state != null) {
       _result.state = state;
@@ -905,7 +911,16 @@ class RunnerStateChange extends $pb.GeneratedMessage {
   static RunnerStateChange? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$core.String> get entryLocators => $_getList(0);
+  $core.String get testName => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set testName($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasTestName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTestName() => clearField(1);
 
   @$pb.TagNumber(2)
   TestEntryState get state => $_getN(1);
@@ -996,20 +1011,20 @@ class RunnerError extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RunnerError',
       createEmptyInstance: create)
-    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testName')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stackTrace')
     ..hasRequiredFields = false;
 
   RunnerError._() : super();
   factory RunnerError({
-    $core.Iterable<$core.String>? entryLocators,
+    $core.String? testName,
     $core.String? error,
     $core.String? stackTrace,
   }) {
     final _result = create();
-    if (entryLocators != null) {
-      _result.entryLocators.addAll(entryLocators);
+    if (testName != null) {
+      _result.testName = testName;
     }
     if (error != null) {
       _result.error = error;
@@ -1042,7 +1057,16 @@ class RunnerError extends $pb.GeneratedMessage {
   static RunnerError? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$core.String> get entryLocators => $_getList(0);
+  $core.String get testName => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set testName($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasTestName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTestName() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get error => $_getSZ(1);
@@ -1073,18 +1097,18 @@ class RunnerMessage extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RunnerMessage',
       createEmptyInstance: create)
-    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryLocators')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'testName')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
     ..hasRequiredFields = false;
 
   RunnerMessage._() : super();
   factory RunnerMessage({
-    $core.Iterable<$core.String>? entryLocators,
+    $core.String? testName,
     $core.String? message,
   }) {
     final _result = create();
-    if (entryLocators != null) {
-      _result.entryLocators.addAll(entryLocators);
+    if (testName != null) {
+      _result.testName = testName;
     }
     if (message != null) {
       _result.message = message;
@@ -1114,7 +1138,16 @@ class RunnerMessage extends $pb.GeneratedMessage {
   static RunnerMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$core.String> get entryLocators => $_getList(0);
+  $core.String get testName => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set testName($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasTestName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTestName() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get message => $_getSZ(1);
@@ -1133,8 +1166,7 @@ class Snapshot extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Snapshot',
       createEmptyInstance: create)
-    ..a<$core.int>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'logEntryId', $pb.PbFieldType.O3)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'logEntryId')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..a<$core.List<$core.int>>(
         3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'image', $pb.PbFieldType.OY)
@@ -1142,7 +1174,7 @@ class Snapshot extends $pb.GeneratedMessage {
 
   Snapshot._() : super();
   factory Snapshot({
-    $core.int? logEntryId,
+    $fixnum.Int64? logEntryId,
     $core.String? name,
     $core.List<$core.int>? image,
   }) {
@@ -1181,10 +1213,10 @@ class Snapshot extends $pb.GeneratedMessage {
   static Snapshot? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get logEntryId => $_getIZ(0);
+  $fixnum.Int64 get logEntryId => $_getI64(0);
   @$pb.TagNumber(1)
-  set logEntryId($core.int v) {
-    $_setSignedInt32(0, v);
+  set logEntryId($fixnum.Int64 v) {
+    $_setInt64(0, v);
   }
 
   @$pb.TagNumber(1)
