@@ -23,6 +23,8 @@ class ConvenientTestExecutor {
     runTestsInDeclarer(
       _input.declarer,
       onGroupBuilt: (group) {
+        _ensureNoDuplicateTestNames(group);
+
         if (_input.reportSuiteInfo) _reportSuiteInfo(group);
 
         _resolvedExecutionFilter = _ExecutionFilterResolver.resolve(
@@ -37,6 +39,15 @@ class ConvenientTestExecutor {
   static void _reportSuiteInfo(Group group) {
     final suiteInfo = SuiteInfoConverter().convert(group);
     myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(suiteInfoProto: suiteInfo));
+  }
+
+  static void _ensureNoDuplicateTestNames(Group group) {
+    final allNames = traverseTests(group).map((e) => e.name).toList();
+    if (allNames.toSet().length != allNames.length) {
+      throw Exception('Should not have any duplicated test names, '
+          'because convenient_test rely on test names to identify and distinguish them. '
+          'However, this is violated.');
+    }
   }
 }
 
@@ -99,16 +110,16 @@ class _ExecutionFilterResolver {
 
   static ResolvedExecutionFilter _createOutput(List<Test> allowExecuteTests) =>
       ResolvedExecutionFilter(allowExecuteTestNames: allowExecuteTests.map((e) => e.name).toList());
+}
 
-  static Iterable<Test> traverseTests(GroupEntry entry) sync* {
-    if (entry is Group) {
-      for (final child in entry.entries) {
-        yield* traverseTests(child);
-      }
-    } else if (entry is Test) {
-      yield entry;
-    } else {
-      throw Exception('unknown $entry');
+Iterable<Test> traverseTests(GroupEntry entry) sync* {
+  if (entry is Group) {
+    for (final child in entry.entries) {
+      yield* traverseTests(child);
     }
+  } else if (entry is Test) {
+    yield entry;
+  } else {
+    throw Exception('unknown $entry');
   }
 }
