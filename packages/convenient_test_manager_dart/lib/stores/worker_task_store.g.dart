@@ -13,14 +13,13 @@ mixin _$WorkerTaskStore on _WorkerTaskStore, Store {
       Atom(name: '_WorkerTaskStore.superRunController', context: context);
 
   @override
-  WorkerSuperRunControllerIntegrationTestClassicalMode get superRunController {
+  WorkerSuperRunController get superRunController {
     _$superRunControllerAtom.reportRead();
     return super.superRunController;
   }
 
   @override
-  set superRunController(
-      WorkerSuperRunControllerIntegrationTestClassicalMode value) {
+  set superRunController(WorkerSuperRunController value) {
     _$superRunControllerAtom.reportWrite(value, super.superRunController, () {
       super.superRunController = value;
     });

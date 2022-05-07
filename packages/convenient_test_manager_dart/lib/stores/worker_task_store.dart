@@ -7,7 +7,8 @@ class WorkerTaskStore = _WorkerTaskStore with _$WorkerTaskStore;
 
 abstract class _WorkerTaskStore with Store {
   @observable
-  var superRunController = WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: kRegexMatchNothing);
+  WorkerSuperRunController superRunController =
+      _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: kRegexMatchNothing);
 }
 
 enum WorkerRunMode { interactiveApp, integrationTest }
@@ -15,12 +16,24 @@ enum WorkerRunMode { interactiveApp, integrationTest }
 /// A "worker run" is the code execution from worker hot-restart to the next hot-restart
 /// A "worker super run" is one or multiple "worker run"s
 abstract class WorkerSuperRunController {
-  const WorkerSuperRunController();
+  const WorkerSuperRunController._();
+
+  factory WorkerSuperRunController.interactiveApp() => _WorkerSuperRunControllerInteractiveApp();
+
+  factory WorkerSuperRunController.integrationTest({
+    required String filterNameRegex,
+    required bool isolationMode,
+  }) =>
+      isolationMode
+          ? _WorkerSuperRunControllerIntegrationTestIsolationMode(filterNameRegex: filterNameRegex)
+          : _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: filterNameRegex);
 
   WorkerCurrentRunConfig calcCurrentRunConfig();
 }
 
-class WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
+class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
+  _WorkerSuperRunControllerInteractiveApp() : super._();
+
   @override
   WorkerCurrentRunConfig calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(interactiveApp: WorkerCurrentRunConfig_InteractiveApp());
@@ -28,10 +41,10 @@ class WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
 }
 
 /// "classical mode": no hot-restart between running two tests
-class WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperRunController {
+class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperRunController {
   final String filterNameRegex;
 
-  WorkerSuperRunControllerIntegrationTestClassicalMode({required this.filterNameRegex});
+  _WorkerSuperRunControllerIntegrationTestClassicalMode({required this.filterNameRegex}) : super._();
 
   @override
   WorkerCurrentRunConfig calcCurrentRunConfig() {
@@ -48,10 +61,10 @@ class WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperRu
 }
 
 /// "isolation mode": *has* hot-restart between running two tests
-class WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperRunController {
+class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperRunController {
   final String filterNameRegex;
 
-  WorkerSuperRunControllerIntegrationTestIsolationMode({required this.filterNameRegex});
+  _WorkerSuperRunControllerIntegrationTestIsolationMode({required this.filterNameRegex}) : super._();
 
   @override
   WorkerCurrentRunConfig calcCurrentRunConfig() {
