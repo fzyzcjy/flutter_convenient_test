@@ -8,7 +8,7 @@ import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/raw_log_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:convenient_test_manager_dart/stores/video_recorder_store.dart';
-import 'package:convenient_test_manager_dart/stores/worker_mode_store.dart';
+import 'package:convenient_test_manager_dart/stores/worker_task_store.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -20,7 +20,7 @@ void setup({
   getIt.registerSingleton<LogStore>(LogStore());
   getIt.registerSingleton<SuiteInfoStore>(SuiteInfoStore());
   getIt.registerSingleton<RawLogStore>(RawLogStore());
-  getIt.registerSingleton<WorkerModeStore>(WorkerModeStore());
+  getIt.registerSingleton<WorkerTaskStore>(WorkerTaskStore());
   getIt.registerSingleton<VideoRecorderStore>(VideoRecorderStore());
   getIt.registerSingleton<ConvenientTestManagerService>(ConvenientTestManagerService());
   getIt.registerSingleton<VmServiceWrapperService>(VmServiceWrapperService());
