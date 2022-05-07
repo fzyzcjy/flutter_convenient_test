@@ -6,6 +6,7 @@ import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:test_api/src/backend/state.dart'; // ignore: implementation_imports
 
 part 'worker_super_run_store.freezed.dart';
 
@@ -184,7 +185,15 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
     }
 
     final executedTestName = allowExecuteTestNames.firstOrNull;
-    final bool executedTestSucceeded = suiteInfoStore.testEntryStateMap[TODO]!.TODO();
+    final executedTestSucceeded = () {
+      if (executedTestName == null) return null;
+
+      final executedTestId = suiteInfoStore.suiteInfo!.getEntryIdFromName(executedTestName)!;
+      final executedTestState = suiteInfoStore.testEntryStateMap[executedTestId].toState();
+      if (executedTestState.status != Status.complete) throw AssertionError;
+
+      return executedTestState.result == Result.success;
+    }();
 
     state = _calcNextState(
       oldState: oldState,
@@ -201,7 +210,7 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
   static _ITIMState _calcNextState({
     required _ITIMState oldState,
     required String? executedTestName,
-    required bool executedTestSucceeded,
+    required bool? executedTestSucceeded,
   }) {
     if (oldState is _ITIMStateFinished && executedTestName != null) throw AssertionError();
 
@@ -209,7 +218,7 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
       return const _ITIMState.finished();
     }
 
-    if (!executedTestSucceeded) {
+    if (!executedTestSucceeded!) {
       final lastExecutedTestFailCount = oldState is _ITIMStateRetryLast ? (oldState.lastExecutedTestFailCount + 1) : 1;
       final shouldRetry = lastExecutedTestFailCount < _kFlakyTestTotalAttemptCount;
 
