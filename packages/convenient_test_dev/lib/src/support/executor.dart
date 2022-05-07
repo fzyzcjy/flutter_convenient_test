@@ -42,7 +42,7 @@ class ConvenientTestExecutor {
   }
 
   static void _ensureNoDuplicateTestNames(Group group) {
-    final allNames = traverseTests(group).map((e) => e.name).toList();
+    final allNames = group.traverse().map((e) => e.name).toList();
     if (allNames.toSet().length != allNames.length) {
       throw Exception('Should not have any duplicated test names, '
           'because convenient_test rely on test names to identify and distinguish them. '
@@ -86,7 +86,9 @@ class _ExecutionFilterResolver {
     required ExecutionFilter executionFilter,
   }) {
     final filterNameRegex = RegExp(executionFilter.filterNameRegex);
-    final flattenedTestsMatchingFilter = traverseTests(root) //
+    final flattenedTestsMatchingFilter = root
+        .traverse()
+        .whereType<Test>() //
         .where((test) => filterNameRegex.hasMatch(test.name))
         .toList();
 
@@ -112,14 +114,13 @@ class _ExecutionFilterResolver {
       ResolvedExecutionFilter(allowExecuteTestNames: allowExecuteTests.map((e) => e.name).toList());
 }
 
-Iterable<Test> traverseTests(GroupEntry entry) sync* {
-  if (entry is Group) {
-    for (final child in entry.entries) {
-      yield* traverseTests(child);
+extension ExtGroupEntry on GroupEntry {
+  Iterable<GroupEntry> traverse() sync* {
+    yield this;
+
+    final that = this;
+    if (that is Group) {
+      yield* that.entries.expand((child) => child.traverse());
     }
-  } else if (entry is Test) {
-    yield entry;
-  } else {
-    throw Exception('unknown $entry');
   }
 }
