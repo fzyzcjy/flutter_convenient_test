@@ -13,7 +13,6 @@ import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
 
@@ -78,7 +77,7 @@ Future<void> _runModeIntegrationTest(
       },
     );
 
-    GetIt.I.get<ConvenientTestExecutor>()
+    myGetIt.get<ConvenientTestExecutor>()
       ..input = ConvenientTestExecutorInput(
         declarer: declarer,
         reportSuiteInfo: currentRunConfig.reportSuiteInfo,
@@ -97,7 +96,7 @@ Future<void> _lastTearDownAll() async {
   // need to `await` to ensure it is sent
   await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
         tearDownAll: TearDownAll(
-          resolvedExecutionFilter: GetIt.I.get<ConvenientTestExecutor>().resolvedExecutionFilter.toProto(),
+          resolvedExecutionFilter: myGetIt.get<ConvenientTestExecutor>().resolvedExecutionFilter.toProto(),
         ),
       ));
 
