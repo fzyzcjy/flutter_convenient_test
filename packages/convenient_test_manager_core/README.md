@@ -1,0 +1,1 @@
+Support library for https://github.com/fzyzcjy/flutter_convenient_test. Please see documentations there for details.
