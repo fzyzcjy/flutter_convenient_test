@@ -1,11 +1,13 @@
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:mobx/mobx.dart';
 
-part 'worker_task_store.g.dart';
+part 'worker_super_run_store.g.dart';
 
-class WorkerTaskStore = _WorkerTaskStore with _$WorkerTaskStore;
+/// A "worker run" is the code execution from worker hot-restart to the next hot-restart
+/// A "worker super run" is one or multiple "worker run"s
+class WorkerSuperRunStore = _WorkerSuperRunStore with _$WorkerSuperRunStore;
 
-abstract class _WorkerTaskStore with Store {
+abstract class _WorkerSuperRunStore with Store {
   @observable
   WorkerSuperRunController superRunController =
       _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: kRegexMatchNothing);
@@ -13,8 +15,6 @@ abstract class _WorkerTaskStore with Store {
 
 enum WorkerRunMode { interactiveApp, integrationTest }
 
-/// A "worker run" is the code execution from worker hot-restart to the next hot-restart
-/// A "worker super run" is one or multiple "worker run"s
 abstract class WorkerSuperRunController {
   const WorkerSuperRunController._();
 
