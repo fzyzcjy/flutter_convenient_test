@@ -85,11 +85,11 @@ class LogHandle {
 
     await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
             logEntry: LogEntry(
-          id: _id,
+          id: _id.toInt64(),
           testName: _testName,
           subEntries: [
             LogSubEntry(
-              id: IdGenerator.instance.nextId(),
+              id: IdGenerator.instance.nextId().toInt64(),
               type: type,
               time: Int64(DateTime.now().microsecondsSinceEpoch),
               title: title,
@@ -105,7 +105,7 @@ class LogHandle {
     image ??= await takeSnapshot();
     await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
             snapshot: Snapshot(
-          logEntryId: _id,
+          logEntryId: _id.toInt64(),
           name: name,
           image: image,
         )));

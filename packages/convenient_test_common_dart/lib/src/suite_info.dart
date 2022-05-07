@@ -17,10 +17,10 @@ class SuiteInfo {
 
   factory SuiteInfo.fromProto(SuiteInfoProto proto) {
     return SuiteInfo._(
-      rootGroupId: proto.groupId,
+      rootGroupId: proto.groupId.toInt(),
       entryMap: Map.fromEntries([
-        ...proto.groups.map((group) => MapEntry(group.id, GroupInfo.fromProto(group))),
-        ...proto.tests.map((test) => MapEntry(test.id, TestInfo.fromProto(test))),
+        ...proto.groups.map((group) => MapEntry(group.id.toInt(), GroupInfo.fromProto(group))),
+        ...proto.tests.map((test) => MapEntry(test.id.toInt(), TestInfo.fromProto(test))),
       ]),
     );
   }
@@ -121,10 +121,10 @@ class GroupInfo extends GroupEntryInfo {
   }) : super(id: id, name: name, parentId: parentId);
 
   factory GroupInfo.fromProto(GroupInfoProto proto) => GroupInfo(
-        id: proto.id,
+        id: proto.id.toInt(),
         name: proto.name,
-        parentId: proto.parentId,
-        entryIds: proto.entryIds,
+        parentId: proto.parentId.toInt(),
+        entryIds: proto.entryIds.map((e) => e.toInt()).toList(),
       );
 
   @override
@@ -140,9 +140,9 @@ class TestInfo extends GroupEntryInfo {
   }) : super(id: id, name: name, parentId: parentId);
 
   factory TestInfo.fromProto(TestInfoProto proto) => TestInfo(
-        id: proto.id,
+        id: proto.id.toInt(),
         name: proto.name,
-        parentId: proto.parentId,
+        parentId: proto.parentId.toInt(),
       );
 
   @override

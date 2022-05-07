@@ -65,9 +65,10 @@ class ReportHandlerService {
     final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
     if (testEntryId == null) return;
 
-    _logStore.addLogEntry(testEntryId: testEntryId, logEntryId: request.id, subEntries: request.subEntries);
+    final requestId = request.id.toInt();
+    _logStore.addLogEntry(testEntryId: testEntryId, logEntryId: requestId, subEntries: request.subEntries);
 
-    GetIt.I.getIfRegistered<HighlightStoreBase>()?.handleLogEntry(testEntryId: testEntryId, logEntryId: request.id);
+    GetIt.I.getIfRegistered<HighlightStoreBase>()?.handleLogEntry(testEntryId: testEntryId, logEntryId: requestId);
   }
 
   Future<void> _handleRunnerError(RunnerError request) async {
@@ -100,8 +101,9 @@ class ReportHandlerService {
   Future<void> _handleSnapshot(Snapshot request) async {
     Log.d(_kTag, 'handleReportSnapshot called');
 
-    _logStore.snapshotInLog[request.logEntryId] ??= ObservableMap();
-    _logStore.snapshotInLog[request.logEntryId]![request.name] = request.image as Uint8List;
+    final logEntryId = request.logEntryId.toInt();
+    _logStore.snapshotInLog[logEntryId] ??= ObservableMap();
+    _logStore.snapshotInLog[logEntryId]![request.name] = request.image as Uint8List;
   }
 
   Future<void> _handleSuiteInfoProto(SuiteInfoProto request) async {

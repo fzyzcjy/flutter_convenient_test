@@ -2,23 +2,22 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/group_entry.dart';
-import 'package:test_api/src/backend/live_test.dart';
 import 'package:test_api/src/backend/test.dart';
 
 class SuiteInfoConverter {
   SuiteInfoProto convert(Group root) {
     final target = SuiteInfoProto();
-    target.groupId = _convertGroup(root, target, -1);
+    target.groupId = _convertGroup(root, target, -1).toInt64();
     return target;
   }
 
   int _convertGroup(Group entry, SuiteInfoProto target, int parentId) {
     final id = IdGenerator.instance.nextId();
     target.groups.add(GroupInfoProto(
-      id: id,
+      id: id.toInt64(),
       name: entry.name,
-      parentId: parentId,
-      entryIds: entry.entries.map((child) => _convertGroupEntry(child, target, id)),
+      parentId: parentId.toInt64(),
+      entryIds: entry.entries.map((child) => _convertGroupEntry(child, target, id).toInt64()),
     ));
     return id;
   }
@@ -26,9 +25,9 @@ class SuiteInfoConverter {
   int _convertTest(Test entry, SuiteInfoProto target, int parentId) {
     final id = IdGenerator.instance.nextId();
     target.tests.add(TestInfoProto(
-      id: id,
+      id: id.toInt64(),
       name: entry.name,
-      parentId: parentId,
+      parentId: parentId.toInt64(),
     ));
     return id;
   }

@@ -27,10 +27,11 @@ abstract class _LogStore with Store {
     logSubEntryInEntry[logEntryId] ??= ObservableList();
 
     for (final subEntry in subEntries) {
-      logSubEntryMap[subEntry.id] = subEntry;
-      logSubEntryInEntry[logEntryId]!.add(subEntry.id);
-      logEntryIdOfLogSubEntry[subEntry.id] = logEntryId;
-      logSubEntryIdOfTime[subEntry.time.toInt()] = subEntry.id;
+      final subEntryId = subEntry.id.toInt();
+      logSubEntryMap[subEntryId] = subEntry;
+      logSubEntryInEntry[logEntryId]!.add(subEntryId);
+      logEntryIdOfLogSubEntry[subEntryId] = logEntryId;
+      logSubEntryIdOfTime[subEntry.time.toInt()] = subEntryId;
     }
 
     if (!(logEntryInTest[testEntryId]?.contains(logEntryId) ?? false)) {
