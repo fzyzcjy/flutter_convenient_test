@@ -25,7 +25,7 @@ void setup() {
   getIt.registerSingleton<HomePageStore>(HomePageStore());
   getIt.registerSingleton<FsService>(FsServiceFlutter());
   getIt.registerSingleton<MiscFlutterService>(MiscFlutterService());
- 
+
   getIt.registerSingleton<HighlightStoreBase>(GetIt.I.get<HighlightStore>());
   getIt.registerSingleton<MiscDartService>(GetIt.I.get<MiscFlutterService>());
 }
