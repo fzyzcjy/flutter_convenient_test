@@ -611,7 +611,7 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SuiteInfoProto',
       createEmptyInstance: create)
-    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupId')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupName')
     ..pc<GroupInfoProto>(
         2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.PM,
         subBuilder: GroupInfoProto.create)
@@ -622,13 +622,13 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
 
   SuiteInfoProto._() : super();
   factory SuiteInfoProto({
-    $fixnum.Int64? groupId,
+    $core.String? groupName,
     $core.Iterable<GroupInfoProto>? groups,
     $core.Iterable<TestInfoProto>? tests,
   }) {
     final _result = create();
-    if (groupId != null) {
-      _result.groupId = groupId;
+    if (groupName != null) {
+      _result.groupName = groupName;
     }
     if (groups != null) {
       _result.groups.addAll(groups);
@@ -662,16 +662,16 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
   static SuiteInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $fixnum.Int64 get groupId => $_getI64(0);
+  $core.String get groupName => $_getSZ(0);
   @$pb.TagNumber(1)
-  set groupId($fixnum.Int64 v) {
-    $_setInt64(0, v);
+  set groupName($core.String v) {
+    $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasGroupId() => $_has(0);
+  $core.bool hasGroupName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearGroupId() => clearField(1);
+  void clearGroupName() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.List<GroupInfoProto> get groups => $_getList(1);
@@ -684,32 +684,26 @@ class GroupInfoProto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupInfoProto',
       createEmptyInstance: create)
-    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parentId')
-    ..p<$fixnum.Int64>(
-        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryIds', $pb.PbFieldType.P6)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parentName')
+    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryNames')
     ..hasRequiredFields = false;
 
   GroupInfoProto._() : super();
   factory GroupInfoProto({
-    $fixnum.Int64? id,
     $core.String? name,
-    $fixnum.Int64? parentId,
-    $core.Iterable<$fixnum.Int64>? entryIds,
+    $core.String? parentName,
+    $core.Iterable<$core.String>? entryNames,
   }) {
     final _result = create();
-    if (id != null) {
-      _result.id = id;
-    }
     if (name != null) {
       _result.name = name;
     }
-    if (parentId != null) {
-      _result.parentId = parentId;
+    if (parentName != null) {
+      _result.parentName = parentName;
     }
-    if (entryIds != null) {
-      _result.entryIds.addAll(entryIds);
+    if (entryNames != null) {
+      _result.entryNames.addAll(entryNames);
     }
     return _result;
   }
@@ -737,69 +731,52 @@ class GroupInfoProto extends $pb.GeneratedMessage {
   static GroupInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $fixnum.Int64 get id => $_getI64(0);
+  $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set id($fixnum.Int64 v) {
-    $_setInt64(0, v);
+  set name($core.String v) {
+    $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
+  void clearName() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get name => $_getSZ(1);
+  $core.String get parentName => $_getSZ(1);
   @$pb.TagNumber(2)
-  set name($core.String v) {
+  set parentName($core.String v) {
     $_setString(1, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasName() => $_has(1);
+  $core.bool hasParentName() => $_has(1);
   @$pb.TagNumber(2)
-  void clearName() => clearField(2);
+  void clearParentName() => clearField(2);
 
   @$pb.TagNumber(3)
-  $fixnum.Int64 get parentId => $_getI64(2);
-  @$pb.TagNumber(3)
-  set parentId($fixnum.Int64 v) {
-    $_setInt64(2, v);
-  }
-
-  @$pb.TagNumber(3)
-  $core.bool hasParentId() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearParentId() => clearField(3);
-
-  @$pb.TagNumber(4)
-  $core.List<$fixnum.Int64> get entryIds => $_getList(3);
+  $core.List<$core.String> get entryNames => $_getList(2);
 }
 
 class TestInfoProto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TestInfoProto',
       createEmptyInstance: create)
-    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parentId')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parentName')
     ..hasRequiredFields = false;
 
   TestInfoProto._() : super();
   factory TestInfoProto({
-    $fixnum.Int64? id,
     $core.String? name,
-    $fixnum.Int64? parentId,
+    $core.String? parentName,
   }) {
     final _result = create();
-    if (id != null) {
-      _result.id = id;
-    }
     if (name != null) {
       _result.name = name;
     }
-    if (parentId != null) {
-      _result.parentId = parentId;
+    if (parentName != null) {
+      _result.parentName = parentName;
     }
     return _result;
   }
@@ -826,40 +803,28 @@ class TestInfoProto extends $pb.GeneratedMessage {
   static TestInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $fixnum.Int64 get id => $_getI64(0);
+  $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set id($fixnum.Int64 v) {
-    $_setInt64(0, v);
+  set name($core.String v) {
+    $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
+  void clearName() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get name => $_getSZ(1);
+  $core.String get parentName => $_getSZ(1);
   @$pb.TagNumber(2)
-  set name($core.String v) {
+  set parentName($core.String v) {
     $_setString(1, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasName() => $_has(1);
+  $core.bool hasParentName() => $_has(1);
   @$pb.TagNumber(2)
-  void clearName() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $fixnum.Int64 get parentId => $_getI64(2);
-  @$pb.TagNumber(3)
-  set parentId($fixnum.Int64 v) {
-    $_setInt64(2, v);
-  }
-
-  @$pb.TagNumber(3)
-  $core.bool hasParentId() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearParentId() => clearField(3);
+  void clearParentName() => clearField(2);
 }
 
 class RunnerStateChange extends $pb.GeneratedMessage {
