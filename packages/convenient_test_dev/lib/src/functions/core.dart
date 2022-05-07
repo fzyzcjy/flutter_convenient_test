@@ -51,29 +51,32 @@ Future<void> _runModeIntegrationTest(
   runZonedGuarded(() {
     ConvenientTestWrapperWidget.convenientTestActive = true;
 
-    final declarer = collectIntoDeclarer(() {
-      // put this tearDownAll *before* everything else (including
-      // `IntegrationTestWidgetsFlutterBinding.ensureInitialized` which adds another tearDownAll)
-      // thus it should be run lastly
-      tearDownAll(_lastTearDownAll);
+    final declarer = collectIntoDeclarer(
+      defaultRetry: currentRunConfig.defaultRetryCount,
+      body: () {
+        // put this tearDownAll *before* everything else (including
+        // `IntegrationTestWidgetsFlutterBinding.ensureInitialized` which adds another tearDownAll)
+        // thus it should be run lastly
+        tearDownAll(_lastTearDownAll);
 
-      if (WidgetsBinding.instance != null) {
-        // This is because:
-        // (1) Must call [runZonedGuarded] *outside* [ensureInitialized], otherwise no errors will be captured.
-        //     See https://docs.flutter.dev/testing/errors#errors-not-caught-by-flutter for details.
-        // (2) [IntegrationTestWidgetsFlutterBinding] must be called *inside* `collectIntoDeclarer`,
-        //     because it calls some logic inside it.
-        throw Exception('Please do *not* initialize `WidgetsBinding.instance` outside `convenientTestMain`.');
-      }
-      IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+        if (WidgetsBinding.instance != null) {
+          // This is because:
+          // (1) Must call [runZonedGuarded] *outside* [ensureInitialized], otherwise no errors will be captured.
+          //     See https://docs.flutter.dev/testing/errors#errors-not-caught-by-flutter for details.
+          // (2) [IntegrationTestWidgetsFlutterBinding] must be called *inside* `collectIntoDeclarer`,
+          //     because it calls some logic inside it.
+          throw Exception('Please do *not* initialize `WidgetsBinding.instance` outside `convenientTestMain`.');
+        }
+        IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-      unawaited(myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(setUpAll: SetUpAll())));
+        unawaited(myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(setUpAll: SetUpAll())));
 
-      setup();
+        setup();
 
-      setUpLogTestStartAndEnd();
-      testBody();
-    });
+        setUpLogTestStartAndEnd();
+        testBody();
+      },
+    );
 
     GetIt.I.get<ConvenientTestExecutor>()
       ..input = ConvenientTestExecutorInput(
