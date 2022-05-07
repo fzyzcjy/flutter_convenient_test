@@ -25,7 +25,7 @@ class SuiteInfo {
     );
   }
 
-  int? getEntryIdFromNames(List<String> entryLocators) {
+  int? getEntryIdFromEntryLocators(List<String> entryLocators) {
     if (entryLocators.first != rootGroup.name) {
       Log.w(
           _kTag,

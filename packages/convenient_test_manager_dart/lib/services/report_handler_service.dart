@@ -62,7 +62,7 @@ class ReportHandlerService {
   Future<void> _handleLogEntry(LogEntry request) async {
     Log.d(_kTag, 'handleReportLogEntry called');
 
-    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromNames(request.entryLocators);
+    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromEntryLocators(request.entryLocators);
     if (testEntryId == null) return;
 
     _logStore.addLogEntry(testEntryId: testEntryId, logEntryId: request.id, subEntries: request.subEntries);
@@ -73,7 +73,7 @@ class ReportHandlerService {
   Future<void> _handleRunnerError(RunnerError request) async {
     Log.d(_kTag, 'handleReportRunnerError called');
 
-    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromEntryLocators(request.entryLocators);
     if (testEntryId == null) return;
 
     _rawLogStore.rawLogInTest[testEntryId] += '${request.error}\n${request.stackTrace}\n';
@@ -82,7 +82,7 @@ class ReportHandlerService {
   Future<void> _handleRunnerMessage(RunnerMessage request) async {
     Log.d(_kTag, 'handleReportRunnerMessage called');
 
-    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromEntryLocators(request.entryLocators);
     if (testEntryId == null) return;
 
     _rawLogStore.rawLogInTest[testEntryId] += '${request.message}\n';
@@ -91,7 +91,7 @@ class ReportHandlerService {
   Future<void> _handleRunnerStateChange(RunnerStateChange request) async {
     Log.d(_kTag, 'handleReportRunnerStateChange called entryLocators=${request.entryLocators} state=${request.state}');
 
-    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromNames(request.entryLocators);
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromEntryLocators(request.entryLocators);
     if (testEntryId == null) return;
 
     _suiteInfoStore.testEntryStateMap[testEntryId] = request.state;
