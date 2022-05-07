@@ -1,6 +1,8 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:async';
 
-import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vm_service/vm_service.dart' hide Log;
 import 'package:vm_service/vm_service.dart' as vm_service;

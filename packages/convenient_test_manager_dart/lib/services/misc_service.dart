@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager/services/report_handler_service.dart';
 import 'package:convenient_test_manager/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
