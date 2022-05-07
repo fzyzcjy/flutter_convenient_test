@@ -1,6 +1,6 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
-import 'package:convenient_test_manager_dart/stores/worker_mode_store.dart';
+import 'package:convenient_test_manager_dart/stores/worker_task_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -10,7 +10,7 @@ class HomePageMiscDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final workerModeStore = GetIt.I.get<WorkerModeStore>();
+    final workerTaskStore = GetIt.I.get<WorkerTaskStore>();
 
     return AlertDialog(
       title: const Text('Misc Tools'),
@@ -27,9 +27,8 @@ class HomePageMiscDialog extends StatelessWidget {
               Observer(builder: (_) {
                 return SyncTextField(
                   gs: GetSet(
-                    getter: () => workerModeStore.activeWorkerMode.integrationTest.filterNameRegex,
-                    setter: (v) => workerModeStore.activeWorkerMode =
-                        WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: v)),
+                    getter: () => workerTaskStore.filterNameRegex,
+                    setter: (v) => workerTaskStore.filterNameRegex = v,
                   ),
                 );
               }),
