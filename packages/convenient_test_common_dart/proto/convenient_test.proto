@@ -31,7 +31,7 @@ message TearDownAll {
 
 message LogEntry {
   int64 id = 1;
-  int64 test_id = 2;
+  repeated string entry_locators = 2;
   repeated LogSubEntry sub_entries = 3;
 }
 
@@ -79,7 +79,7 @@ message TestInfoProto {
 }
 
 message RunnerStateChange {
-  int64 test_id = 1;
+  repeated string entry_locators = 1;
   TestEntryState state = 2;
 }
 
@@ -89,13 +89,13 @@ message TestEntryState {
 }
 
 message RunnerError {
-  int64 test_id = 1;
+  repeated string entry_locators = 1;
   string error = 2;
   string stack_trace = 3;
 }
 
 message RunnerMessage {
-  int64 test_id = 1;
+  repeated string entry_locators = 1;
   string message = 2;
 }
 
