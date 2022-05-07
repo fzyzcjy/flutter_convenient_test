@@ -9,19 +9,6 @@ import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use overallExecutionDescriptor instead')
-const OverallExecution$json = const {
-  '1': 'OverallExecution',
-  '2': const [
-    const {'1': 'OVERALL_EXECUTION_INVALID', '2': 0},
-    const {'1': 'SET_UP_ALL', '2': 1},
-    const {'1': 'TEAR_DOWN_ALL', '2': 2},
-  ],
-};
-
-/// Descriptor for `OverallExecution`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List overallExecutionDescriptor = $convert.base64Decode(
-    'ChBPdmVyYWxsRXhlY3V0aW9uEh0KGU9WRVJBTExfRVhFQ1VUSU9OX0lOVkFMSUQQABIOCgpTRVRfVVBfQUxMEAESEQoNVEVBUl9ET1dOX0FMTBAC');
 @$core.Deprecated('Use logSubEntryTypeDescriptor instead')
 const LogSubEntryType$json = const {
   '1': 'LogSubEntryType',
@@ -55,25 +42,9 @@ final $typed_data.Uint8List reportCollectionDescriptor =
 const ReportItem$json = const {
   '1': 'ReportItem',
   '2': const [
-    const {
-      '1': 'overall_execution',
-      '3': 7,
-      '4': 1,
-      '5': 14,
-      '6': '.OverallExecution',
-      '9': 0,
-      '10': 'overallExecution'
-    },
+    const {'1': 'set_up_all', '3': 7, '4': 1, '5': 11, '6': '.SetUpAll', '9': 0, '10': 'setUpAll'},
+    const {'1': 'tear_down_all', '3': 8, '4': 1, '5': 11, '6': '.TearDownAll', '9': 0, '10': 'tearDownAll'},
     const {'1': 'suite_info_proto', '3': 1, '4': 1, '5': 11, '6': '.SuiteInfoProto', '9': 0, '10': 'suiteInfoProto'},
-    const {
-      '1': 'resolved_execution_filter',
-      '3': 8,
-      '4': 1,
-      '5': 11,
-      '6': '.ResolvedExecutionFilterProto',
-      '9': 0,
-      '10': 'resolvedExecutionFilter'
-    },
     const {'1': 'log_entry', '3': 2, '4': 1, '5': 11, '6': '.LogEntry', '9': 0, '10': 'logEntry'},
     const {
       '1': 'runner_state_change',
@@ -95,7 +66,32 @@ const ReportItem$json = const {
 
 /// Descriptor for `ReportItem`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List reportItemDescriptor = $convert.base64Decode(
-    'CgpSZXBvcnRJdGVtEkAKEW92ZXJhbGxfZXhlY3V0aW9uGAcgASgOMhEuT3ZlcmFsbEV4ZWN1dGlvbkgAUhBvdmVyYWxsRXhlY3V0aW9uEjsKEHN1aXRlX2luZm9fcHJvdG8YASABKAsyDy5TdWl0ZUluZm9Qcm90b0gAUg5zdWl0ZUluZm9Qcm90bxJbChlyZXNvbHZlZF9leGVjdXRpb25fZmlsdGVyGAggASgLMh0uUmVzb2x2ZWRFeGVjdXRpb25GaWx0ZXJQcm90b0gAUhdyZXNvbHZlZEV4ZWN1dGlvbkZpbHRlchIoCglsb2dfZW50cnkYAiABKAsyCS5Mb2dFbnRyeUgAUghsb2dFbnRyeRJEChNydW5uZXJfc3RhdGVfY2hhbmdlGAMgASgLMhIuUnVubmVyU3RhdGVDaGFuZ2VIAFIRcnVubmVyU3RhdGVDaGFuZ2USMQoMcnVubmVyX2Vycm9yGAQgASgLMgwuUnVubmVyRXJyb3JIAFILcnVubmVyRXJyb3ISNwoOcnVubmVyX21lc3NhZ2UYBSABKAsyDi5SdW5uZXJNZXNzYWdlSABSDXJ1bm5lck1lc3NhZ2USJwoIc25hcHNob3QYBiABKAsyCS5TbmFwc2hvdEgAUghzbmFwc2hvdEIKCghzdWJfdHlwZQ==');
+    'CgpSZXBvcnRJdGVtEikKCnNldF91cF9hbGwYByABKAsyCS5TZXRVcEFsbEgAUghzZXRVcEFsbBIyCg10ZWFyX2Rvd25fYWxsGAggASgLMgwuVGVhckRvd25BbGxIAFILdGVhckRvd25BbGwSOwoQc3VpdGVfaW5mb19wcm90bxgBIAEoCzIPLlN1aXRlSW5mb1Byb3RvSABSDnN1aXRlSW5mb1Byb3RvEigKCWxvZ19lbnRyeRgCIAEoCzIJLkxvZ0VudHJ5SABSCGxvZ0VudHJ5EkQKE3J1bm5lcl9zdGF0ZV9jaGFuZ2UYAyABKAsyEi5SdW5uZXJTdGF0ZUNoYW5nZUgAUhFydW5uZXJTdGF0ZUNoYW5nZRIxCgxydW5uZXJfZXJyb3IYBCABKAsyDC5SdW5uZXJFcnJvckgAUgtydW5uZXJFcnJvchI3Cg5ydW5uZXJfbWVzc2FnZRgFIAEoCzIOLlJ1bm5lck1lc3NhZ2VIAFINcnVubmVyTWVzc2FnZRInCghzbmFwc2hvdBgGIAEoCzIJLlNuYXBzaG90SABSCHNuYXBzaG90QgoKCHN1Yl90eXBl');
+@$core.Deprecated('Use setUpAllDescriptor instead')
+const SetUpAll$json = const {
+  '1': 'SetUpAll',
+};
+
+/// Descriptor for `SetUpAll`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List setUpAllDescriptor = $convert.base64Decode('CghTZXRVcEFsbA==');
+@$core.Deprecated('Use tearDownAllDescriptor instead')
+const TearDownAll$json = const {
+  '1': 'TearDownAll',
+  '2': const [
+    const {
+      '1': 'resolved_execution_filter',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.ResolvedExecutionFilterProto',
+      '10': 'resolvedExecutionFilter'
+    },
+  ],
+};
+
+/// Descriptor for `TearDownAll`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tearDownAllDescriptor = $convert.base64Decode(
+    'CgtUZWFyRG93bkFsbBJZChlyZXNvbHZlZF9leGVjdXRpb25fZmlsdGVyGAEgASgLMh0uUmVzb2x2ZWRFeGVjdXRpb25GaWx0ZXJQcm90b1IXcmVzb2x2ZWRFeGVjdXRpb25GaWx0ZXI=');
 @$core.Deprecated('Use logEntryDescriptor instead')
 const LogEntry$json = const {
   '1': 'LogEntry',

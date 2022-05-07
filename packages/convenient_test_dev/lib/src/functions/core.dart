@@ -15,6 +15,7 @@ import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
 
@@ -68,8 +69,7 @@ Future<void> _runModeIntegrationTest(
       }
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-      unawaited(
-          myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(overallExecution: OverallExecution.SET_UP_ALL)));
+      unawaited(myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(setUpAll: SetUpAll())));
 
       setup();
 
@@ -77,11 +77,13 @@ Future<void> _runModeIntegrationTest(
       testBody();
     });
 
-    ConvenientTestExecutor(
-      declarer: declarer,
-      reportSuiteInfo: currentRunConfig.reportSuiteInfo,
-      executionFilter: currentRunConfig.executionFilter,
-    ).execute();
+    GetIt.I.get<ConvenientTestExecutor>()
+      ..input = ConvenientTestExecutorInput(
+        declarer: declarer,
+        reportSuiteInfo: currentRunConfig.reportSuiteInfo,
+        executionFilter: currentRunConfig.executionFilter,
+      )
+      ..execute();
   }, (e, s) {
     Log.w('ConvenientTestMain',
         'ConvenientTest captured error (via runZonedGuarded). type(e)=${e.runtimeType} exception=$e stackTrace=$s');
@@ -92,7 +94,11 @@ Future<void> _lastTearDownAll() async {
   const _kTag = 'LastTearDownAll';
 
   // need to `await` to ensure it is sent
-  await myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(overallExecution: OverallExecution.TEAR_DOWN_ALL));
+  await myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(
+        tearDownAll: TearDownAll(
+          resolvedExecutionFilter: GetIt.I.get<ConvenientTestExecutor>().resolvedExecutionFilter.toProto(),
+        ),
+      ));
 
   if (CompileTimeConfig.kCIMode) {
     Log.i(_kTag, 'wait for a few seconds, hoping everything is really finished');

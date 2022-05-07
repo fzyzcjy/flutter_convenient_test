@@ -27,6 +27,8 @@ class ReportHandlerService {
         return _handleOverallExecution(item.overallExecution, offlineFile: offlineFile);
       case ReportItem_SubType.suiteInfoProto:
         return _handleSuiteInfoProto(item.suiteInfoProto);
+      case ReportItem_SubType.resolvedExecutionFilter:
+        return _handleResolvedExecutionFilter(item.resolvedExecutionFilter);
       case ReportItem_SubType.logEntry:
         return _handleLogEntry(item.logEntry);
       case ReportItem_SubType.runnerStateChange:

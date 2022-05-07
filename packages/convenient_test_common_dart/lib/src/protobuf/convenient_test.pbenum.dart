@@ -9,26 +9,6 @@
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class OverallExecution extends $pb.ProtobufEnum {
-  static const OverallExecution OVERALL_EXECUTION_INVALID = OverallExecution._(
-      0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OVERALL_EXECUTION_INVALID');
-  static const OverallExecution SET_UP_ALL =
-      OverallExecution._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SET_UP_ALL');
-  static const OverallExecution TEAR_DOWN_ALL =
-      OverallExecution._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEAR_DOWN_ALL');
-
-  static const $core.List<OverallExecution> values = <OverallExecution>[
-    OVERALL_EXECUTION_INVALID,
-    SET_UP_ALL,
-    TEAR_DOWN_ALL,
-  ];
-
-  static final $core.Map<$core.int, OverallExecution> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static OverallExecution? valueOf($core.int value) => _byValue[value];
-
-  const OverallExecution._($core.int v, $core.String n) : super(v, n);
-}
-
 class LogSubEntryType extends $pb.ProtobufEnum {
   static const LogSubEntryType INVALID =
       LogSubEntryType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INVALID');

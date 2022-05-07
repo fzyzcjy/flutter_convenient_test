@@ -12,9 +12,9 @@ message ReportCollection {
 
 message ReportItem {
   oneof sub_type {
-    OverallExecution overall_execution = 7;
+    SetUpAll set_up_all = 7;
+    TearDownAll tear_down_all = 8;
     SuiteInfoProto suite_info_proto = 1;
-    ResolvedExecutionFilterProto resolved_execution_filter = 8;
     LogEntry log_entry = 2;
     RunnerStateChange runner_state_change = 3;
     RunnerError runner_error = 4;
@@ -23,10 +23,10 @@ message ReportItem {
   }
 }
 
-enum OverallExecution {
-  OVERALL_EXECUTION_INVALID = 0;
-  SET_UP_ALL = 1;
-  TEAR_DOWN_ALL = 2;
+message SetUpAll {}
+
+message TearDownAll {
+  ResolvedExecutionFilterProto resolved_execution_filter = 1;
 }
 
 message LogEntry {

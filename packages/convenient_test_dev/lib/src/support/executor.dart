@@ -13,30 +13,24 @@ import 'package:test_api/src/backend/test.dart';
 class ConvenientTestExecutor {
   // static const _kTag = 'ConvenientTestExecutor';
 
-  final Declarer declarer;
-  final bool reportSuiteInfo;
-  final ExecutionFilter executionFilter;
-  late final ResolvedExecutionFilter resolvedExecutionFilter;
+  set input(ConvenientTestExecutorInput val) => _input = val;
+  late final ConvenientTestExecutorInput _input;
 
-  ConvenientTestExecutor({
-    required this.declarer,
-    required this.reportSuiteInfo,
-    required this.executionFilter,
-  });
+  ResolvedExecutionFilter get resolvedExecutionFilter => _resolvedExecutionFilter;
+  late final ResolvedExecutionFilter _resolvedExecutionFilter;
 
   void execute() {
     runTestsInDeclarer(
-      declarer,
+      _input.declarer,
       onGroupBuilt: (group) {
-        if (reportSuiteInfo) _reportSuiteInfo(group);
+        if (_input.reportSuiteInfo) _reportSuiteInfo(group);
 
-        resolvedExecutionFilter = _ExecutionFilterResolver.resolve(
+        _resolvedExecutionFilter = _ExecutionFilterResolver.resolve(
           root: group,
-          executionFilter: executionFilter,
+          executionFilter: _input.executionFilter,
         );
-        _reportResolvedExecutionFilter(resolvedExecutionFilter);
       },
-      shouldSkip: (entry) async => !resolvedExecutionFilter.allowExecute(entry),
+      shouldSkip: (entry) async => !_resolvedExecutionFilter.allowExecute(entry),
     );
   }
 
@@ -44,10 +38,19 @@ class ConvenientTestExecutor {
     final suiteInfo = SuiteInfoConverter().convert(group);
     myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(suiteInfoProto: suiteInfo));
   }
+}
 
-  static void _reportResolvedExecutionFilter(ResolvedExecutionFilter info) {
-    myGetIt.get<ManagerRpcService>().reportSingle(ReportItem(resolvedExecutionFilter: info.toProto()));
-  }
+@immutable
+class ConvenientTestExecutorInput {
+  final Declarer declarer;
+  final bool reportSuiteInfo;
+  final ExecutionFilter executionFilter;
+
+  const ConvenientTestExecutorInput({
+    required this.declarer,
+    required this.reportSuiteInfo,
+    required this.executionFilter,
+  });
 }
 
 @immutable
