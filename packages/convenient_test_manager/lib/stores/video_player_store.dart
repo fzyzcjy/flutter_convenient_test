@@ -1,3 +1,4 @@
+import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/misc/video_player.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/video_player_store.dart';
@@ -11,8 +12,10 @@ part 'video_player_store.g.dart';
 class VideoPlayerStore = _VideoPlayerStore with _$VideoPlayerStore;
 
 abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
+  final videoMap = ObservableMap<int, VideoInfo>();
+
   @observable
-  VideoInfo? displayVideoInfo;
+  int? activeVideoId;
 
   @observable
   var displayRange = const Tuple2(Duration.zero, Duration.zero);
@@ -35,13 +38,14 @@ abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
   int? playerPositionCorrespondingLogEntryId;
 
   void clear() {
-    displayVideoInfo = null;
+    activeVideoId = null;
+    videoMap.clear();
     playerPositionCorrespondingLogEntryId = null;
   }
 
   @override
   void handleRecorderFinished(VideoInfo info) {
-    displayVideoInfo = info;
+    videoMap[IdGenerator.instance.nextId()] = info;
   }
 
   _VideoPlayerStore() {
