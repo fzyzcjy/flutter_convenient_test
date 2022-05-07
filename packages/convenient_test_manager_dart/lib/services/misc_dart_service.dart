@@ -7,7 +7,7 @@ import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/raw_log_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:convenient_test_manager_dart/stores/video_recorder_store.dart';
-import 'package:convenient_test_manager_dart/stores/worker_mode_store.dart';
+import 'package:convenient_test_manager_dart/stores/worker_task_store.dart';
 import 'package:get_it/get_it.dart';
 
 class MiscDartService {
@@ -15,20 +15,22 @@ class MiscDartService {
 
   Future<void> hotRestartAndRunTests({required String filterNameRegex}) async {
     Log.d(_kTag, 'hotRestartAndRunTests filterNameRegex=$filterNameRegex');
-    GetIt.I.get<WorkerModeStore>().activeWorkerMode =
-        WorkerMode(integrationTest: WorkerModeIntegrationTest(filterNameRegex: filterNameRegex, reportSuiteInfo: TODO));
+    GetIt.I.get<WorkerTaskStore>()
+      ..runMode = WorkerRunMode.integrationTest
+      ..filterNameRegex = filterNameRegex;
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 
   Future<void> hotRestartAndRunInAppMode() async {
     Log.d(_kTag, 'hotRestartAndRunInAppMode');
-    GetIt.I.get<WorkerModeStore>().activeWorkerMode = WorkerMode(interactiveApp: WorkerModeInteractiveApp());
+    GetIt.I.get<WorkerTaskStore>().runMode = WorkerRunMode.interactiveApp;
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 
   Future<void> reloadInfo() async {
-    GetIt.I.get<WorkerModeStore>().activeWorkerMode = WorkerMode(
-        integrationTest: WorkerModeIntegrationTest(filterNameRegex: kRegexMatchNothing, reportSuiteInfo: TODO));
+    GetIt.I.get<WorkerTaskStore>()
+      ..runMode = WorkerRunMode.integrationTest
+      ..filterNameRegex = kRegexMatchNothing;
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 
