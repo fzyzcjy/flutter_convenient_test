@@ -1,4 +1,5 @@
 import 'package:convenient_test_manager_dart/services/convenient_test_manager_service.dart';
+import 'package:convenient_test_manager_dart/services/fs_service.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:convenient_test_manager_dart/services/report_handler_service.dart';
 import 'package:convenient_test_manager_dart/services/screen_video_recorder_service.dart';
@@ -12,7 +13,10 @@ import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
 
-void setup({bool registerMiscDartService = true}) {
+void setup({
+  bool registerMiscDartService = true,
+  bool registerFsService = true,
+}) {
   getIt.registerSingleton<LogStore>(LogStore());
   getIt.registerSingleton<SuiteInfoStore>(SuiteInfoStore());
   getIt.registerSingleton<RawLogStore>(RawLogStore());
@@ -23,9 +27,8 @@ void setup({bool registerMiscDartService = true}) {
   getIt.registerSingleton<ReportHandlerService>(ReportHandlerService());
   getIt.registerSingleton<ScreenVideoRecorderService>(ScreenVideoRecorderService.create());
 
-  if (registerMiscDartService) {
-    getIt.registerSingleton<MiscDartService>(MiscDartService());
-  }
+  if (registerMiscDartService) getIt.registerSingleton<MiscDartService>(MiscDartService());
+  if (registerFsService) getIt.registerSingleton<FsService>(FsServiceDart());
 
   GetIt.I.get<ConvenientTestManagerService>().serve();
 }

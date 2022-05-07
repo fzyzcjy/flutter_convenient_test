@@ -1,3 +1,4 @@
+import 'package:convenient_test_manager_dart/services/fs_service.dart';
 import 'package:convenient_test_manager_dart/services/screen_video_recorder_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -32,7 +33,7 @@ abstract class _VideoRecorderStore with Store {
 
   Future<String> _createVideoPath() async {
     final stem = DateFormat('yyyyMMdd_hhmmss').format(DateTime.now());
-    return '${(await getTemporaryDirectory()).path}/ConvenientTest_Video_$stem.mov';
+    return '${await GetIt.I.get<FsService>().getTemporaryDirectory()}/ConvenientTest_Video_$stem.mov';
   }
 }
 
