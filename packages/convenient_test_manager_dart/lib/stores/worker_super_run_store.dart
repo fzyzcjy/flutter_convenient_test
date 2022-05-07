@@ -1,4 +1,5 @@
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
+import 'package:convenient_test_manager_dart/misc/compile_time_config.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
@@ -16,7 +17,7 @@ abstract class _WorkerSuperRunStore with Store {
   static const _kTag = 'WorkerSuperRunStore';
 
   @observable
-  bool isolationMode = false;
+  bool isolationMode = CompileTimeConfig.kDefaultEnableIsolationMode;
 
   @observable
   WorkerSuperRunController currSuperRunController =
@@ -29,6 +30,8 @@ abstract class _WorkerSuperRunStore with Store {
       : _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: filterNameRegex);
 
   _WorkerSuperRunStore() {
+    Log.d(_kTag, 'CompileTimeConfig.kDefaultEnableIsolationMode=${CompileTimeConfig.kDefaultEnableIsolationMode}');
+
     reaction<bool>(
       (_) => isolationMode,
       (isolationMode) async {
