@@ -48,9 +48,6 @@ class ReportHandlerService {
   Future<void> _handleSetUpAll(SetUpAll request, {required bool offlineFile}) async {
     Log.d(_kTag, 'handleSetUpAll $request');
 
-    Log.d(_kTag, 'reset cache since see SET_UP_ALL');
-    GetIt.I.get<MiscDartService>().clearAll();
-
     if (!offlineFile) await GetIt.I.get<VideoRecorderStore>().startRecord();
   }
 
@@ -109,6 +106,9 @@ class ReportHandlerService {
 
   Future<void> _handleSuiteInfoProto(SuiteInfoProto request) async {
     Log.d(_kTag, 'handleReportSuiteInfo called $request');
+
+    Log.d(_kTag, 'reset cache since see SuiteInfo');
+    GetIt.I.get<MiscDartService>().clearAll();
 
     _suiteInfoStore.suiteInfo = SuiteInfo.fromProto(request);
   }
