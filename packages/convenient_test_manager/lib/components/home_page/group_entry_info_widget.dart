@@ -160,7 +160,7 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     final highlightStore = GetIt.I.get<HighlightStore>();
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
-    return Observer(builder: (_) {
+    return Observer(builder: (context) {
       return InkWell(
         onTap: () {
           highlightStore
@@ -183,7 +183,7 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
                   style: const TextStyle(),
                 ),
                 Expanded(child: Container()),
-                _buildPlayVideoButton(),
+                _buildPlayVideoButton(context),
                 _RunTestButton(filterNameRegex: '^${info.name}\$'),
               ],
             ),
@@ -193,12 +193,12 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     });
   }
 
-  Widget _buildPlayVideoButton() {
+  Widget _buildPlayVideoButton(BuildContext context) {
     if (logEntryIds.isEmpty) return const SizedBox.shrink();
 
     return IconButton(
       visualDensity: VisualDensity.compact,
-      onPressed: _handleTapPlayVideoButton,
+      onPressed: () => _handleTapPlayVideoButton(context),
       tooltip: 'Play video recording',
       icon: const Icon(
         Icons.movie,
@@ -208,7 +208,7 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     );
   }
 
-  void _handleTapPlayVideoButton() {
+  Future<void> _handleTapPlayVideoButton(BuildContext context) async {
     final videoPlayerStore = GetIt.I.get<VideoPlayerStore>();
     final logStore = GetIt.I.get<LogStore>();
     final homePageStore = GetIt.I.get<HomePageStore>();
@@ -221,19 +221,40 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
 
     final startTime = logSubEntryTimes.reduce((a, b) => a.isBefore(b) ? a : b);
     final endTime = logSubEntryTimes.reduce((a, b) => a.isAfter(b) ? a : b);
+    final duration = endTime.difference(startTime);
+    Log.d(_kTag, 'handleTapPlayVideoButton startTime=$startTime endTime=$endTime');
 
-    final anchorTime = startTime.add(endTime.difference(startTime) ~/ 5);
-    Log.d(_kTag, 'handleTapPlayVideoButton startTime=$startTime endTime=$endTime anchorTime=$anchorTime');
+    // to avoid minor time shifting causing wrong videos be included
+    final searchStartTime = startTime.add(duration ~/ 10);
+    final searchEndTime = endTime.subtract(duration ~/ 10);
+    final candidateVideoIds = videoPlayerStore.videoMap.findVideosAtTimeRange(searchStartTime, searchEndTime);
+    if (candidateVideoIds.isEmpty) return;
 
-    final interestVideoId = videoPlayerStore.videoMap.findVideoAtTime(anchorTime);
+    final interestVideoId = candidateVideoIds.length == 1
+        ? candidateVideoIds.single
+        : await showDialog<int>(
+            context: context,
+            builder: (_) => SimpleDialog(
+              title: const Text('Choose video'),
+              children: <Widget>[
+                ...candidateVideoIds.map((candidateVideoId) {
+                  final candidateVideo = videoPlayerStore.videoMap[candidateVideoId]!;
+
+                  return SimpleDialogOption(
+                    onPressed: () => Navigator.pop(context, candidateVideoId),
+                    child: Text('Video at ${candidateVideo.startTime} ~ ${candidateVideo.endTime}'),
+                  );
+                })
+              ],
+            ),
+          );
+    if (interestVideoId == null) return;
+
     Log.d(_kTag, 'handleTapPlayVideoButton interestVideoId=$interestVideoId videoInfos=${videoPlayerStore.videoMap}');
-    if (interestVideoId != null) {
-      final activeVideo = videoPlayerStore.videoMap[interestVideoId]!;
-
-      videoPlayerStore
-        ..activeVideoId = interestVideoId
-        ..displayRange = Tuple2(activeVideo.absoluteToVideoTime(startTime), activeVideo.absoluteToVideoTime(endTime));
-    }
+    final interestVideo = videoPlayerStore.videoMap[interestVideoId]!;
+    videoPlayerStore
+      ..activeVideoId = interestVideoId
+      ..displayRange = Tuple2(interestVideo.absoluteToVideoTime(startTime), interestVideo.absoluteToVideoTime(endTime));
 
     homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.video;
   }
