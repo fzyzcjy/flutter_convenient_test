@@ -15,7 +15,7 @@ abstract class _HomePageStore with Store {
 
   /// key: testId; value: ListView index of *first* log entry of that test
   final rdtListViewIndexOfFirstLogEntryOfTestIdMap = ObservableMap<int, int>();
- 
+
   final logEntryExpandErrorInfoMap = ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
 }
 
@@ -23,6 +23,7 @@ enum HomePageSecondaryPanelTab {
   screenshot,
   video,
   rawLog,
+  none,
 }
 
 extension ExtHomePageSecondaryPanelTab on HomePageSecondaryPanelTab {
@@ -34,6 +35,8 @@ extension ExtHomePageSecondaryPanelTab on HomePageSecondaryPanelTab {
         return 'Videos';
       case HomePageSecondaryPanelTab.rawLog:
         return 'Raw Logs';
+      case HomePageSecondaryPanelTab.none:
+        return 'None';
     }
   }
 }

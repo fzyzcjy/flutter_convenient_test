@@ -76,6 +76,8 @@ class HomePageSecondaryPanel extends StatelessWidget {
         return const HomePageRawLogPanel();
       case HomePageSecondaryPanelTab.video:
         return const HomePageVideoPanel();
+      case HomePageSecondaryPanelTab.none:
+        return Container();
     }
   }
 }
