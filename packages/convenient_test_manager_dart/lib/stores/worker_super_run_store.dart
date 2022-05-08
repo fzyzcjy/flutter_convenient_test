@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/misc/compile_time_config.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
+import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
@@ -205,6 +206,11 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
         _kTag,
         'handleTearDownAll end oldState=$oldState newState=$state '
         'allowExecuteTestNames=$allowExecuteTestNames executedTestSucceeded=$executedTestSucceeded');
+
+    if (state is! _ITIMStateFinished) {
+      Log.d(_kTag, 'call hot restart');
+      GetIt.I.get<VmServiceWrapperService>().hotRestart();
+    }
   }
 
   static _ITIMState _calcNextState({
