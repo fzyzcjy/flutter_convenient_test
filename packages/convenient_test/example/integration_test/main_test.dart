@@ -46,6 +46,16 @@ void main() {
         }
       });
 
+      // TODO only for #138 debugging, should comment out later
+      tTestWidgets('deliberately test that takes forever', (t) async {
+        while (true) {
+          print('call pumpAndSettle');
+          await t.pumpAndSettle();
+          print('call delay');
+          await Future.delayed(const Duration(seconds: 2));
+        }
+      });
+
       tTestWidgets('navigation', (t) async {
         await t.visit('/second');
         await t.get(find.text('HomePage')).should(findsNothing);
