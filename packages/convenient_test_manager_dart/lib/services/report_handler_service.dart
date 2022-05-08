@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
+import 'package:convenient_test_manager_dart/services/report_saver_service.dart';
 import 'package:convenient_test_manager_dart/stores/highlight_store.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/raw_log_store.dart';
@@ -108,8 +109,10 @@ class ReportHandlerService {
   Future<void> _handleSuiteInfoProto(SuiteInfoProto request) async {
     Log.d(_kTag, 'handleReportSuiteInfo called $request');
 
-    Log.d(_kTag, 'reset cache since see SuiteInfo');
+    Log.d(_kTag, 'handleReportSuiteInfo thus clearAll');
     GetIt.I.get<MiscDartService>().clearAll();
+    Log.d(_kTag, 'handleReportSuiteInfo thus changeReportTarget');
+    GetIt.I.get<ReportSaverService>().createNewReportTarget();
 
     _suiteInfoStore.suiteInfo = SuiteInfo.fromProto(request);
   }

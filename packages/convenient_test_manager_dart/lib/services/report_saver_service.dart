@@ -8,9 +8,16 @@ import 'package:intl/intl.dart';
 class ReportSaverService {
   static const _kTag = 'ReportSaverService';
 
+  late Future<String> _reportPath;
+
   Future<void> save(ReportCollection request) async {
     // need to be sync, otherwise when two reports come together they may conflict
-    File(await reportPath).writeAsBytesSync(request.writeToBuffer(), mode: FileMode.append);
+    File(await _reportPath).writeAsBytesSync(request.writeToBuffer(), mode: FileMode.append);
+  }
+
+  void createNewReportTarget() {
+    Log.d(_kTag, 'createNewReportTarget');
+    _reportPath = _createReportPath();
   }
 
   static Future<String> _createReportPath() async {
