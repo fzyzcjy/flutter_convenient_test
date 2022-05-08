@@ -3,15 +3,7 @@ class RegexUtils {
 
   static const kMatchEverything = '.*';
 
-  static String matchPrefix(String name) {
-    return '^${escape(name)}.*';
-  }
+  static String matchPrefix(String name) => '^${RegExp.escape(name)}.*';
 
-  static String matchFull(String name) {
-    return '^${escape(name)}\$';
-  }
-
-  static String escape(String name) {
-    return TODO;
-  }
+  static String matchFull(String name) => '^${RegExp.escape(name)}\$';
 }
