@@ -16,6 +16,7 @@ dependencies:
   quiver: ^3.0.1+1
   tuple: ^2.0.0
 dev_dependencies:
+  dart_code_metrics: ^4.15.0
   flutter_test:
     sdk: flutter
   lint: ^1.8.2

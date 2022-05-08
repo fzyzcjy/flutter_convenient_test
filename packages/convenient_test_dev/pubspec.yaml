@@ -29,6 +29,9 @@ dependencies:
   test_api: ^0.4.2
   web_socket_channel: ^2.1.0
 
+dev_dependencies:
+  dart_code_metrics: ^4.15.0
+
 dependency_overrides:
   convenient_test_common:
     path: ../convenient_test_common
