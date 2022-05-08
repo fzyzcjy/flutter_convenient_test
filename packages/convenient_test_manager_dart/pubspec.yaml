@@ -34,3 +34,4 @@ dev_dependencies:
   freezed: ^2.0.3
   lint: ^1.8.2
   mobx_codegen: ^2.0.6
+  test: ^1.20.1
