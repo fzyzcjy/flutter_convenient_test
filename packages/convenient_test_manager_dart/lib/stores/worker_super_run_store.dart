@@ -13,8 +13,6 @@ part 'worker_super_run_store.freezed.dart';
 
 part 'worker_super_run_store.g.dart';
 
-const _kFlakyTestTotalAttemptCount = 2;
-
 /// A "worker run" is the code execution from worker hot-restart to the next hot-restart
 /// A "worker super run" is one or multiple "worker run"s
 class WorkerSuperRunStore = _WorkerSuperRunStore with _$WorkerSuperRunStore;
@@ -24,6 +22,13 @@ abstract class _WorkerSuperRunStore with Store {
 
   @observable
   bool isolationMode = CompileTimeConfig.kDefaultEnableIsolationMode;
+
+  @observable
+  var flakyTestTotalAttemptCount = 2;
+
+  bool get retryMode => flakyTestTotalAttemptCount > 1;
+
+  set retryMode(bool enable) => flakyTestTotalAttemptCount = enable ? 2 : 1;
 
   @observable
   WorkerSuperRunController currSuperRunController =
@@ -112,7 +117,7 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
         reportSuiteInfo: true,
         // this is for flaky test detection. set to non-zero,
         // such that the flaky tests are retried at the worker automatically
-        defaultRetryCount: _kFlakyTestTotalAttemptCount - 1,
+        defaultRetryCount: GetIt.I.get<WorkerSuperRunStore>().flakyTestTotalAttemptCount - 1,
         executionFilter: ExecutionFilter(
           filterNameRegex: filterNameRegex,
           strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
@@ -226,7 +231,7 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
 
     if (!executedTestSucceeded!) {
       final lastExecutedTestFailCount = oldState is _ITIMStateRetryLast ? (oldState.lastExecutedTestFailCount + 1) : 1;
-      final shouldRetry = lastExecutedTestFailCount < _kFlakyTestTotalAttemptCount;
+      final shouldRetry = lastExecutedTestFailCount < GetIt.I.get<WorkerSuperRunStore>().flakyTestTotalAttemptCount;
 
       if (shouldRetry) {
         return _ITIMState.retryLast(

@@ -9,7 +9,8 @@ part of 'worker_super_run_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$WorkerSuperRunStore on _WorkerSuperRunStore, Store {
-  late final _$isolationModeAtom = Atom(name: '_WorkerSuperRunStore.isolationMode', context: context);
+  late final _$isolationModeAtom =
+      Atom(name: '_WorkerSuperRunStore.isolationMode', context: context);
 
   @override
   bool get isolationMode {
@@ -24,7 +25,26 @@ mixin _$WorkerSuperRunStore on _WorkerSuperRunStore, Store {
     });
   }
 
-  late final _$currSuperRunControllerAtom = Atom(name: '_WorkerSuperRunStore.currSuperRunController', context: context);
+  late final _$flakyTestTotalAttemptCountAtom = Atom(
+      name: '_WorkerSuperRunStore.flakyTestTotalAttemptCount',
+      context: context);
+
+  @override
+  int get flakyTestTotalAttemptCount {
+    _$flakyTestTotalAttemptCountAtom.reportRead();
+    return super.flakyTestTotalAttemptCount;
+  }
+
+  @override
+  set flakyTestTotalAttemptCount(int value) {
+    _$flakyTestTotalAttemptCountAtom
+        .reportWrite(value, super.flakyTestTotalAttemptCount, () {
+      super.flakyTestTotalAttemptCount = value;
+    });
+  }
+
+  late final _$currSuperRunControllerAtom = Atom(
+      name: '_WorkerSuperRunStore.currSuperRunController', context: context);
 
   @override
   WorkerSuperRunController get currSuperRunController {
@@ -34,7 +54,8 @@ mixin _$WorkerSuperRunStore on _WorkerSuperRunStore, Store {
 
   @override
   set currSuperRunController(WorkerSuperRunController value) {
-    _$currSuperRunControllerAtom.reportWrite(value, super.currSuperRunController, () {
+    _$currSuperRunControllerAtom
+        .reportWrite(value, super.currSuperRunController, () {
       super.currSuperRunController = value;
     });
   }
@@ -43,6 +64,7 @@ mixin _$WorkerSuperRunStore on _WorkerSuperRunStore, Store {
   String toString() {
     return '''
 isolationMode: ${isolationMode},
+flakyTestTotalAttemptCount: ${flakyTestTotalAttemptCount},
 currSuperRunController: ${currSuperRunController}
     ''';
   }

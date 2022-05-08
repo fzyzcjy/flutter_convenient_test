@@ -70,6 +70,16 @@ class HomePageHeaderPanel extends StatelessWidget {
             ),
           ),
           const Text(
+            'Retry Mode',
+            style: TextStyle(fontSize: 12, height: 1.2),
+          ),
+          Observer(
+            builder: (_) => Switch(
+              value: workerSuperRunStore.retryMode,
+              onChanged: (v) => workerSuperRunStore.retryMode = v,
+            ),
+          ),
+          const Text(
             'Hover Mode',
             style: TextStyle(fontSize: 12, height: 1.2),
           ),
