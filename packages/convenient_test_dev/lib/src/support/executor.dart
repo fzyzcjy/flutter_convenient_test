@@ -102,7 +102,9 @@ class _ExecutionFilterResolver {
         final prevTestIndex = flattenedTestsMatchingFilter.indexWhere((e) => e.name == info.prevTestName);
         if (prevTestIndex == -1) throw Exception;
 
-        return _createOutput([flattenedTestsMatchingFilter[prevTestIndex + 1]]);
+        final nextTestIndex = prevTestIndex + 1;
+        return _createOutput(
+            nextTestIndex == flattenedTestsMatchingFilter.length ? [] : [flattenedTestsMatchingFilter[nextTestIndex]]);
       case ExecutionFilter_Strategy_SubType.allMatch:
         return _createOutput(flattenedTestsMatchingFilter);
       case ExecutionFilter_Strategy_SubType.notSet:
