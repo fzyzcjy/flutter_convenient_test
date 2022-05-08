@@ -162,7 +162,7 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
         ),
         retryLast: (s) => ExecutionFilter(
           // retry this test again (flaky test handling)
-          filterNameRegex: s.lastExecutedTestName,
+          filterNameRegex: RegexUtils.matchFull(s.lastExecutedTestName),
           strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
         ),
         finished: (_) => ExecutionFilter(

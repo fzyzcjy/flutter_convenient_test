@@ -1,3 +1,4 @@
+import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/services/misc_flutter_service.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
@@ -23,7 +24,7 @@ class HomePageHeaderPanel extends StatelessWidget {
           TextButton(
             onPressed: () {
               highlightStore.enableAutoExpand = true;
-              miscFlutterService.hotRestartAndRunTests(filterNameRegex: '.*');
+              miscFlutterService.hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
             },
             child: const Text('Run All'),
           ),
