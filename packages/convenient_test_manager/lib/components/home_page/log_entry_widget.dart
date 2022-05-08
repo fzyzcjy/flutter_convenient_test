@@ -3,6 +3,7 @@ import 'package:convenient_test_manager/components/misc/enhanced_selectable_text
 import 'package:convenient_test_manager/components/misc/rotate_animation.dart';
 import 'package:convenient_test_manager/misc/protobuf_extensions.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
+import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/video_player_store.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:flutter/material.dart';
@@ -166,20 +167,54 @@ class HomePageLogEntryWidget extends StatelessWidget {
   }
 
   Widget _buildError(BuildContext context, LogSubEntry interestLogSubEntry) {
-    final text = '${interestLogSubEntry.error}\n${interestLogSubEntry.stackTrace}';
+    final homePageStore = GetIt.I.get<HomePageStore>();
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      margin: const EdgeInsets.only(left: 32),
-      decoration: BoxDecoration(
-        color: Colors.red[50],
-        border: Border(left: BorderSide(color: Colors.red[200]!, width: 2)),
-      ),
-      child: EnhancedSelectableText(
-        text,
-        style: const TextStyle(fontSize: 13, fontFamily: 'RobotoMono'),
-      ),
-    );
+    return Observer(builder: (_) {
+      final expand = homePageStore.logEntryExpandErrorInfoMap[logEntryId];
+
+      final text = '${interestLogSubEntry.error}\n${interestLogSubEntry.stackTrace}';
+
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        margin: const EdgeInsets.only(left: 32),
+        decoration: BoxDecoration(
+          color: Colors.red[50],
+          border: Border(left: BorderSide(color: Colors.red[200]!, width: 2)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: expand ? double.infinity : 100,
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: EnhancedSelectableText(
+                  text,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontFamily: 'RobotoMono',
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () => homePageStore.logEntryExpandErrorInfoMap[logEntryId] = !expand,
+                child: Text(
+                  '[${expand ? "Collapse" : "Expand"}]',
+                  style: const TextStyle(fontSize: 12, color: Colors.black87),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   Widget _buildTime({required List<int> logSubEntryIds}) {

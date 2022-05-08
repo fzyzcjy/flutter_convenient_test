@@ -1,3 +1,4 @@
+import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:mobx/mobx.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -14,6 +15,8 @@ abstract class _HomePageStore with Store {
 
   /// key: testId; value: ListView index of *first* log entry of that test
   final rdtListViewIndexOfFirstLogEntryOfTestIdMap = ObservableMap<int, int>();
+ 
+  final logEntryExpandErrorInfoMap = ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
 }
 
 enum HomePageSecondaryPanelTab {
