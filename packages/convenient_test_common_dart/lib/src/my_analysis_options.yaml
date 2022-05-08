@@ -4,8 +4,9 @@ include: package:lint/analysis_options.yaml
 
 # https://dart.dev/guides/language/analysis-options
 analyzer:
-  plugins:
-    - dart_code_metrics
+# will use CI to check. this plugin will leak memory
+#   plugins:
+#     - dart_code_metrics
 
   language:
     strict-casts: true
