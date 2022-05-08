@@ -12,10 +12,13 @@ class HomePageVideoPanel extends StatelessWidget {
     final videoPlayerStore = GetIt.I.get<VideoPlayerStore>();
 
     return Observer(builder: (_) {
-      final displayVideoPath = videoPlayerStore.displayVideoInfo?.path;
+      final displayVideoPath = videoPlayerStore.activeVideo?.path;
       if (displayVideoPath == null) {
         return const Center(
-          child: Text('No video or still recording'),
+          child: Text(
+            'No selected video or still recording.\n'
+            'Please tap the "play video" button of a test in the left panel.',
+          ),
         );
       }
 

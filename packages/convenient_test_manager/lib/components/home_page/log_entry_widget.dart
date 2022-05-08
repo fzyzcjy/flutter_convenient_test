@@ -35,8 +35,10 @@ class HomePageLogEntryWidget extends StatelessWidget {
     // ];
 
     return Observer(builder: (_) {
-      final logSubEntryIds = logStore.logSubEntryInEntry[logEntryId]!;
-      final interestLogSubEntry = logStore.logSubEntryMap[logSubEntryIds.last]!;
+      final logSubEntryIds = logStore.logSubEntryInEntry[logEntryId];
+      if (logSubEntryIds == null) return const SizedBox.shrink();
+      final interestLogSubEntry = logStore.logSubEntryMap[logSubEntryIds.last];
+      if (interestLogSubEntry == null) return const SizedBox.shrink();
 
       // if (kSkipTypes.contains(logEntry.type)) {
       //   return Container();
@@ -111,8 +113,12 @@ class HomePageLogEntryWidget extends StatelessWidget {
 
     highlightStore.highlightLogEntryId = targetState ? logEntryId : null;
     highlightStore.highlightTestEntryId = targetState ? testEntryId : null;
+
     if (targetState) {
-      videoPlayerStore.mainPlayerController.seek(videoPlayerStore.absoluteToVideoTime(interestLogSubEntry.timeTyped));
+      final activeVideo = videoPlayerStore.activeVideo;
+      if (activeVideo != null) {
+        videoPlayerStore.mainPlayerController.seek(activeVideo.absoluteToVideoTime(interestLogSubEntry.timeTyped));
+      }
     }
   }
 

@@ -133,6 +133,8 @@ class _GroupInfoSectionBuilder extends StaticSectionBuilder {
 }
 
 class _TestInfoSectionBuilder extends StaticSectionBuilder {
+  static const _kTag = 'TestInfoSectionBuilder';
+
   final TestInfo info;
   final int depth;
 
@@ -220,10 +222,18 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     final startTime = logSubEntryTimes.reduce((a, b) => a.isBefore(b) ? a : b);
     final endTime = logSubEntryTimes.reduce((a, b) => a.isAfter(b) ? a : b);
 
-    videoPlayerStore.displayRange = Tuple2(
-      videoPlayerStore.absoluteToVideoTime(startTime),
-      videoPlayerStore.absoluteToVideoTime(endTime),
-    );
+    final anchorTime = startTime.add(endTime.difference(startTime) ~/ 5);
+    Log.d(_kTag, 'handleTapPlayVideoButton startTime=$startTime endTime=$endTime anchorTime=$anchorTime');
+
+    final interestVideoId = videoPlayerStore.videoMap.findVideoAtTime(anchorTime);
+    Log.d(_kTag, 'handleTapPlayVideoButton interestVideoId=$interestVideoId videoInfos=${videoPlayerStore.videoMap}');
+    if (interestVideoId != null) {
+      final activeVideo = videoPlayerStore.videoMap[interestVideoId]!;
+
+      videoPlayerStore
+        ..activeVideoId = interestVideoId
+        ..displayRange = Tuple2(activeVideo.absoluteToVideoTime(startTime), activeVideo.absoluteToVideoTime(endTime));
+    }
 
     homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.video;
   }

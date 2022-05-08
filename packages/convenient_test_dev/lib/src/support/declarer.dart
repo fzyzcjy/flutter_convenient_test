@@ -5,7 +5,9 @@ import 'package:test_api/src/backend/declarer.dart';
 
 class MyDeclarer extends Declarer {
   // NOTE use this for flaky test retrying, see #16
-  static const kDefaultRetry = 1;
+  final int defaultRetry;
+
+  MyDeclarer({required this.defaultRetry});
 
   @override
   void test(
@@ -28,7 +30,7 @@ class MyDeclarer extends Declarer {
       onPlatform: onPlatform,
       tags: tags,
       // NOTE use this for flaky test retrying, see #16
-      retry: retry ?? kDefaultRetry,
+      retry: retry ?? defaultRetry,
       solo: solo,
     );
   }
@@ -54,7 +56,7 @@ class MyDeclarer extends Declarer {
       onPlatform: onPlatform,
       tags: tags,
       // NOTE use this for flaky test retrying, see #16
-      retry: retry ?? kDefaultRetry,
+      retry: retry ?? defaultRetry,
       solo: solo,
     );
   }

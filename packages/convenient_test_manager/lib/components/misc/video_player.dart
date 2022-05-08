@@ -49,7 +49,7 @@ class VideoPlayer extends StatefulWidget {
 }
 
 class _VideoPlayerState extends State<VideoPlayer> {
-  static const _kTag = 'VideoPlayerState';
+  static const _kTag = 'VideoPlayer';
 
   final player = Player(id: Random().nextInt(100000000));
 

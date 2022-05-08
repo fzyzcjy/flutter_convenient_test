@@ -1,5 +1,5 @@
-import 'package:convenient_test_dev/src/utils/id_generator.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:convenient_test_common_dart/src/id_generator.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('IdGenerator', () {

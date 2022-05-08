@@ -21,6 +21,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
+  dart_code_metrics: ^4.15.0
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
@@ -28,10 +29,11 @@ dev_dependencies:
     sdk: flutter
   convenient_test_dev: ^1.0.0
 
-# NOTE *no* dependency overrides
 # dependency_overrides:
 #   convenient_test_common:
 #     path: ../../convenient_test_common
+#   convenient_test_common_dart:
+#     path: ../../convenient_test_common_dart
 #   convenient_test:
 #     path: ../
 #   convenient_test_dev:

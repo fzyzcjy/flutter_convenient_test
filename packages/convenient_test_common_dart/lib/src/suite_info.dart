@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/src/common_dart/front_log.dart';
 import 'package:convenient_test_common_dart/src/protobuf/convenient_test.pb.dart';
 import 'package:meta/meta.dart';
@@ -9,54 +8,38 @@ class SuiteInfo {
 
   final int rootGroupId;
   final Map<int, GroupEntryInfo> entryMap;
+  final Map<String, int> entryIdOfName;
 
   const SuiteInfo._({
     required this.rootGroupId,
     required this.entryMap,
+    required this.entryIdOfName,
   });
 
   factory SuiteInfo.fromProto(SuiteInfoProto proto) {
+    final entryMap = Map.fromEntries([
+      ...proto.groups.map((group) => MapEntry(group.id.toInt(), GroupInfo.fromProto(group))),
+      ...proto.tests.map((test) => MapEntry(test.id.toInt(), TestInfo.fromProto(test))),
+    ]);
+    final entryIdOfName = Map.fromEntries(entryMap.entries.map((e) => MapEntry(e.value.name, e.key)));
+
+    if (entryIdOfName.length != entryMap.length) {
+      Log.d(
+          _kTag,
+          '#groups=${proto.groups.length} #tests=${proto.tests.length} '
+          'entryIdOfName.keys.length=${entryIdOfName.keys.length} entryIdOfName.keys=${entryIdOfName.keys.toList()} '
+          'groups.name=${proto.groups.map((e) => e.name).toList()} tests.name=${proto.tests.map((e) => e.name).toList()} ');
+      throw Exception('Sanity check failed: Suite tests should have no duplicate names');
+    }
+
     return SuiteInfo._(
-      rootGroupId: proto.groupId,
-      entryMap: Map.fromEntries([
-        ...proto.groups.map((group) => MapEntry(group.id, GroupInfo.fromProto(group))),
-        ...proto.tests.map((test) => MapEntry(test.id, TestInfo.fromProto(test))),
-      ]),
+      rootGroupId: proto.groupId.toInt(),
+      entryMap: entryMap,
+      entryIdOfName: entryIdOfName,
     );
   }
 
-  int? getEntryIdFromNames(List<String> entryLocators) {
-    if (entryLocators.first != rootGroup.name) {
-      Log.w(
-          _kTag,
-          'getEntryIdFromNames since entryLocators.first does not match rootGroup.name=${rootGroup.name} '
-          '(entryLocators=$entryLocators)');
-      return null;
-    }
-
-    var currEntryId = rootGroupId;
-
-    for (final name in entryLocators.sublist(1)) {
-      void logFail(String reason) => Log.w(_kTag,
-          'getEntryIdFromNames fail reason=$reason currEntryId=$currEntryId name=$name entryLocators=$entryLocators');
-
-      final currEntry = entryMap[currEntryId];
-      if (currEntry is! GroupInfo) {
-        logFail('currEntry is not GroupInfo');
-        return null;
-      }
-
-      final nextEntryId = currEntry.entryIds.singleWhereOrNull((childEntryId) => entryMap[childEntryId]?.name == name);
-      if (nextEntryId == null) {
-        logFail('nextEntryId is null (currEntry.entryIds=${currEntry.entryIds})');
-        return null;
-      }
-
-      currEntryId = nextEntryId;
-    }
-
-    return currEntryId;
-  }
+  int? getEntryIdFromName(String entryName) => entryIdOfName[entryName];
 
   GroupInfo get rootGroup => entryMap[rootGroupId]! as GroupInfo;
 
@@ -103,8 +86,16 @@ abstract class GroupEntryInfo {
 
   void traverse(SuiteInfo suiteInfo, GroupEntryInfoTraverseCallback callback) {
     callback(this);
-    for (final entryId in childrenGroupEntryIds) {
-      suiteInfo.entryMap[entryId]!.traverse(suiteInfo, callback);
+    for (final childEntryId in childrenGroupEntryIds) {
+      final child = suiteInfo.entryMap[childEntryId];
+
+      // #135
+      if (child == null) {
+        throw Exception('cannot find entry for childEntryId=$childEntryId '
+            '(this.id=$id, this.name=$name, suiteInfo.entryMap=${suiteInfo.entryMap.keys.toList()})');
+      }
+
+      child.traverse(suiteInfo, callback);
     }
   }
 }
@@ -121,10 +112,10 @@ class GroupInfo extends GroupEntryInfo {
   }) : super(id: id, name: name, parentId: parentId);
 
   factory GroupInfo.fromProto(GroupInfoProto proto) => GroupInfo(
-        id: proto.id,
+        id: proto.id.toInt(),
         name: proto.name,
-        parentId: proto.parentId,
-        entryIds: proto.entryIds,
+        parentId: proto.parentId.toInt(),
+        entryIds: proto.entryIds.map((e) => e.toInt()).toList(),
       );
 
   @override
@@ -140,9 +131,9 @@ class TestInfo extends GroupEntryInfo {
   }) : super(id: id, name: name, parentId: parentId);
 
   factory TestInfo.fromProto(TestInfoProto proto) => TestInfo(
-        id: proto.id,
+        id: proto.id.toInt(),
         name: proto.name,
-        parentId: proto.parentId,
+        parentId: proto.parentId.toInt(),
       );
 
   @override

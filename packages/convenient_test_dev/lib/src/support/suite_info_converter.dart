@@ -1,42 +1,37 @@
 // ignore_for_file: implementation_imports
 import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_dev/src/utils/id_generator.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/group_entry.dart';
-import 'package:test_api/src/backend/live_test.dart';
 import 'package:test_api/src/backend/test.dart';
 
-class SuiteInfoUtils {
-  static List<String> entryLocatorsFromGroupEntries(List<GroupEntry> entries) => entries.map((e) => e.name).toList();
-
-  static List<String> entryLocatorsFromLiveTest(LiveTest liveTest) =>
-      entryLocatorsFromGroupEntries([...liveTest.groups, liveTest.test]);
-}
-
 class SuiteInfoConverter {
-  SuiteInfoProto convert(Group root) {
+  final _idStableGenerator = _GroupEntryIdStableGenerator();
+
+  SuiteInfoConverter._();
+
+  static SuiteInfoProto convert(Group root) {
     final target = SuiteInfoProto();
-    target.groupId = _convertGroup(root, target, -1);
+    target.groupId = SuiteInfoConverter._()._convertGroup(root, target, -1).toInt64();
     return target;
   }
 
   int _convertGroup(Group entry, SuiteInfoProto target, int parentId) {
-    final id = IdGenerator.instance.nextId();
+    final id = _idStableGenerator.generate(entry.name);
     target.groups.add(GroupInfoProto(
-      id: id,
+      id: id.toInt64(),
       name: entry.name,
-      parentId: parentId,
-      entryIds: entry.entries.map((child) => _convertGroupEntry(child, target, id)),
+      parentId: parentId.toInt64(),
+      entryIds: entry.entries.map((child) => _convertGroupEntry(child, target, id).toInt64()).toList(),
     ));
     return id;
   }
 
   int _convertTest(Test entry, SuiteInfoProto target, int parentId) {
-    final id = IdGenerator.instance.nextId();
+    final id = _idStableGenerator.generate(entry.name);
     target.tests.add(TestInfoProto(
-      id: id,
+      id: id.toInt64(),
       name: entry.name,
-      parentId: parentId,
+      parentId: parentId.toInt64(),
     ));
     return id;
   }
@@ -45,5 +40,33 @@ class SuiteInfoConverter {
     if (entry is Group) return _convertGroup(entry, target, parentId);
     if (entry is Test) return _convertTest(entry, target, parentId);
     throw Exception('Unknown entry=$entry');
+  }
+}
+
+class _GroupEntryIdStableGenerator {
+  final _seenNames = <String>{};
+  final _seenIds = <int>{};
+
+  int generate(String name) {
+    if (_seenNames.contains(name)) throw AssertionError;
+
+    final id = _generateWithoutSave(name);
+    if (_seenIds.contains(id)) throw AssertionError;
+
+    _seenNames.add(name);
+    _seenIds.add(id);
+
+    return id;
+  }
+
+  int _generateWithoutSave(String name) {
+    var ansId = name.hashCode;
+
+    // linear probing
+    while (_seenIds.contains(ansId)) {
+      ansId++;
+    }
+
+    return ansId;
   }
 }

@@ -62,7 +62,7 @@ class _MyLog extends vm_service.Log {
 class _ServiceConnectionManager = __ServiceConnectionManager with _$_ServiceConnectionManager;
 
 abstract class __ServiceConnectionManager with Store {
-  static const _kTag = 'ServiceConnectionManager';
+  static const _kTag = '_ServiceConnectionManager';
 
   @observable
   VmService? service;

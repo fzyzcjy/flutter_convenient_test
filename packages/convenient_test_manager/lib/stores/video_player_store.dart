@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/misc/video_player.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/video_player_store.dart';
@@ -11,37 +13,35 @@ part 'video_player_store.g.dart';
 class VideoPlayerStore = _VideoPlayerStore with _$VideoPlayerStore;
 
 abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
+  static const _kTag = 'VideoPlayerStore';
+
+  final videoMap = ObservableMap<int, VideoInfo>();
+
   @observable
-  VideoInfo? displayVideoInfo;
+  int? activeVideoId;
+
+  @computed
+  VideoInfo? get activeVideo => videoMap[activeVideoId];
 
   @observable
   var displayRange = const Tuple2(Duration.zero, Duration.zero);
 
   final mainPlayerController = VideoPlayerController();
 
-  Duration absoluteToVideoTime(DateTime absoluteTime) {
-    final displayVideoInfo = this.displayVideoInfo;
-    if (displayVideoInfo == null) return Duration.zero;
-    return absoluteTime.difference(displayVideoInfo.startTime);
-  }
-
-  DateTime videoToAbsoluteTime(Duration videoTime) {
-    final displayVideoInfo = this.displayVideoInfo;
-    if (displayVideoInfo == null) return DateTime.fromMicrosecondsSinceEpoch(0);
-    return displayVideoInfo.startTime.add(videoTime);
-  }
-
   @observable
   int? playerPositionCorrespondingLogEntryId;
 
   void clear() {
-    displayVideoInfo = null;
+    activeVideoId = null;
+    videoMap.clear();
     playerPositionCorrespondingLogEntryId = null;
   }
 
   @override
   void handleRecorderFinished(VideoInfo info) {
-    displayVideoInfo = info;
+    final id = IdGenerator.instance.nextId();
+    Log.d(_kTag, 'handleRecorderFinished info=$info id=$id');
+    videoMap[id] = info;
   }
 
   _VideoPlayerStore() {
@@ -53,10 +53,16 @@ abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
   }
 
   void _handlePositionStreamEvent(Duration position) {
-    final absoluteTime = videoToAbsoluteTime(position);
+    final absoluteTime = activeVideo?.videoToAbsoluteTime(position) ?? DateTime.fromMicrosecondsSinceEpoch(0);
     final logEntryId = GetIt.I.get<LogStore>().calcLogEntryAtTime(absoluteTime);
 
     // this "if" will avoid unnecessary mobx updates
     if (logEntryId != playerPositionCorrespondingLogEntryId) playerPositionCorrespondingLogEntryId = logEntryId;
   }
+}
+
+extension ExtObservableMapVideoInfo on ObservableMap<int, VideoInfo> {
+  int? findVideoAtTime(DateTime time) => entries
+      .firstWhereOrNull((entry) => entry.value.startTime.isBefore(time) && entry.value.endTime.isAfter(time))
+      ?.key;
 }

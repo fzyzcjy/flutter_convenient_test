@@ -2,7 +2,7 @@ syntax = "proto3";
 
 service ConvenientTestManager {
   rpc Report (ReportCollection) returns (Empty);
-  rpc GetWorkerMode (Empty) returns (WorkerMode);
+  rpc GetWorkerCurrentRunConfig (Empty) returns (WorkerCurrentRunConfig);
 }
 
 message ReportCollection {
@@ -12,7 +12,8 @@ message ReportCollection {
 
 message ReportItem {
   oneof sub_type {
-    OverallExecution overall_execution = 7;
+    SetUpAll set_up_all = 7;
+    TearDownAll tear_down_all = 8;
     SuiteInfoProto suite_info_proto = 1;
     LogEntry log_entry = 2;
     RunnerStateChange runner_state_change = 3;
@@ -22,20 +23,20 @@ message ReportItem {
   }
 }
 
-enum OverallExecution {
-  OVERALL_EXECUTION_INVALID = 0;
-  SET_UP_ALL = 1;
-  TEAR_DOWN_ALL = 2;
+message SetUpAll {}
+
+message TearDownAll {
+  ResolvedExecutionFilterProto resolved_execution_filter = 1;
 }
 
 message LogEntry {
-  int32 id = 1;
-  repeated string entry_locators = 2;
+  int64 id = 1;
+  string test_name = 2;
   repeated LogSubEntry sub_entries = 3;
 }
 
 message LogSubEntry {
-  int32 id = 1;
+  int64 id = 1;
   int64 time = 2;
   LogSubEntryType type = 3;
   string title = 4;
@@ -57,28 +58,28 @@ enum LogSubEntryType {
 
 // mimic test_api :: Suite
 message SuiteInfoProto {
-  int32 group_id = 1;
+  int64 group_id = 1;
   repeated GroupInfoProto groups = 2;
   repeated TestInfoProto tests = 3;
 }
 
 // mimic test_api :: Group
 message GroupInfoProto {
-  int32 id = 1;
+  int64 id = 1;
   string name = 2;
-  int32 parent_id = 3;
-  repeated int32 entry_ids = 4;
+  int64 parent_id = 3;
+  repeated int64 entry_ids = 4;
 }
 
 // mimic test_api :: Test
 message TestInfoProto {
-  int32 id = 1;
+  int64 id = 1;
   string name = 2;
-  int32 parent_id = 3;
+  int64 parent_id = 3;
 }
 
 message RunnerStateChange {
-  repeated string entry_locators = 1;
+  string test_name = 1;
   TestEntryState state = 2;
 }
 
@@ -88,33 +89,60 @@ message TestEntryState {
 }
 
 message RunnerError {
-  repeated string entry_locators = 1;
+  string test_name = 1;
   string error = 2;
   string stack_trace = 3;
 }
 
 message RunnerMessage {
-  repeated string entry_locators = 1;
+  string test_name = 1;
   string message = 2;
 }
 
 message Snapshot {
-  int32 log_entry_id = 1;
+  int64 log_entry_id = 1;
   string name = 2;
   bytes image = 3;
 }
 
-message WorkerMode {
+// The config for `worker` in the current run (current hot-restart)
+message WorkerCurrentRunConfig {
   oneof sub_type {
-    WorkerModeInteractiveApp interactive_app = 1;
-    WorkerModeIntegrationTest integration_test = 2;
+    InteractiveApp interactive_app = 1;
+    IntegrationTest integration_test = 2;
+  }
+
+  message InteractiveApp {}
+
+  message IntegrationTest {
+    bool report_suite_info = 1;
+    int32 default_retry_count = 3;
+    ExecutionFilter execution_filter = 2;
   }
 }
 
-message WorkerModeInteractiveApp {}
-
-message WorkerModeIntegrationTest {
+message ExecutionFilter {
   string filter_name_regex = 1;
+  Strategy strategy = 2;
+
+  message Strategy {
+    oneof sub_type {
+      FirstMatch first_match = 1;
+      NextMatch next_match = 2;
+      AllMatch all_match = 3;
+    }
+
+    message FirstMatch {}
+    message NextMatch {
+      string prev_test_name = 1;
+    }
+    message AllMatch {}
+  }
+}
+
+// Information after `ExecutionFilter` is resolved
+message ResolvedExecutionFilterProto {
+  repeated string allow_execute_test_names = 1;
 }
 
 // https://stackoverflow.com/questions/31768665/can-i-define-a-grpc-call-with-a-null-request-or-response

@@ -9,18 +9,25 @@ part of 'video_player_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$VideoPlayerStore on _VideoPlayerStore, Store {
-  late final _$displayVideoInfoAtom = Atom(name: '_VideoPlayerStore.displayVideoInfo', context: context);
+  Computed<VideoInfo?>? _$activeVideoComputed;
 
   @override
-  VideoInfo? get displayVideoInfo {
-    _$displayVideoInfoAtom.reportRead();
-    return super.displayVideoInfo;
+  VideoInfo? get activeVideo =>
+      (_$activeVideoComputed ??= Computed<VideoInfo?>(() => super.activeVideo, name: '_VideoPlayerStore.activeVideo'))
+          .value;
+
+  late final _$activeVideoIdAtom = Atom(name: '_VideoPlayerStore.activeVideoId', context: context);
+
+  @override
+  int? get activeVideoId {
+    _$activeVideoIdAtom.reportRead();
+    return super.activeVideoId;
   }
 
   @override
-  set displayVideoInfo(VideoInfo? value) {
-    _$displayVideoInfoAtom.reportWrite(value, super.displayVideoInfo, () {
-      super.displayVideoInfo = value;
+  set activeVideoId(int? value) {
+    _$activeVideoIdAtom.reportWrite(value, super.activeVideoId, () {
+      super.activeVideoId = value;
     });
   }
 
@@ -58,9 +65,10 @@ mixin _$VideoPlayerStore on _VideoPlayerStore, Store {
   @override
   String toString() {
     return '''
-displayVideoInfo: ${displayVideoInfo},
+activeVideoId: ${activeVideoId},
 displayRange: ${displayRange},
-playerPositionCorrespondingLogEntryId: ${playerPositionCorrespondingLogEntryId}
+playerPositionCorrespondingLogEntryId: ${playerPositionCorrespondingLogEntryId},
+activeVideo: ${activeVideo}
     ''';
   }
 }

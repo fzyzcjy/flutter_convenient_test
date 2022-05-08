@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 
 class IdGenerator {
   static final instance = IdGenerator.raw(
