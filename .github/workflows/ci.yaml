@@ -43,6 +43,10 @@ jobs:
         run: flutter analyze
         working-directory: packages/${{ matrix.package_name }}
 
+      - name: Dart code metrics
+        run: flutter pub run dart_code_metrics:metrics analyze lib --fatal-style --fatal-performance --fatal-warnings --set-exit-on-violation-level noted
+        working-directory: packages/${{ matrix.package_name }}
+
       - name: Run tests
         run: flutter test
         working-directory: packages/${{ matrix.package_name }}
