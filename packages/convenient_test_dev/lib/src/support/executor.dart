@@ -81,11 +81,13 @@ class ResolvedExecutionFilter {
 }
 
 class _ExecutionFilterResolver {
+  static const _kTag = 'ExecutionFilterResolver';
+
   static ResolvedExecutionFilter resolve({
     required Group root,
     required ExecutionFilter executionFilter,
   }) {
-    final filterNameRegex = RegExp(executionFilter.filterNameRegex);
+    final filterNameRegex = _createRegExp(executionFilter.filterNameRegex);
     final flattenedTestsMatchingFilter = root
         .traverse()
         .whereType<Test>() //
@@ -109,6 +111,15 @@ class _ExecutionFilterResolver {
         return _createOutput(flattenedTestsMatchingFilter);
       case ExecutionFilter_Strategy_SubType.notSet:
         throw Exception('unknown $executionFilter');
+    }
+  }
+
+  static RegExp _createRegExp(String raw) {
+    try {
+      return RegExp(raw);
+    } catch (_) {
+      Log.i(_kTag, 'error when create RegExp raw=`$raw`');
+      rethrow;
     }
   }
 
