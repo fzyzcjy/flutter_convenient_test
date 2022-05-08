@@ -55,35 +55,35 @@ class HomePageHeaderPanel extends StatelessWidget {
           // ),
           // const SizedBox(width: 8),
           ..._buildSwitch(
-            text: 'Isolation Mode',
+            text: 'Isolation',
             gs: GetSet.gs(
               () => workerSuperRunStore.isolationMode,
               (v) => workerSuperRunStore.isolationMode = v,
             ),
           ),
           ..._buildSwitch(
-            text: 'Retry Mode',
+            text: 'Retry',
             gs: GetSet.gs(
               () => workerSuperRunStore.retryMode,
               (v) => workerSuperRunStore.retryMode = v,
             ),
           ),
           ..._buildSwitch(
-            text: 'Hover Mode',
+            text: 'Hover',
             gs: GetSet.gs(
               () => highlightStore.enableHoverMode,
               (v) => highlightStore.enableHoverMode = v,
             ),
           ),
           ..._buildSwitch(
-            text: 'Auto Jump',
+            text: 'AutoJump',
             gs: GetSet.gs(
               () => highlightStore.enableAutoJump,
               (v) => highlightStore.enableAutoJump = v,
             ),
           ),
           ..._buildSwitch(
-            text: 'Auto Expand',
+            text: 'AutoExpand',
             gs: GetSet.gs(
               () => highlightStore.enableAutoExpand,
               (v) => highlightStore.enableAutoExpand = v,
@@ -101,9 +101,12 @@ class HomePageHeaderPanel extends StatelessWidget {
     return [
       TextButton(
         onPressed: onPressed,
-        child: Text(text),
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 12, color: Colors.black87),
+        ),
       ),
-      const SizedBox(width: 8),
+      const SizedBox(width: 4),
     ];
   }
 
@@ -112,16 +115,26 @@ class HomePageHeaderPanel extends StatelessWidget {
     required GetSet<bool> gs,
   }) {
     return [
-      Text(
-        text,
-        style: const TextStyle(fontSize: 12, height: 1.2),
+      Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            text,
+            style: const TextStyle(fontSize: 11.5, height: 1),
+          ),
+          Observer(
+            builder: (_) => SizedBox(
+              height: 24,
+              child: Switch(
+                value: gs.getter(),
+                onChanged: gs.setter,
+              ),
+            ),
+          ),
+        ],
       ),
-      Observer(
-        builder: (_) => Switch(
-          value: gs.getter(),
-          onChanged: gs.setter,
-        ),
-      ),
+      const SizedBox(width: 8),
     ];
   }
 }
