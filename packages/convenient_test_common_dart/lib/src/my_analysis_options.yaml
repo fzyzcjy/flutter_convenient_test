@@ -4,6 +4,9 @@ include: package:lint/analysis_options.yaml
 
 # https://dart.dev/guides/language/analysis-options
 analyzer:
+  plugins:
+    - dart_code_metrics
+
   language:
     strict-casts: true
     strict-inference: true
@@ -24,6 +27,29 @@ analyzer:
 
   exclude:
     - lib/generated_plugin_registrant.dart
+
+dart_code_metrics:
+  metrics:
+    source-lines-of-code: 80
+    cyclomatic-complexity: 1000
+    number-of-parameters: 1000
+    maximum-nesting-level: 1000
+  metrics-exclude:
+    - test/**
+  rules:
+    - avoid-global-state
+    - avoid-nested-conditional-expressions:
+        acceptable-level: 2
+    - no-boolean-literal-compare
+    - prefer-last
+    - avoid-unnecessary-setstate
+    - avoid-collection-methods-with-unrelated-types
+    - tag-name:
+        var-names: [ _kTag, tag, kTag, TAG ]
+        strip-prefix: '_'
+        strip-postfix: 'State'
+  anti-patterns:
+    - long-method
 
 linter:
   rules:
