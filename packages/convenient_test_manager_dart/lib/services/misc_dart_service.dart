@@ -26,7 +26,7 @@ class MiscDartService {
   }
 
   Future<void> reloadInfo() async {
-    GetIt.I.get<WorkerSuperRunStore>().setControllerIntegrationTest(filterNameRegex: kRegexMatchNothing);
+    GetIt.I.get<WorkerSuperRunStore>().setControllerIntegrationTest(filterNameRegex: RegexUtils.kMatchNothing);
     await GetIt.I.get<VmServiceWrapperService>().hotRestart();
   }
 

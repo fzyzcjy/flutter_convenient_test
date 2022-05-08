@@ -27,7 +27,7 @@ abstract class _WorkerSuperRunStore with Store {
 
   @observable
   WorkerSuperRunController currSuperRunController =
-      _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: kRegexMatchNothing);
+      _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: RegexUtils.kMatchNothing);
 
   void setControllerInteractiveApp() => currSuperRunController = const _WorkerSuperRunControllerInteractiveApp();
 
@@ -75,7 +75,7 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
           reportSuiteInfo: false,
           defaultRetryCount: 0,
           executionFilter: ExecutionFilter(
-            filterNameRegex: kRegexMatchNothing,
+            filterNameRegex: RegexUtils.kMatchNothing,
             strategy: ExecutionFilter_Strategy(
               allMatch: ExecutionFilter_Strategy_AllMatch(),
             ),
@@ -167,7 +167,7 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
         ),
         finished: (_) => ExecutionFilter(
           // NOTE use "regex match nothing"
-          filterNameRegex: kRegexMatchNothing,
+          filterNameRegex: RegexUtils.kMatchNothing,
           strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
         ),
       );

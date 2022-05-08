@@ -7,4 +7,5 @@ export 'package:convenient_test_common_dart/src/id_generator.dart';
 export 'package:convenient_test_common_dart/src/misc.dart';
 export 'package:convenient_test_common_dart/src/protobuf/convenient_test.pb.dart';
 export 'package:convenient_test_common_dart/src/protobuf/convenient_test.pbgrpc.dart';
+export 'package:convenient_test_common_dart/src/regex_utils.dart';
 export 'package:convenient_test_common_dart/src/suite_info.dart';
