@@ -89,8 +89,8 @@ class TFinderCommand extends TCommand {
         logMessage: '"$text" to ${finder.description}',
       );
 
-  Future<void> tap() => act(
-        act: () => t.tester.tap(finder),
+  Future<void> tap({bool warnIfMissed = true}) => act(
+        act: () => t.tester.tap(finder, warnIfMissed: warnIfMissed),
         logTitle: 'TAP',
         logMessage: finder.description,
       );
