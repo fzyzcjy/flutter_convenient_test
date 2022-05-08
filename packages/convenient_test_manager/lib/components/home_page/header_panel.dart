@@ -21,37 +21,32 @@ class HomePageHeaderPanel extends StatelessWidget {
       child: Row(
         children: [
           const SizedBox(width: 8),
-          TextButton(
+          ..._buildButton(
             onPressed: () {
               highlightStore.enableAutoExpand = true;
               miscFlutterService.hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
             },
-            child: const Text('Run All'),
+            text: 'Run All',
           ),
-          const SizedBox(width: 8),
-          TextButton(
+          ..._buildButton(
             onPressed: miscFlutterService.haltWorker,
-            child: const Text('Halt'),
+            text: 'Halt',
           ),
-          const SizedBox(width: 8),
-          TextButton(
+          ..._buildButton(
             onPressed: miscFlutterService.hotRestartAndRunInAppMode,
-            child: const Text('Interactive Mode'),
+            text: 'Interactive Mode',
           ),
-          const SizedBox(width: 8),
-          TextButton(
+          ..._buildButton(
             onPressed: miscFlutterService.reloadInfo,
-            child: const Text('Reload Info'),
+            text: 'Reload Info',
           ),
-          const SizedBox(width: 8),
-          TextButton(
+          ..._buildButton(
             onPressed: GetIt.I.get<VmServiceWrapperService>().connect,
-            child: const Text('Reconnect VM'),
+            text: 'Reconnect VM',
           ),
-          const SizedBox(width: 8),
-          TextButton(
+          ..._buildButton(
             onPressed: miscFlutterService.pickFileAndReadReport,
-            child: const Text('Open File'),
+            text: 'Open File',
           ),
           Expanded(child: Container()),
           // TextButton(
@@ -59,58 +54,87 @@ class HomePageHeaderPanel extends StatelessWidget {
           //   child: const Text('Misc'),
           // ),
           // const SizedBox(width: 8),
-          const Text(
-            'Isolation Mode',
-            style: TextStyle(fontSize: 12, height: 1.2),
-          ),
-          Observer(
-            builder: (_) => Switch(
-              value: workerSuperRunStore.isolationMode,
-              onChanged: (v) => workerSuperRunStore.isolationMode = v,
+          ..._buildSwitch(
+            text: 'Isolation',
+            gs: GetSet.gs(
+              () => workerSuperRunStore.isolationMode,
+              (v) => workerSuperRunStore.isolationMode = v,
             ),
           ),
-          const Text(
-            'Retry Mode',
-            style: TextStyle(fontSize: 12, height: 1.2),
-          ),
-          Observer(
-            builder: (_) => Switch(
-              value: workerSuperRunStore.retryMode,
-              onChanged: (v) => workerSuperRunStore.retryMode = v,
+          ..._buildSwitch(
+            text: 'Retry',
+            gs: GetSet.gs(
+              () => workerSuperRunStore.retryMode,
+              (v) => workerSuperRunStore.retryMode = v,
             ),
           ),
-          const Text(
-            'Hover Mode',
-            style: TextStyle(fontSize: 12, height: 1.2),
-          ),
-          Observer(
-            builder: (_) => Switch(
-              value: highlightStore.enableHoverMode,
-              onChanged: (v) => highlightStore.enableHoverMode = v,
+          ..._buildSwitch(
+            text: 'Hover',
+            gs: GetSet.gs(
+              () => highlightStore.enableHoverMode,
+              (v) => highlightStore.enableHoverMode = v,
             ),
           ),
-          const Text(
-            'Auto Jump',
-            style: TextStyle(fontSize: 12, height: 1.2),
-          ),
-          Observer(
-            builder: (_) => Switch(
-              value: highlightStore.enableAutoJump,
-              onChanged: (v) => highlightStore.enableAutoJump = v,
+          ..._buildSwitch(
+            text: 'AutoJump',
+            gs: GetSet.gs(
+              () => highlightStore.enableAutoJump,
+              (v) => highlightStore.enableAutoJump = v,
             ),
           ),
-          const Text(
-            'Auto Expand',
-            style: TextStyle(fontSize: 12, height: 1.2),
-          ),
-          Observer(
-            builder: (_) => Switch(
-              value: highlightStore.enableAutoExpand,
-              onChanged: (v) => highlightStore.enableAutoExpand = v,
+          ..._buildSwitch(
+            text: 'AutoExpand',
+            gs: GetSet.gs(
+              () => highlightStore.enableAutoExpand,
+              (v) => highlightStore.enableAutoExpand = v,
             ),
           ),
         ],
       ),
     );
+  }
+
+  List<Widget> _buildButton({
+    required String text,
+    required VoidCallback onPressed,
+  }) {
+    return [
+      TextButton(
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 12, color: Colors.black87),
+        ),
+      ),
+      const SizedBox(width: 4),
+    ];
+  }
+
+  List<Widget> _buildSwitch({
+    required String text,
+    required GetSet<bool> gs,
+  }) {
+    return [
+      Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            text,
+            style: const TextStyle(fontSize: 11.5, height: 1),
+          ),
+          Observer(
+            builder: (_) => SizedBox(
+              height: 24,
+              child: Switch(
+                value: gs.getter(),
+                onChanged: gs.setter,
+              ),
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(width: 8),
+    ];
   }
 }
