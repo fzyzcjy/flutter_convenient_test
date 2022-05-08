@@ -2,6 +2,7 @@ import 'package:convenient_test_manager_dart/services/convenient_test_manager_se
 import 'package:convenient_test_manager_dart/services/fs_service.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:convenient_test_manager_dart/services/report_handler_service.dart';
+import 'package:convenient_test_manager_dart/services/report_saver_service.dart';
 import 'package:convenient_test_manager_dart/services/screen_video_recorder_service.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager_dart/stores/highlight_store.dart';
@@ -29,6 +30,7 @@ void setup({
   getIt.registerSingleton<ConvenientTestManagerService>(ConvenientTestManagerService());
   getIt.registerSingleton<VmServiceWrapperService>(VmServiceWrapperService());
   getIt.registerSingleton<ReportHandlerService>(ReportHandlerService());
+  getIt.registerSingleton<ReportSaverService>(ReportSaverService());
   getIt.registerSingleton<ScreenVideoRecorderService>(ScreenVideoRecorderService.create());
 
   if (registerMiscDartService) getIt.registerSingleton<MiscDartService>(MiscDartService());
