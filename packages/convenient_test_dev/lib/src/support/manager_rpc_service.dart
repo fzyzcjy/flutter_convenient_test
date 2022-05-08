@@ -10,6 +10,6 @@ extension ExtConvenientTestManagerClient on ConvenientTestManagerClient {
     );
     return ConvenientTestManagerClient(channel, options: CallOptions(timeout: null));
   }
- 
+
   Future<void> reportSingle(ReportItem item) => report(ReportCollection(items: [item]));
 }
