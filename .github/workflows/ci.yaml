@@ -36,10 +36,6 @@ jobs:
         run: flutter pub get
         working-directory: packages/${{ matrix.package_name }}
 
-      - name: Check format
-        run: flutter format --set-exit-if-changed --line-length 120 .
-        working-directory: packages/${{ matrix.package_name }}
-
       - name: Analyze
         run: flutter analyze
         working-directory: packages/${{ matrix.package_name }}
@@ -51,3 +47,8 @@ jobs:
       - name: Run tests
         run: flutter test
         working-directory: packages/${{ matrix.package_name }}
+
+      - name: Check format
+        run: flutter format --set-exit-if-changed --line-length 120 .
+        working-directory: packages/${{ matrix.package_name }}
+
