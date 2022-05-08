@@ -188,7 +188,8 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
     final executedTestSucceeded = () {
       if (executedTestName == null) return null;
 
-      final executedTestState = suiteInfoStore.testEntryStateMap[executedTestName].toState();
+      final executedTestId = suiteInfoStore.suiteInfo!.getEntryIdFromName(executedTestName)!;
+      final executedTestState = suiteInfoStore.testEntryStateMap[executedTestId].toState();
       if (executedTestState.status != Status.complete) throw AssertionError;
 
       return executedTestState.result == Result.success;

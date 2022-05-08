@@ -13,11 +13,13 @@ mixin _$HighlightStore on _HighlightStore, Store {
 
   @override
   String? get effectiveActiveSnapshotName =>
-      (_$effectiveActiveSnapshotNameComputed ??= Computed<String?>(() => super.effectiveActiveSnapshotName,
+      (_$effectiveActiveSnapshotNameComputed ??= Computed<String?>(
+              () => super.effectiveActiveSnapshotName,
               name: '_HighlightStore.effectiveActiveSnapshotName'))
           .value;
 
-  late final _$enableAutoExpandAtom = Atom(name: '_HighlightStore.enableAutoExpand', context: context);
+  late final _$enableAutoExpandAtom =
+      Atom(name: '_HighlightStore.enableAutoExpand', context: context);
 
   @override
   bool get enableAutoExpand {
@@ -32,7 +34,8 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
-  late final _$enableAutoJumpAtom = Atom(name: '_HighlightStore.enableAutoJump', context: context);
+  late final _$enableAutoJumpAtom =
+      Atom(name: '_HighlightStore.enableAutoJump', context: context);
 
   @override
   bool get enableAutoJump {
@@ -47,7 +50,8 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
-  late final _$enableHoverModeAtom = Atom(name: '_HighlightStore.enableHoverMode', context: context);
+  late final _$enableHoverModeAtom =
+      Atom(name: '_HighlightStore.enableHoverMode', context: context);
 
   @override
   bool get enableHoverMode {
@@ -62,22 +66,25 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
-  late final _$highlightTestEntryIdAtom = Atom(name: '_HighlightStore.highlightTestEntryId', context: context);
+  late final _$highlightTestEntryIdAtom =
+      Atom(name: '_HighlightStore.highlightTestEntryId', context: context);
 
   @override
-  int? get highlightTestEntryName {
+  int? get highlightTestEntryId {
     _$highlightTestEntryIdAtom.reportRead();
-    return super.highlightTestEntryName;
+    return super.highlightTestEntryId;
   }
 
   @override
-  set highlightTestEntryName(int? value) {
-    _$highlightTestEntryIdAtom.reportWrite(value, super.highlightTestEntryName, () {
-      super.highlightTestEntryName = value;
+  set highlightTestEntryId(int? value) {
+    _$highlightTestEntryIdAtom.reportWrite(value, super.highlightTestEntryId,
+        () {
+      super.highlightTestEntryId = value;
     });
   }
 
-  late final _$highlightLogEntryIdAtom = Atom(name: '_HighlightStore.highlightLogEntryId', context: context);
+  late final _$highlightLogEntryIdAtom =
+      Atom(name: '_HighlightStore.highlightLogEntryId', context: context);
 
   @override
   int? get highlightLogEntryId {
@@ -92,7 +99,8 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
-  late final _$highlightSnapshotNameAtom = Atom(name: '_HighlightStore.highlightSnapshotName', context: context);
+  late final _$highlightSnapshotNameAtom =
+      Atom(name: '_HighlightStore.highlightSnapshotName', context: context);
 
   @override
   String? get highlightSnapshotName {
@@ -102,18 +110,21 @@ mixin _$HighlightStore on _HighlightStore, Store {
 
   @override
   set highlightSnapshotName(String? value) {
-    _$highlightSnapshotNameAtom.reportWrite(value, super.highlightSnapshotName, () {
+    _$highlightSnapshotNameAtom.reportWrite(value, super.highlightSnapshotName,
+        () {
       super.highlightSnapshotName = value;
     });
   }
 
-  late final _$_HighlightStoreActionController = ActionController(name: '_HighlightStore', context: context);
+  late final _$_HighlightStoreActionController =
+      ActionController(name: '_HighlightStore', context: context);
 
   @override
-  void expandSeriesForTest({required int testInfoName}) {
-    final _$actionInfo = _$_HighlightStoreActionController.startAction(name: '_HighlightStore.expandSeriesForTest');
+  void expandSeriesForTest({required int testInfoId}) {
+    final _$actionInfo = _$_HighlightStoreActionController.startAction(
+        name: '_HighlightStore.expandSeriesForTest');
     try {
-      return super.expandSeriesForTest(testInfoName: testInfoName);
+      return super.expandSeriesForTest(testInfoId: testInfoId);
     } finally {
       _$_HighlightStoreActionController.endAction(_$actionInfo);
     }
@@ -125,7 +136,7 @@ mixin _$HighlightStore on _HighlightStore, Store {
 enableAutoExpand: ${enableAutoExpand},
 enableAutoJump: ${enableAutoJump},
 enableHoverMode: ${enableHoverMode},
-highlightTestEntryId: ${highlightTestEntryName},
+highlightTestEntryId: ${highlightTestEntryId},
 highlightLogEntryId: ${highlightLogEntryId},
 highlightSnapshotName: ${highlightSnapshotName},
 effectiveActiveSnapshotName: ${effectiveActiveSnapshotName}

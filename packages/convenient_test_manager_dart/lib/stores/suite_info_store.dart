@@ -12,7 +12,7 @@ abstract class _SuiteInfoStore with Store {
   @observable
   SuiteInfo? suiteInfo;
 
-  final testEntryStateMap = ObservableDefaultMap<String, TestEntryState>(
+  final testEntryStateMap = ObservableDefaultMap<int, TestEntryState>(
       createDefaultValue: (_) => TestEntryState(status: 'pending', result: 'success'));
 
   SimplifiedStateEnum getSimplifiedState(int testInfoId) =>

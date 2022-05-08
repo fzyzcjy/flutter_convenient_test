@@ -61,28 +61,40 @@ class ReportHandlerService {
   Future<void> _handleLogEntry(LogEntry request) async {
     Log.d(_kTag, 'handleReportLogEntry called');
 
-    final requestId = request.id.toInt();
-    _logStore.addLogEntry(testName: request.testName, logEntryId: requestId, subEntries: request.subEntries);
+    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
+    if (testEntryId == null) return;
 
-    GetIt.I.get<HighlightStoreBase>().handleLogEntry(testEntryName: request.testName, logEntryId: requestId);
+    final requestId = request.id.toInt();
+    _logStore.addLogEntry(testEntryId: testEntryId, logEntryId: requestId, subEntries: request.subEntries);
+
+    GetIt.I.get<HighlightStoreBase>().handleLogEntry(testEntryId: testEntryId, logEntryId: requestId);
   }
 
   Future<void> _handleRunnerError(RunnerError request) async {
     Log.d(_kTag, 'handleReportRunnerError called');
 
-    _rawLogStore.rawLogInTest[request.testName] += '${request.error}\n${request.stackTrace}\n';
+    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
+    if (testEntryId == null) return;
+
+    _rawLogStore.rawLogInTest[testEntryId] += '${request.error}\n${request.stackTrace}\n';
   }
 
   Future<void> _handleRunnerMessage(RunnerMessage request) async {
     Log.d(_kTag, 'handleReportRunnerMessage called');
 
-    _rawLogStore.rawLogInTest[request.testName] += '${request.message}\n';
+    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
+    if (testEntryId == null) return;
+
+    _rawLogStore.rawLogInTest[testEntryId] += '${request.message}\n';
   }
 
   Future<void> _handleRunnerStateChange(RunnerStateChange request) async {
     Log.d(_kTag, 'handleReportRunnerStateChange called testName=${request.testName} state=${request.state}');
 
-    _suiteInfoStore.testEntryStateMap[request.testName] = request.state;
+    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
+    if (testEntryId == null) return;
+
+    _suiteInfoStore.testEntryStateMap[testEntryId] = request.state;
   }
 
   Future<void> _handleSnapshot(Snapshot request) async {

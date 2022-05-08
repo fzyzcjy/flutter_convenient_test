@@ -28,26 +28,26 @@ abstract class _HighlightStore extends HighlightStoreBase with Store {
   final expandGroupEntryMap = ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
 
   @action
-  void expandSeriesForTest({required String testInfoName}) {
+  void expandSeriesForTest({required int testInfoId}) {
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
-    for (final entryId in suiteInfoStore.suiteInfo!.ancestors(testInfoName)) {
+    for (final entryId in suiteInfoStore.suiteInfo!.ancestors(testInfoId)) {
       expandGroupEntryMap[entryId] = true;
     }
   }
 
   @override
-  void handleLogEntry({required String testEntryName, required int logEntryId}) {
+  void handleLogEntry({required int testEntryId, required int logEntryId}) {
     if (enableAutoExpand) {
       expandGroupEntryMap.clear();
-      expandSeriesForTest(testInfoName: testEntryName);
-      highlightTestEntryName = testEntryName;
+      expandSeriesForTest(testInfoId: testEntryId);
+      highlightTestEntryId = testEntryId;
       highlightLogEntryId = logEntryId;
     }
   }
 
   @observable
-  String? highlightTestEntryName;
+  int? highlightTestEntryId;
 
   @observable
   int? highlightLogEntryId;
@@ -63,7 +63,7 @@ abstract class _HighlightStore extends HighlightStoreBase with Store {
 
   void clear() {
     expandGroupEntryMap.clear();
-    highlightTestEntryName = null;
+    highlightTestEntryId = null;
     highlightLogEntryId = null;
     highlightSnapshotName = null;
   }
@@ -89,8 +89,8 @@ abstract class _HighlightStore extends HighlightStoreBase with Store {
     Log.d(_kTag, 'update highlight since playerPositionCorrespondingLogEntryId=$logEntryId');
 
     final testEntryId = logStore.testIdOfLogEntry[logEntryId]!;
-    expandSeriesForTest(testInfoName: testEntryId);
-    highlightTestEntryName = testEntryId;
+    expandSeriesForTest(testInfoId: testEntryId);
+    highlightTestEntryId = testEntryId;
     highlightLogEntryId = logEntryId;
   }
 
