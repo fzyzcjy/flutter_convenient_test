@@ -1294,6 +1294,7 @@ class WorkerCurrentRunConfig_IntegrationTest extends $pb.GeneratedMessage {
         subBuilder: ExecutionFilter.create)
     ..a<$core.int>(
         3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'defaultRetryCount', $pb.PbFieldType.O3)
+    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'autoUpdateGoldenFiles')
     ..hasRequiredFields = false;
 
   WorkerCurrentRunConfig_IntegrationTest._() : super();
@@ -1301,6 +1302,7 @@ class WorkerCurrentRunConfig_IntegrationTest extends $pb.GeneratedMessage {
     $core.bool? reportSuiteInfo,
     ExecutionFilter? executionFilter,
     $core.int? defaultRetryCount,
+    $core.bool? autoUpdateGoldenFiles,
   }) {
     final _result = create();
     if (reportSuiteInfo != null) {
@@ -1311,6 +1313,9 @@ class WorkerCurrentRunConfig_IntegrationTest extends $pb.GeneratedMessage {
     }
     if (defaultRetryCount != null) {
       _result.defaultRetryCount = defaultRetryCount;
+    }
+    if (autoUpdateGoldenFiles != null) {
+      _result.autoUpdateGoldenFiles = autoUpdateGoldenFiles;
     }
     return _result;
   }
@@ -1378,6 +1383,18 @@ class WorkerCurrentRunConfig_IntegrationTest extends $pb.GeneratedMessage {
   $core.bool hasDefaultRetryCount() => $_has(2);
   @$pb.TagNumber(3)
   void clearDefaultRetryCount() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.bool get autoUpdateGoldenFiles => $_getBF(3);
+  @$pb.TagNumber(4)
+  set autoUpdateGoldenFiles($core.bool v) {
+    $_setBool(3, v);
+  }
+
+  @$pb.TagNumber(4)
+  $core.bool hasAutoUpdateGoldenFiles() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAutoUpdateGoldenFiles() => clearField(4);
 }
 
 enum WorkerCurrentRunConfig_SubType { interactiveApp, integrationTest, notSet }

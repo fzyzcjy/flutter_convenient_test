@@ -22,6 +22,21 @@ extension ConvenientTestFind on ConvenientTest {
   TRawCommand raw(Object value) => TRawCommand(this, value);
 }
 
+extension ExtFinder on Finder {
+  // forward methods
+
+  Future<void> should(Matcher matcher, {String? reason}) async =>
+      TFinderCommand.auto(this).should(matcher, reason: reason);
+
+  Future<void> enterText(String text) => TFinderCommand.auto(this).enterText(text);
+
+  Future<void> tap({bool warnIfMissed = true}) => TFinderCommand.auto(this).tap(warnIfMissed: warnIfMissed);
+
+  Future<void> longPress() => TFinderCommand.auto(this).longPress();
+
+  Future<void> drag(Offset offset) => TFinderCommand.auto(this).drag(offset);
+}
+
 extension ExtCommonFinders on CommonFinders {
   /// smart "get"
   Finder get(Object arg) {
@@ -79,6 +94,8 @@ class TFinderCommand extends TCommand {
   final Finder finder;
 
   TFinderCommand(ConvenientTest t, this.finder) : super(t);
+
+  TFinderCommand.auto(this.finder) : super.auto();
 
   @override
   Object? getCurrentActual() => finder;

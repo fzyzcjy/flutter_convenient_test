@@ -37,7 +37,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
   @override
   Future<WorkerCurrentRunConfig> getWorkerCurrentRunConfig(grpc.ServiceCall call, Empty request) async {
-    final ans = _workerSuperRunStore.currSuperRunController.calcCurrentRunConfig();
+    final ans = _workerSuperRunStore.calcCurrentRunConfig();
     Log.d(_kTag, 'getWorkerCurrentRunConfig ans=$ans');
     return ans;
   }

@@ -62,6 +62,13 @@ class HomePageHeaderPanel extends StatelessWidget {
             ),
           ),
           ..._buildSwitch(
+            text: 'UpdateGoldens',
+            gs: GetSet.gs(
+              () => workerSuperRunStore.autoUpdateGoldenFiles,
+              (v) => workerSuperRunStore.autoUpdateGoldenFiles = v,
+            ),
+          ),
+          ..._buildSwitch(
             text: 'Retry',
             gs: GetSet.gs(
               () => workerSuperRunStore.retryMode,

@@ -31,6 +31,9 @@ abstract class _WorkerSuperRunStore with Store {
   set retryMode(bool enable) => flakyTestTotalAttemptCount = enable ? 2 : 1;
 
   @observable
+  bool autoUpdateGoldenFiles = false;
+
+  @observable
   WorkerSuperRunController currSuperRunController =
       _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: RegexUtils.kMatchNothing);
 
@@ -41,6 +44,14 @@ abstract class _WorkerSuperRunStore with Store {
       : _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: filterNameRegex);
 
   void setControllerHalt() => currSuperRunController = const _WorkerSuperRunControllerHalt();
+
+  WorkerCurrentRunConfig calcCurrentRunConfig() {
+    final config = currSuperRunController._calcCurrentRunConfig();
+    if (config.hasIntegrationTest()) {
+      if (config.integrationTest.autoUpdateGoldenFiles != autoUpdateGoldenFiles) throw AssertionError;
+    }
+    return config;
+  }
 
   _WorkerSuperRunStore() {
     Log.d(_kTag, 'CompileTimeConfig.kDefaultEnableIsolationMode=${CompileTimeConfig.kDefaultEnableIsolationMode}');
@@ -64,7 +75,7 @@ enum WorkerRunMode { interactiveApp, integrationTest }
 abstract class WorkerSuperRunController {
   const WorkerSuperRunController._();
 
-  WorkerCurrentRunConfig calcCurrentRunConfig();
+  WorkerCurrentRunConfig _calcCurrentRunConfig();
 
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter);
 
@@ -75,7 +86,7 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
   const _WorkerSuperRunControllerHalt() : super._();
 
   @override
-  WorkerCurrentRunConfig calcCurrentRunConfig() => WorkerCurrentRunConfig(
+  WorkerCurrentRunConfig _calcCurrentRunConfig() => WorkerCurrentRunConfig(
         integrationTest: WorkerCurrentRunConfig_IntegrationTest(
           reportSuiteInfo: false,
           defaultRetryCount: 0,
@@ -85,6 +96,7 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
               allMatch: ExecutionFilter_Strategy_AllMatch(),
             ),
           ),
+          autoUpdateGoldenFiles: GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
         ),
       );
 
@@ -96,7 +108,7 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
   const _WorkerSuperRunControllerInteractiveApp() : super._();
 
   @override
-  WorkerCurrentRunConfig calcCurrentRunConfig() {
+  WorkerCurrentRunConfig _calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(interactiveApp: WorkerCurrentRunConfig_InteractiveApp());
   }
 
@@ -111,7 +123,7 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
   _WorkerSuperRunControllerIntegrationTestClassicalMode({required this.filterNameRegex}) : super._();
 
   @override
-  WorkerCurrentRunConfig calcCurrentRunConfig() {
+  WorkerCurrentRunConfig _calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
         reportSuiteInfo: true,
@@ -122,6 +134,7 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
           filterNameRegex: filterNameRegex,
           strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
         ),
+        autoUpdateGoldenFiles: GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
       ),
     );
   }
@@ -141,13 +154,14 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
   _WorkerSuperRunControllerIntegrationTestIsolationMode({required this.filterNameRegex}) : super._();
 
   @override
-  WorkerCurrentRunConfig calcCurrentRunConfig() {
+  WorkerCurrentRunConfig _calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
         reportSuiteInfo: state is _ITIMStateInitial,
         // do *not* handle flaky tests at worker level; instead, handle it at manager level
         defaultRetryCount: 0,
         executionFilter: _calcExecutionFilter(),
+        autoUpdateGoldenFiles: GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
       ),
     );
   }

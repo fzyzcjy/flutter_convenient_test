@@ -5,6 +5,7 @@ import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:test_api/src/expect/async_matcher.dart'; // ignore: implementation_imports
 
 abstract class TCommand {
   @protected
@@ -17,6 +18,8 @@ abstract class TCommand {
   Object? getCurrentActual();
 
   TCommand(this.t);
+
+  TCommand.auto() : this(ConvenientTest.activeInstance);
 }
 
 extension ExtTCommand on TCommand {
@@ -63,7 +66,7 @@ String _formatActual(dynamic actual) {
 Future<void> _expectWithRetry(
   ConvenientTest t,
   ValueGetter<Object?> actualGetter,
-  dynamic matcher, {
+  Matcher matcher, {
   String? reason,
   dynamic skip,
   Duration timeout = const Duration(seconds: 4),
@@ -81,7 +84,12 @@ Future<void> _expectWithRetry(
 
     final actual = actualGetter();
     try {
-      expect(actual, matcher, reason: reason, skip: skip);
+      if (matcher is AsyncMatcher) {
+        expect(actual, matcher, reason: reason, skip: skip);
+      } else {
+        expect(actual, matcher, reason: reason, skip: skip);
+      }
+
       if (snapshotWhenSuccess) await logSnapshot(name: 'after');
       return;
     } on TestFailure catch (e, s) {

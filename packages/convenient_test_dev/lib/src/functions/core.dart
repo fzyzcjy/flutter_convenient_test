@@ -4,6 +4,7 @@ import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/compile_time_config.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
@@ -15,11 +16,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
+import 'package:path/path.dart' as path;
 
 class ConvenientTest {
   final WidgetTester tester;
 
   ConvenientTest(this.tester);
+
+  @internal
+  static ConvenientTest get activeInstance => _activeInstance!;
+  static ConvenientTest? _activeInstance;
+
+  static set activeInstance(ConvenientTest? value) {
+    if (!((value != null) ^ (_activeInstance != null))) {
+      throw Exception(
+          'Cannot set activeInstance, either overwrite existing instance or removing non-existing instance. '
+          'old=$_activeInstance new=$value');
+    }
+    _activeInstance = value;
+  }
+
+  static Future<void> withActiveInstance(WidgetTester tester, Future<void> Function(ConvenientTest) body) async {
+    final t = ConvenientTest(tester);
+    activeInstance = t;
+    try {
+      await body(t);
+    } finally {
+      activeInstance = null;
+    }
+  }
 }
 
 /// Please make this the only method in your "main" method.
@@ -49,6 +74,7 @@ Future<void> _runModeIntegrationTest(
 ) async {
   runZonedGuarded(() {
     ConvenientTestWrapperWidget.convenientTestActive = true;
+    _configureGoldens(currentRunConfig);
 
     final declarer = collectIntoDeclarer(
       defaultRetry: currentRunConfig.defaultRetryCount,
@@ -90,6 +116,20 @@ Future<void> _runModeIntegrationTest(
   });
 }
 
+void _configureGoldens(WorkerCurrentRunConfig_IntegrationTest currentRunConfig) {
+  const _kTag = 'ConfigureGoldens';
+
+  goldenFileComparator =
+      LocalFileComparator(Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart')));
+  autoUpdateGoldenFiles = currentRunConfig.autoUpdateGoldenFiles;
+
+  Log.d(
+      _kTag,
+      'configure '
+      'autoUpdateGoldenFiles=$autoUpdateGoldenFiles '
+      'comparator.basedir=${(goldenFileComparator as LocalFileComparator).basedir}');
+}
+
 Future<void> _lastTearDownAll() async {
   // const _kTag = 'LastTearDownAll';
 
@@ -121,11 +161,7 @@ void tTestWidgets(
 }) {
   testWidgets(
     description,
-    (tester) async {
-      convenientTestLog('BODY', '', type: LogSubEntryType.TEST_BODY);
-
-      final t = ConvenientTest(tester);
-
+    (tester) async => await ConvenientTest.withActiveInstance(tester, (t) async {
       final log = t.log('START APP', '');
       await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
       await t.pumpAndSettle();
@@ -136,7 +172,7 @@ void tTestWidgets(
       // hack, otherwise `hot restart` sometimes makes this variable set strangely, making assertions failed
       // TODO is it ok?
       debugDefaultTargetPlatformOverride = null;
-    },
+    }),
     skip: skip,
   );
 }
