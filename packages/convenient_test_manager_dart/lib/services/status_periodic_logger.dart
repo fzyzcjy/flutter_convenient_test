@@ -19,15 +19,16 @@ class StatusPeriodicLogger {
     final duration = DateTime.now().difference(_startTime);
     final durationHint = '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, "0")}';
 
-    final stateCountMap = suiteInfoStore.calcStateCountMap(suiteInfoStore.suiteInfo!.rootGroup);
-    final stateCountHint = stateCountMap.entries //
+    final suiteInfo = suiteInfoStore.suiteInfo;
+    final stateCountMap = suiteInfo == null ? null : suiteInfoStore.calcStateCountMap(suiteInfo.rootGroup);
+    final stateCountHint = stateCountMap?.entries //
         .where((e) => e.value > 0)
         .map((e) => '${e.value}x ${e.key.name}')
         .join(', ');
 
     final maxLogSubEntryId = logStore.logSubEntryMap.keys.fold(0, max);
     final interestTestId = logStore.testIdOfLogEntry[logStore.logEntryIdOfLogSubEntry[maxLogSubEntryId]];
-    final interestTest = suiteInfoStore.suiteInfo!.entryMap[interestTestId];
+    final interestTest = suiteInfo?.entryMap[interestTestId];
     final interestTestHint = 'Test=${interestTest?.name}';
 
     // ignore: avoid_print
