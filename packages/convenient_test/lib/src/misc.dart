@@ -48,9 +48,7 @@ class MarkCore extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
+  Widget build(BuildContext context) => child;
 }
 
 // Similar to Cypress' commonly used approach - add a `<mytag data-test="hello"/>` in HTML, and
