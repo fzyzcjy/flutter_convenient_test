@@ -45,6 +45,8 @@ abstract class _WorkerSuperRunStore with Store {
 
   void setControllerHalt() => currSuperRunController = const _WorkerSuperRunControllerHalt();
 
+  WorkerCurrentRunConfig calcCurrentRunConfig() => currSuperRunController._calcCurrentRunConfig();
+
   _WorkerSuperRunStore() {
     Log.d(_kTag, 'CompileTimeConfig.kDefaultEnableIsolationMode=${CompileTimeConfig.kDefaultEnableIsolationMode}');
 
@@ -67,7 +69,7 @@ enum WorkerRunMode { interactiveApp, integrationTest }
 abstract class WorkerSuperRunController {
   const WorkerSuperRunController._();
 
-  WorkerCurrentRunConfig calcCurrentRunConfig();
+  WorkerCurrentRunConfig _calcCurrentRunConfig();
 
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter);
 
@@ -78,7 +80,7 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
   const _WorkerSuperRunControllerHalt() : super._();
 
   @override
-  WorkerCurrentRunConfig calcCurrentRunConfig() => WorkerCurrentRunConfig(
+  WorkerCurrentRunConfig _calcCurrentRunConfig() => WorkerCurrentRunConfig(
         integrationTest: WorkerCurrentRunConfig_IntegrationTest(
           reportSuiteInfo: false,
           defaultRetryCount: 0,
@@ -100,7 +102,7 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
   const _WorkerSuperRunControllerInteractiveApp() : super._();
 
   @override
-  WorkerCurrentRunConfig calcCurrentRunConfig() {
+  WorkerCurrentRunConfig _calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(interactiveApp: WorkerCurrentRunConfig_InteractiveApp());
   }
 
@@ -115,7 +117,7 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
   _WorkerSuperRunControllerIntegrationTestClassicalMode({required this.filterNameRegex}) : super._();
 
   @override
-  WorkerCurrentRunConfig calcCurrentRunConfig() {
+  WorkerCurrentRunConfig _calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
         reportSuiteInfo: true,
@@ -146,7 +148,7 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
   _WorkerSuperRunControllerIntegrationTestIsolationMode({required this.filterNameRegex}) : super._();
 
   @override
-  WorkerCurrentRunConfig calcCurrentRunConfig() {
+  WorkerCurrentRunConfig _calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
         reportSuiteInfo: state is _ITIMStateInitial,
