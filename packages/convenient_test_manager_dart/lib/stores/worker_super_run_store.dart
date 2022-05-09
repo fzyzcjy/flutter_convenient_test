@@ -125,6 +125,9 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
 
   @override
   WorkerSuperRunStatus get superRunStatus => WorkerSuperRunStatus.na;
+
+  @override
+  String toString() => 'WorkerSuperRunControllerHalt{}';
 }
 
 class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
@@ -140,6 +143,9 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
 
   @override
   WorkerSuperRunStatus get superRunStatus => WorkerSuperRunStatus.na;
+
+  @override
+  String toString() => 'WorkerSuperRunControllerInteractiveApp{}';
 }
 
 /// "classical mode": no hot-restart between running two tests
@@ -179,6 +185,12 @@ abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode extends Wo
   @override
   WorkerSuperRunStatus get superRunStatus =>
       seenTearDownAll ? WorkerSuperRunStatus.testAllDone : WorkerSuperRunStatus.runningTest;
+
+  @override
+  String toString() => 'WorkerSuperRunControllerIntegrationTestClassicalMode{'
+      'filterNameRegex: $filterNameRegex, '
+      'seenTearDownAll: $seenTearDownAll'
+      '}';
 }
 
 /// "isolation mode": *has* hot-restart between running two tests
@@ -303,6 +315,12 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
 
     return _ITIMState.goOn(lastExecutedTestName: executedTestName);
   }
+
+  @override
+  String toString() => 'WorkerSuperRunControllerIntegrationTestIsolationMode{'
+      'filterNameRegex: $filterNameRegex, '
+      'state: $state'
+      '}';
 }
 
 // ITIM := IntegrationTestIsolationMode
