@@ -80,11 +80,17 @@ void main() {
         t.section('sample section one');
 
         // do something
-        await find.text('HomePage').should(findsOneWidget);
+        await t.get(HomePageMark.fetchFruits).tap();
+        await find.text('Apple').tap();
+        await find.text('Banana').tap();
+        await find.text('Cherry').tap();
 
         t.section('sample section two');
 
         // do something
+        await find.text('Apple').tap();
+        await find.text('Banana').tap();
+        await find.text('Cherry').tap();
         await find.text('HomePage').should(findsOneWidget);
       });
 

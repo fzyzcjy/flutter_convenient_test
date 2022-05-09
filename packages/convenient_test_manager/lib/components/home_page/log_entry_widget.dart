@@ -41,6 +41,8 @@ class HomePageLogEntryWidget extends StatelessWidget {
       final interestLogSubEntry = logStore.logSubEntryMap[logSubEntryIds.last];
       if (interestLogSubEntry == null) return const SizedBox.shrink();
 
+      final isSection = interestLogSubEntry.type == LogSubEntryType.SECTION;
+
       // if (kSkipTypes.contains(logEntry.type)) {
       //   return Container();
       // }
@@ -57,10 +59,15 @@ class HomePageLogEntryWidget extends StatelessWidget {
             onTap: () => _handleTapOrHover(interestLogSubEntry, targetState: !active),
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8),
-              margin: const EdgeInsets.only(left: 32),
+              margin: isSection //
+                  ? const EdgeInsets.only(left: 32, top: 16)
+                  : const EdgeInsets.only(left: 32),
               decoration: BoxDecoration(
-                color: _calcDecorationColor(context, active: active),
-                border: running ? Border(left: BorderSide(color: Theme.of(context).primaryColor, width: 2)) : null,
+                color: _calcDecorationColor(context, isSection: isSection, active: active),
+                border: Border(
+                  left: running ? BorderSide(color: Theme.of(context).primaryColor, width: 2) : BorderSide.none,
+                  // top: isSection ? BorderSide(color: Theme.of(context).primaryColor, width: 2) : BorderSide.none,
+                ),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,9 +115,10 @@ class HomePageLogEntryWidget extends StatelessWidget {
     });
   }
 
-  Color _calcDecorationColor(BuildContext context, {required bool active}) {
+  Color _calcDecorationColor(BuildContext context, {required bool isSection, required bool active}) {
     if (active) return Colors.green[50]!;
-    if (running) return Colors.blue[50]!;
+    // if (running) return Colors.blue[50]!;
+    if (isSection) return Colors.blue[50]!;
     return Colors.blueGrey[50]!.withAlpha(150);
   }
 
