@@ -52,6 +52,9 @@ void main() {
         await find.text('HomePage').should(findsNothing);
         await find.text('SecondPage').should(findsOneWidget);
 
+        // you can also assert route names
+        await t.routeName().shouldEquals('/second');
+
         await t.pageBack();
         await find.text('HomePage').should(findsOneWidget);
         await find.text('SecondPage').should(findsNothing);
