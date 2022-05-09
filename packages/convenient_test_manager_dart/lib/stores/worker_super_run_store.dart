@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/misc/compile_time_config.dart';
@@ -60,7 +62,8 @@ abstract class _WorkerSuperRunStore with Store {
   _WorkerSuperRunStore() {
     Log.d(_kTag, 'CompileTimeConfig.kDefaultEnableIsolationMode=${CompileTimeConfig.kDefaultEnableIsolationMode}');
 
-    reaction<bool>((_) => isolationMode, _handleIsolationModeChange);
+    reaction((_) => isolationMode, _handleIsolationModeChange);
+    reaction((_) => currSuperRunController.superRunStatus, _handleSuperRunStatusChange);
   }
 
   Future<void> _handleIsolationModeChange(bool isolationMode) async {
@@ -69,6 +72,13 @@ abstract class _WorkerSuperRunStore with Store {
     assert(isolationMode
         ? currSuperRunController is _WorkerSuperRunControllerIntegrationTestIsolationMode
         : currSuperRunController is _WorkerSuperRunControllerIntegrationTestClassicalMode);
+  }
+
+  void _handleSuperRunStatusChange(WorkerSuperRunStatus status) {
+    if (CompileTimeConfig.kCiMode) {
+      Log.i(_kTag, 'handleSuperRunStatusChange exit whole app since in ci mode');
+      exit(0);
+    }
   }
 }
 
