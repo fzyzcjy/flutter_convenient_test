@@ -110,15 +110,20 @@ void main() {
       group('zoom page', () {
         tTestWidgets('single finger drag', (t) async {
           await t.visit('/zoom');
+          await t.pumpAndSettle();
 
-          // await find.get(ZoomPageMark.palette).drag(const Offset(0, -50));
+          await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_drag_before.png'));
 
-          await t.tester.drag(find.get(ZoomPageMark.palette), const Offset(0, -50));
+          await find.get(ZoomPageMark.palette).drag(const Offset(0, -50));
 
-          await t.tester.pumpAndSettle();
-          await t.log('HELLO', 'look at it').snapshot();
+          await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_drag_after.png'));
 
-          // TODO assertion
+          // alternative approach
+          // await t.tester.drag(find.get(ZoomPageMark.palette), const Offset(0, -50));
+
+          // sample logging
+          // await t.tester.pumpAndSettle();
+          // await t.log('HELLO', 'look at it').snapshot();
         });
 
         tTestWidgets('double finger zooming', (t) async {
