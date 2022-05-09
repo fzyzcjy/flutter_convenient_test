@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class ZoomPage extends StatelessWidget {
@@ -15,16 +17,16 @@ class ZoomPage extends StatelessWidget {
             constrained: false,
             child: Column(
               children: [
-                for (var colorIndex = 0; colorIndex < Colors.primaries.length; ++colorIndex)
+                for (var y = 0; y < _colorArr.length; ++y)
                   Row(
                     children: [
-                      for (final shade in [50, 100, 200, 300, 400, 500, 600, 700, 800, 900])
+                      for (var x = 0; x < _shadeArr.length; ++x)
                         Container(
                           width: 50,
                           height: 50,
-                          color: Colors.primaries[colorIndex][shade],
+                          color: _getColor(Point(x, y)),
                           child: Center(
-                            child: Text('$colorIndex#${shade ~/ 100}'),
+                            child: Text('$x#$y'),
                           ),
                         )
                     ],
@@ -36,4 +38,9 @@ class ZoomPage extends StatelessWidget {
       ),
     );
   }
+
+  static const _colorArr = Colors.primaries;
+  static const _shadeArr = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+
+  Color _getColor(Point<int> point) => _colorArr[point.y][_shadeArr[point.x]]!;
 }
