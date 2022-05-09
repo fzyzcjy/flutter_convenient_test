@@ -59,7 +59,7 @@ void main() {
       tTestWidgets('golden test', (t) async {
         await t.get(find.text('HomePage')).should(findsOneWidget);
 
-        await expectLater(find.byType(MaterialApp), matchesGoldenFile('goldens/sample_golden.png'));
+        await t.get(find.byType(MaterialApp)).should(matchesGoldenFile('goldens/sample_golden.png'));
       });
 
       tTestWidgets('custom logging and snapshotting', (t) async {
