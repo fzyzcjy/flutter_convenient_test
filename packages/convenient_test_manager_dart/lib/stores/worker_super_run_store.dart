@@ -39,9 +39,13 @@ abstract class _WorkerSuperRunStore with Store {
 
   void setControllerInteractiveApp() => currSuperRunController = const _WorkerSuperRunControllerInteractiveApp();
 
-  void setControllerIntegrationTest({required String filterNameRegex}) => currSuperRunController = isolationMode
-      ? _WorkerSuperRunControllerIntegrationTestIsolationMode(filterNameRegex: filterNameRegex)
-      : _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: filterNameRegex);
+  void setControllerIntegrationTest({required String filterNameRegex}) {
+    if (isolationMode) {
+      currSuperRunController = _WorkerSuperRunControllerIntegrationTestIsolationMode(filterNameRegex: filterNameRegex);
+    } else {
+      currSuperRunController = _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: filterNameRegex);
+    }
+  }
 
   void setControllerHalt() => currSuperRunController = const _WorkerSuperRunControllerHalt();
 
