@@ -18,6 +18,8 @@ abstract class TCommand {
   Object? getCurrentActual();
 
   TCommand(this.t);
+
+  TCommand.auto() : this(ConvenientTest.activeInstance);
 }
 
 extension ExtTCommand on TCommand {

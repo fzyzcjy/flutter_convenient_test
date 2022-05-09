@@ -22,6 +22,29 @@ class ConvenientTest {
   final WidgetTester tester;
 
   ConvenientTest(this.tester);
+
+  @internal
+  static ConvenientTest get activeInstance => _activeInstance!;
+  static ConvenientTest? _activeInstance;
+
+  static set activeInstance(ConvenientTest? value) {
+    if (!((value != null) ^ (_activeInstance != null))) {
+      throw Exception(
+          'Cannot set activeInstance, either overwrite existing instance or removing non-existing instance. '
+          'old=$_activeInstance new=$value');
+    }
+    _activeInstance = value;
+  }
+
+  static Future<void> withActiveInstance(WidgetTester tester, Future<void> Function(ConvenientTest) body) async {
+    final t = ConvenientTest(tester);
+    activeInstance = t;
+    try {
+      await body(t);
+    } finally {
+      activeInstance = null;
+    }
+  }
 }
 
 /// Please make this the only method in your "main" method.
@@ -138,11 +161,7 @@ void tTestWidgets(
 }) {
   testWidgets(
     description,
-    (tester) async {
-      convenientTestLog('BODY', '', type: LogSubEntryType.TEST_BODY);
-
-      final t = ConvenientTest(tester);
-
+    (tester) async => await ConvenientTest.withActiveInstance(tester, (t) async {
       final log = t.log('START APP', '');
       await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
       await t.pumpAndSettle();
@@ -153,7 +172,7 @@ void tTestWidgets(
       // hack, otherwise `hot restart` sometimes makes this variable set strangely, making assertions failed
       // TODO is it ok?
       debugDefaultTargetPlatformOverride = null;
-    },
+    }),
     skip: skip,
   );
 }

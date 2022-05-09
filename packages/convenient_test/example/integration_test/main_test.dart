@@ -10,23 +10,23 @@ void main() {
     group('simple test group', () {
       tTestWidgets('choose some fruits', (t) async {
         await t.get(HomePageMark.fetchFruits).tap();
-        await t.get(find.text('HomePage')).should(findsOneWidget);
-        await t.get(find.text('You chose nothing')).should(findsOneWidget);
+        await find.text('HomePage').should(findsOneWidget);
+        await find.text('You chose nothing').should(findsOneWidget);
 
-        await t.get(find.text('Cherry')).tap();
-        await t.get(find.text('You chose: Cherry')).should(findsOneWidget);
+        await find.text('Cherry').tap();
+        await find.text('You chose: Cherry').should(findsOneWidget);
 
         await t.tester.scrollUntilVisible(find.text('Orange'), 100);
-        await t.get(find.text('Orange')).tap();
-        await t.get(find.text('You chose: Cherry, Orange')).should(findsOneWidget);
+        await find.text('Orange').tap();
+        await find.text('You chose: Cherry, Orange').should(findsOneWidget);
 
         await t.get(HomePageMark.fab).tap();
-        await t.get(find.text('HomePage')).should(findsNothing);
-        await t.get(find.text('SecondPage')).should(findsOneWidget);
-        await t.get(find.text('See fruits: Cherry, Orange')).should(findsOneWidget);
+        await find.text('HomePage').should(findsNothing);
+        await find.text('SecondPage').should(findsOneWidget);
+        await find.text('See fruits: Cherry, Orange').should(findsOneWidget);
 
         await t.pageBack();
-        await t.get(find.text('HomePage')).should(findsOneWidget);
+        await find.text('HomePage').should(findsOneWidget);
       });
 
       tTestWidgets('deliberately failing test', (t) async {
@@ -40,31 +40,31 @@ void main() {
         await t.get(HomePageMark.fetchFruits).tap();
 
         if (shouldFailThisTime) {
-          await t.get(find.text('NotExistString')).should(findsOneWidget);
+          await find.text('NotExistString').should(findsOneWidget);
         } else {
-          await t.get(find.text('Apple')).should(findsOneWidget);
+          await find.text('Apple').should(findsOneWidget);
         }
       });
 
       tTestWidgets('navigation', (t) async {
         await t.visit('/second');
-        await t.get(find.text('HomePage')).should(findsNothing);
-        await t.get(find.text('SecondPage')).should(findsOneWidget);
+        await find.text('HomePage').should(findsNothing);
+        await find.text('SecondPage').should(findsOneWidget);
 
         await t.pageBack();
-        await t.get(find.text('HomePage')).should(findsOneWidget);
-        await t.get(find.text('SecondPage')).should(findsNothing);
+        await find.text('HomePage').should(findsOneWidget);
+        await find.text('SecondPage').should(findsNothing);
       });
 
       tTestWidgets('golden test', (t) async {
-        await t.get(find.text('HomePage')).should(findsOneWidget);
+        await find.text('HomePage').should(findsOneWidget);
 
-        await t.get(find.byType(MaterialApp)).should(matchesGoldenFile('goldens/sample_golden.png'));
+        await find.byType(MaterialApp).should(matchesGoldenFile('goldens/sample_golden.png'));
       });
 
       tTestWidgets('custom logging and snapshotting', (t) async {
         // suppose you do something normal...
-        await t.get(find.text('HomePage')).should(findsOneWidget);
+        await find.text('HomePage').should(findsOneWidget);
 
         // then you want to log and snapshot
         final log = t.log('HELLO', 'Just a demonstration of custom logging');
@@ -79,12 +79,12 @@ void main() {
         t.section('sample section one');
 
         // do something
-        await t.get(find.text('HomePage')).should(findsOneWidget);
+        await find.text('HomePage').should(findsOneWidget);
 
         t.section('sample section two');
 
         // do something
-        await t.get(find.text('HomePage')).should(findsOneWidget);
+        await find.text('HomePage').should(findsOneWidget);
       });
 
       tTestWidgets('timer page', (t) async {
