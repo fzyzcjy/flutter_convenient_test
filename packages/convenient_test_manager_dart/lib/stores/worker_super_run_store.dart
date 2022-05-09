@@ -117,10 +117,16 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
 }
 
 /// "classical mode": no hot-restart between running two tests
-class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperRunController {
+class _WorkerSuperRunControllerIntegrationTestClassicalMode = __WorkerSuperRunControllerIntegrationTestClassicalMode
+    with _$_WorkerSuperRunControllerIntegrationTestClassicalMode;
+
+abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperRunController with Store {
   final String filterNameRegex;
 
-  _WorkerSuperRunControllerIntegrationTestClassicalMode({required this.filterNameRegex}) : super._();
+  __WorkerSuperRunControllerIntegrationTestClassicalMode({required this.filterNameRegex}) : super._();
+
+  @observable
+  bool seenTearDownAll = false;
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
@@ -140,18 +146,24 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
   }
 
   @override
-  void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
+  void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {
+    seenTearDownAll = true;
+  }
 }
 
 /// "isolation mode": *has* hot-restart between running two tests
-class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperRunController {
+class _WorkerSuperRunControllerIntegrationTestIsolationMode = __WorkerSuperRunControllerIntegrationTestIsolationMode
+    with _$_WorkerSuperRunControllerIntegrationTestIsolationMode;
+
+abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperRunController with Store {
   static const _kTag = 'WorkerSuperRunControllerIntegrationTestIsolationMode';
 
   final String filterNameRegex;
 
+  @observable
   var state = const _ITIMState.initial();
 
-  _WorkerSuperRunControllerIntegrationTestIsolationMode({required this.filterNameRegex}) : super._();
+  __WorkerSuperRunControllerIntegrationTestIsolationMode({required this.filterNameRegex}) : super._();
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
