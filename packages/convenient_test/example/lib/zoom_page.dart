@@ -44,7 +44,7 @@ class _ZoomPageState extends State<ZoomPage> {
                               child: Container(
                                 width: 50,
                                 height: 50,
-                                color: _getColor(Point(x, y)),
+                                color: _getColor(Point(x, y), invert: _chosenPoint == Point(x, y)),
                                 child: Center(
                                   child: Text('$x#$y'),
                                 ),
@@ -62,5 +62,12 @@ class _ZoomPageState extends State<ZoomPage> {
     );
   }
 
-  Color _getColor(Point<int> point) => _colorArr[point.y][_shadeArr[point.x]]!;
+  Color _getColor(Point<int> point, {required bool invert}) {
+    var raw = _colorArr[point.y][_shadeArr[point.x]]!;
+    return invert ? raw.invert() : raw;
+  }
+}
+
+extension on Color {
+  Color invert() => Color.fromARGB(alpha, 255 - red, 255 - green, 255 - blue);
 }
