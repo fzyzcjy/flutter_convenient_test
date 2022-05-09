@@ -87,3 +87,58 @@ currSuperRunController: ${currSuperRunController}
     ''';
   }
 }
+
+mixin _$_WorkerSuperRunControllerIntegrationTestClassicalMode
+    on __WorkerSuperRunControllerIntegrationTestClassicalMode, Store {
+  late final _$seenTearDownAllAtom = Atom(
+      name:
+          '__WorkerSuperRunControllerIntegrationTestClassicalMode.seenTearDownAll',
+      context: context);
+
+  @override
+  bool get seenTearDownAll {
+    _$seenTearDownAllAtom.reportRead();
+    return super.seenTearDownAll;
+  }
+
+  @override
+  set seenTearDownAll(bool value) {
+    _$seenTearDownAllAtom.reportWrite(value, super.seenTearDownAll, () {
+      super.seenTearDownAll = value;
+    });
+  }
+
+  @override
+  String toString() {
+    return '''
+seenTearDownAll: ${seenTearDownAll}
+    ''';
+  }
+}
+
+mixin _$_WorkerSuperRunControllerIntegrationTestIsolationMode
+    on __WorkerSuperRunControllerIntegrationTestIsolationMode, Store {
+  late final _$stateAtom = Atom(
+      name: '__WorkerSuperRunControllerIntegrationTestIsolationMode.state',
+      context: context);
+
+  @override
+  _ITIMState get state {
+    _$stateAtom.reportRead();
+    return super.state;
+  }
+
+  @override
+  set state(_ITIMState value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
+    });
+  }
+
+  @override
+  String toString() {
+    return '''
+state: ${state}
+    ''';
+  }
+}

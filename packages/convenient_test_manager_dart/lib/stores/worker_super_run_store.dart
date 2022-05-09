@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
-import 'package:convenient_test_manager_dart/misc/compile_time_config.dart';
+import 'package:convenient_test_manager_dart/misc/config.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
@@ -39,9 +41,13 @@ abstract class _WorkerSuperRunStore with Store {
 
   void setControllerInteractiveApp() => currSuperRunController = const _WorkerSuperRunControllerInteractiveApp();
 
-  void setControllerIntegrationTest({required String filterNameRegex}) => currSuperRunController = isolationMode
-      ? _WorkerSuperRunControllerIntegrationTestIsolationMode(filterNameRegex: filterNameRegex)
-      : _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: filterNameRegex);
+  void setControllerIntegrationTest({required String filterNameRegex}) {
+    if (isolationMode) {
+      currSuperRunController = _WorkerSuperRunControllerIntegrationTestIsolationMode(filterNameRegex: filterNameRegex);
+    } else {
+      currSuperRunController = _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: filterNameRegex);
+    }
+  }
 
   void setControllerHalt() => currSuperRunController = const _WorkerSuperRunControllerHalt();
 
@@ -56,18 +62,30 @@ abstract class _WorkerSuperRunStore with Store {
   _WorkerSuperRunStore() {
     Log.d(_kTag, 'CompileTimeConfig.kDefaultEnableIsolationMode=${CompileTimeConfig.kDefaultEnableIsolationMode}');
 
-    reaction<bool>(
-      (_) => isolationMode,
-      (isolationMode) async {
-        Log.d(
-            _kTag, 'see isolationMode($isolationMode) changed, thus reloadInfo to make currSuperRunController updated');
-        await GetIt.I.get<MiscDartService>().reloadInfo();
-        assert(isolationMode
-            ? currSuperRunController is _WorkerSuperRunControllerIntegrationTestIsolationMode
-            : currSuperRunController is _WorkerSuperRunControllerIntegrationTestClassicalMode);
-      },
-    );
+    reaction((_) => isolationMode, _handleIsolationModeChange);
+    reaction((_) => currSuperRunController.superRunStatus, _handleSuperRunStatusChange);
   }
+
+  Future<void> _handleIsolationModeChange(bool isolationMode) async {
+    Log.d(_kTag, 'see isolationMode($isolationMode) changed, thus reloadInfo to make currSuperRunController updated');
+    await GetIt.I.get<MiscDartService>().reloadInfo();
+    assert(isolationMode
+        ? currSuperRunController is _WorkerSuperRunControllerIntegrationTestIsolationMode
+        : currSuperRunController is _WorkerSuperRunControllerIntegrationTestClassicalMode);
+  }
+
+  void _handleSuperRunStatusChange(WorkerSuperRunStatus status) {
+    if (GlobalConfig.ciMode) {
+      Log.i(_kTag, 'handleSuperRunStatusChange exit whole app since in ci mode');
+      exit(0);
+    }
+  }
+}
+
+enum WorkerSuperRunStatus {
+  runningTest,
+  testAllDone,
+  na,
 }
 
 enum WorkerRunMode { interactiveApp, integrationTest }
@@ -80,6 +98,8 @@ abstract class WorkerSuperRunController {
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter);
 
   bool get isInteractiveApp => this is _WorkerSuperRunControllerInteractiveApp;
+
+  WorkerSuperRunStatus get superRunStatus;
 }
 
 class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
@@ -102,6 +122,9 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
 
   @override
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
+
+  @override
+  WorkerSuperRunStatus get superRunStatus => WorkerSuperRunStatus.na;
 }
 
 class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
@@ -114,13 +137,22 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
 
   @override
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
+
+  @override
+  WorkerSuperRunStatus get superRunStatus => WorkerSuperRunStatus.na;
 }
 
 /// "classical mode": no hot-restart between running two tests
-class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperRunController {
+class _WorkerSuperRunControllerIntegrationTestClassicalMode = __WorkerSuperRunControllerIntegrationTestClassicalMode
+    with _$_WorkerSuperRunControllerIntegrationTestClassicalMode;
+
+abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperRunController with Store {
   final String filterNameRegex;
 
-  _WorkerSuperRunControllerIntegrationTestClassicalMode({required this.filterNameRegex}) : super._();
+  __WorkerSuperRunControllerIntegrationTestClassicalMode({required this.filterNameRegex}) : super._();
+
+  @observable
+  bool seenTearDownAll = false;
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
@@ -140,18 +172,28 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
   }
 
   @override
-  void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
+  void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {
+    seenTearDownAll = true;
+  }
+
+  @override
+  WorkerSuperRunStatus get superRunStatus =>
+      seenTearDownAll ? WorkerSuperRunStatus.testAllDone : WorkerSuperRunStatus.runningTest;
 }
 
 /// "isolation mode": *has* hot-restart between running two tests
-class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperRunController {
+class _WorkerSuperRunControllerIntegrationTestIsolationMode = __WorkerSuperRunControllerIntegrationTestIsolationMode
+    with _$_WorkerSuperRunControllerIntegrationTestIsolationMode;
+
+abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperRunController with Store {
   static const _kTag = 'WorkerSuperRunControllerIntegrationTestIsolationMode';
 
   final String filterNameRegex;
 
+  @observable
   var state = const _ITIMState.initial();
 
-  _WorkerSuperRunControllerIntegrationTestIsolationMode({required this.filterNameRegex}) : super._();
+  __WorkerSuperRunControllerIntegrationTestIsolationMode({required this.filterNameRegex}) : super._();
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
@@ -231,6 +273,10 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
       GetIt.I.get<VmServiceWrapperService>().hotRestart();
     }
   }
+
+  @override
+  WorkerSuperRunStatus get superRunStatus =>
+      state is _ITIMStateFinished ? WorkerSuperRunStatus.testAllDone : WorkerSuperRunStatus.runningTest;
 
   static _ITIMState _calcNextState({
     required _ITIMState oldState,

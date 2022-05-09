@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/services/report_handler_service.dart';
+import 'package:convenient_test_manager_dart/services/report_saver_service.dart';
 import 'package:convenient_test_manager_dart/stores/worker_super_run_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart' as grpc;
@@ -26,6 +27,11 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   @override
   Future<Empty> report(ServiceCall call, ReportCollection request) async {
     await GetIt.I.get<ReportHandlerService>().handle(request, offlineFile: false);
+
+    // NOTE *first* handle by ReportHandlerService, *then* by ReportSaverService,
+    //      because ReportHandlerService may let ReportSaverService change target file
+    await GetIt.I.get<ReportSaverService>().save(request);
+
     return Empty();
   }
 

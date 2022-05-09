@@ -36,13 +36,19 @@ class VmServiceWrapperService {
   bool get hotRestartActing => _hotRestartActing.positive;
   final _hotRestartActing = ObservableCounter();
 
+  static const _kHotRestartServiceName = 'hotRestart';
+
+  @computed
+  bool get hotRestartAvailable =>
+      _manager.connected && _manager.registeredMethodsForService.keys.contains(_kHotRestartServiceName);
+
   // ref devtools/packages/devtools_app :: HotRestartButton
   Future<void> hotRestart() async {
     await _hotRestartActing.withPlusOneAsync(() async {
       Log.i(_kTag, 'hotRestart start');
       // p.s. devtool's code reads isolateId and ensure it is sent to main isolate.
       // Here we have not done that, but seems to work well already.
-      final resp = await _manager.callService('hotRestart');
+      final resp = await _manager.callService(_kHotRestartServiceName);
       Log.i(_kTag, 'hotRestart end resp=${resp.json}');
     });
   }
@@ -71,7 +77,7 @@ abstract class __ServiceConnectionManager with Store {
   bool get connected => service != null;
 
   Map<String, List<String>> get registeredMethodsForService => _registeredMethodsForService;
-  final Map<String, List<String>> _registeredMethodsForService = {};
+  final _registeredMethodsForService = ObservableMap<String, List<String>>();
 
   /// Call a service that is registered by exactly one client.
   Future<Response> callService(
