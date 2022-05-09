@@ -70,6 +70,12 @@ abstract class _WorkerSuperRunStore with Store {
   }
 }
 
+enum WorkerSuperRunStatus {
+  runningTest,
+  testAllDone,
+  na,
+}
+
 enum WorkerRunMode { interactiveApp, integrationTest }
 
 abstract class WorkerSuperRunController {
@@ -80,6 +86,8 @@ abstract class WorkerSuperRunController {
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter);
 
   bool get isInteractiveApp => this is _WorkerSuperRunControllerInteractiveApp;
+
+  WorkerSuperRunStatus get superRunStatus;
 }
 
 class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
@@ -102,6 +110,9 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
 
   @override
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
+
+  @override
+  WorkerSuperRunStatus get superRunStatus => WorkerSuperRunStatus.na;
 }
 
 class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
@@ -114,6 +125,9 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
 
   @override
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
+
+  @override
+  WorkerSuperRunStatus get superRunStatus => WorkerSuperRunStatus.na;
 }
 
 /// "classical mode": no hot-restart between running two tests
@@ -149,6 +163,10 @@ abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode extends Wo
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {
     seenTearDownAll = true;
   }
+
+  @override
+  WorkerSuperRunStatus get superRunStatus =>
+      seenTearDownAll ? WorkerSuperRunStatus.testAllDone : WorkerSuperRunStatus.runningTest;
 }
 
 /// "isolation mode": *has* hot-restart between running two tests
@@ -243,6 +261,10 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
       GetIt.I.get<VmServiceWrapperService>().hotRestart();
     }
   }
+
+  @override
+  WorkerSuperRunStatus get superRunStatus =>
+      state is _ITIMStateFinished ? WorkerSuperRunStatus.testAllDone : WorkerSuperRunStatus.runningTest;
 
   static _ITIMState _calcNextState({
     required _ITIMState oldState,
