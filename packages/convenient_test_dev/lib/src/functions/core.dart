@@ -51,7 +51,7 @@ Future<void> _runModeIntegrationTest(
 ) async {
   runZonedGuarded(() {
     ConvenientTestWrapperWidget.convenientTestActive = true;
-    goldenFileComparator = _createGoldenFileComparator();
+    _configureGoldens(currentRunConfig);
 
     final declarer = collectIntoDeclarer(
       defaultRetry: currentRunConfig.defaultRetryCount,
@@ -93,14 +93,18 @@ Future<void> _runModeIntegrationTest(
   });
 }
 
-LocalFileComparator _createGoldenFileComparator() {
-  const _kTag = '_createGoldenFileComparator';
+void _configureGoldens(WorkerCurrentRunConfig_IntegrationTest currentRunConfig) {
+  const _kTag = 'ConfigureGoldens';
 
-  final dummyTestFile = Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart'));
-  final comparator = LocalFileComparator(dummyTestFile);
-  Log.d(_kTag, 'comparator basedir=${comparator.basedir}');
+  goldenFileComparator =
+      LocalFileComparator(Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart')));
+  autoUpdateGoldenFiles = currentRunConfig.autoUpdateGoldenFiles;
 
-  return comparator;
+  Log.d(
+      _kTag,
+      'configure '
+      'autoUpdateGoldenFiles=$autoUpdateGoldenFiles '
+      'comparator.basedir=${(goldenFileComparator as LocalFileComparator).basedir}');
 }
 
 Future<void> _lastTearDownAll() async {
