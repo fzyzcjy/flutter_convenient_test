@@ -4,6 +4,7 @@ import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/compile_time_config.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
+import 'package:path/path.dart' as path;
 
 class ConvenientTest {
   final WidgetTester tester;
@@ -49,6 +51,7 @@ Future<void> _runModeIntegrationTest(
 ) async {
   runZonedGuarded(() {
     ConvenientTestWrapperWidget.convenientTestActive = true;
+    goldenFileComparator = _createGoldenFileComparator();
 
     final declarer = collectIntoDeclarer(
       defaultRetry: currentRunConfig.defaultRetryCount,
@@ -88,6 +91,16 @@ Future<void> _runModeIntegrationTest(
     Log.w('ConvenientTestMain',
         'ConvenientTest captured error (via runZonedGuarded). type(e)=${e.runtimeType} exception=$e stackTrace=$s');
   });
+}
+
+LocalFileComparator _createGoldenFileComparator() {
+  const _kTag = '_createGoldenFileComparator';
+
+  final dummyTestFile = Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart'));
+  final comparator = LocalFileComparator(dummyTestFile);
+  Log.d(_kTag, 'comparator basedir=${comparator.basedir}');
+
+  return comparator;
 }
 
 Future<void> _lastTearDownAll() async {
