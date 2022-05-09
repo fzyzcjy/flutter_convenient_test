@@ -6,6 +6,7 @@ import 'package:convenient_test_dev/src/functions/command.dart';
 import 'package:convenient_test_dev/src/functions/core.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/functions/widget_controller.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
@@ -35,6 +36,19 @@ extension ExtFinder on Finder {
   Future<void> longPress() => TFinderCommand.auto(this).longPress();
 
   Future<void> drag(Offset offset) => TFinderCommand.auto(this).drag(offset);
+
+  Future<void> multiDrag({
+    required Offset firstDownOffset,
+    required Offset secondDownOffset,
+    required List<Offset> firstFingerOffsets,
+    required List<Offset> secondFingerOffsets,
+  }) =>
+      TFinderCommand.auto(this).multiDrag(
+        firstDownOffset: firstDownOffset,
+        secondDownOffset: secondDownOffset,
+        firstFingerOffsets: firstFingerOffsets,
+        secondFingerOffsets: secondFingerOffsets,
+      );
 }
 
 extension ExtCommonFinders on CommonFinders {
@@ -122,6 +136,24 @@ class TFinderCommand extends TCommand {
   Future<void> drag(Offset offset) => act(
         act: () => t.tester.drag(finder, offset),
         logTitle: 'DRAG',
+        logMessage: finder.description,
+      );
+
+  Future<void> multiDrag({
+    required Offset firstDownOffset,
+    required Offset secondDownOffset,
+    required List<Offset> firstFingerOffsets,
+    required List<Offset> secondFingerOffsets,
+  }) =>
+      act(
+        act: () => t.tester.multiDrag(
+          finder,
+          firstDownOffset: firstDownOffset,
+          secondDownOffset: secondDownOffset,
+          firstFingerOffsets: firstFingerOffsets,
+          secondFingerOffsets: secondFingerOffsets,
+        ),
+        logTitle: 'MULTI DRAG',
         logMessage: finder.description,
       );
 

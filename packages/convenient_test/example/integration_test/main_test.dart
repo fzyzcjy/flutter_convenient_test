@@ -131,8 +131,7 @@ void main() {
 
           await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_zoom_before.png'));
 
-          await t.tester.multiDrag(
-            find.get(ZoomPageMark.palette),
+          await find.get(ZoomPageMark.palette).multiDrag(
             firstDownOffset: const Offset(0, -30),
             secondDownOffset: const Offset(0, 30),
             firstFingerOffsets: const [Offset(0, -20), Offset(0, -20), Offset(0, -10)],
