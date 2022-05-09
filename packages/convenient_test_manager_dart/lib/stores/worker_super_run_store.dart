@@ -85,6 +85,7 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
               allMatch: ExecutionFilter_Strategy_AllMatch(),
             ),
           ),
+          autoUpdateGoldenFiles: TODO,
         ),
       );
 
@@ -122,6 +123,7 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperR
           filterNameRegex: filterNameRegex,
           strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
         ),
+        autoUpdateGoldenFiles: TODO,
       ),
     );
   }
@@ -148,6 +150,7 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperR
         // do *not* handle flaky tests at worker level; instead, handle it at manager level
         defaultRetryCount: 0,
         executionFilter: _calcExecutionFilter(),
+        autoUpdateGoldenFiles: TODO,
       ),
     );
   }
