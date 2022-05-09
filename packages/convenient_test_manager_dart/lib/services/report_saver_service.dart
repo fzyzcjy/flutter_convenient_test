@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
+import 'package:convenient_test_manager_dart/misc/compile_time_config.dart';
 import 'package:convenient_test_manager_dart/services/fs_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -14,7 +15,7 @@ abstract class _ReportSaverService with Store {
   static const _kTag = 'ReportSaverService';
 
   @observable
-  var enable = true;
+  var enable = _initialEnable;
 
   late Future<String> _reportPath;
 
@@ -38,3 +39,5 @@ abstract class _ReportSaverService with Store {
     return path;
   }
 }
+
+bool get _initialEnable => CompileTimeConfig.kCiMode;
