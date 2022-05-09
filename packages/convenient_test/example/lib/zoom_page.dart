@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:convenient_test/convenient_test.dart';
 import 'package:flutter/material.dart';
 
 class ZoomPage extends StatefulWidget {
@@ -24,35 +25,38 @@ class _ZoomPageState extends State<ZoomPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('ChosenPoint: ${_chosenPoint.x}#${_chosenPoint.y}'),
-            SizedBox(
-              width: 275,
-              height: 375,
-              child: InteractiveViewer(
-                constrained: false,
-                child: Column(
-                  children: [
-                    for (var y = 0; y < _colorArr.length; ++y)
-                      Row(
-                        children: [
-                          for (var x = 0; x < _shadeArr.length; ++x)
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _chosenPoint = Point(x, y);
-                                });
-                              },
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                color: _getColor(Point(x, y), invert: _chosenPoint == Point(x, y)),
-                                child: Center(
-                                  child: Text('$x#$y'),
+            Mark(
+              name: ZoomPageMark.palette,
+              child: SizedBox(
+                width: 275,
+                height: 375,
+                child: InteractiveViewer(
+                  constrained: false,
+                  child: Column(
+                    children: [
+                      for (var y = 0; y < _colorArr.length; ++y)
+                        Row(
+                          children: [
+                            for (var x = 0; x < _shadeArr.length; ++x)
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _chosenPoint = Point(x, y);
+                                  });
+                                },
+                                child: Container(
+                                  width: 50,
+                                  height: 50,
+                                  color: _getColor(Point(x, y), invert: _chosenPoint == Point(x, y)),
+                                  child: Center(
+                                    child: Text('$x#$y'),
+                                  ),
                                 ),
-                              ),
-                            )
-                        ],
-                      )
-                  ],
+                              )
+                          ],
+                        )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -70,4 +74,8 @@ class _ZoomPageState extends State<ZoomPage> {
 
 extension on Color {
   Color invert() => Color.fromARGB(alpha, 255 - red, 255 - green, 255 - blue);
+}
+
+enum ZoomPageMark {
+  palette,
 }

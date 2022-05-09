@@ -2,6 +2,8 @@ import 'package:convenient_test_dev/convenient_test_dev.dart';
 import 'package:convenient_test_example/home_page.dart';
 import 'package:convenient_test_example/main.dart' as app;
 import 'package:convenient_test_example/main.dart';
+import 'package:convenient_test_example/zoom_page.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -106,16 +108,46 @@ void main() {
       });
 
       group('zoom page', () {
-        tTestWidgets('double finger zooming', (t) async {
+        tTestWidgets('single finger drag', (t) async {
           await t.visit('/zoom');
 
-          TODO;
+          // await find.get(ZoomPageMark.palette).drag(const Offset(0, -50));
+
+          await t.tester.drag(find.get(ZoomPageMark.palette), const Offset(0, -50));
+
+          await t.tester.pumpAndSettle();
+          await t.log('HELLO', 'look at it').snapshot();
+
+          // TODO assertion
+        });
+
+        tTestWidgets('double finger zooming', (t) async {
+          // TODO not finished
+
+          await t.visit('/zoom');
+
+          final finder = find.get(ZoomPageMark.palette);
+          final startLocation = t.tester.getCenter(finder);
+          await t.log('HELLO', 'startLocation=$startLocation').snapshot();
+
+          // mimic [tester.dragFrom]
+          await TestAsyncUtils.guard<void>(() async {
+            final gesture = await t.tester.startGesture(startLocation);
+            // NOTE by experiment, must 20+20+10, NOT 20, NOT 50 (strange...)
+            await gesture.moveBy(const Offset(0, -20));
+            await gesture.moveBy(const Offset(0, -20));
+            await gesture.moveBy(const Offset(0, -10));
+            await gesture.up();
+          });
+
+          await t.tester.pumpAndSettle();
+          await t.log('HELLO', 'look at it').snapshot();
         });
 
         tTestWidgets('double finger scrolling', (t) async {
           await t.visit('/zoom');
 
-          TODO;
+          // TODO not finished
         });
       });
     });
