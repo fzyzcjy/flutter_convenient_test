@@ -141,24 +141,6 @@ void main() {
 
           await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_zoom_after.png'));
         });
-
-        // seems that it does not understand events in sync
-        // tTestWidgets('double finger scrolling', (t) async {
-        //   await t.visit('/zoom');
-        //
-        //   await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_double_drag_before.png'));
-        //
-        //   await find.get(ZoomPageMark.palette).multiDrag(
-        //         firstDownOffset: const Offset(0, -30),
-        //         secondDownOffset: const Offset(0, 30),
-        //         // notice their drags are in sync
-        //         firstFingerOffsets: const [Offset(0, -20), Offset(0, -20), Offset(0, -10)],
-        //         secondFingerOffsets: const [Offset(0, -20), Offset(0, -20), Offset(0, -10)],
-        //         logMove: true,
-        //       );
-        //
-        //   await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_double_drag_after.png'));
-        // });
       });
     });
 
