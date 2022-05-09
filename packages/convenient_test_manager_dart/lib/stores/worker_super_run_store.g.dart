@@ -43,6 +43,23 @@ mixin _$WorkerSuperRunStore on _WorkerSuperRunStore, Store {
     });
   }
 
+  late final _$autoUpdateGoldenFilesAtom = Atom(
+      name: '_WorkerSuperRunStore.autoUpdateGoldenFiles', context: context);
+
+  @override
+  bool get autoUpdateGoldenFiles {
+    _$autoUpdateGoldenFilesAtom.reportRead();
+    return super.autoUpdateGoldenFiles;
+  }
+
+  @override
+  set autoUpdateGoldenFiles(bool value) {
+    _$autoUpdateGoldenFilesAtom.reportWrite(value, super.autoUpdateGoldenFiles,
+        () {
+      super.autoUpdateGoldenFiles = value;
+    });
+  }
+
   late final _$currSuperRunControllerAtom = Atom(
       name: '_WorkerSuperRunStore.currSuperRunController', context: context);
 
@@ -65,6 +82,7 @@ mixin _$WorkerSuperRunStore on _WorkerSuperRunStore, Store {
     return '''
 isolationMode: ${isolationMode},
 flakyTestTotalAttemptCount: ${flakyTestTotalAttemptCount},
+autoUpdateGoldenFiles: ${autoUpdateGoldenFiles},
 currSuperRunController: ${currSuperRunController}
     ''';
   }

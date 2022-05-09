@@ -31,6 +31,9 @@ abstract class _WorkerSuperRunStore with Store {
   set retryMode(bool enable) => flakyTestTotalAttemptCount = enable ? 2 : 1;
 
   @observable
+  bool autoUpdateGoldenFiles = false;
+
+  @observable
   WorkerSuperRunController currSuperRunController =
       _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: RegexUtils.kMatchNothing);
 
