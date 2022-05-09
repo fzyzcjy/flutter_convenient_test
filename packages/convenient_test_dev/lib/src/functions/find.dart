@@ -206,7 +206,9 @@ class TRouteNameCommand extends TCommand {
       currentRoute = route;
       return true;
     });
-    return currentRoute.settings.name;
+    final ans = currentRoute.settings.name;
+
+    return ToStringOverrider(ans, 'route "$ans"');
   }
 }
 

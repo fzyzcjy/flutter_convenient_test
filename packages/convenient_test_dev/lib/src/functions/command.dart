@@ -5,6 +5,7 @@ import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:meta/meta.dart';
 import 'package:test_api/src/expect/async_matcher.dart'; // ignore: implementation_imports
 
 abstract class TCommand {
@@ -143,4 +144,20 @@ String _getTestFailureErrorExtraInfo(dynamic actual) {
     return 'Extra Info: matched elements are:\n' + info;
   }
   return '';
+}
+
+class ToStringOverrider<T> {
+  final T object;
+  final String toStringValue;
+
+  ToStringOverrider(this.object, this.toStringValue);
+
+  @override
+  bool operator ==(Object other) => object == other;
+
+  @override
+  int get hashCode => object.hashCode;
+
+  @override
+  String toString() => toStringValue;
 }
