@@ -63,7 +63,7 @@ String _formatActual(dynamic actual) {
 Future<void> _expectWithRetry(
   ConvenientTest t,
   ValueGetter<Object?> actualGetter,
-  dynamic matcher, {
+  Matcher matcher, {
   String? reason,
   dynamic skip,
   Duration timeout = const Duration(seconds: 4),
