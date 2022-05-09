@@ -2,6 +2,7 @@ import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_example/home_page.dart';
 import 'package:convenient_test_example/second_page.dart';
 import 'package:convenient_test_example/timer_page.dart';
+import 'package:convenient_test_example/zoom_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
           '/home': (_) => const HomePage(),
           '/second': (_) => const SecondPage(),
           '/timer': (_) => const TimerPage(),
+          '/zoom': (_) => const ZoomPage(),
         },
       ),
     );
