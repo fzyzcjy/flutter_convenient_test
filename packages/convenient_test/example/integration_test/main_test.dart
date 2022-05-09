@@ -104,6 +104,20 @@ void main() {
 
         await t.pageBack();
       });
+
+      group('zoom page', () {
+        tTestWidgets('double finger zooming', (t) async {
+          await t.visit('/zoom');
+
+          TODO;
+        });
+
+        tTestWidgets('double finger scrolling', (t) async {
+          await t.visit('/zoom');
+
+          TODO;
+        });
+      });
     });
 
     group('some other test group', () {
