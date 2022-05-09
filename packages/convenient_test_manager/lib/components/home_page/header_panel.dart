@@ -50,6 +50,8 @@ class HomePageHeaderPanel extends StatelessWidget {
             onPressed: miscFlutterService.pickFileAndReadReport,
             text: 'Open File',
           ),
+          const SizedBox(width: 8),
+          _buildSuperRunStatusHint(),
           Expanded(child: Container()),
           // TextButton(
           //   onPressed: () => showDialog<dynamic>(context: context, builder: (_) => const HomePageMiscDialog()),
@@ -152,5 +154,40 @@ class HomePageHeaderPanel extends StatelessWidget {
       ),
       const SizedBox(width: 8),
     ];
+  }
+
+  Widget _buildSuperRunStatusHint() {
+    final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
+
+    Widget _buildCore({
+      required Color color,
+      required Widget child,
+    }) =>
+        Container(
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: DefaultTextStyle(
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.normal,
+            ),
+            child: child,
+          ),
+        );
+
+    return Observer(builder: (_) {
+      switch (workerSuperRunStore.currSuperRunController.superRunStatus) {
+        case WorkerSuperRunStatus.runningTest:
+          return _buildCore(color: Colors.blue, child: const Text('Running'));
+        case WorkerSuperRunStatus.testAllDone:
+          return _buildCore(color: Colors.green, child: const Text('Idle'));
+        case WorkerSuperRunStatus.na:
+          return const SizedBox.shrink();
+      }
+    });
   }
 }
