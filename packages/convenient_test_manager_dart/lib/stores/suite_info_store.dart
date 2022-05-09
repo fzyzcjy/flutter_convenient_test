@@ -22,6 +22,16 @@ abstract class _SuiteInfoStore with Store {
     suiteInfo = null;
     testEntryStateMap.clear();
   }
+
+  ExhaustiveMap<SimplifiedStateEnum, int> calcStateCountMap(GroupInfo info) {
+    final stateCountMap = ExhaustiveMap(SimplifiedStateEnum.values, (_) => 0);
+    info.traverse(suiteInfo!, (groupEntryInfo) {
+      if (groupEntryInfo is TestInfo) {
+        stateCountMap[getSimplifiedState(groupEntryInfo.id)]++;
+      }
+    });
+    return stateCountMap;
+  }
 }
 
 extension ExtTestEntryState on TestEntryState {

@@ -110,12 +110,7 @@ class _GroupInfoSectionBuilder extends StaticSectionBuilder {
   List<Widget> _buildGroupStat() {
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
-    final stateCountMap = ExhaustiveMap(SimplifiedStateEnum.values, (_) => 0);
-    info.traverse(suiteInfoStore.suiteInfo!, (groupEntryInfo) {
-      if (groupEntryInfo is TestInfo) {
-        stateCountMap[suiteInfoStore.getSimplifiedState(groupEntryInfo.id)]++;
-      }
-    });
+    final stateCountMap = suiteInfoStore.calcStateCountMap(info);
 
     return SimplifiedStateEnum.values.expand<Widget>((state) {
       final count = stateCountMap[state];
