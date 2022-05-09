@@ -127,35 +127,19 @@ void main() {
         });
 
         tTestWidgets('double finger zooming', (t) async {
-          // TODO not finished
-
           await t.visit('/zoom');
 
-          final finder = find.get(ZoomPageMark.palette);
-          final startLocation = t.tester.getCenter(finder);
-          await t.log('HELLO', 'startLocation=$startLocation').snapshot();
+          await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_zoom_before.png'));
 
-          // mimic [tester.dragFrom]
-          await TestAsyncUtils.guard<void>(() async {
-            final gestureOne = await t.tester.startGesture(startLocation - const Offset(0, 30));
-            final gestureTwo = await t.tester.startGesture(startLocation + const Offset(0, 30));
-            await t.tester.pump();
+          await t.tester.multiDrag(
+            find.get(ZoomPageMark.palette),
+            firstDownOffset: const Offset(0, -30),
+            secondDownOffset: const Offset(0, 30),
+            firstFingerOffsets: const [Offset(0, -20), Offset(0, -20), Offset(0, -10)],
+            secondFingerOffsets: const [Offset(0, 20), Offset(0, 20), Offset(0, 10)],
+          );
 
-            await gestureOne.moveBy(const Offset(0, -20));
-            await gestureTwo.moveBy(const Offset(0, 20));
-            await t.tester.pump();
-
-            await gestureOne.moveBy(const Offset(0, -20));
-            await gestureTwo.moveBy(const Offset(0, 20));
-            await t.tester.pump();
-
-            await gestureOne.up();
-            await gestureTwo.up();
-            await t.tester.pump();
-          });
-
-          await t.tester.pumpAndSettle();
-          await t.log('HELLO', 'look at it').snapshot();
+          await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_zoom_after.png'));
         });
 
         tTestWidgets('double finger scrolling', (t) async {
