@@ -34,7 +34,8 @@ abstract class _ReportSaverService with Store {
   static Future<String> _createReportPath() async {
     final stem = DateFormat('yyyyMMdd_hhmmss').format(DateTime.now());
     final path =
-        '${await GetIt.I.get<FsService>().getTemporaryDirectory()}/ConvenientTest_Report_$stem.$kReportFileExtension';
+        '${await GetIt.I.get<FsService>().getTemporaryDirectory()}/ConvenientTest/Report/$stem.$kReportFileExtension';
+    await File(path).parent.create(recursive: true);
     Log.i(_kTag, '*** Report data will be written to path: $path ***');
     return path;
   }
