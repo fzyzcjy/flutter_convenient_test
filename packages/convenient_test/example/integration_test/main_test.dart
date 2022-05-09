@@ -3,7 +3,6 @@ import 'package:convenient_test_example/home_page.dart';
 import 'package:convenient_test_example/main.dart' as app;
 import 'package:convenient_test_example/main.dart';
 import 'package:convenient_test_example/zoom_page.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
