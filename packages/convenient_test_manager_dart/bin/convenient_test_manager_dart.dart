@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/misc/config.dart';
@@ -7,7 +8,9 @@ import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:convenient_test_manager_dart/services/status_periodic_logger.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
+import 'package:convenient_test_manager_dart/stores/worker_super_run_store.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 
 const _kTag = 'main';
 
@@ -27,9 +30,15 @@ Future<void> main(List<String> args) async {
   await _awaitSuiteInfoNonEmpty();
 
   Log.i(_kTag, 'step hotRestartAndRunTests');
-  unawaited(GetIt.I.get<MiscDartService>().hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything));
+  await GetIt.I.get<MiscDartService>().hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
 
   StatusPeriodicLogger.run();
+
+  Log.i(_kTag, 'step awaitSuperRunStatusTestAllDone');
+  await _awaitSuperRunStatusTestAllDone();
+
+  Log.i(_kTag, 'step exit');
+  exit(0);
 }
 
 Future<void> _awaitWorkerAvailable() async {
@@ -65,4 +74,14 @@ Future<void> _awaitSuiteInfoNonEmpty() async {
 
     await Future<void>.delayed(const Duration(seconds: 3));
   }
+}
+
+Future<void> _awaitSuperRunStatusTestAllDone() async {
+  final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
+
+  if (workerSuperRunStore.currSuperRunController.superRunStatus == WorkerSuperRunStatus.testAllDone) {
+    throw AssertionError;
+  }
+
+  await asyncWhen((_) => workerSuperRunStore.currSuperRunController.superRunStatus == WorkerSuperRunStatus.testAllDone);
 }
