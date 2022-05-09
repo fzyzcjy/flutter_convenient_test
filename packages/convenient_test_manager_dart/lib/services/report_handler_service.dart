@@ -46,13 +46,13 @@ class ReportHandlerService {
   }
 
   Future<void> _handleSetUpAll(SetUpAll request, {required bool offlineFile}) async {
-    Log.d(_kTag, 'handleSetUpAll $request');
+    Log.d(_kTag, 'SetUpAll $request');
 
     if (!offlineFile) await GetIt.I.get<VideoRecorderStore>().startRecord();
   }
 
   Future<void> _handleTearDownAll(TearDownAll request, {required bool offlineFile}) async {
-    Log.d(_kTag, 'handleTearDownAll $request');
+    Log.d(_kTag, 'TearDownAll $request');
 
     if (!offlineFile) await GetIt.I.get<VideoRecorderStore>().stopRecord();
 
@@ -72,7 +72,7 @@ class ReportHandlerService {
   }
 
   Future<void> _handleRunnerError(RunnerError request) async {
-    Log.d(_kTag, 'handleReportRunnerError called');
+    Log.d(_kTag, 'Error: ${request.error} stack=${request.stackTrace}');
 
     final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
     if (testEntryId == null) return;
@@ -81,7 +81,7 @@ class ReportHandlerService {
   }
 
   Future<void> _handleRunnerMessage(RunnerMessage request) async {
-    Log.d(_kTag, 'handleReportRunnerMessage called');
+    Log.d(_kTag, 'Message: ${request.message}');
 
     final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
     if (testEntryId == null) return;
@@ -90,7 +90,7 @@ class ReportHandlerService {
   }
 
   Future<void> _handleRunnerStateChange(RunnerStateChange request) async {
-    Log.d(_kTag, 'handleReportRunnerStateChange called testName=${request.testName} state=${request.state}');
+    Log.d(_kTag, 'StateChange: testName=${request.testName} state=${request.state}');
 
     final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
     if (testEntryId == null) return;
@@ -99,7 +99,7 @@ class ReportHandlerService {
   }
 
   Future<void> _handleSnapshot(Snapshot request) async {
-    Log.d(_kTag, 'handleReportSnapshot called');
+    Log.d(_kTag, 'Snapshot');
 
     final logEntryId = request.logEntryId.toInt();
     _logStore.snapshotInLog[logEntryId] ??= ObservableMap();
