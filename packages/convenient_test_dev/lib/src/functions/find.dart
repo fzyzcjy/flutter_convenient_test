@@ -48,7 +48,7 @@ extension ExtCommonFinders on CommonFinders {
   // ref
   // 1. cypress-realworld-app command: getBySel
   // 2. [CommonFinders.byTooltip]
-  Finder bySel(Object name, {bool skipOffstage = true, bool Function(Mark mark)? predicate}) {
+  Finder bySel(Object name, {bool skipOffstage = true, bool Function(Object? markData)? predicate}) {
     var description = '$name';
     // hacky beautify things like [LoginMark.username]; only useful when code is not obfuscated
     if (_isEnum(name) && name.runtimeType.toString().endsWith('Mark')) {
@@ -58,7 +58,8 @@ extension ExtCommonFinders on CommonFinders {
     }
 
     return byWidgetPredicate(
-      (widget) => widget is Mark && widget.name == name && (predicate?.call(widget) ?? true),
+      // NOTE MarkCore, not Mark
+      (widget) => widget is MarkCore && widget.name == name && (predicate?.call(widget.data) ?? true),
       description: description + (predicate == null ? '' : ' with extra predicate'),
       skipOffstage: skipOffstage,
     );

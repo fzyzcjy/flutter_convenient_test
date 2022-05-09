@@ -34,6 +34,25 @@ class ConvenientTestImageCaptureWrapper extends StatelessWidget {
   }
 }
 
+/// Do *not* use directly. Instead, users should use [Mark].
+class MarkCore extends StatelessWidget {
+  final Object name;
+  final Object? data;
+  final Widget child;
+
+  const MarkCore({
+    Key? key,
+    required this.name,
+    this.data,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 // Similar to Cypress' commonly used approach - add a `<mytag data-test="hello"/>` in HTML, and
 // use `cy.get('[data-test=hello]')` when testing to find that widget.
 // Why make this a separate Widget? Because HTML's padding/margin/... becomes a separate Widget in Flutter's world.
@@ -61,12 +80,17 @@ class Mark extends StatelessWidget {
 
     final color = kColorList['$name'.hashCode % kColorList.length];
 
+    var wrappedChild = child;
+    if (repaintBoundary) wrappedChild = RepaintBoundary(child: wrappedChild);
+
     return Stack(
       fit: StackFit.passthrough,
       children: [
-        repaintBoundary //
-            ? RepaintBoundary(child: child)
-            : child,
+        MarkCore(
+          name: name,
+          data: data,
+          child: wrappedChild,
+        ),
         Positioned(
           left: 0,
           top: 0,
