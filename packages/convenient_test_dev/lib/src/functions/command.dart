@@ -110,7 +110,16 @@ String _formatLogOfExpect(dynamic actual, Matcher matcher) {
   return '{${_formatActual(actual)}} matches {${_formatMatcher(matcher)}}';
 }
 
-String _formatMatcher(Matcher matcher) => matcher.describe(StringDescription()).toString();
+// make text briefer
+const _matcherTextReplaceMap = {
+  'exactly one matching node in the widget tree': 'findsOneWidget',
+  'no matching nodes in the widget tree': 'findsNothing',
+};
+
+String _formatMatcher(Matcher matcher) {
+  final raw = matcher.describe(StringDescription()).toString();
+  return _matcherTextReplaceMap[raw] ?? raw;
+}
 
 String _formatActual(dynamic actual) {
   if (actual is Finder) return actual.description;
