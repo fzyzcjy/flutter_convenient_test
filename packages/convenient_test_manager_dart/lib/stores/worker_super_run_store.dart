@@ -45,7 +45,13 @@ abstract class _WorkerSuperRunStore with Store {
 
   void setControllerHalt() => currSuperRunController = const _WorkerSuperRunControllerHalt();
 
-  WorkerCurrentRunConfig calcCurrentRunConfig() => currSuperRunController._calcCurrentRunConfig();
+  WorkerCurrentRunConfig calcCurrentRunConfig() {
+    final config = currSuperRunController._calcCurrentRunConfig();
+    if (config.hasIntegrationTest()) {
+      if (config.integrationTest.autoUpdateGoldenFiles != autoUpdateGoldenFiles) throw AssertionError;
+    }
+    return config;
+  }
 
   _WorkerSuperRunStore() {
     Log.d(_kTag, 'CompileTimeConfig.kDefaultEnableIsolationMode=${CompileTimeConfig.kDefaultEnableIsolationMode}');
