@@ -132,12 +132,21 @@ void main() {
 
           // mimic [tester.dragFrom]
           await TestAsyncUtils.guard<void>(() async {
-            final gesture = await t.tester.startGesture(startLocation);
-            // NOTE by experiment, must 20+20+10, NOT 20, NOT 50 (strange...)
-            await gesture.moveBy(const Offset(0, -20));
-            await gesture.moveBy(const Offset(0, -20));
-            await gesture.moveBy(const Offset(0, -10));
-            await gesture.up();
+            final gestureOne = await t.tester.startGesture(startLocation - const Offset(0, 30));
+            final gestureTwo = await t.tester.startGesture(startLocation + const Offset(0, 30));
+            await t.tester.pump();
+
+            await gestureOne.moveBy(const Offset(0, -20));
+            await gestureTwo.moveBy(const Offset(0, 20));
+            await t.tester.pump();
+
+            await gestureOne.moveBy(const Offset(0, -20));
+            await gestureTwo.moveBy(const Offset(0, 20));
+            await t.tester.pump();
+
+            await gestureOne.up();
+            await gestureTwo.up();
+            await t.tester.pump();
           });
 
           await t.tester.pumpAndSettle();
