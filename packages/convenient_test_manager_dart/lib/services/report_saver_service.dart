@@ -40,4 +40,4 @@ abstract class _ReportSaverService with Store {
   }
 }
 
-bool get _initialEnable => CompileTimeConfig.kCiMode;
+bool get _initialEnable => GlobalConfig.ciMode;

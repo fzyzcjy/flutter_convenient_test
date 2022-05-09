@@ -4,5 +4,5 @@ class CompileTimeConfig {
 }
 
 class GlobalConfig {
-  static final ciMode = false;
+  static var ciMode = false;
 }

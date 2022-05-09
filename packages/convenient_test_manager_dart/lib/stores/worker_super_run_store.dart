@@ -75,7 +75,7 @@ abstract class _WorkerSuperRunStore with Store {
   }
 
   void _handleSuperRunStatusChange(WorkerSuperRunStatus status) {
-    if (CompileTimeConfig.kCiMode) {
+    if (GlobalConfig.ciMode) {
       Log.i(_kTag, 'handleSuperRunStatusChange exit whole app since in ci mode');
       exit(0);
     }
