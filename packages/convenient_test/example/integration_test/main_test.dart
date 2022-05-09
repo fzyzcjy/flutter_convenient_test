@@ -56,6 +56,12 @@ void main() {
         await t.get(find.text('SecondPage')).should(findsNothing);
       });
 
+      tTestWidgets('golden test', (t) async {
+        await t.get(find.text('HomePage')).should(findsOneWidget);
+
+        await expectLater(find.byType(MaterialApp), matchesGoldenFile('goldens/sample_golden.png'));
+      });
+
       tTestWidgets('custom logging and snapshotting', (t) async {
         // suppose you do something normal...
         await t.get(find.text('HomePage')).should(findsOneWidget);
