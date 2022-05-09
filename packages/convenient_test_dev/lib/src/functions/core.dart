@@ -18,10 +18,75 @@ import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 
-class ConvenientTest {
+// "implements CommonFinders" - to make grammar better, #159
+class ConvenientTest implements CommonFinders {
   final WidgetTester tester;
 
   ConvenientTest(this.tester);
+
+  // forward to CommonFinders
+
+  @override
+  Finder ancestor({required Finder of, required Finder matching, bool matchRoot = false}) =>
+      find.ancestor(of: of, matching: matching, matchRoot: matchRoot);
+
+  @override
+  Finder byElementPredicate(ElementPredicate predicate, {String? description, bool skipOffstage = true}) =>
+      find.byElementPredicate(predicate, description: description, skipOffstage: skipOffstage);
+
+  @override
+  Finder byElementType(Type type, {bool skipOffstage = true}) => find.byElementType(type, skipOffstage: skipOffstage);
+
+  @override
+  Finder byIcon(IconData icon, {bool skipOffstage = true}) => find.byIcon(icon, skipOffstage: skipOffstage);
+
+  @override
+  Finder byKey(Key key, {bool skipOffstage = true}) => find.byKey(key, skipOffstage: skipOffstage);
+
+  @override
+  Finder bySemanticsLabel(Pattern label, {bool skipOffstage = true}) =>
+      find.bySemanticsLabel(label, skipOffstage: skipOffstage);
+
+  @override
+  Finder byTooltip(String message, {bool skipOffstage = true}) => find.byTooltip(message, skipOffstage: skipOffstage);
+
+  @override
+  Finder byType(Type type, {bool skipOffstage = true}) => find.byType(type, skipOffstage: skipOffstage);
+
+  @override
+  Finder byWidget(Widget widget, {bool skipOffstage = true}) => find.byWidget(widget, skipOffstage: skipOffstage);
+
+  @override
+  Finder byWidgetPredicate(WidgetPredicate predicate, {String? description, bool skipOffstage = true}) =>
+      find.byWidgetPredicate(predicate, description: description, skipOffstage: skipOffstage);
+
+  @override
+  Finder descendant({required Finder of, required Finder matching, bool matchRoot = false, bool skipOffstage = true}) =>
+      find.descendant(of: of, matching: matching, matchRoot: matchRoot, skipOffstage: skipOffstage);
+
+  @override
+  Finder image(ImageProvider<Object> image, {bool skipOffstage = true}) =>
+      find.image(image, skipOffstage: skipOffstage);
+
+  @override
+  Finder text(String text, {bool findRichText = false, bool skipOffstage = true}) =>
+      find.text(text, findRichText: findRichText, skipOffstage: skipOffstage);
+
+  @override
+  Finder textContaining(Pattern pattern, {bool skipOffstage = true}) =>
+      find.textContaining(pattern, skipOffstage: skipOffstage);
+
+  @override
+  Finder widgetWithIcon(Type widgetType, IconData icon, {bool skipOffstage = true}) =>
+      find.widgetWithIcon(widgetType, icon, skipOffstage: skipOffstage);
+
+  @override
+  Finder widgetWithImage(Type widgetType, ImageProvider<Object> image, {bool skipOffstage = true}) =>
+      find.widgetWithImage(widgetType, image, skipOffstage: skipOffstage);
+
+  @override
+  Finder widgetWithText(Type widgetType, String text, {bool skipOffstage = true}) =>
+      find.widgetWithText(widgetType, text, skipOffstage: skipOffstage);
 }
 
 /// Please make this the only method in your "main" method.
