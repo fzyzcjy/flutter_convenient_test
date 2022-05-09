@@ -59,7 +59,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8),
               margin: const EdgeInsets.only(left: 32),
               decoration: BoxDecoration(
-                color: active ? Colors.green[50] : (running ? Colors.blue[50] : Colors.blueGrey[50]!.withAlpha(150)),
+                color: _calcDecorationColor(context, active: active),
                 border: running ? Border(left: BorderSide(color: Theme.of(context).primaryColor, width: 2)) : null,
               ),
               child: Row(
@@ -106,6 +106,12 @@ class HomePageLogEntryWidget extends StatelessWidget {
         ],
       );
     });
+  }
+
+  Color _calcDecorationColor(BuildContext context, {required bool active}) {
+    if (active) return Colors.green[50]!;
+    if (running) return Colors.blue[50]!;
+    return Colors.blueGrey[50]!.withAlpha(150);
   }
 
   void _handleTapOrHover(LogSubEntry interestLogSubEntry, {required bool targetState}) {
