@@ -41,10 +41,17 @@ class ConvenientTestImageCaptureWrapper extends StatelessWidget {
 // P.S. For the Cypress's approach, please see Cypress's intro doc, or see `cypress-realworld-app`'s `cy.getBySel`.
 class Mark extends StatelessWidget {
   final Object name;
+  final bool repaintBoundary;
   final Object? data;
   final Widget child;
 
-  const Mark({Key? key, required this.name, this.data, required this.child}) : super(key: key);
+  const Mark({
+    Key? key,
+    required this.name,
+    this.repaintBoundary = false,
+    this.data,
+    required this.child,
+  }) : super(key: key);
 
   T childTyped<T>() => child as T;
 
@@ -57,7 +64,9 @@ class Mark extends StatelessWidget {
     return Stack(
       fit: StackFit.passthrough,
       children: [
-        child,
+        repaintBoundary //
+            ? RepaintBoundary(child: child)
+            : child,
         Positioned(
           left: 0,
           top: 0,

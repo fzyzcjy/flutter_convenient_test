@@ -26,6 +26,7 @@ class _ZoomPageState extends State<ZoomPage> {
           children: [
             Text('ChosenPoint: ${_chosenPoint.x}#${_chosenPoint.y}'),
             Mark(
+              repaintBoundary: true,
               name: ZoomPageMark.palette,
               child: SizedBox(
                 width: 275,
