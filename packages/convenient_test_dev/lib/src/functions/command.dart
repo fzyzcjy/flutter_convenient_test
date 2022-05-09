@@ -54,14 +54,6 @@ extension ExtTCommand on TCommand {
   Future<void> shouldEquals(dynamic expected, {String? reason}) => should(equals(expected), reason: reason);
 }
 
-// ignore: avoid_dynamic_calls
-String _formatMatcher(dynamic matcher) => matcher.describe(StringDescription()).toString();
-
-String _formatActual(dynamic actual) {
-  if (actual is Finder) return actual.description;
-  return actual.toString();
-}
-
 // NOTE "retry-ability" methodology, please see https://docs.cypress.io/guides/core-concepts/retry-ability
 Future<void> _expectWithRetry(
   ConvenientTest t,
@@ -79,8 +71,7 @@ Future<void> _expectWithRetry(
   while (true) {
     // Why need log "update": Because `actualGetter` can change
     // ignore: avoid_dynamic_calls
-    logUpdate('ASSERT', '{${_formatActual(actualGetter())}} matches {${_formatMatcher(matcher)}}',
-        type: LogSubEntryType.ASSERT);
+    logUpdate('ASSERT', _formatLogOfExpect(actualGetter(), matcher), type: LogSubEntryType.ASSERT);
 
     final actual = actualGetter();
     try {
@@ -113,6 +104,17 @@ Future<void> _expectWithRetry(
       // TODO Not sure whether to add `Future.delayed`. Be careful: Future "delay" may be fake in test environment
     }
   }
+}
+
+String _formatLogOfExpect(dynamic actual, Matcher matcher) {
+  return '{${_formatActual(actual)}} matches {${_formatMatcher(matcher)}}';
+}
+
+String _formatMatcher(Matcher matcher) => matcher.describe(StringDescription()).toString();
+
+String _formatActual(dynamic actual) {
+  if (actual is Finder) return actual.description;
+  return actual.toString();
 }
 
 String _getTestFailureErrorExtraInfo(dynamic actual) {
