@@ -6,6 +6,7 @@ import 'package:convenient_test_manager_dart/misc/setup.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:convenient_test_manager_dart/services/status_periodic_logger.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
+import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:get_it/get_it.dart';
 
 const _kTag = 'main';
@@ -20,6 +21,10 @@ Future<void> main(List<String> args) async {
 
   Log.i(_kTag, 'step awaitWorkerAvailable');
   await _awaitWorkerAvailable();
+
+  Log.i(_kTag, 'step reloadInfo');
+  await GetIt.I.get<MiscDartService>().reloadInfo();
+  await _awaitSuiteInfoNonEmpty();
 
   Log.i(_kTag, 'step hotRestartAndRunTests');
   unawaited(GetIt.I.get<MiscDartService>().hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything));
@@ -43,6 +48,20 @@ Future<void> _awaitWorkerAvailable() async {
     if (!vmServiceWrapperService.connected) {
       await vmServiceWrapperService.connect();
     }
+
+    await Future<void>.delayed(const Duration(seconds: 3));
+  }
+}
+
+Future<void> _awaitSuiteInfoNonEmpty() async {
+  final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
+
+  while (true) {
+    final suiteInfo = suiteInfoStore.suiteInfo;
+    final numGroupEntries = suiteInfo?.entryMap.length ?? 0;
+    Log.i(_kTag, 'awaitSuiteInfoNonEmpty check numGroupEntries=$numGroupEntries');
+
+    if (numGroupEntries > 0) return;
 
     await Future<void>.delayed(const Duration(seconds: 3));
   }
