@@ -110,7 +110,7 @@ Tap "Raw Logs" in the right panel to see raw outputs of a test.
 ## Tutorial: Run examples
 
 1. Clone this repository and enter the `packages/convenient_test/example` folder.
-2. Run the example app (e.g. using iOS simulator) via `flutter run /path/to/flutter_convenient_test/packages/convenient_test/example/integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes`. Can also be run via VSCode or Android Studio with similar commands.
+2. Run the example app (e.g. using iOS simulator) via `flutter run /path/to/flutter_convenient_test/packages/convenient_test/example/integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define CONVENIENT_TEST_APP_CODE_DIR=/path/to/this/app`. Can also be run via VSCode or Android Studio with similar commands.
 3. Run the GUI located in `packages/convenient_test_manager`. It is nothing but a normal Flutter Windows/MacOS/Linux app, so run it follow Flutter official doc. May run in `profile` mode to speed up.
 4. Enjoy the GUI!
 
@@ -118,7 +118,7 @@ Tap "Raw Logs" in the right panel to see raw outputs of a test.
 
 1. In `pubspec.yaml`, add `convenient_test: ^1.0.0` to the `dependencies` section, and `convenient_test_dev: ^1.0.0` to the `dev_dependencies` section. As normal, we need to `flutter pub get`.
 2. Create `integration_test/main_test.dart` file in your app. Fill it like `void main() => convenientTestMain(MyConvenientTestSlot(), () { ... the normal test code you write });`. See [the example package](https://github.com/fzyzcjy/flutter_convenient_test/blob/master/packages/convenient_test/example/integration_test/main_test.dart) for demonstration.
-3. Run your app (e.g. using iOS simulator) via `flutter run /path/to/your/app/integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes`. Can also be run via VSCode or Android Studio with similar commands.
+3. Run your app (e.g. using iOS simulator) via `flutter run /path/to/your/app/integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define CONVENIENT_TEST_APP_CODE_DIR=/path/to/this/app`. Can also be run via VSCode or Android Studio with similar commands.
 4. Run the GUI located in `packages/convenient_test_manager`. It is nothing but a normal Flutter Windows/MacOS/Linux app, so run it follow Flutter official doc. May run in `profile` mode to speed up.
 5. Enjoy the GUI!
 
