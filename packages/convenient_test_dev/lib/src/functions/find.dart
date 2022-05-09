@@ -42,12 +42,14 @@ extension ExtFinder on Finder {
     required Offset secondDownOffset,
     required List<Offset> firstFingerOffsets,
     required List<Offset> secondFingerOffsets,
+    bool? logMove,
   }) =>
       TFinderCommand.auto(this).multiDrag(
         firstDownOffset: firstDownOffset,
         secondDownOffset: secondDownOffset,
         firstFingerOffsets: firstFingerOffsets,
         secondFingerOffsets: secondFingerOffsets,
+        logMove: logMove,
       );
 }
 
@@ -116,25 +118,25 @@ class TFinderCommand extends TCommand {
   Object? getCurrentActual() => finder;
 
   Future<void> enterText(String text) => act(
-        act: () => t.tester.enterText(finder, text),
+        act: (log) => t.tester.enterText(finder, text),
         logTitle: 'TYPE',
         logMessage: '"$text" to ${finder.description}',
       );
 
   Future<void> tap({bool warnIfMissed = true}) => act(
-        act: () => t.tester.tap(finder, warnIfMissed: warnIfMissed),
+        act: (log) => t.tester.tap(finder, warnIfMissed: warnIfMissed),
         logTitle: 'TAP',
         logMessage: finder.description,
       );
 
   Future<void> longPress() => act(
-        act: () => t.tester.longPress(finder),
+        act: (log) => t.tester.longPress(finder),
         logTitle: 'LONG PRESS',
         logMessage: finder.description,
       );
 
   Future<void> drag(Offset offset) => act(
-        act: () => t.tester.drag(finder, offset),
+        act: (log) => t.tester.drag(finder, offset),
         logTitle: 'DRAG',
         logMessage: finder.description,
       );
@@ -144,21 +146,23 @@ class TFinderCommand extends TCommand {
     required Offset secondDownOffset,
     required List<Offset> firstFingerOffsets,
     required List<Offset> secondFingerOffsets,
+    bool? logMove,
   }) =>
       act(
-        act: () => t.tester.multiDrag(
+        act: (log) => t.tester.multiDrag(
           finder,
           firstDownOffset: firstDownOffset,
           secondDownOffset: secondDownOffset,
           firstFingerOffsets: firstFingerOffsets,
           secondFingerOffsets: secondFingerOffsets,
+          afterMove: (logMove ?? false) ? (i) async => log.snapshot(name: 'move #$i') : null,
         ),
         logTitle: 'MULTI DRAG',
         logMessage: finder.description,
       );
 
   Future<void> act({
-    required Future<void> Function() act,
+    required Future<void> Function(LogHandle log) act,
     required String logTitle,
     required String logMessage,
   }) async {
@@ -180,7 +184,7 @@ class TFinderCommand extends TCommand {
     // update log, since [should] will change logs
     unawaited(log.update(logTitle, logMessage, type: LogSubEntryType.GENERAL_MESSAGE));
 
-    await act();
+    await act(log);
 
     await t.pumpAndSettle();
 

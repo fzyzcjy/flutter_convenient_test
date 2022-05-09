@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 extension ExtWidgetController on WidgetController {
@@ -7,6 +8,7 @@ extension ExtWidgetController on WidgetController {
     required Offset secondDownOffset,
     required List<Offset> firstFingerOffsets,
     required List<Offset> secondFingerOffsets,
+    Future<void> Function(int index)? afterMove,
   }) async {
     final startLocation = getCenter(finder);
 
@@ -20,6 +22,7 @@ extension ExtWidgetController on WidgetController {
         await gestureOne.moveBy(firstFingerOffsets[i]);
         await gestureTwo.moveBy(secondFingerOffsets[i]);
         await pump();
+        await afterMove?.call(i);
       }
 
       await gestureOne.up();

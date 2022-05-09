@@ -132,11 +132,12 @@ void main() {
           await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_zoom_before.png'));
 
           await find.get(ZoomPageMark.palette).multiDrag(
-            firstDownOffset: const Offset(0, -30),
-            secondDownOffset: const Offset(0, 30),
-            firstFingerOffsets: const [Offset(0, -20), Offset(0, -20), Offset(0, -10)],
-            secondFingerOffsets: const [Offset(0, 20), Offset(0, 20), Offset(0, 10)],
-          );
+                firstDownOffset: const Offset(0, -30),
+                secondDownOffset: const Offset(0, 30),
+                firstFingerOffsets: const [Offset(0, -20), Offset(0, -20), Offset(0, -10)],
+                secondFingerOffsets: const [Offset(0, 20), Offset(0, 20), Offset(0, 10)],
+                logMove: true,
+              );
 
           await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_zoom_after.png'));
         });
