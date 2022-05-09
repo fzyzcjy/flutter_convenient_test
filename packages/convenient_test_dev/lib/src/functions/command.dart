@@ -17,6 +17,9 @@ abstract class TCommand {
   @protected
   Object? getCurrentActual();
 
+  @protected
+  String? get overrideActualDescription => null;
+
   TCommand(this.t);
 
   TCommand.auto() : this(ConvenientTest.activeInstance);
@@ -44,6 +47,7 @@ extension ExtTCommand on TCommand {
         t,
         getCurrentActual,
         matcher,
+        overrideActualDescription: overrideActualDescription,
         reason: reason,
         logUpdate: logUpdate,
         logSnapshot: logSnapshot,
@@ -59,6 +63,7 @@ Future<void> _expectWithRetry(
   ConvenientTest t,
   ValueGetter<Object?> actualGetter,
   Matcher matcher, {
+  required String? overrideActualDescription,
   String? reason,
   dynamic skip,
   Duration timeout = const Duration(seconds: 4),
@@ -71,7 +76,11 @@ Future<void> _expectWithRetry(
   while (true) {
     // Why need log "update": Because `actualGetter` can change
     // ignore: avoid_dynamic_calls
-    logUpdate('ASSERT', _formatLogOfExpect(actualGetter(), matcher), type: LogSubEntryType.ASSERT);
+    logUpdate(
+      'ASSERT',
+      _formatLogOfExpect(actualGetter(), matcher, overrideActualDescription: overrideActualDescription),
+      type: LogSubEntryType.ASSERT,
+    );
 
     final actual = actualGetter();
     try {
@@ -106,8 +115,8 @@ Future<void> _expectWithRetry(
   }
 }
 
-String _formatLogOfExpect(dynamic actual, Matcher matcher) {
-  return '{${_formatActual(actual)}} matches {${_formatMatcher(matcher)}}';
+String _formatLogOfExpect(dynamic actual, Matcher matcher, {required String? overrideActualDescription}) {
+  return '{${overrideActualDescription ?? _formatActual(actual)}} matches {${_formatMatcher(matcher)}}';
 }
 
 // make text briefer

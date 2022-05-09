@@ -208,6 +208,9 @@ class TRouteNameCommand extends TCommand {
     });
     return currentRoute.settings.name;
   }
+
+  @override
+  String? get overrideActualDescription => 'route "${getCurrentActual()}"';
 }
 
 class TRawCommand extends TCommand {
