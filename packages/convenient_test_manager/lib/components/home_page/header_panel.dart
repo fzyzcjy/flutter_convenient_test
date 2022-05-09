@@ -1,6 +1,7 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/services/misc_flutter_service.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
+import 'package:convenient_test_manager_dart/services/report_saver_service.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager_dart/stores/worker_super_run_store.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class HomePageHeaderPanel extends StatelessWidget {
     final highlightStore = GetIt.I.get<HighlightStore>();
     final miscFlutterService = GetIt.I.get<MiscFlutterService>();
     final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
+    final reportSaverService = GetIt.I.get<ReportSaverService>();
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -73,6 +75,13 @@ class HomePageHeaderPanel extends StatelessWidget {
             gs: GetSet.gs(
               () => workerSuperRunStore.retryMode,
               (v) => workerSuperRunStore.retryMode = v,
+            ),
+          ),
+          ..._buildSwitch(
+            text: 'SaveReport',
+            gs: GetSet.gs(
+              () => reportSaverService.enable,
+              (v) => reportSaverService.enable = v,
             ),
           ),
           ..._buildSwitch(
