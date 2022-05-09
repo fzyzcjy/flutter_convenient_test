@@ -60,17 +60,15 @@ abstract class _WorkerSuperRunStore with Store {
   _WorkerSuperRunStore() {
     Log.d(_kTag, 'CompileTimeConfig.kDefaultEnableIsolationMode=${CompileTimeConfig.kDefaultEnableIsolationMode}');
 
-    reaction<bool>(
-      (_) => isolationMode,
-      (isolationMode) async {
-        Log.d(
-            _kTag, 'see isolationMode($isolationMode) changed, thus reloadInfo to make currSuperRunController updated');
-        await GetIt.I.get<MiscDartService>().reloadInfo();
-        assert(isolationMode
-            ? currSuperRunController is _WorkerSuperRunControllerIntegrationTestIsolationMode
-            : currSuperRunController is _WorkerSuperRunControllerIntegrationTestClassicalMode);
-      },
-    );
+    reaction<bool>((_) => isolationMode, _handleIsolationModeChange);
+  }
+
+  Future<void> _handleIsolationModeChange(bool isolationMode) async {
+    Log.d(_kTag, 'see isolationMode($isolationMode) changed, thus reloadInfo to make currSuperRunController updated');
+    await GetIt.I.get<MiscDartService>().reloadInfo();
+    assert(isolationMode
+        ? currSuperRunController is _WorkerSuperRunControllerIntegrationTestIsolationMode
+        : currSuperRunController is _WorkerSuperRunControllerIntegrationTestClassicalMode);
   }
 }
 
