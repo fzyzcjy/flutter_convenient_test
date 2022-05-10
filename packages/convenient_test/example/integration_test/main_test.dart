@@ -60,6 +60,10 @@ void main() {
         await find.text('SecondPage').should(findsNothing);
       });
 
+      tTestWidgets('find by icon', (t) async {
+        await find.byIcon(Icons.done).should(findsOneWidget);
+      });
+
       tTestWidgets('golden test', (t) async {
         await find.text('HomePage').should(findsOneWidget);
 
