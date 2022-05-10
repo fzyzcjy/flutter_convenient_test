@@ -140,9 +140,10 @@ void main() {
         await find.text('first').should(findsOneWidget);
         _logTestTextInput();
 
-        await t.tester.sendKeyEvent(LogicalKeyboardKey.keyA);
-        await t.tester.sendKeyEvent(LogicalKeyboardKey.keyB);
-        await t.tester.sendKeyEvent(LogicalKeyboardKey.keyC);
+        // "Returns true if the key down event was handled by the framework." so assert the result
+        expect(await t.tester.sendKeyEvent(LogicalKeyboardKey.keyA), true);
+        expect(await t.tester.sendKeyEvent(LogicalKeyboardKey.keyB), true);
+        expect(await t.tester.sendKeyEvent(LogicalKeyboardKey.keyC), true);
         await find.text('firstabc').should(findsOneWidget);
         // await find.byType(TextField).enterText('first second');
         // await find.text('first second').should(findsOneWidget);
