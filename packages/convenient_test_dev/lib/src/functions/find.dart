@@ -36,9 +36,10 @@ extension ExtFinder on Finder {
 
   Future<void> tap({bool warnIfMissed = true}) => TFinderCommand.auto(this).tap(warnIfMissed: warnIfMissed);
 
-  Future<void> longPress() => TFinderCommand.auto(this).longPress();
+  Future<void> longPress({bool warnIfMissed = true}) => TFinderCommand.auto(this).longPress(warnIfMissed: warnIfMissed);
 
-  Future<void> drag(Offset offset) => TFinderCommand.auto(this).drag(offset);
+  Future<void> drag(Offset offset, {bool warnIfMissed = true}) =>
+      TFinderCommand.auto(this).drag(offset, warnIfMissed: warnIfMissed);
 
   Future<void> multiDrag({
     required Offset firstDownOffset,
@@ -149,14 +150,14 @@ class TFinderCommand extends TCommand {
         logMessage: finder.description,
       );
 
-  Future<void> longPress() => act(
-        act: (log) => t.tester.longPress(finder),
+  Future<void> longPress({bool warnIfMissed = true}) => act(
+        act: (log) => t.tester.longPress(finder, warnIfMissed: warnIfMissed),
         logTitle: 'LONG PRESS',
         logMessage: finder.description,
       );
 
-  Future<void> drag(Offset offset) => act(
-        act: (log) => t.tester.drag(finder, offset),
+  Future<void> drag(Offset offset, {bool warnIfMissed = true}) => act(
+        act: (log) => t.tester.drag(finder, offset, warnIfMissed: warnIfMissed),
         logTitle: 'DRAG',
         logMessage: finder.description,
       );
