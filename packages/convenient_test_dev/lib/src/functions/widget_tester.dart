@@ -1,39 +1,52 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 typedef EnterTextWithoutReplaceLogCallback = void Function(TextEditingValue oldValue, TextEditingValue newValue);
 
 extension ExtWidgetTester on WidgetTester {
-  Future<void> enterTextWithoutReplace(
-    Finder finder,
-    String text, {
-    EnterTextWithoutReplaceLogCallback? logCallback,
-    GeneralizedTextFieldInfo? info,
-  }) async {
-    final effectiveInfo = info ?? const TextFieldInfo();
+  Future<void> enterTextWithoutReplace(Finder finder, String text,
+      {EnterTextWithoutReplaceLogCallback? logCallback}) async {
     // reference: [enterText]
     await TestAsyncUtils.guard<void>(() async {
-      final textField =
-          widget(find.descendant(of: finder, matching: find.byType(effectiveInfo.widgetType), matchRoot: true));
-      final oldValue = effectiveInfo.extractTextEditingValue(textField);
-      if (oldValue == null) {
-        throw Exception('To use `enterTextWithoutReplace`, please ensure your TextField has non-null controller');
+      for (final textFieldInfo in convenientTestGeneralizedTextFieldInfos) {
+        final textField = textFieldInfo.findWidget(this, finder);
+        if (textField == null) {
+          continue; // try next one
+        }
+
+        final oldValue = textFieldInfo.extractTextEditingValue(textField);
+        if (oldValue == null) {
+          throw Exception('To use `enterTextWithoutReplace`, please ensure your TextField has non-null controller');
+        }
+
+        final newValue = _enterTextWithoutReplaceActOnValue(oldValue, text);
+        logCallback?.call(oldValue, newValue);
+
+        await showKeyboard(finder);
+        testTextInput.updateEditingValue(newValue);
+        await idle();
+       
+        return;
       }
 
-      final newValue = _enterTextWithoutReplaceActOnValue(oldValue, text);
-      logCallback?.call(oldValue, newValue);
-
-      await showKeyboard(finder);
-      testTextInput.updateEditingValue(newValue);
-      await idle();
+      throw Exception(
+          'Have tried all infos in convenientTestGeneralizedTextFieldInfos=$convenientTestGeneralizedTextFieldInfos, but none works.');
     });
   }
 }
 
-abstract class GeneralizedTextFieldInfo<T extends Object> {
+// users can customize this, for example, if they have a custom MyTextField which is similar to TextField
+final convenientTestGeneralizedTextFieldInfos = <GeneralizedTextFieldInfo>[const TextFieldInfo()];
+
+abstract class GeneralizedTextFieldInfo<T extends Widget> {
   const GeneralizedTextFieldInfo();
 
   Type get widgetType => T;
+
+  T? findWidget(WidgetTester tester, Finder finder) => tester
+      .widgetList<T>(find.descendant(of: finder, matching: find.byType(widgetType), matchRoot: true))
+      .singleOrNull;
 
   TextEditingValue? extractTextEditingValue(T widget);
 }
@@ -43,6 +56,9 @@ class TextFieldInfo extends GeneralizedTextFieldInfo<TextField> {
 
   @override
   TextEditingValue? extractTextEditingValue(TextField widget) => widget.controller?.value;
+
+  @override
+  String toString() => 'TextFieldInfo{}';
 }
 
 // TODO ok?
