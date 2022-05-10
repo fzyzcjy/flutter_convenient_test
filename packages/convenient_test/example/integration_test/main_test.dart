@@ -140,6 +140,8 @@ void main() {
         await find.text('first').should(findsOneWidget);
         _logTestTextInput();
 
+        t.tester.widget<TextField>(find.byType(TextField)).focusNode!.requestFocus();
+
         // "Returns true if the key down event was handled by the framework." so assert the result
         expect(await t.tester.sendKeyEvent(LogicalKeyboardKey.keyA), true);
         expect(await t.tester.sendKeyEvent(LogicalKeyboardKey.keyB), true);

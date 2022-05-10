@@ -8,12 +8,16 @@ class TextFieldPage extends StatefulWidget {
 }
 
 class _TextFieldPageState extends State<TextFieldPage> {
+  final _focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('TextFieldPage')),
-      body: const Center(
-        child: TextField(),
+      body: Center(
+        child: TextField(
+          focusNode: _focusNode,
+        ),
       ),
     );
   }
