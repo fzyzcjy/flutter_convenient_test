@@ -76,7 +76,7 @@ class LogHandle {
     String message, {
     String? error,
     String? stackTrace,
-    required LogSubEntryType type,
+    LogSubEntryType type = LogSubEntryType.GENERAL_MESSAGE,
     bool printing = false,
   }) async {
     if (printing) {

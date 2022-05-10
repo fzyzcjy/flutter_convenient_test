@@ -126,11 +126,22 @@ class TFinderCommand extends TCommand {
         logMessage: '"$text" to ${finder.description}',
       );
 
-  Future<void> enterTextWithoutReplace(String text) => act(
-        act: (log) => t.tester.enterTextWithoutReplace(finder, text),
-        logTitle: 'TYPE',
-        logMessage: '"$text" to ${finder.description}',
-      );
+  Future<void> enterTextWithoutReplace(String text) {
+    const logTitle = 'TYPE';
+    final basicLogMessage = '"$text" to ${finder.description}';
+
+    return act(
+      act: (log) => t.tester.enterTextWithoutReplace(
+        finder,
+        text,
+        logCallback: (oldValue, newValue) {
+          log.update(logTitle, '$basicLogMessage (old=$oldValue, new=$newValue)');
+        },
+      ),
+      logTitle: logTitle,
+      logMessage: basicLogMessage,
+    );
+  }
 
   Future<void> tap({bool warnIfMissed = true}) => act(
         act: (log) => t.tester.tap(finder, warnIfMissed: warnIfMissed),
