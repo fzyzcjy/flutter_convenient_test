@@ -1,6 +1,7 @@
 import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_example/home_page.dart';
 import 'package:convenient_test_example/second_page.dart';
+import 'package:convenient_test_example/text_field_page.dart';
 import 'package:convenient_test_example/timer_page.dart';
 import 'package:convenient_test_example/zoom_page.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
           '/second': (_) => const SecondPage(),
           '/timer': (_) => const TimerPage(),
           '/zoom': (_) => const ZoomPage(),
+          '/text_field': (_) => const TextFieldPage(),
         },
       ),
     );
