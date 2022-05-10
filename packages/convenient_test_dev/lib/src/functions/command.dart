@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/core.dart';
+import 'package:convenient_test_dev/src/functions/descriptor.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ Future<void> _expectWithRetry(
     // ignore: avoid_dynamic_calls
     logUpdate(
       'ASSERT',
-      _formatLogOfExpect(actualGetter(), matcher, overrideActualDescription: overrideActualDescription),
+      Descriptor().formatLogOfExpect(actualGetter(), matcher, overrideActualDescription: overrideActualDescription),
       type: LogSubEntryType.ASSERT,
     );
 
@@ -113,26 +114,6 @@ Future<void> _expectWithRetry(
       // TODO Not sure whether to add `Future.delayed`. Be careful: Future "delay" may be fake in test environment
     }
   }
-}
-
-String _formatLogOfExpect(dynamic actual, Matcher matcher, {required String? overrideActualDescription}) {
-  return '{${overrideActualDescription ?? _formatActual(actual)}} matches {${_formatMatcher(matcher)}}';
-}
-
-// make text briefer
-const _matcherTextReplaceMap = {
-  'exactly one matching node in the widget tree': 'findsOneWidget',
-  'no matching nodes in the widget tree': 'findsNothing',
-};
-
-String _formatMatcher(Matcher matcher) {
-  final raw = matcher.describe(StringDescription()).toString();
-  return _matcherTextReplaceMap[raw] ?? raw;
-}
-
-String _formatActual(dynamic actual) {
-  if (actual is Finder) return actual.description;
-  return actual.toString();
 }
 
 String _getTestFailureErrorExtraInfo(dynamic actual) {
