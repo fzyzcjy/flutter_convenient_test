@@ -141,6 +141,7 @@ void main() {
         _logTestTextInput();
 
         t.tester.widget<TextField>(find.byType(TextField)).focusNode!.requestFocus();
+        await t.pumpAndSettle();
 
         // "Returns true if the key down event was handled by the framework." so assert the result
         expect(await t.tester.sendKeyEvent(LogicalKeyboardKey.keyA), true);
