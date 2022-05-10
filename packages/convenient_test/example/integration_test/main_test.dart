@@ -115,6 +115,17 @@ void main() {
         await t.pageBack();
       });
 
+      tTestWidgets('enter and append text', (t) async {
+        await t.visit('/text_field');
+
+        await find.byType(TextField).enterText('first');
+        await find.text('first').should(findsOneWidget);
+
+        // TODO want to be appendText
+        await find.byType(TextField).enterText('first second');
+        await find.text('first second').should(findsOneWidget);
+      });
+
       group('zoom page', () {
         tTestWidgets('single finger drag', (t) async {
           await t.visit('/zoom');
