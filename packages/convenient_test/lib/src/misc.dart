@@ -57,6 +57,7 @@ class MarkCore extends StatelessWidget {
 // Therefore, the data-test property in HTML is also a Widget now.
 // P.S. For the Cypress's approach, please see Cypress's intro doc, or see `cypress-realworld-app`'s `cy.getBySel`.
 class Mark extends StatelessWidget {
+  final bool enable;
   final Object name;
   final bool repaintBoundary;
   final Object? data;
@@ -64,6 +65,7 @@ class Mark extends StatelessWidget {
 
   const Mark({
     Key? key,
+    this.enable = true,
     required this.name,
     this.repaintBoundary = false,
     this.data,
@@ -74,7 +76,7 @@ class Mark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!ConvenientTestWrapperWidget.convenientTestActive) return child;
+    if (!enable || !ConvenientTestWrapperWidget.convenientTestActive) return child;
 
     final color = kColorList['$name'.hashCode % kColorList.length];
 
