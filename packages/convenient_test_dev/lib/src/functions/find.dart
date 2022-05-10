@@ -32,7 +32,11 @@ extension ExtFinder on Finder {
 
   Future<void> replaceText(String text) => TFinderCommand.auto(this).replaceText(text);
 
-  Future<void> enterTextWithoutReplace(String text) => TFinderCommand.auto(this).enterTextWithoutReplace(text);
+  Future<void> enterTextWithoutReplace(
+    String text, {
+    GeneralizedTextFieldInfo? info,
+  }) =>
+      TFinderCommand.auto(this).enterTextWithoutReplace(text, info: info);
 
   Future<void> tap({bool warnIfMissed = true}) => TFinderCommand.auto(this).tap(warnIfMissed: warnIfMissed);
 
@@ -126,7 +130,10 @@ class TFinderCommand extends TCommand {
         logMessage: '"$text" to ${finder.description}',
       );
 
-  Future<void> enterTextWithoutReplace(String text) {
+  Future<void> enterTextWithoutReplace(
+    String text, {
+    GeneralizedTextFieldInfo? info,
+  }) {
     const logTitle = 'TYPE';
     final basicLogMessage = '"$text" to ${finder.description}';
 
@@ -134,6 +141,7 @@ class TFinderCommand extends TCommand {
       act: (log) => t.tester.enterTextWithoutReplace(
         finder,
         text,
+        info: info,
         logCallback: (oldValue, newValue) {
           log.update(logTitle, '$basicLogMessage (old text: "${oldValue.text}")');
         },

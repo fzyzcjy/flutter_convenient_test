@@ -4,18 +4,22 @@ import 'package:flutter_test/flutter_test.dart';
 typedef EnterTextWithoutReplaceLogCallback = void Function(TextEditingValue oldValue, TextEditingValue newValue);
 
 extension ExtWidgetTester on WidgetTester {
-  Future<void> enterTextWithoutReplace(Finder finder, String text,
-      {EnterTextWithoutReplaceLogCallback? logCallback}) async {
+  Future<void> enterTextWithoutReplace(
+    Finder finder,
+    String text, {
+    EnterTextWithoutReplaceLogCallback? logCallback,
+    GeneralizedTextFieldInfo? info,
+  }) async {
+    final effectiveInfo = info ?? const TextFieldInfo();
     // reference: [enterText]
     await TestAsyncUtils.guard<void>(() async {
-      final TextField textField =
-          widget(find.descendant(of: finder, matching: find.byType(TextField), matchRoot: true));
-      final controller = textField.controller;
-      if (controller == null) {
+      final textField =
+          widget(find.descendant(of: finder, matching: find.byType(effectiveInfo.widgetType), matchRoot: true));
+      final oldValue = effectiveInfo.extractTextEditingValue(textField);
+      if (oldValue == null) {
         throw Exception('To use `enterTextWithoutReplace`, please ensure your TextField has non-null controller');
       }
 
-      final oldValue = controller.value;
       final newValue = _enterTextWithoutReplaceActOnValue(oldValue, text);
       logCallback?.call(oldValue, newValue);
 
@@ -24,6 +28,21 @@ extension ExtWidgetTester on WidgetTester {
       await idle();
     });
   }
+}
+
+abstract class GeneralizedTextFieldInfo<T extends Object> {
+  const GeneralizedTextFieldInfo();
+
+  Type get widgetType => T;
+
+  TextEditingValue? extractTextEditingValue(T widget);
+}
+
+class TextFieldInfo extends GeneralizedTextFieldInfo<TextField> {
+  const TextFieldInfo();
+
+  @override
+  TextEditingValue? extractTextEditingValue(TextField widget) => widget.controller?.value;
 }
 
 // TODO ok?
