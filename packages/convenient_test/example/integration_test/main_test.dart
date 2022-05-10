@@ -116,14 +116,31 @@ void main() {
       });
 
       tTestWidgets('enter and append text', (t) async {
+        void _logTestTextInput() {
+          final testTextInput = t.tester.testTextInput;
+          t.log(
+            'HELLO',
+            'testTextInput {'
+                'setClientArgs: ${testTextInput.setClientArgs}, '
+                'editingState: ${testTextInput.editingState}, '
+                'isRegistered: ${testTextInput.isRegistered}, '
+                // 'hasAnyClients: ${testTextInput.hasAnyClients}, '
+                '}',
+          );
+        }
+
         await t.visit('/text_field');
+
+        _logTestTextInput();
 
         await find.byType(TextField).enterText('first');
         await find.text('first').should(findsOneWidget);
+        _logTestTextInput();
 
         // TODO want to be appendText
         await find.byType(TextField).enterText('first second');
         await find.text('first second').should(findsOneWidget);
+        _logTestTextInput();
       });
 
       group('zoom page', () {
