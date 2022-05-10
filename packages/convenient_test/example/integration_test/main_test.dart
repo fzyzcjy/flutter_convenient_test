@@ -4,6 +4,7 @@ import 'package:convenient_test_example/main.dart' as app;
 import 'package:convenient_test_example/main.dart';
 import 'package:convenient_test_example/zoom_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -120,7 +121,9 @@ void main() {
           final testTextInput = t.tester.testTextInput;
           t.log(
             'HELLO',
-            'testTextInput {'
+            // ignore: invalid_use_of_protected_member
+            'TestWidgetsFlutterBinding.registerTestTextInput=${(TestWidgetsFlutterBinding.ensureInitialized() as TestWidgetsFlutterBinding).registerTestTextInput} '
+                'testTextInput {'
                 'setClientArgs: ${testTextInput.setClientArgs}, '
                 'editingState: ${testTextInput.editingState}, '
                 'isRegistered: ${testTextInput.isRegistered}, '
@@ -137,9 +140,12 @@ void main() {
         await find.text('first').should(findsOneWidget);
         _logTestTextInput();
 
-        // TODO want to be appendText
-        await find.byType(TextField).enterText('first second');
-        await find.text('first second').should(findsOneWidget);
+        await t.tester.sendKeyEvent(LogicalKeyboardKey.keyA);
+        await t.tester.sendKeyEvent(LogicalKeyboardKey.keyB);
+        await t.tester.sendKeyEvent(LogicalKeyboardKey.keyC);
+        await find.text('firstabc').should(findsOneWidget);
+        // await find.byType(TextField).enterText('first second');
+        // await find.text('first second').should(findsOneWidget);
         _logTestTextInput();
       });
 
