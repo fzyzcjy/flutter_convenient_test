@@ -7,6 +7,7 @@ import 'package:convenient_test_dev/src/functions/core.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/functions/widget_controller.dart';
+import 'package:convenient_test_dev/src/functions/widget_tester.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
@@ -29,7 +30,9 @@ extension ExtFinder on Finder {
   Future<void> should(Matcher matcher, {String? reason}) async =>
       TFinderCommand.auto(this).should(matcher, reason: reason);
 
-  Future<void> enterText(String text) => TFinderCommand.auto(this).enterText(text);
+  Future<void> replaceText(String text) => TFinderCommand.auto(this).replaceText(text);
+
+  Future<void> enterTextWithoutReplace(String text) => TFinderCommand.auto(this).enterTextWithoutReplace(text);
 
   Future<void> tap({bool warnIfMissed = true}) => TFinderCommand.auto(this).tap(warnIfMissed: warnIfMissed);
 
@@ -117,8 +120,14 @@ class TFinderCommand extends TCommand {
   @override
   Object? getCurrentActual() => finder;
 
-  Future<void> enterText(String text) => act(
+  Future<void> replaceText(String text) => act(
         act: (log) => t.tester.enterText(finder, text),
+        logTitle: 'REPLACE TYPE',
+        logMessage: '"$text" to ${finder.description}',
+      );
+
+  Future<void> enterTextWithoutReplace(String text) => act(
+        act: (log) => t.tester.enterTextWithoutReplace(finder, text),
         logTitle: 'TYPE',
         logMessage: '"$text" to ${finder.description}',
       );
