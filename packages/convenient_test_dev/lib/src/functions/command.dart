@@ -85,7 +85,7 @@ Future<void> _expectWithRetry(
     final actual = actualGetter();
     try {
       if (matcher is AsyncMatcher) {
-        expect(actual, matcher, reason: reason, skip: skip);
+        await expectLater(actual, matcher, reason: reason, skip: skip);
       } else {
         expect(actual, matcher, reason: reason, skip: skip);
       }
