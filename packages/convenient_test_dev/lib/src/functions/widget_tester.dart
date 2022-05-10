@@ -26,7 +26,7 @@ extension ExtWidgetTester on WidgetTester {
         await showKeyboard(finder);
         testTextInput.updateEditingValue(newValue);
         await idle();
-       
+
         return;
       }
 
@@ -36,8 +36,10 @@ extension ExtWidgetTester on WidgetTester {
   }
 }
 
+const kDefaultConvenientTestGeneralizedTextFieldInfos = <GeneralizedTextFieldInfo>[TextFieldInfo()];
+
 // users can customize this, for example, if they have a custom MyTextField which is similar to TextField
-final convenientTestGeneralizedTextFieldInfos = <GeneralizedTextFieldInfo>[const TextFieldInfo()];
+var convenientTestGeneralizedTextFieldInfos = kDefaultConvenientTestGeneralizedTextFieldInfos;
 
 abstract class GeneralizedTextFieldInfo<T extends Widget> {
   const GeneralizedTextFieldInfo();
