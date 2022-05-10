@@ -135,7 +135,7 @@ class TFinderCommand extends TCommand {
         finder,
         text,
         logCallback: (oldValue, newValue) {
-          log.update(logTitle, '$basicLogMessage (old=$oldValue, new=$newValue)');
+          log.update(logTitle, '$basicLogMessage (old text: "${oldValue.text}")');
         },
       ),
       logTitle: logTitle,
