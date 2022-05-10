@@ -26,7 +26,14 @@ extension ExtWidgetTester on WidgetTester {
   }
 }
 
+// TODO ok?
 TextEditingValue _enterTextWithoutReplaceActOnValue(TextEditingValue oldValue, String text) {
-  // TODO ok?
+  if (!oldValue.selection.isValid) {
+    final newText = oldValue.text + text;
+    return TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
+  }
   return oldValue.replaced(oldValue.selection, text);
 }
