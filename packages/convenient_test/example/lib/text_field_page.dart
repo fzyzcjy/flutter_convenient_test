@@ -8,7 +8,7 @@ class TextFieldPage extends StatefulWidget {
 }
 
 class _TextFieldPageState extends State<TextFieldPage> {
-  final _focusNode = FocusNode();
+  final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
       appBar: AppBar(title: const Text('TextFieldPage')),
       body: Center(
         child: TextField(
-          focusNode: _focusNode,
+          controller: _controller,
         ),
       ),
     );
