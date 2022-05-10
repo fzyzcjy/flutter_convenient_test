@@ -23,7 +23,7 @@ extension ExtWidgetTester on WidgetTester {
         final newValue = _enterTextWithoutReplaceActOnValue(oldValue, text);
         logCallback?.call(oldValue, newValue);
 
-        await showKeyboard(finder);
+        await textFieldInfo.showKeyboard(this, finder);
         testTextInput.updateEditingValue(newValue);
         await idle();
 
@@ -51,6 +51,8 @@ abstract class GeneralizedTextFieldInfo<T extends Widget> {
       .singleOrNull;
 
   TextEditingValue? extractTextEditingValue(T widget);
+
+  Future<void> showKeyboard(WidgetTester tester, Finder finder) => tester.showKeyboard(finder);
 }
 
 class TextFieldInfo extends GeneralizedTextFieldInfo<TextField> {
