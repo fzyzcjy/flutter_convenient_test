@@ -52,6 +52,7 @@ typedef LogUpdate = void Function(
 });
 typedef LogSnapshot = Future<void> Function({
   String name,
+  List<int>? image,
 });
 
 class LogHandle {
