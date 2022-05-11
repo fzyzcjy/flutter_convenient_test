@@ -228,7 +228,6 @@ final $typed_data.Uint8List snapshotDescriptor = $convert.base64Decode(
 const WorkerCurrentRunConfig$json = const {
   '1': 'WorkerCurrentRunConfig',
   '2': const [
-    const {'1': 'super_run_id', '3': 3, '4': 1, '5': 9, '10': 'superRunId'},
     const {
       '1': 'interactive_app',
       '3': 1,
@@ -272,7 +271,7 @@ const WorkerCurrentRunConfig_IntegrationTest$json = const {
 
 /// Descriptor for `WorkerCurrentRunConfig`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List workerCurrentRunConfigDescriptor = $convert.base64Decode(
-    'ChZXb3JrZXJDdXJyZW50UnVuQ29uZmlnEiAKDHN1cGVyX3J1bl9pZBgDIAEoCVIKc3VwZXJSdW5JZBJRCg9pbnRlcmFjdGl2ZV9hcHAYASABKAsyJi5Xb3JrZXJDdXJyZW50UnVuQ29uZmlnLkludGVyYWN0aXZlQXBwSABSDmludGVyYWN0aXZlQXBwElQKEGludGVncmF0aW9uX3Rlc3QYAiABKAsyJy5Xb3JrZXJDdXJyZW50UnVuQ29uZmlnLkludGVncmF0aW9uVGVzdEgAUg9pbnRlZ3JhdGlvblRlc3QaEAoOSW50ZXJhY3RpdmVBcHAa4wEKD0ludGVncmF0aW9uVGVzdBIqChFyZXBvcnRfc3VpdGVfaW5mbxgBIAEoCFIPcmVwb3J0U3VpdGVJbmZvEi4KE2RlZmF1bHRfcmV0cnlfY291bnQYAyABKAVSEWRlZmF1bHRSZXRyeUNvdW50EjsKEGV4ZWN1dGlvbl9maWx0ZXIYAiABKAsyEC5FeGVjdXRpb25GaWx0ZXJSD2V4ZWN1dGlvbkZpbHRlchI3ChhhdXRvX3VwZGF0ZV9nb2xkZW5fZmlsZXMYBCABKAhSFWF1dG9VcGRhdGVHb2xkZW5GaWxlc0IKCghzdWJfdHlwZQ==');
+    'ChZXb3JrZXJDdXJyZW50UnVuQ29uZmlnElEKD2ludGVyYWN0aXZlX2FwcBgBIAEoCzImLldvcmtlckN1cnJlbnRSdW5Db25maWcuSW50ZXJhY3RpdmVBcHBIAFIOaW50ZXJhY3RpdmVBcHASVAoQaW50ZWdyYXRpb25fdGVzdBgCIAEoCzInLldvcmtlckN1cnJlbnRSdW5Db25maWcuSW50ZWdyYXRpb25UZXN0SABSD2ludGVncmF0aW9uVGVzdBoQCg5JbnRlcmFjdGl2ZUFwcBrjAQoPSW50ZWdyYXRpb25UZXN0EioKEXJlcG9ydF9zdWl0ZV9pbmZvGAEgASgIUg9yZXBvcnRTdWl0ZUluZm8SLgoTZGVmYXVsdF9yZXRyeV9jb3VudBgDIAEoBVIRZGVmYXVsdFJldHJ5Q291bnQSOwoQZXhlY3V0aW9uX2ZpbHRlchgCIAEoCzIQLkV4ZWN1dGlvbkZpbHRlclIPZXhlY3V0aW9uRmlsdGVyEjcKGGF1dG9fdXBkYXRlX2dvbGRlbl9maWxlcxgEIAEoCFIVYXV0b1VwZGF0ZUdvbGRlbkZpbGVzQgoKCHN1Yl90eXBl');
 @$core.Deprecated('Use executionFilterDescriptor instead')
 const ExecutionFilter$json = const {
   '1': 'ExecutionFilter',
