@@ -1415,12 +1415,14 @@ class WorkerCurrentRunConfig extends $pb.GeneratedMessage {
     ..aOM<WorkerCurrentRunConfig_IntegrationTest>(
         2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'integrationTest',
         subBuilder: WorkerCurrentRunConfig_IntegrationTest.create)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'superRunId')
     ..hasRequiredFields = false;
 
   WorkerCurrentRunConfig._() : super();
   factory WorkerCurrentRunConfig({
     WorkerCurrentRunConfig_InteractiveApp? interactiveApp,
     WorkerCurrentRunConfig_IntegrationTest? integrationTest,
+    $core.String? superRunId,
   }) {
     final _result = create();
     if (interactiveApp != null) {
@@ -1428,6 +1430,9 @@ class WorkerCurrentRunConfig extends $pb.GeneratedMessage {
     }
     if (integrationTest != null) {
       _result.integrationTest = integrationTest;
+    }
+    if (superRunId != null) {
+      _result.superRunId = superRunId;
     }
     return _result;
   }
@@ -1486,6 +1491,18 @@ class WorkerCurrentRunConfig extends $pb.GeneratedMessage {
   void clearIntegrationTest() => clearField(2);
   @$pb.TagNumber(2)
   WorkerCurrentRunConfig_IntegrationTest ensureIntegrationTest() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.String get superRunId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set superRunId($core.String v) {
+    $_setString(2, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasSuperRunId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSuperRunId() => clearField(3);
 }
 
 class ExecutionFilter_Strategy_FirstMatch extends $pb.GeneratedMessage {

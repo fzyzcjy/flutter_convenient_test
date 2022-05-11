@@ -107,6 +107,8 @@ message Snapshot {
 
 // The config for `worker` in the current run (current hot-restart)
 message WorkerCurrentRunConfig {
+  string super_run_id = 3;
+
   oneof sub_type {
     InteractiveApp interactive_app = 1;
     IntegrationTest integration_test = 2;
