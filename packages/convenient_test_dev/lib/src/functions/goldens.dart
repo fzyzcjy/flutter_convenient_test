@@ -3,7 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as path;
 
 class MyLocalFileComparator extends LocalFileComparator {
-  MyLocalFileComparator() : super(Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart'))) {
+  final Uri goldenBasedirForFailure;
+
+  MyLocalFileComparator({required this.goldenBasedirForFailure})
+      : super(Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart'))) {
     assert(basedir == Uri.directory(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test')));
   }
 
@@ -18,13 +21,8 @@ class MyLocalFileComparator extends LocalFileComparator {
       result,
       golden,
       // NOTE hacked
-      _basedirForFailureOutput,
+      goldenBasedirForFailure,
       key: key,
     );
-  }
-
-  // failures will be at `this_folder/failures/some_file.png`, according to logic of [generateFailureOutput]
-  Uri get _basedirForFailureOutput {
-    return TODO;
   }
 }
