@@ -129,44 +129,6 @@ void main() {
         await find.text('first second').should(findsOneWidget);
       });
 
-      // TODO remove
-      // tTestWidgets('enter and append text', (t) async {
-      //   void _logTestTextInput() {
-      //     final testTextInput = t.tester.testTextInput;
-      //     t.log(
-      //       'HELLO',
-      //       // ignore: invalid_use_of_protected_member
-      //       'TestWidgetsFlutterBinding.registerTestTextInput=${(TestWidgetsFlutterBinding.ensureInitialized() as TestWidgetsFlutterBinding).registerTestTextInput} '
-      //           'testTextInput {'
-      //           'setClientArgs: ${testTextInput.setClientArgs}, '
-      //           'editingState: ${testTextInput.editingState}, '
-      //           'isRegistered: ${testTextInput.isRegistered}, '
-      //           // 'hasAnyClients: ${testTextInput.hasAnyClients}, '
-      //           '}',
-      //     );
-      //   }
-      //
-      //   await t.visit('/text_field');
-      //
-      //   _logTestTextInput();
-      //
-      //   await find.byType(TextField).enterText('first');
-      //   await find.text('first').should(findsOneWidget);
-      //   _logTestTextInput();
-      //
-      //   t.tester.widget<TextField>(find.byType(TextField)).focusNode!.requestFocus();
-      //   await t.pumpAndSettle();
-      //
-      //   // "Returns true if the key down event was handled by the framework." so assert the result
-      //   expect(await t.tester.sendKeyEvent(LogicalKeyboardKey.keyA), true);
-      //   expect(await t.tester.sendKeyEvent(LogicalKeyboardKey.keyB), true);
-      //   expect(await t.tester.sendKeyEvent(LogicalKeyboardKey.keyC), true);
-      //   await find.text('firstabc').should(findsOneWidget);
-      //   // await find.byType(TextField).enterText('first second');
-      //   // await find.text('first second').should(findsOneWidget);
-      //   _logTestTextInput();
-      // });
-
       group('zoom page', () {
         tTestWidgets('single finger drag', (t) async {
           await t.visit('/zoom');
