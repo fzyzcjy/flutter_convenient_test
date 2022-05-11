@@ -2,12 +2,10 @@ import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/core.dart';
 import 'package:convenient_test_dev/src/functions/descriptor.dart';
-import 'package:convenient_test_dev/src/functions/goldens.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_test/src/_matchers_io.dart';
 import 'package:test_api/src/expect/async_matcher.dart'; // ignore: implementation_imports
 
 abstract class TCommand {
@@ -116,31 +114,12 @@ Future<void> _expectWithRetry(
           printing: true,
         );
         await logSnapshot(name: 'failed');
-
-        if (matcher is MatchesGoldenFile) {
-          await _goldenMatcherDumpFailures(matcher, logSnapshot: logSnapshot);
-        }
-
         rethrow;
       }
 
       await t.pumpAndSettle();
       // TODO Not sure whether to add `Future.delayed`. Be careful: Future "delay" may be fake in test environment
     }
-  }
-}
-
-Future<void> _goldenMatcherDumpFailures(MatchesGoldenFile matcher, {required LogSnapshot logSnapshot}) async {
-  const _kTag = 'goldenMatcherDumpFailures';
-
-  final failureFiles = MyLocalFileComparator.instance.getAllFailureFiles(matcher.key);
-  Log.d(_kTag, 'failureFiles=$failureFiles');
-
-  for (final failureFile in failureFiles) {
-    await logSnapshot(
-      name: failureFile.key,
-      image: await failureFile.value.readAsBytes(),
-    );
   }
 }
 
