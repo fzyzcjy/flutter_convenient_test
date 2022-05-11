@@ -59,8 +59,6 @@ abstract class _WorkerSuperRunStore with Store {
   }
 
   void _sanityCheckWorkerCurrentRunConfig(WorkerCurrentRunConfig config) {
-    if (config.superRunId != currSuperRunController.superRunId) throw AssertionError;
-
     if (config.hasIntegrationTest()) {
       if (config.integrationTest.autoUpdateGoldenFiles != autoUpdateGoldenFiles) throw AssertionError;
     }
@@ -112,7 +110,6 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() => WorkerCurrentRunConfig(
-        superRunId: superRunId,
         integrationTest: WorkerCurrentRunConfig_IntegrationTest(
           reportSuiteInfo: false,
           defaultRetryCount: 0,
@@ -141,10 +138,7 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
-    return WorkerCurrentRunConfig(
-      superRunId: superRunId,
-      interactiveApp: WorkerCurrentRunConfig_InteractiveApp(),
-    );
+    return WorkerCurrentRunConfig(interactiveApp: WorkerCurrentRunConfig_InteractiveApp());
   }
 
   @override
@@ -172,7 +166,6 @@ abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode extends Wo
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(
-      superRunId: superRunId,
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
         reportSuiteInfo: true,
         // this is for flaky test detection. set to non-zero,
@@ -220,7 +213,6 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(
-      superRunId: superRunId,
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
         reportSuiteInfo: state is _ITIMStateInitial,
         // do *not* handle flaky tests at worker level; instead, handle it at manager level
