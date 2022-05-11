@@ -118,8 +118,7 @@ Future<void> _runModeIntegrationTest(
 void _configureGoldens(WorkerCurrentRunConfig_IntegrationTest currentRunConfig) {
   const _kTag = 'ConfigureGoldens';
 
-  goldenFileComparator =
-      MyLocalFileComparator(goldenBasedirForFailure: Uri.directory(currentRunConfig.goldenBasedirForFailure));
+  goldenFileComparator = MyLocalFileComparator();
   autoUpdateGoldenFiles = currentRunConfig.autoUpdateGoldenFiles;
 
   Log.d(
