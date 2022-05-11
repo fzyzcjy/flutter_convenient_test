@@ -94,8 +94,8 @@ Future<void> _expectWithRetry(
       // happens e.g. when golden test fails, see #179 for details
       final Object? caughtException = t.tester.takeException();
       if (caughtException != null) {
-        // TODO error message
-        throw TestFailure('TODO this is error message');
+        // TODO add more details like stacktrace after https://github.com/flutter/flutter/pull/103486 is implemented
+        throw TestFailure('See caught exception: $caughtException');
       }
 
       if (snapshotWhenSuccess) await logSnapshot(name: 'after');
