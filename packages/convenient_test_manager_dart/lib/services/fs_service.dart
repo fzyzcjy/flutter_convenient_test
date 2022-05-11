@@ -8,6 +8,8 @@ abstract class FsService {
     final superRunId = GetIt.I.get<WorkerSuperRunStore>().currSuperRunController.superRunId;
     return '${await getBaseDataDirectory()}/$superRunId/$category';
   }
+ 
+  Future<String> getGoldenBasedirForFailure() => getActiveSuperRunDataSubDirectory(category: 'Goldens');
 
   Future<String> getTemporaryDirectory();
 }

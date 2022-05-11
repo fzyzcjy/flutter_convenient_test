@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/misc/config.dart';
+import 'package:convenient_test_manager_dart/services/fs_service.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
@@ -52,15 +53,19 @@ abstract class _WorkerSuperRunStore with Store {
 
   void setControllerHalt() => currSuperRunController = _WorkerSuperRunControllerHalt();
 
-  WorkerCurrentRunConfig calcCurrentRunConfig() {
-    final config = currSuperRunController._calcCurrentRunConfig();
-    _sanityCheckWorkerCurrentRunConfig(config);
+  Future<WorkerCurrentRunConfig> calcCurrentRunConfig() async {
+    final config = await currSuperRunController._calcCurrentRunConfig();
+    await _sanityCheckWorkerCurrentRunConfig(config);
     return config;
   }
 
-  void _sanityCheckWorkerCurrentRunConfig(WorkerCurrentRunConfig config) {
+  Future<void> _sanityCheckWorkerCurrentRunConfig(WorkerCurrentRunConfig config) async {
     if (config.hasIntegrationTest()) {
-      if (config.integrationTest.autoUpdateGoldenFiles != autoUpdateGoldenFiles) throw AssertionError;
+      final integrationTest = config.integrationTest;
+      if (integrationTest.autoUpdateGoldenFiles != autoUpdateGoldenFiles) throw AssertionError;
+      if (integrationTest.goldenBasedirForFailure != await GetIt.I.get<FsService>().getGoldenBasedirForFailure()) {
+        throw AssertionError;
+      }
     }
   }
 
@@ -92,7 +97,7 @@ abstract class WorkerSuperRunController {
 
   WorkerSuperRunController._();
 
-  WorkerCurrentRunConfig _calcCurrentRunConfig();
+  Future<WorkerCurrentRunConfig> _calcCurrentRunConfig();
 
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter);
 
@@ -109,7 +114,7 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
   _WorkerSuperRunControllerHalt() : super._();
 
   @override
-  WorkerCurrentRunConfig _calcCurrentRunConfig() => WorkerCurrentRunConfig(
+  Future<WorkerCurrentRunConfig> _calcCurrentRunConfig() async => WorkerCurrentRunConfig(
         integrationTest: WorkerCurrentRunConfig_IntegrationTest(
           reportSuiteInfo: false,
           defaultRetryCount: 0,
@@ -120,6 +125,7 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
             ),
           ),
           autoUpdateGoldenFiles: GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
+          goldenBasedirForFailure: await GetIt.I.get<FsService>().getGoldenBasedirForFailure(),
         ),
       );
 
@@ -137,7 +143,7 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
   _WorkerSuperRunControllerInteractiveApp() : super._();
 
   @override
-  WorkerCurrentRunConfig _calcCurrentRunConfig() {
+  Future<WorkerCurrentRunConfig> _calcCurrentRunConfig() async {
     return WorkerCurrentRunConfig(interactiveApp: WorkerCurrentRunConfig_InteractiveApp());
   }
 
@@ -164,7 +170,7 @@ abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode extends Wo
   bool seenTearDownAll = false;
 
   @override
-  WorkerCurrentRunConfig _calcCurrentRunConfig() {
+  Future<WorkerCurrentRunConfig> _calcCurrentRunConfig() async {
     return WorkerCurrentRunConfig(
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
         reportSuiteInfo: true,
@@ -176,6 +182,7 @@ abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode extends Wo
           strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
         ),
         autoUpdateGoldenFiles: GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
+        goldenBasedirForFailure: await GetIt.I.get<FsService>().getGoldenBasedirForFailure(),
       ),
     );
   }
@@ -211,7 +218,7 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
   __WorkerSuperRunControllerIntegrationTestIsolationMode({required this.filterNameRegex}) : super._();
 
   @override
-  WorkerCurrentRunConfig _calcCurrentRunConfig() {
+  Future<WorkerCurrentRunConfig> _calcCurrentRunConfig() async {
     return WorkerCurrentRunConfig(
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
         reportSuiteInfo: state is _ITIMStateInitial,
@@ -219,6 +226,7 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
         defaultRetryCount: 0,
         executionFilter: _calcExecutionFilter(),
         autoUpdateGoldenFiles: GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
+        goldenBasedirForFailure: await GetIt.I.get<FsService>().getGoldenBasedirForFailure(),
       ),
     );
   }
