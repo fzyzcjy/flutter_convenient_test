@@ -188,7 +188,7 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode = __WorkerSuperRunCo
     with _$_WorkerSuperRunControllerIntegrationTestIsolationMode;
 
 abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperRunController with Store {
-  static const _kTag = 'WorkerSuperRunControllerIntegrationTestIsolationMode';
+  static const _kTag = '_WorkerSuperRunControllerIntegrationTestIsolationMode';
 
   final String filterNameRegex;
 

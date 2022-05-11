@@ -4,5 +4,6 @@ class CompileTimeConfig {
 }
 
 class GlobalConfig {
+  // ignore: avoid-global-state
   static var ciMode = false;
 }

@@ -39,6 +39,7 @@ extension ExtWidgetTester on WidgetTester {
 const kDefaultConvenientTestGeneralizedTextFieldInfos = <GeneralizedTextFieldInfo>[TextFieldInfo()];
 
 // users can customize this, for example, if they have a custom MyTextField which is similar to TextField
+// ignore: avoid-global-state
 var convenientTestGeneralizedTextFieldInfos = kDefaultConvenientTestGeneralizedTextFieldInfos;
 
 abstract class GeneralizedTextFieldInfo<T extends Widget> {
