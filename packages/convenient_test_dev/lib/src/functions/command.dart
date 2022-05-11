@@ -91,6 +91,13 @@ Future<void> _expectWithRetry(
         expect(actual, matcher, reason: reason, skip: skip);
       }
 
+      // happens e.g. when golden test fails, see #179 for details
+      final Object? caughtException = t.tester.takeException();
+      if (caughtException != null) {
+        // TODO error message
+        throw TestFailure('TODO this is error message');
+      }
+
       if (snapshotWhenSuccess) await logSnapshot(name: 'after');
       return;
     } on TestFailure catch (e, s) {
