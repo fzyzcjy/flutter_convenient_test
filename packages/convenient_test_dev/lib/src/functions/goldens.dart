@@ -6,4 +6,19 @@ class MyLocalFileComparator extends LocalFileComparator {
   MyLocalFileComparator() : super(Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart'))) {
     assert(basedir == Uri.directory(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test')));
   }
+
+  @override
+  Future<String> generateFailureOutput(
+    ComparisonResult result,
+    Uri golden,
+    Uri basedir, {
+    String key = '',
+  }) async {
+    return await super.generateFailureOutput(
+      result,
+      golden,
+      basedir,
+      key: key,
+    );
+  }
 }
