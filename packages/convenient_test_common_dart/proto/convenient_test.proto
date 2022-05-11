@@ -119,7 +119,6 @@ message WorkerCurrentRunConfig {
     int32 default_retry_count = 3;
     ExecutionFilter execution_filter = 2;
     bool auto_update_golden_files = 4;
-    string golden_basedir_for_failure = 5;
   }
 }
 

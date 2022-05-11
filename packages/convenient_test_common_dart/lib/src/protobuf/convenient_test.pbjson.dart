@@ -266,13 +266,12 @@ const WorkerCurrentRunConfig_IntegrationTest$json = const {
     const {'1': 'default_retry_count', '3': 3, '4': 1, '5': 5, '10': 'defaultRetryCount'},
     const {'1': 'execution_filter', '3': 2, '4': 1, '5': 11, '6': '.ExecutionFilter', '10': 'executionFilter'},
     const {'1': 'auto_update_golden_files', '3': 4, '4': 1, '5': 8, '10': 'autoUpdateGoldenFiles'},
-    const {'1': 'golden_basedir_for_failure', '3': 5, '4': 1, '5': 9, '10': 'goldenBasedirForFailure'},
   ],
 };
 
 /// Descriptor for `WorkerCurrentRunConfig`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List workerCurrentRunConfigDescriptor = $convert.base64Decode(
-    'ChZXb3JrZXJDdXJyZW50UnVuQ29uZmlnElEKD2ludGVyYWN0aXZlX2FwcBgBIAEoCzImLldvcmtlckN1cnJlbnRSdW5Db25maWcuSW50ZXJhY3RpdmVBcHBIAFIOaW50ZXJhY3RpdmVBcHASVAoQaW50ZWdyYXRpb25fdGVzdBgCIAEoCzInLldvcmtlckN1cnJlbnRSdW5Db25maWcuSW50ZWdyYXRpb25UZXN0SABSD2ludGVncmF0aW9uVGVzdBoQCg5JbnRlcmFjdGl2ZUFwcBqgAgoPSW50ZWdyYXRpb25UZXN0EioKEXJlcG9ydF9zdWl0ZV9pbmZvGAEgASgIUg9yZXBvcnRTdWl0ZUluZm8SLgoTZGVmYXVsdF9yZXRyeV9jb3VudBgDIAEoBVIRZGVmYXVsdFJldHJ5Q291bnQSOwoQZXhlY3V0aW9uX2ZpbHRlchgCIAEoCzIQLkV4ZWN1dGlvbkZpbHRlclIPZXhlY3V0aW9uRmlsdGVyEjcKGGF1dG9fdXBkYXRlX2dvbGRlbl9maWxlcxgEIAEoCFIVYXV0b1VwZGF0ZUdvbGRlbkZpbGVzEjsKGmdvbGRlbl9iYXNlZGlyX2Zvcl9mYWlsdXJlGAUgASgJUhdnb2xkZW5CYXNlZGlyRm9yRmFpbHVyZUIKCghzdWJfdHlwZQ==');
+    'ChZXb3JrZXJDdXJyZW50UnVuQ29uZmlnElEKD2ludGVyYWN0aXZlX2FwcBgBIAEoCzImLldvcmtlckN1cnJlbnRSdW5Db25maWcuSW50ZXJhY3RpdmVBcHBIAFIOaW50ZXJhY3RpdmVBcHASVAoQaW50ZWdyYXRpb25fdGVzdBgCIAEoCzInLldvcmtlckN1cnJlbnRSdW5Db25maWcuSW50ZWdyYXRpb25UZXN0SABSD2ludGVncmF0aW9uVGVzdBoQCg5JbnRlcmFjdGl2ZUFwcBrjAQoPSW50ZWdyYXRpb25UZXN0EioKEXJlcG9ydF9zdWl0ZV9pbmZvGAEgASgIUg9yZXBvcnRTdWl0ZUluZm8SLgoTZGVmYXVsdF9yZXRyeV9jb3VudBgDIAEoBVIRZGVmYXVsdFJldHJ5Q291bnQSOwoQZXhlY3V0aW9uX2ZpbHRlchgCIAEoCzIQLkV4ZWN1dGlvbkZpbHRlclIPZXhlY3V0aW9uRmlsdGVyEjcKGGF1dG9fdXBkYXRlX2dvbGRlbl9maWxlcxgEIAEoCFIVYXV0b1VwZGF0ZUdvbGRlbkZpbGVzQgoKCHN1Yl90eXBl');
 @$core.Deprecated('Use executionFilterDescriptor instead')
 const ExecutionFilter$json = const {
   '1': 'ExecutionFilter',
