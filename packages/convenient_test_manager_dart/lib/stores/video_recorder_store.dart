@@ -56,7 +56,9 @@ abstract class _VideoRecorderStore with Store {
 
   Future<String> _createVideoPath() async {
     final stem = DateFormat('yyyyMMdd_hhmmss').format(DateTime.now());
-    final path = '${await GetIt.I.get<FsService>().getTemporaryDirectory()}/ConvenientTest/Video/$stem.mov';
+    final path =
+        // ignore: prefer_interpolation_to_compose_strings
+        await GetIt.I.get<FsService>().getActiveSuperRunDataSubDirectory(category: 'Video') + '$stem.mov';
     await File(path).parent.create(recursive: true);
     return path;
   }

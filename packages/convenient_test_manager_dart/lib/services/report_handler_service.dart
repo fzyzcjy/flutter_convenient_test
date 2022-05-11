@@ -111,8 +111,10 @@ class ReportHandlerService {
 
     Log.d(_kTag, 'handleReportSuiteInfo thus clearAll');
     GetIt.I.get<MiscDartService>().clearAll();
-    Log.d(_kTag, 'handleReportSuiteInfo thus changeReportTarget');
-    GetIt.I.get<ReportSaverService>().createNewReportTarget();
+
+    Log.d(_kTag, 'handleReportSuiteInfo thus clear');
+    // in case data from previous super-run are logged into current run
+    await GetIt.I.get<ReportSaverService>().clear();
 
     _suiteInfoStore.suiteInfo = SuiteInfo.fromProto(request);
   }
