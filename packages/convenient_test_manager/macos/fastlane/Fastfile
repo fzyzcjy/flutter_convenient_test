@@ -18,6 +18,12 @@ default_platform(:macos)
 platform :macos do
   desc "Build the app"
   lane :build do
-    # add actions here: https://docs.fastlane.tools/actions
+    sh "flutter build macos"
+
+    build_mac_app(
+      export_method: 'mac-application',
+      scheme: "Runner",
+      output_directory: "./build",
+    )
   end
 end
