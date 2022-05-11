@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/misc/config.dart';
@@ -6,6 +8,7 @@ import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:test_api/src/backend/state.dart'; // ignore: implementation_imports
 
@@ -37,7 +40,7 @@ abstract class _WorkerSuperRunStore with Store {
   WorkerSuperRunController currSuperRunController =
       _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: RegexUtils.kMatchNothing);
 
-  void setControllerInteractiveApp() => currSuperRunController = const _WorkerSuperRunControllerInteractiveApp();
+  void setControllerInteractiveApp() => currSuperRunController = _WorkerSuperRunControllerInteractiveApp();
 
   void setControllerIntegrationTest({required String filterNameRegex}) {
     if (isolationMode) {
@@ -47,7 +50,7 @@ abstract class _WorkerSuperRunStore with Store {
     }
   }
 
-  void setControllerHalt() => currSuperRunController = const _WorkerSuperRunControllerHalt();
+  void setControllerHalt() => currSuperRunController = _WorkerSuperRunControllerHalt();
 
   WorkerCurrentRunConfig calcCurrentRunConfig() {
     final config = currSuperRunController._calcCurrentRunConfig();
@@ -81,7 +84,9 @@ enum WorkerSuperRunStatus {
 enum WorkerRunMode { interactiveApp, integrationTest }
 
 abstract class WorkerSuperRunController {
-  const WorkerSuperRunController._();
+  final String superRunId = _createSuperRunId();
+
+  WorkerSuperRunController._();
 
   WorkerCurrentRunConfig _calcCurrentRunConfig();
 
@@ -90,10 +95,14 @@ abstract class WorkerSuperRunController {
   bool get isInteractiveApp => this is _WorkerSuperRunControllerInteractiveApp;
 
   WorkerSuperRunStatus get superRunStatus;
+
+  static String _createSuperRunId() {
+    return 'RUN-${DateFormat('yyyyMMdd-hhmmss').format(DateTime.now())}-${Random().nextInt(1000).toString().padLeft(3, '0')}';
+  }
 }
 
 class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
-  const _WorkerSuperRunControllerHalt() : super._();
+  _WorkerSuperRunControllerHalt() : super._();
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() => WorkerCurrentRunConfig(
@@ -121,7 +130,7 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
 }
 
 class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
-  const _WorkerSuperRunControllerInteractiveApp() : super._();
+  _WorkerSuperRunControllerInteractiveApp() : super._();
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
