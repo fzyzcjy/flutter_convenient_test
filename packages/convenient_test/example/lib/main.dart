@@ -1,5 +1,6 @@
 import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_example/home_page.dart';
+import 'package:convenient_test_example/random_page.dart';
 import 'package:convenient_test_example/second_page.dart';
 import 'package:convenient_test_example/text_field_page.dart';
 import 'package:convenient_test_example/timer_page.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
           '/timer': (_) => const TimerPage(),
           '/zoom': (_) => const ZoomPage(),
           '/text_field': (_) => const TextFieldPage(),
+          '/random': (_) => const RandomPage(),
         },
       ),
     );

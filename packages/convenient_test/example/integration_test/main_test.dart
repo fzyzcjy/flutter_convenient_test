@@ -70,6 +70,17 @@ void main() {
         await find.byType(MaterialApp).should(matchesGoldenFile('goldens/sample_golden.png'));
       });
 
+      tTestWidgets('deliberately failed golden test', (t) async {
+        await t.visit('/random');
+        await find.text('RandomPage').should(findsOneWidget);
+
+        await find.byType(MaterialApp).should(matchesGoldenFile('goldens/deliberately_failed_golden.png'));
+
+        // let's assert something else
+        await find.textContaining('Random Number').should(findsOneWidget);
+        await find.textContaining('Number').should(findsOneWidget);
+      });
+
       tTestWidgets('custom logging and snapshotting', (t) async {
         // suppose you do something normal...
         await find.text('HomePage').should(findsOneWidget);
