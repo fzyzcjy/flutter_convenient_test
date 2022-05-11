@@ -54,10 +54,14 @@ abstract class _WorkerSuperRunStore with Store {
 
   WorkerCurrentRunConfig calcCurrentRunConfig() {
     final config = currSuperRunController._calcCurrentRunConfig();
+    _sanityCheckWorkerCurrentRunConfig(config);
+    return config;
+  }
+
+  void _sanityCheckWorkerCurrentRunConfig(WorkerCurrentRunConfig config) {
     if (config.hasIntegrationTest()) {
       if (config.integrationTest.autoUpdateGoldenFiles != autoUpdateGoldenFiles) throw AssertionError;
     }
-    return config;
   }
 
   _WorkerSuperRunStore() {
