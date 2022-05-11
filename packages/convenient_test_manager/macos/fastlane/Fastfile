@@ -13,9 +13,9 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-default_platform(:macos)
+default_platform(:mac)
 
-platform :macos do
+platform :mac do
   desc "Build the app"
   lane :build do
     sh "flutter build macos"
