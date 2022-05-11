@@ -17,8 +17,14 @@ class MyLocalFileComparator extends LocalFileComparator {
     return await super.generateFailureOutput(
       result,
       golden,
-      basedir,
+      // NOTE hacked
+      _basedirForFailureOutput,
       key: key,
     );
+  }
+
+  // failures will be at `this_folder/failures/some_file.png`, according to logic of [generateFailureOutput]
+  Uri get _basedirForFailureOutput {
+    return TODO;
   }
 }
