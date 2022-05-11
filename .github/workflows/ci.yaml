@@ -52,3 +52,35 @@ jobs:
         run: flutter format --set-exit-if-changed --line-length 120 .
         working-directory: packages/${{ matrix.package_name }}
 
+
+  build_manager_macos:
+    runs-on: macOS-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: packages/convenient_test_manager
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.2'
+
+      - uses: maierj/fastlane-action@v2.2.0
+        with:
+          lane: 'build'
+          subdirectory: packages/convenient_test_manager/macos
+          bundle-install-path: 'vendor/bundle'
+
+      - name: Tar outputs
+        run: cd packages/convenient_test_manager/macos/build && tar cvf convenient_test_manager.app.tar convenient_test_manager.app
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: manager_macos
+          path: packages/convenient_test_manager/macos/build/convenient_test_manager.app.tar
