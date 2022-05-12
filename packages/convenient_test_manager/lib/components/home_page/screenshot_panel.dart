@@ -39,10 +39,10 @@ class HomePageScreenshotPanel extends StatelessWidget {
 
       return Column(
         children: [
-          if (selectiveDisplayMode) _buildThumbnails(highlightLogEntryId, snapshots),
           Expanded(
             child: _buildBigImage(bigImageInterestSnapshots),
           ),
+          if (selectiveDisplayMode) _buildThumbnails(highlightLogEntryId, snapshots),
         ],
       );
     });
@@ -55,7 +55,6 @@ class HomePageScreenshotPanel extends StatelessWidget {
     if (!selectiveDisplayMode) return snapshots.keys.toList();
 
     final highlightSnapshot = highlightStore.highlightSnapshot;
-    print('hi highlightSnapshot=$highlightSnapshot');
     if (highlightSnapshot == null || highlightSnapshot.logEntryId != logEntryId) {
       return snapshots.keys.take(1).toList();
     }
@@ -82,6 +81,7 @@ class HomePageScreenshotPanel extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+                    const SizedBox(height: 4),
                     Expanded(
                       child: Center(
                         child: Container(
@@ -104,16 +104,18 @@ class HomePageScreenshotPanel extends StatelessWidget {
   Widget _buildThumbnails(int logEntryId, Map<String, Uint8List> snapshots) {
     final highlightStore = GetIt.I.get<HighlightStore>();
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-      child: Material(
-        color: Colors.grey.shade100,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Row(
-            children: [
-              for (final snapshotEntry in snapshots.entries)
-                InkWell(
+    return Material(
+      color: Colors.grey.shade100,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Row(
+          children: [
+            for (final snapshotEntry in snapshots.entries)
+              Material(
+                color: highlightStore.highlightSnapshot == LogEntryAndSnapshot(logEntryId, snapshotEntry.key)
+                    ? Colors.grey.shade200
+                    : null,
+                child: InkWell(
                   onHover: (hovering) {
                     if (hovering) highlightStore.highlightSnapshot = LogEntryAndSnapshot(logEntryId, snapshotEntry.key);
                   },
@@ -147,8 +149,8 @@ class HomePageScreenshotPanel extends StatelessWidget {
                     ),
                   ),
                 ),
-            ],
-          ),
+              ),
+          ],
         ),
       ),
     );

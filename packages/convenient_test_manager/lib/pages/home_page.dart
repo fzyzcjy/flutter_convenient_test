@@ -90,7 +90,6 @@ class _Body extends StatelessWidget {
         ),
         Container(width: 8),
         Container(width: 1, color: Colors.grey[200]),
-        Container(width: 8),
         const Expanded(
           flex: 1,
           child: HomePageSecondaryPanel(),
