@@ -85,9 +85,14 @@ class HomePageLogEntryWidget extends StatelessWidget {
                                 color: Colors.indigo,
                               ),
                             )
-                          : Text(
-                              '$order',
-                              style: const TextStyle(color: Colors.grey),
+                          : Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 4, left: 8),
+                                child: Text(
+                                  '$order',
+                                  style: const TextStyle(color: Colors.grey, fontSize: 9),
+                                ),
+                              ),
                             ),
                     ),
                   ),
