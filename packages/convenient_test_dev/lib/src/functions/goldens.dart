@@ -75,6 +75,16 @@ class GoldenFailureInfo {
   }
 }
 
-Future<ComparisonResult> _myCompareLists(List<int> test, List<int> master) {
-  return TODO;
+Future<ComparisonResult> _myCompareLists(List<int> test, List<int> master) async {
+  const _kTag = 'myCompareLists';
+
+  final raw = await GoldenFileComparator.compareLists(test, master);
+
+  if (!raw.passed && (raw.error ?? '').startsWith('Pixel test failed, image sizes do not match.')) {
+    Log.d(_kTag, 'see result.error=${raw.error}, thus change image size and re-compare');
+
+    return TODO;
+  }
+
+  return raw;
 }
