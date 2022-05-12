@@ -19,6 +19,7 @@ class MyLocalFileComparator extends LocalFileComparator {
     assert(basedir == Uri.directory(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test')));
   }
 
+  // NOTE reference: [super.generateFailureOutput], but this function is (almost) completely rewritten
   @override
   Future<String> generateFailureOutput(
     ComparisonResult result,
@@ -28,7 +29,6 @@ class MyLocalFileComparator extends LocalFileComparator {
   }) async {
     Log.i(_kTag, 'generateFailureOutput golden=$golden result=$result');
 
-    // NOTE reference: [super.generateFailureOutput]
     return TestAsyncUtils.guard<String>(() async {
       final info = GoldenFailureInfo(images: {});
 
