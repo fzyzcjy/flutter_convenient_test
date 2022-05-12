@@ -79,13 +79,15 @@ class Mark extends StatelessWidget {
     if (!enable || !ConvenientTestWrapperWidget.convenientTestActive) return child;
 
     final color = kColorList['$name'.hashCode % kColorList.length];
-   
+
     Widget wrappedChild = MarkCore(
       name: name,
       data: data,
       child: child,
     );
 
+    // useful when want this [Mark] to be used in golden tests, since golden test will take screenshot at
+    // the nearest ancestor RepaintBoundary.
     if (repaintBoundary) wrappedChild = RepaintBoundary(child: wrappedChild);
 
     return Stack(
