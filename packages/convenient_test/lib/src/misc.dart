@@ -79,18 +79,19 @@ class Mark extends StatelessWidget {
     if (!enable || !ConvenientTestWrapperWidget.convenientTestActive) return child;
 
     final color = kColorList['$name'.hashCode % kColorList.length];
+   
+    Widget wrappedChild = MarkCore(
+      name: name,
+      data: data,
+      child: child,
+    );
 
-    var wrappedChild = child;
     if (repaintBoundary) wrappedChild = RepaintBoundary(child: wrappedChild);
 
     return Stack(
       fit: StackFit.passthrough,
       children: [
-        MarkCore(
-          name: name,
-          data: data,
-          child: wrappedChild,
-        ),
+        wrappedChild,
         Positioned(
           left: 0,
           top: 0,
