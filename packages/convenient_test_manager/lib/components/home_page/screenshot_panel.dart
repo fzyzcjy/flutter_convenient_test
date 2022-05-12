@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:flutter/material.dart';
@@ -20,18 +22,32 @@ class HomePageScreenshotPanel extends StatelessWidget {
         );
       }
 
-      final snapshotNames = logStore.snapshotInLog[highlightLogEntryId]?.keys ?? [];
-      if (snapshotNames.isEmpty) {
+      final snapshots = logStore.snapshotInLog[highlightLogEntryId];
+
+      if (snapshots == null || snapshots.isEmpty) {
         return const Center(
           child: Text('No screenshots for chosen log entry'),
         );
       }
 
-      return Row(
-        children: snapshotNames.map((snapshotName) {
-          final image = logStore.snapshotInLog[highlightLogEntryId]![snapshotName];
+      return Column(
+        children: [
+          _buildThumbnails(snapshots),
+          Expanded(
+            child: _buildBigImage(snapshots),
+          ),
+        ],
+      );
+    });
+  }
 
-          return Expanded(
+  Widget _buildBigImage(Map<String, Uint8List> snapshots) {
+    final highlightStore = GetIt.I.get<HighlightStore>();
+   
+    return Row(
+      children: [
+        for (final snapshotEntry in snapshots.entries)
+          Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: Center(
@@ -39,7 +55,7 @@ class HomePageScreenshotPanel extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      snapshotName,
+                      snapshotEntry.key,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -51,7 +67,7 @@ class HomePageScreenshotPanel extends StatelessWidget {
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey, width: 1),
                           ),
-                          child: image != null ? Image.memory(image) : const Text('[Failed to load image]'),
+                          child: Image.memory(snapshotEntry.value),
                         ),
                       ),
                     ),
@@ -59,9 +75,50 @@ class HomePageScreenshotPanel extends StatelessWidget {
                 ),
               ),
             ),
-          );
-        }).toList(),
-      );
-    });
+          ),
+      ],
+    );
+  }
+
+  Widget _buildThumbnails(Map<String, Uint8List> snapshots) {
+    if (snapshots.length <= 2) return const SizedBox();
+
+    return Container(
+      color: Colors.grey.shade100,
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      child: Row(
+        children: [
+          for (final snapshotEntry in snapshots.entries)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    snapshotEntry.key,
+                    style: const TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxHeight: 48,
+                      maxWidth: 48,
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 1),
+                      ),
+                      child: Image.memory(snapshotEntry.value),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
   }
 }
