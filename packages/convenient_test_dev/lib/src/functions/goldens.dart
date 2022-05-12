@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/compile_time_config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as path;
 
@@ -17,6 +18,22 @@ class MyLocalFileComparator extends LocalFileComparator {
 
   MyLocalFileComparator() : super(Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart'))) {
     assert(basedir == Uri.directory(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test')));
+  }
+
+  // NOTE MODIFIED from [super.compare]
+  @override
+  Future<bool> compare(Uint8List imageBytes, Uri golden) async {
+    // NOTE MODIFIED [GoldenFileComparator.compareLists] -> [_myCompareLists]
+    final ComparisonResult result = await _myCompareLists(
+      imageBytes,
+      await getGoldenBytes(golden),
+    );
+
+    if (!result.passed) {
+      final String error = await generateFailureOutput(result, golden, basedir);
+      throw FlutterError(error);
+    }
+    return result.passed;
   }
 
   // NOTE reference: [super.generateFailureOutput], but this function is (almost) completely rewritten
@@ -56,4 +73,8 @@ class GoldenFailureInfo {
       await logSnapshot(name: entry.key, image: entry.value);
     }
   }
+}
+
+Future<ComparisonResult> _myCompareLists(List<int> test, List<int> master) {
+  return TODO;
 }
