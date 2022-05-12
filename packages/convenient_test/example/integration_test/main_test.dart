@@ -78,8 +78,8 @@ void main() {
         await find.get(RandomPageMark.randomText).should(matchesGoldenFile('goldens/deliberately_failed_golden.png'));
 
         // let's assert something else
-        await find.textContaining('Random Number').should(findsOneWidget);
-        await find.textContaining('Number').should(findsOneWidget);
+        await find.textContaining('Random Height').should(findsOneWidget);
+        await find.textContaining('Height').should(findsOneWidget);
       });
 
       tTestWidgets('custom logging and snapshotting', (t) async {
