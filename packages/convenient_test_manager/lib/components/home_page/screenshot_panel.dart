@@ -121,8 +121,9 @@ class HomePageScreenshotPanel extends StatelessWidget {
                   },
                   // seems to need onTap if want onHover
                   onTap: () {},
-                  child: Padding(
+                  child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    height: 72,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -133,16 +134,15 @@ class HomePageScreenshotPanel extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            maxHeight: 48,
-                            maxWidth: 48,
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, width: 1),
+                        Expanded(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 48),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey, width: 1),
+                              ),
+                              child: Image.memory(snapshotEntry.value),
                             ),
-                            child: Image.memory(snapshotEntry.value),
                           ),
                         ),
                       ],
