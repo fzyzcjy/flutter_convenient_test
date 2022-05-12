@@ -2,6 +2,7 @@ import 'package:convenient_test_dev/convenient_test_dev.dart';
 import 'package:convenient_test_example/home_page.dart';
 import 'package:convenient_test_example/main.dart' as app;
 import 'package:convenient_test_example/main.dart';
+import 'package:convenient_test_example/random_page.dart';
 import 'package:convenient_test_example/zoom_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -74,7 +75,7 @@ void main() {
         await t.visit('/random');
         await find.text('RandomPage').should(findsOneWidget);
 
-        await find.byType(MaterialApp).should(matchesGoldenFile('goldens/deliberately_failed_golden.png'));
+        await find.get(RandomPageMark.randomText).should(matchesGoldenFile('goldens/deliberately_failed_golden.png'));
 
         // let's assert something else
         await find.textContaining('Random Number').should(findsOneWidget);
