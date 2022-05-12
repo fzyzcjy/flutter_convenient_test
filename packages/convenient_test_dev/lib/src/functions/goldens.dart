@@ -7,8 +7,24 @@ import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/compile_time_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_test/flutter_test.dart' as flutter_test;
 import 'package:image/image.dart' as image;
 import 'package:path/path.dart' as path;
+
+@immutable
+class GoldenMatcherGenerator {
+  final String folder;
+  final String extension;
+
+  const GoldenMatcherGenerator({
+    required this.folder,
+    this.extension = 'png',
+  });
+
+  Matcher call(String stem, {int? version}) => flutter_test.matchesGoldenFile(_generateKey(stem), version: version);
+
+  String _generateKey(String stem) => '$folder/$stem.$extension';
+}
 
 class MyLocalFileComparator extends LocalFileComparator {
   static const _kTag = 'MyLocalFileComparator';
