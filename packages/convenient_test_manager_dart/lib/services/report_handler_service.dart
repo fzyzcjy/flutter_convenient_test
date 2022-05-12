@@ -62,7 +62,7 @@ class ReportHandlerService {
   Future<void> _handleLogEntry(LogEntry request) async {
     Log.d(_kTag, 'handleReportLogEntry called');
 
-    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
     if (testEntryId == null) return;
 
     final requestId = request.id.toInt();
@@ -74,7 +74,7 @@ class ReportHandlerService {
   Future<void> _handleRunnerError(RunnerError request) async {
     Log.d(_kTag, 'Error: ${request.error} stack=${request.stackTrace}');
 
-    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
     if (testEntryId == null) return;
 
     _rawLogStore.rawLogInTest[testEntryId] += '${request.error}\n${request.stackTrace}\n';
@@ -83,7 +83,7 @@ class ReportHandlerService {
   Future<void> _handleRunnerMessage(RunnerMessage request) async {
     Log.d(_kTag, 'Message: ${request.message}');
 
-    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
     if (testEntryId == null) return;
 
     _rawLogStore.rawLogInTest[testEntryId] += '${request.message}\n';
@@ -92,7 +92,7 @@ class ReportHandlerService {
   Future<void> _handleRunnerStateChange(RunnerStateChange request) async {
     Log.d(_kTag, 'StateChange: testName=${request.testName} state=${request.state}');
 
-    final testEntryId = _suiteInfoStore.suiteInfo!.getEntryIdFromName(request.testName);
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
     if (testEntryId == null) return;
 
     _suiteInfoStore.testEntryStateMap[testEntryId] = request.state;
