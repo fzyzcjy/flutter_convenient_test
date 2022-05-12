@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -6,6 +7,7 @@ import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/compile_time_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image/image.dart' as image;
 import 'package:path/path.dart' as path;
 
 class MyLocalFileComparator extends LocalFileComparator {
@@ -82,9 +84,35 @@ Future<ComparisonResult> _myCompareLists(List<int> test, List<int> master) async
 
   if (!raw.passed && (raw.error ?? '').startsWith('Pixel test failed, image sizes do not match.')) {
     Log.d(_kTag, 'see result.error=${raw.error}, thus change image size and re-compare');
-
-    return TODO;
+    return _compareListsGivenSizeDiffer(test, master, raw);
   }
 
   return raw;
+}
+
+Future<ComparisonResult> _compareListsGivenSizeDiffer(
+    List<int> testRaw, List<int> masterRaw, ComparisonResult rawResult) async {
+  final testRawImage = image.decodeImage(testRaw)!;
+  final masterRawImage = image.decodeImage(masterRaw)!;
+
+  final targetWidth = max(testRawImage.width, masterRawImage.width);
+  final targetHeight = max(testRawImage.height, masterRawImage.height);
+
+  List<int> padAndEncode(image.Image src) {
+    final dst = image.Image(targetWidth, targetHeight);
+    image.copyInto(dst, src, blend: false);
+    return image.encodeNamedImage(dst, 'temp.png')!;
+  }
+
+  final testTarget = padAndEncode(testRawImage);
+  final masterTarget = padAndEncode(masterRawImage);
+
+  final secondResult = await GoldenFileComparator.compareLists(testTarget, masterTarget);
+
+  return ComparisonResult(
+    passed: false,
+    diffPercent: secondResult.diffPercent,
+    error: '${secondResult.error}\nOriginal result: ${rawResult.error}',
+    diffs: secondResult.diffs,
+  );
 }
