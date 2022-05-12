@@ -5,6 +5,7 @@ import 'package:convenient_test_manager/stores/video_player_store.dart';
 import 'package:convenient_test_manager_dart/stores/highlight_store.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -53,19 +54,13 @@ abstract class _HighlightStore extends HighlightStoreBase with Store {
   int? highlightLogEntryId;
 
   @observable
-  String? highlightSnapshotName;
-
-  @computed
-  String? get effectiveActiveSnapshotName {
-    if (highlightSnapshotName != null) return highlightSnapshotName;
-    return _logStore.snapshotInLog[highlightLogEntryId]?.keys.firstOrNull;
-  }
+  LogEntryAndSnapshot? highlightSnapshot;
 
   void clear() {
     expandGroupEntryMap.clear();
     highlightTestEntryId = null;
     highlightLogEntryId = null;
-    highlightSnapshotName = null;
+    highlightSnapshot = null;
   }
 
   _HighlightStore() {
@@ -146,4 +141,26 @@ abstract class _HighlightStore extends HighlightStoreBase with Store {
   }
 
   final _logStore = GetIt.I.get<LogStore>();
+}
+
+@immutable
+class LogEntryAndSnapshot {
+  final int logEntryId;
+  final String snapshotName;
+
+  const LogEntryAndSnapshot(this.logEntryId, this.snapshotName);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is LogEntryAndSnapshot &&
+          runtimeType == other.runtimeType &&
+          logEntryId == other.logEntryId &&
+          snapshotName == other.snapshotName;
+
+  @override
+  int get hashCode => logEntryId.hashCode ^ snapshotName.hashCode;
+
+  @override
+  String toString() => 'LogEntryAndSnapshot{logEntryId: $logEntryId, snapshotName: $snapshotName}';
 }

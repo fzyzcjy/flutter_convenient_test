@@ -30,23 +30,44 @@ class HomePageScreenshotPanel extends StatelessWidget {
         );
       }
 
+      final selectiveDisplayMode = snapshots.length > 2;
+
+      final bigImageInterestSnapshotNames = _calcBigImageInterestSnapshotNames(highlightLogEntryId, snapshots,
+          selectiveDisplayMode: selectiveDisplayMode);
+      final bigImageInterestSnapshots =
+          Map.fromEntries(bigImageInterestSnapshotNames.map((name) => MapEntry(name, snapshots[name]!)));
+
       return Column(
         children: [
-          _buildThumbnails(snapshots),
+          if (selectiveDisplayMode) _buildThumbnails(highlightLogEntryId, snapshots),
           Expanded(
-            child: _buildBigImage(snapshots),
+            child: _buildBigImage(bigImageInterestSnapshots),
           ),
         ],
       );
     });
   }
 
-  Widget _buildBigImage(Map<String, Uint8List> snapshots) {
+  List<String> _calcBigImageInterestSnapshotNames(int logEntryId, Map<String, Uint8List> snapshots,
+      {required bool selectiveDisplayMode}) {
     final highlightStore = GetIt.I.get<HighlightStore>();
-   
+
+    if (!selectiveDisplayMode) return snapshots.keys.toList();
+
+    final highlightSnapshot = highlightStore.highlightSnapshot;
+    print('hi highlightSnapshot=$highlightSnapshot');
+    if (highlightSnapshot == null || highlightSnapshot.logEntryId != logEntryId) {
+      return snapshots.keys.take(1).toList();
+    }
+
+    assert(snapshots.containsKey(highlightSnapshot.snapshotName));
+    return [highlightSnapshot.snapshotName];
+  }
+
+  Widget _buildBigImage(Map<String, Uint8List> interestSnapshots) {
     return Row(
       children: [
-        for (final snapshotEntry in snapshots.entries)
+        for (final snapshotEntry in interestSnapshots.entries)
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -80,44 +101,55 @@ class HomePageScreenshotPanel extends StatelessWidget {
     );
   }
 
-  Widget _buildThumbnails(Map<String, Uint8List> snapshots) {
-    if (snapshots.length <= 2) return const SizedBox();
+  Widget _buildThumbnails(int logEntryId, Map<String, Uint8List> snapshots) {
+    final highlightStore = GetIt.I.get<HighlightStore>();
 
-    return Container(
-      color: Colors.grey.shade100,
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-      child: Row(
-        children: [
-          for (final snapshotEntry in snapshots.entries)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    snapshotEntry.key,
-                    style: const TextStyle(
-                      fontSize: 13,
+      child: Material(
+        color: Colors.grey.shade100,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Row(
+            children: [
+              for (final snapshotEntry in snapshots.entries)
+                InkWell(
+                  onHover: (hovering) {
+                    if (hovering) highlightStore.highlightSnapshot = LogEntryAndSnapshot(logEntryId, snapshotEntry.key);
+                  },
+                  // seems to need onTap if want onHover
+                  onTap: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          snapshotEntry.key,
+                          style: const TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            maxHeight: 48,
+                            maxWidth: 48,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                            ),
+                            child: Image.memory(snapshotEntry.value),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxHeight: 48,
-                      maxWidth: 48,
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 1),
-                      ),
-                      child: Image.memory(snapshotEntry.value),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ],
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
