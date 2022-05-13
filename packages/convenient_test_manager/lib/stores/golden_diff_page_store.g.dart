@@ -57,12 +57,29 @@ mixin _$GoldenDiffPageStore on _GoldenDiffPageStore, Store {
     });
   }
 
+  late final _$highlightTransformAtom =
+      Atom(name: '_GoldenDiffPageStore.highlightTransform', context: context);
+
+  @override
+  Matrix4 get highlightTransform {
+    _$highlightTransformAtom.reportRead();
+    return super.highlightTransform;
+  }
+
+  @override
+  set highlightTransform(Matrix4 value) {
+    _$highlightTransformAtom.reportWrite(value, super.highlightTransform, () {
+      super.highlightTransform = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 gitRepo: ${gitRepo},
 gitFolderInfo: ${gitFolderInfo},
-highlightPath: ${highlightPath}
+highlightPath: ${highlightPath},
+highlightTransform: ${highlightTransform}
     ''';
   }
 }

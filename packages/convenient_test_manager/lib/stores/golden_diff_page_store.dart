@@ -6,7 +6,7 @@ import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/convenient_test_dev.dart';
 import 'package:convenient_test_manager/misc/git_extensions.dart';
 import 'package:convenient_test_manager_dart/misc/config.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:git/git.dart';
 import 'package:mobx/mobx.dart';
@@ -27,6 +27,9 @@ abstract class _GoldenDiffPageStore with Store {
 
   @observable
   String? highlightPath;
+
+  @observable
+  var highlightTransform = Matrix4.identity();
 
   _GoldenDiffPageStore() {
     reaction((_) => gitRepo, _syncGitFolderInfoFromRepo, fireImmediately: true);
