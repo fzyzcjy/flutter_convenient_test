@@ -1,4 +1,5 @@
 import 'package:convenient_test_manager/misc/setup.dart';
+import 'package:convenient_test_manager/pages/golden_diff_page.dart';
 import 'package:convenient_test_manager/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const HomePage(),
+      initialRoute: HomePage.kRouteName,
+      routes: {
+        HomePage.kRouteName: (_) => const HomePage(),
+        GoldenDiffPage.kRouteName: (_) => const GoldenDiffPage(),
+      },
     );
   }
 }
