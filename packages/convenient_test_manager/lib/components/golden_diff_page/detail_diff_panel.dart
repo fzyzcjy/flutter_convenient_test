@@ -14,9 +14,14 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
       final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
       if (gitFolderInfo == null) return const Center(child: Text('Please choose a folder first'));
 
-      return ListView.builder(
-        itemCount: gitFolderInfo.diffFileInfos.length,
-        itemBuilder: (_, index) => _buildItem(context, gitFolderInfo.diffFileInfos[index]),
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (final info in gitFolderInfo.diffFileInfos) _buildItem(context, info),
+          ],
+        ),
       );
     });
   }
