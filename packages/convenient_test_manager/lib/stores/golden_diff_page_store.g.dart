@@ -25,10 +25,44 @@ mixin _$GoldenDiffPageStore on _GoldenDiffPageStore, Store {
     });
   }
 
+  late final _$gitFolderInfoAtom =
+      Atom(name: '_GoldenDiffPageStore.gitFolderInfo', context: context);
+
+  @override
+  GitFolderInfo? get gitFolderInfo {
+    _$gitFolderInfoAtom.reportRead();
+    return super.gitFolderInfo;
+  }
+
+  @override
+  set gitFolderInfo(GitFolderInfo? value) {
+    _$gitFolderInfoAtom.reportWrite(value, super.gitFolderInfo, () {
+      super.gitFolderInfo = value;
+    });
+  }
+
+  late final _$highlightPathAtom =
+      Atom(name: '_GoldenDiffPageStore.highlightPath', context: context);
+
+  @override
+  String? get highlightPath {
+    _$highlightPathAtom.reportRead();
+    return super.highlightPath;
+  }
+
+  @override
+  set highlightPath(String? value) {
+    _$highlightPathAtom.reportWrite(value, super.highlightPath, () {
+      super.highlightPath = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
-gitRepo: ${gitRepo}
+gitRepo: ${gitRepo},
+gitFolderInfo: ${gitFolderInfo},
+highlightPath: ${highlightPath}
     ''';
   }
 }
