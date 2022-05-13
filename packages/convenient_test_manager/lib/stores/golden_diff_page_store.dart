@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/misc/git_extensions.dart';
@@ -44,7 +45,7 @@ abstract class _GoldenDiffPageStore with Store {
     final diffFileInfos = await Stream.fromIterable(diffFilePaths).asyncMap((path) async {
       return GitDiffFileInfo(
         path: path,
-        originalContent: await gitDir.show(ref: 'HEAD', filePath: path),
+        originalContent: Uint8List.fromList(await gitDir.show(ref: 'HEAD', filePath: path)),
         newContent: await File(join(gitRepo, path)).readAsBytes(),
       );
     }).toList();
@@ -65,8 +66,8 @@ class GitFolderInfo {
 @immutable
 class GitDiffFileInfo {
   final String path;
-  final List<int> originalContent;
-  final List<int> newContent;
+  final Uint8List originalContent;
+  final Uint8List newContent;
 
   const GitDiffFileInfo({
     required this.path,
