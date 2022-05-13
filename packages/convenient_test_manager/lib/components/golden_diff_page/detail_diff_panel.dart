@@ -100,21 +100,26 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
     return Expanded(
-      child: Column(
-        children: [
-          Text(
-            name,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-          ),
-          Expanded(
-            child: Observer(
-              builder: (_) => Transform(
-                transform: goldenDiffPageStore.highlightTransform,
-                child: child,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        child: ClipRect(
+          child: Column(
+            children: [
+              Text(
+                name,
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
               ),
-            ),
+              Expanded(
+                child: Observer(
+                  builder: (_) => Transform(
+                    transform: goldenDiffPageStore.highlightTransform,
+                    child: child,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
