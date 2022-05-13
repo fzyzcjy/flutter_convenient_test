@@ -13,6 +13,9 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
+    // antialiasing will make it hard to see what is happening
+    const filterQuality = FilterQuality.none;
+
     return Observer(builder: (_) {
       final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
       if (gitFolderInfo == null) return const Center(child: Text('Please choose a folder first'));
@@ -39,11 +42,11 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
                   children: [
                     _buildImage(
                       name: 'Original',
-                      child: Image(image: MemoryImage(highlightInfo.originalContent)),
+                      child: Image(image: MemoryImage(highlightInfo.originalContent), filterQuality: filterQuality),
                     ),
                     _buildImage(
                       name: 'New',
-                      child: Image(image: MemoryImage(highlightInfo.newContent)),
+                      child: Image(image: MemoryImage(highlightInfo.newContent), filterQuality: filterQuality),
                     ),
                   ],
                 ),
@@ -54,11 +57,15 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
                   children: [
                     _buildImage(
                       name: 'Masked Diff',
-                      child: maskedDiff == null ? Container() : RawImage(image: maskedDiff),
+                      child: maskedDiff == null //
+                          ? Container()
+                          : RawImage(image: maskedDiff, filterQuality: filterQuality),
                     ),
                     _buildImage(
                       name: 'Isolated Diff',
-                      child: isolatedDiff == null ? Container() : RawImage(image: isolatedDiff),
+                      child: isolatedDiff == null
+                          ? Container()
+                          : RawImage(image: isolatedDiff, filterQuality: filterQuality),
                     ),
                   ],
                 ),
