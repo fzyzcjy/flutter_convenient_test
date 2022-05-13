@@ -55,16 +55,44 @@ class GoldenDiffPageFileInfoPanel extends StatelessWidget {
           onTap: toggleActive,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            child: Text(
-              displayPath,
-              style: const TextStyle(
-                height: 1,
-                fontSize: 12,
-              ),
+            child: Row(
+              children: [
+                _buildDiffPercentHint(diffFileInfo.comparisonResult.diffPercent),
+                Text(
+                  displayPath,
+                  style: const TextStyle(
+                    height: 1,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
       );
     });
+  }
+
+  Widget _buildDiffPercentHint(double diffPercent) {
+    final Color color;
+    if (diffPercent < 0.01) {
+      color = Colors.blue.shade700;
+    } else if (diffPercent < 0.10) {
+      color = Colors.orange.shade700;
+    } else {
+      color = Colors.red.shade700;
+    }
+
+    return SizedBox(
+      width: 48,
+      child: Text(
+        '${(diffPercent * 100).toStringAsFixed(2)}%',
+        style: TextStyle(
+          fontSize: 10,
+          color: color,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
   }
 }
