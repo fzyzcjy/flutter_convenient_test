@@ -20,21 +20,36 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
           gitFolderInfo.diffFileInfos.singleWhereOrNull((info) => info.path == goldenDiffPageStore.highlightPath);
       if (highlightInfo == null) return const Center(child: Text('Please choose an item from left panel'));
 
+      final maskedDiff = highlightInfo.comparisonResult.diffs?['maskedDiff'];
+      final isolatedDiff = highlightInfo.comparisonResult.diffs?['isolatedDiff'];
+
       return _HotKeyHandlerWidget(
         onMove: (delta) => _handleMove(gitFolderInfo, delta),
-        child: Row(
-          children: [
-            Expanded(
-              child: Image(
-                image: MemoryImage(highlightInfo.originalContent),
+        child: Material(
+          color: Colors.grey.shade200,
+          child: Column(
+            children: [
+              const SizedBox(height: 24),
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(child: Image(image: MemoryImage(highlightInfo.originalContent))),
+                    Expanded(child: Image(image: MemoryImage(highlightInfo.newContent))),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: Image(
-                image: MemoryImage(highlightInfo.newContent),
+              const SizedBox(height: 24),
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(child: maskedDiff == null ? Container() : RawImage(image: maskedDiff)),
+                    Expanded(child: isolatedDiff == null ? Container() : RawImage(image: isolatedDiff)),
+                  ],
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
       );
     });
