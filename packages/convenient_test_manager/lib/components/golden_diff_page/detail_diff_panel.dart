@@ -13,9 +13,6 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
-    // const filterQuality = FilterQuality.none;
-    const filterQuality = FilterQuality.low;
-
     return Observer(builder: (_) {
       final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
       if (gitFolderInfo == null) return const Center(child: Text('Please choose a folder first'));
@@ -26,6 +23,8 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
 
       final maskedDiff = highlightInfo.comparisonResult.diffs?['maskedDiff'];
       final isolatedDiff = highlightInfo.comparisonResult.diffs?['isolatedDiff'];
+
+      final imageSize = maskedDiff == null ? null : Size(maskedDiff.width.toDouble(), maskedDiff.height.toDouble());
 
       return _HotKeyHandlerWidget(
         onMove: (delta) => _handleMove(gitFolderInfo, delta),
@@ -42,11 +41,15 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
                   children: [
                     _buildImage(
                       name: 'Original',
-                      child: Image(image: MemoryImage(highlightInfo.originalContent), filterQuality: filterQuality),
+                      imageSize: imageSize,
+                      builder: (filterQuality) =>
+                          Image(image: MemoryImage(highlightInfo.originalContent), filterQuality: filterQuality),
                     ),
                     _buildImage(
                       name: 'New',
-                      child: Image(image: MemoryImage(highlightInfo.newContent), filterQuality: filterQuality),
+                      imageSize: imageSize,
+                      builder: (filterQuality) =>
+                          Image(image: MemoryImage(highlightInfo.newContent), filterQuality: filterQuality),
                     ),
                   ],
                 ),
@@ -57,13 +60,15 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
                   children: [
                     _buildImage(
                       name: 'Masked Diff',
-                      child: maskedDiff == null //
+                      imageSize: imageSize,
+                      builder: (filterQuality) => maskedDiff == null //
                           ? Container()
                           : RawImage(image: maskedDiff, filterQuality: filterQuality),
                     ),
                     _buildImage(
                       name: 'Isolated Diff',
-                      child: isolatedDiff == null
+                      imageSize: imageSize,
+                      builder: (filterQuality) => isolatedDiff == null
                           ? Container()
                           : RawImage(image: isolatedDiff, filterQuality: filterQuality),
                     ),
@@ -80,46 +85,56 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
 
   Widget _buildImage({
     required String name,
-    required Widget child,
+    required Size? imageSize,
+    required Widget Function(FilterQuality) builder,
   }) {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: Material(
-          color: Colors.grey.shade200,
-          child: ClipRect(
-            child: Column(
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                ),
-                Expanded(
-                  child: Observer(
-                    builder: (_) => Transform(
-                      transform: goldenDiffPageStore.highlightTransform,
-                      child: Listener(
-                        onPointerSignal: (signal) {
-                          if (signal is PointerScrollEvent) {
-                            const kScaleRatio = 1.5;
-                            final scale = signal.scrollDelta.dy > 0 ? kScaleRatio : (1 / kScaleRatio);
+      child: LayoutBuilder(builder: (_, constraints) {
+        return Observer(builder: (_) {
+          final isLargeScale = imageSize != null &&
+              constraints.maxWidth / imageSize.width * goldenDiffPageStore.highlightTransform[0] > 1.5;
+          final filterQuality = isLargeScale ? FilterQuality.none : FilterQuality.medium;
+          // print('hi $isLargeScale');
 
-                            goldenDiffPageStore.highlightTransform = _matrixScale(scale, signal.localPosition)
-                                .multiplied(goldenDiffPageStore.highlightTransform);
-                          }
-                        },
-                        child: child,
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Material(
+              color: Colors.grey.shade200,
+              child: ClipRect(
+                child: Column(
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                    ),
+                    Expanded(
+                      child: Observer(
+                        builder: (_) => Transform(
+                          transform: goldenDiffPageStore.highlightTransform,
+                          child: Listener(
+                            onPointerSignal: (signal) {
+                              if (signal is PointerScrollEvent) {
+                                const kScaleRatio = 1.5;
+                                final scale = signal.scrollDelta.dy > 0 ? kScaleRatio : (1 / kScaleRatio);
+
+                                goldenDiffPageStore.highlightTransform = _matrixScale(scale, signal.localPosition)
+                                    .multiplied(goldenDiffPageStore.highlightTransform);
+                              }
+                            },
+                            child: builder(filterQuality),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
+          );
+        });
+      }),
     );
   }
 
