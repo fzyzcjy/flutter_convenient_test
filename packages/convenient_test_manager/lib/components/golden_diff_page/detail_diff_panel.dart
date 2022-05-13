@@ -25,44 +25,48 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
 
       return _HotKeyHandlerWidget(
         onMove: (delta) => _handleMove(gitFolderInfo, delta),
-        child: Material(
-          color: Colors.grey.shade200,
-          child: Column(
-            children: [
-              const SizedBox(height: 24),
-              _buildHeader(highlightInfo),
-              const SizedBox(height: 24),
-              Expanded(
-                child: Row(
-                  children: [
-                    _buildImage(
-                      name: 'Original',
-                      child: Image(image: MemoryImage(highlightInfo.originalContent)),
-                    ),
-                    _buildImage(
-                      name: 'New',
-                      child: Image(image: MemoryImage(highlightInfo.newContent)),
-                    ),
-                  ],
+        child: GestureDetector(
+          onPanUpdate: (d) => goldenDiffPageStore.highlightTransform =
+              Matrix4.translationValues(d.delta.dx, d.delta.dy, 0).multiplied(goldenDiffPageStore.highlightTransform),
+          child: Material(
+            color: Colors.grey.shade200,
+            child: Column(
+              children: [
+                const SizedBox(height: 24),
+                _buildHeader(highlightInfo),
+                const SizedBox(height: 24),
+                Expanded(
+                  child: Row(
+                    children: [
+                      _buildImage(
+                        name: 'Original',
+                        child: Image(image: MemoryImage(highlightInfo.originalContent)),
+                      ),
+                      _buildImage(
+                        name: 'New',
+                        child: Image(image: MemoryImage(highlightInfo.newContent)),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              Expanded(
-                child: Row(
-                  children: [
-                    _buildImage(
-                      name: 'Masked Diff',
-                      child: maskedDiff == null ? Container() : RawImage(image: maskedDiff),
-                    ),
-                    _buildImage(
-                      name: 'Isolated Diff',
-                      child: isolatedDiff == null ? Container() : RawImage(image: isolatedDiff),
-                    ),
-                  ],
+                const SizedBox(height: 24),
+                Expanded(
+                  child: Row(
+                    children: [
+                      _buildImage(
+                        name: 'Masked Diff',
+                        child: maskedDiff == null ? Container() : RawImage(image: maskedDiff),
+                      ),
+                      _buildImage(
+                        name: 'Isolated Diff',
+                        child: isolatedDiff == null ? Container() : RawImage(image: isolatedDiff),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-            ],
+                const SizedBox(height: 24),
+              ],
+            ),
           ),
         ),
       );
