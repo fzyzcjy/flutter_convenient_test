@@ -25,9 +25,7 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
 
       return _HotKeyHandlerWidget(
         onMove: (delta) => _handleMove(gitFolderInfo, delta),
-        child: GestureDetector(
-          onPanUpdate: (d) => goldenDiffPageStore.highlightTransform =
-              Matrix4.translationValues(d.delta.dx, d.delta.dy, 0).multiplied(goldenDiffPageStore.highlightTransform),
+        child: _buildGestureHandlers(
           child: Material(
             color: Colors.grey.shade200,
             child: Column(
@@ -71,6 +69,16 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
         ),
       );
     });
+  }
+
+  Widget _buildGestureHandlers({required Widget child}) {
+    final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
+
+    return GestureDetector(
+      onPanUpdate: (d) => goldenDiffPageStore.highlightTransform =
+          Matrix4.translationValues(d.delta.dx, d.delta.dy, 0).multiplied(goldenDiffPageStore.highlightTransform),
+      child: child,
+    );
   }
 
   Widget _buildImage({
