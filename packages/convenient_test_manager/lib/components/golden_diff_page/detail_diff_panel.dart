@@ -30,11 +30,19 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 24),
+              _buildHeader(highlightInfo),
+              const SizedBox(height: 24),
               Expanded(
                 child: Row(
                   children: [
-                    Expanded(child: Image(image: MemoryImage(highlightInfo.originalContent))),
-                    Expanded(child: Image(image: MemoryImage(highlightInfo.newContent))),
+                    _buildImage(
+                      name: 'Original',
+                      child: Image(image: MemoryImage(highlightInfo.originalContent)),
+                    ),
+                    _buildImage(
+                      name: 'New',
+                      child: Image(image: MemoryImage(highlightInfo.newContent)),
+                    ),
                   ],
                 ),
               ),
@@ -42,8 +50,14 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Expanded(child: maskedDiff == null ? Container() : RawImage(image: maskedDiff)),
-                    Expanded(child: isolatedDiff == null ? Container() : RawImage(image: isolatedDiff)),
+                    _buildImage(
+                      name: 'Masked Diff',
+                      child: maskedDiff == null ? Container() : RawImage(image: maskedDiff),
+                    ),
+                    _buildImage(
+                      name: 'Isolated Diff',
+                      child: isolatedDiff == null ? Container() : RawImage(image: isolatedDiff),
+                    ),
                   ],
                 ),
               ),
@@ -55,6 +69,23 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
     });
   }
 
+  Widget _buildImage({
+    required String name,
+    required Widget child,
+  }) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            name,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+          ),
+          Expanded(child: child),
+        ],
+      ),
+    );
+  }
+
   void _handleMove(GitFolderInfo gitFolderInfo, int delta) {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
@@ -63,6 +94,19 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
 
     final newIndex = (oldIndex + delta + gitFolderInfo.diffFileInfos.length) % gitFolderInfo.diffFileInfos.length;
     goldenDiffPageStore.highlightPath = gitFolderInfo.diffFileInfos[newIndex].path;
+  }
+
+  Widget _buildHeader(GitDiffFileInfo highlightInfo) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Row(
+        children: [
+          Text('Diff: ${(highlightInfo.comparisonResult.diffPercent * 100).toStringAsFixed(2)}%'),
+          const SizedBox(width: 16),
+          Text('Path: ${highlightInfo.path}'),
+        ],
+      ),
+    );
   }
 }
 
