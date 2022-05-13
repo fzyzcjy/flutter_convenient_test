@@ -19,7 +19,7 @@ class MiscFlutterService extends MiscDartService {
   }
 
   Future<void> pickFileAndReadReport() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result == null) return;
 
     final path = result.paths.single!;
