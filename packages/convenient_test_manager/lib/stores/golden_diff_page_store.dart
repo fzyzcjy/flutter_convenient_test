@@ -2,9 +2,11 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/convenient_test_dev.dart';
 import 'package:convenient_test_manager/misc/git_extensions.dart';
 import 'package:convenient_test_manager_dart/misc/config.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:git/git.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path/path.dart' as p;
@@ -47,11 +49,13 @@ abstract class _GoldenDiffPageStore with Store {
     final diffFileInfos = await Stream.fromIterable(diffFilePaths).asyncMap((path) async {
       final originalContent = Uint8List.fromList(await git.show(ref: 'HEAD', filePath: path));
       final newContent = await File(p.join(gitRepo, path)).readAsBytes();
+      final comparisonResult = await MyLocalFileComparator.myCompareLists(originalContent, newContent);
 
       return GitDiffFileInfo(
         path: path,
         originalContent: originalContent,
         newContent: newContent,
+        comparisonResult: comparisonResult,
       );
     }).toList();
 
@@ -73,10 +77,12 @@ class GitDiffFileInfo {
   final String path;
   final Uint8List originalContent;
   final Uint8List newContent;
+  final ComparisonResult comparisonResult;
 
   const GitDiffFileInfo({
     required this.path,
     required this.originalContent,
     required this.newContent,
+    required this.comparisonResult,
   });
 }
