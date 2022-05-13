@@ -41,8 +41,8 @@ class MyLocalFileComparator extends LocalFileComparator {
   // NOTE MODIFIED from [super.compare]
   @override
   Future<bool> compare(Uint8List imageBytes, Uri golden) async {
-    // NOTE MODIFIED [GoldenFileComparator.compareLists] -> [_myCompareLists]
-    final ComparisonResult result = await _myCompareLists(
+    // NOTE MODIFIED [GoldenFileComparator.compareLists] -> [myCompareLists]
+    final ComparisonResult result = await myCompareLists(
       imageBytes,
       await getGoldenBytes(golden),
     );
@@ -77,6 +77,19 @@ class MyLocalFileComparator extends LocalFileComparator {
       return 'Golden "$golden": ${result.error}';
     });
   }
+
+  static Future<ComparisonResult> myCompareLists(List<int> test, List<int> master) async {
+    const _kTag = 'myCompareLists';
+
+    final raw = await GoldenFileComparator.compareLists(test, master);
+
+    if (!raw.passed && (raw.error ?? '').startsWith('Pixel test failed, image sizes do not match.')) {
+      Log.d(_kTag, 'see result.error=${raw.error}, thus change image size and re-compare');
+      return _compareListsGivenSizeDiffer(test, master, raw);
+    }
+
+    return raw;
+  }
 }
 
 class GoldenFailureInfo {
@@ -91,19 +104,6 @@ class GoldenFailureInfo {
       await logSnapshot(name: entry.key, image: entry.value);
     }
   }
-}
-
-Future<ComparisonResult> _myCompareLists(List<int> test, List<int> master) async {
-  const _kTag = 'myCompareLists';
-
-  final raw = await GoldenFileComparator.compareLists(test, master);
-
-  if (!raw.passed && (raw.error ?? '').startsWith('Pixel test failed, image sizes do not match.')) {
-    Log.d(_kTag, 'see result.error=${raw.error}, thus change image size and re-compare');
-    return _compareListsGivenSizeDiffer(test, master, raw);
-  }
-
-  return raw;
 }
 
 Future<ComparisonResult> _compareListsGivenSizeDiffer(
