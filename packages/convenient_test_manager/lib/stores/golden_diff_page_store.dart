@@ -21,6 +21,9 @@ abstract class _GoldenDiffPageStore with Store {
   @observable
   GitFolderInfo? gitFolderInfo;
 
+  @observable
+  String? highlightPath;
+
   _GoldenDiffPageStore() {
     reaction((_) => gitRepo, _syncGitFolderInfoFromRepo);
   }

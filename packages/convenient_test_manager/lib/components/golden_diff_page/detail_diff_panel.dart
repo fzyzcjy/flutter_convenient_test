@@ -11,7 +11,35 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
     return Observer(builder: (_) {
-      return TODO;
+      final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
+      if (gitFolderInfo == null) return const Center(child: Text('Please choose a folder first'));
+
+      return ListView.builder(
+        itemCount: gitFolderInfo.diffFileInfos.length,
+        itemBuilder: (_, index) => _buildItem(context, gitFolderInfo.diffFileInfos[index]),
+      );
     });
+  }
+
+  Widget _buildItem(BuildContext context, GitDiffFileInfo diffFileInfo) {
+    final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
+
+    final active = goldenDiffPageStore.highlightPath == diffFileInfo.path;
+    void toggleActive() => goldenDiffPageStore.highlightPath = active ? null : diffFileInfo.path;
+
+    return Material(
+      color: active ? Colors.blue.shade200 : Colors.white,
+      child: InkWell(
+        onHover: (hovering) {
+          if (hovering) toggleActive();
+        },
+        onTap: toggleActive,
+        child: Row(
+          children: [
+            Text(diffFileInfo.path),
+          ],
+        ),
+      ),
+    );
   }
 }

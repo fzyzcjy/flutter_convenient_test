@@ -11,6 +11,9 @@ class GoldenDiffPageFileInfoPanel extends StatelessWidget {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
     return Observer(builder: (_) {
+      final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
+      if (gitFolderInfo == null) return const Center(child: Text('Please choose a folder first'));
+     
       return TODO;
     });
   }
