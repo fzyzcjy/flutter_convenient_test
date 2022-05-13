@@ -58,6 +58,8 @@ extension ExtFinder on Finder {
 }
 
 extension ExtCommonFinders on CommonFinders {
+  Finder root() => _RootFinder();
+
   /// smart "get"
   Finder get(Object arg) {
     if (arg is Finder) return arg;
@@ -247,4 +249,14 @@ class TRawCommand extends TCommand {
 bool _isEnum(dynamic data) {
   final split = data.toString().split('.');
   return split.length > 1 && split[0] == data.runtimeType.toString();
+}
+
+class _RootFinder extends Finder {
+  _RootFinder();
+
+  @override
+  String get description => 'root widget';
+
+  @override
+  Iterable<Element> apply(Iterable<Element> candidates) => candidates.take(1);
 }
