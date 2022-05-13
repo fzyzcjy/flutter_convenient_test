@@ -57,7 +57,10 @@ class GoldenDiffPageFileInfoPanel extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
             child: Text(
               displayPath,
-              style: const TextStyle(height: 1),
+              style: const TextStyle(
+                height: 1,
+                fontSize: 12,
+              ),
             ),
           ),
         ),
