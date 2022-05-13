@@ -1,5 +1,6 @@
 import 'package:convenient_test_manager/services/fs_service.dart';
 import 'package:convenient_test_manager/services/misc_flutter_service.dart';
+import 'package:convenient_test_manager/stores/golden_diff_page_store.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/video_player_store.dart';
@@ -26,6 +27,7 @@ void setup() {
   getIt.registerSingleton<VideoPlayerStore>(VideoPlayerStore());
   getIt.registerSingleton<HighlightStore>(HighlightStore());
   getIt.registerSingleton<HomePageStore>(HomePageStore());
+  getIt.registerSingleton<GoldenDiffPageStore>(GoldenDiffPageStore());
   getIt.registerSingleton<FsService>(FsServiceFlutter());
   getIt.registerSingleton<MiscFlutterService>(MiscFlutterService());
 
