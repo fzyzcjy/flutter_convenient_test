@@ -36,6 +36,7 @@ dependencies:
       ref: 2e447ae595fa61d5b7a9beec6bee6c1a1155b0f5
       path: flutter_mobx
   get_it: ^6.0.0
+  git: ^2.0.0
   grpc: ^3.0.0
   intl: ^0.17.0
   mobx: ^2.0.7
