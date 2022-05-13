@@ -29,45 +29,42 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
         child: GestureDetector(
           onPanUpdate: (d) => goldenDiffPageStore.highlightTransform =
               Matrix4.translationValues(d.delta.dx, d.delta.dy, 0).multiplied(goldenDiffPageStore.highlightTransform),
-          child: Material(
-            color: Colors.grey.shade200,
-            child: Column(
-              children: [
-                const SizedBox(height: 24),
-                _buildHeader(highlightInfo),
-                const SizedBox(height: 24),
-                Expanded(
-                  child: Row(
-                    children: [
-                      _buildImage(
-                        name: 'Original',
-                        child: Image(image: MemoryImage(highlightInfo.originalContent)),
-                      ),
-                      _buildImage(
-                        name: 'New',
-                        child: Image(image: MemoryImage(highlightInfo.newContent)),
-                      ),
-                    ],
-                  ),
+          child: Column(
+            children: [
+              const SizedBox(height: 24),
+              _buildHeader(highlightInfo),
+              const SizedBox(height: 24),
+              Expanded(
+                child: Row(
+                  children: [
+                    _buildImage(
+                      name: 'Original',
+                      child: Image(image: MemoryImage(highlightInfo.originalContent)),
+                    ),
+                    _buildImage(
+                      name: 'New',
+                      child: Image(image: MemoryImage(highlightInfo.newContent)),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 24),
-                Expanded(
-                  child: Row(
-                    children: [
-                      _buildImage(
-                        name: 'Masked Diff',
-                        child: maskedDiff == null ? Container() : RawImage(image: maskedDiff),
-                      ),
-                      _buildImage(
-                        name: 'Isolated Diff',
-                        child: isolatedDiff == null ? Container() : RawImage(image: isolatedDiff),
-                      ),
-                    ],
-                  ),
+              ),
+              const SizedBox(height: 24),
+              Expanded(
+                child: Row(
+                  children: [
+                    _buildImage(
+                      name: 'Masked Diff',
+                      child: maskedDiff == null ? Container() : RawImage(image: maskedDiff),
+                    ),
+                    _buildImage(
+                      name: 'Isolated Diff',
+                      child: isolatedDiff == null ? Container() : RawImage(image: isolatedDiff),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 24),
-              ],
-            ),
+              ),
+              const SizedBox(height: 24),
+            ],
           ),
         ),
       );
@@ -83,33 +80,36 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: ClipRect(
-          child: Column(
-            children: [
-              Text(
-                name,
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-              ),
-              Expanded(
-                child: Observer(
-                  builder: (_) => Transform(
-                    transform: goldenDiffPageStore.highlightTransform,
-                    child: Listener(
-                      onPointerSignal: (signal) {
-                        if (signal is PointerScrollEvent) {
-                          const kScaleRatio = 1.5;
-                          final scale = signal.scrollDelta.dy > 0 ? kScaleRatio : (1 / kScaleRatio);
+        child: Material(
+          color: Colors.grey.shade200,
+          child: ClipRect(
+            child: Column(
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                ),
+                Expanded(
+                  child: Observer(
+                    builder: (_) => Transform(
+                      transform: goldenDiffPageStore.highlightTransform,
+                      child: Listener(
+                        onPointerSignal: (signal) {
+                          if (signal is PointerScrollEvent) {
+                            const kScaleRatio = 1.5;
+                            final scale = signal.scrollDelta.dy > 0 ? kScaleRatio : (1 / kScaleRatio);
 
-                          goldenDiffPageStore.highlightTransform = _matrixScale(scale, signal.localPosition)
-                              .multiplied(goldenDiffPageStore.highlightTransform);
-                        }
-                      },
-                      child: child,
+                            goldenDiffPageStore.highlightTransform = _matrixScale(scale, signal.localPosition)
+                                .multiplied(goldenDiffPageStore.highlightTransform);
+                          }
+                        },
+                        child: child,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
