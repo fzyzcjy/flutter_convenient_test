@@ -10,41 +10,54 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
-    return Observer(builder: (_) {
-      final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
-      if (gitFolderInfo == null) return const Center(child: Text('Please choose a folder first'));
-
-      return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            for (final info in gitFolderInfo.diffFileInfos) _buildItem(context, info),
-          ],
-        ),
-      );
+    return LayoutBuilder(builder: (_, constraints) {
+      return Observer(builder: (_) {
+        final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
+        if (gitFolderInfo == null) return const Center(child: Text('Please choose a folder first'));
+        return SingleChildScrollView(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8),
+                  for (final info in gitFolderInfo.diffFileInfos) _buildItem(context, info),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
     });
   }
 
   Widget _buildItem(BuildContext context, GitDiffFileInfo diffFileInfo) {
-    final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
+    return Observer(builder: (_) {
+      final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
-    final active = goldenDiffPageStore.highlightPath == diffFileInfo.path;
-    void toggleActive() => goldenDiffPageStore.highlightPath = active ? null : diffFileInfo.path;
+      final active = goldenDiffPageStore.highlightPath == diffFileInfo.path;
+      void toggleActive() => goldenDiffPageStore.highlightPath = active ? null : diffFileInfo.path;
 
-    return Material(
-      color: active ? Colors.blue.shade200 : Colors.white,
-      child: InkWell(
-        onHover: (hovering) {
-          if (hovering) toggleActive();
-        },
-        onTap: toggleActive,
-        child: Row(
-          children: [
-            Text(diffFileInfo.path),
-          ],
+      return Material(
+        color: active ? Colors.blue.shade100 : Colors.white,
+        child: InkWell(
+          onHover: (hovering) {
+            if (hovering) toggleActive();
+          },
+          onTap: toggleActive,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            child: Text(
+              diffFileInfo.path,
+              style: const TextStyle(height: 1),
+            ),
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
