@@ -56,6 +56,8 @@ dependency_overrides:
     path: ../convenient_test_common
   convenient_test_common_dart:
     path: ../convenient_test_common_dart
+  convenient_test:
+    path: ../convenient_test
   convenient_test_dev:
     path: ../convenient_test_dev
   convenient_test_manager_dart:

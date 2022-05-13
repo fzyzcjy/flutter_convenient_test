@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
@@ -59,15 +60,33 @@ abstract class _GoldenDiffPageStore with Store {
       );
     }).toList();
 
-    return GitFolderInfo(diffFileInfos: diffFileInfos);
+    return GitFolderInfo(
+      commonPathPrefix: _commonPrefixMulti(diffFileInfos.map((e) => e.path)),
+      diffFileInfos: diffFileInfos,
+    );
   }
+}
+
+String _commonPrefixMulti(Iterable<String> items) {
+  if (items.isEmpty) return '';
+  return items.reduce(_commonPrefix);
+}
+
+String _commonPrefix(String a, String b) {
+  final end = min(a.length, b.length);
+  for (var i = 0; i < end; ++i) {
+    if (a[i] != b[i]) return a.substring(0, i);
+  }
+  return a.substring(0, end);
 }
 
 @immutable
 class GitFolderInfo {
+  final String commonPathPrefix;
   final List<GitDiffFileInfo> diffFileInfos;
 
   const GitFolderInfo({
+    required this.commonPathPrefix,
     required this.diffFileInfos,
   });
 }
