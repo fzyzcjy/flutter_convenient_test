@@ -19,6 +19,9 @@ class SimpleGit {
     final pr = await myRunGit(
       ['show', '$ref:$filePath'],
       processWorkingDir: directory,
+      // to allow binary
+      stdoutEncoding: null,
+      stderrEncoding: null,
     );
 
     return pr.stdout as List<int>;

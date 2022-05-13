@@ -40,8 +40,10 @@ abstract class _GoldenDiffPageStore with Store {
 
     final git = SimpleGit(gitRepo);
 
+    Log.d(_kTag, 'calcGitFolderInfo step getDiff');
     final diffFilePaths = await git.getDiff();
 
+    Log.d(_kTag, 'calcGitFolderInfo step get file content');
     final diffFileInfos = await Stream.fromIterable(diffFilePaths).asyncMap((path) async {
       return GitDiffFileInfo(
         path: path,
