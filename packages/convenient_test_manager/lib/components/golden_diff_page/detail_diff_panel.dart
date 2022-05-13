@@ -26,7 +26,9 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
 
       return _HotKeyHandlerWidget(
         onMove: (delta) => _handleMove(gitFolderInfo, delta),
-        child: _buildGestureHandlers(
+        child: GestureDetector(
+          onPanUpdate: (d) => goldenDiffPageStore.highlightTransform =
+              Matrix4.translationValues(d.delta.dx, d.delta.dy, 0).multiplied(goldenDiffPageStore.highlightTransform),
           child: Material(
             color: Colors.grey.shade200,
             child: Column(
@@ -72,27 +74,6 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
     });
   }
 
-  Widget _buildGestureHandlers({required Widget child}) {
-    final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
-
-    return Listener(
-      onPointerSignal: (signal) {
-        if (signal is PointerScrollEvent) {
-          const kScaleRatio = 1.5;
-          final scale = signal.scrollDelta.dy > 0 ? kScaleRatio : (1 / kScaleRatio);
-
-          goldenDiffPageStore.highlightTransform =
-              _matrixScale(scale, signal.localPosition).multiplied(goldenDiffPageStore.highlightTransform);
-        }
-      },
-      child: GestureDetector(
-        onPanUpdate: (d) => goldenDiffPageStore.highlightTransform =
-            Matrix4.translationValues(d.delta.dx, d.delta.dy, 0).multiplied(goldenDiffPageStore.highlightTransform),
-        child: child,
-      ),
-    );
-  }
-
   Widget _buildImage({
     required String name,
     required Widget child,
@@ -113,7 +94,18 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
                 child: Observer(
                   builder: (_) => Transform(
                     transform: goldenDiffPageStore.highlightTransform,
-                    child: child,
+                    child: Listener(
+                      onPointerSignal: (signal) {
+                        if (signal is PointerScrollEvent) {
+                          const kScaleRatio = 1.5;
+                          final scale = signal.scrollDelta.dy > 0 ? kScaleRatio : (1 / kScaleRatio);
+
+                          goldenDiffPageStore.highlightTransform = _matrixScale(scale, signal.localPosition)
+                              .multiplied(goldenDiffPageStore.highlightTransform);
+                        }
+                      },
+                      child: child,
+                    ),
                   ),
                 ),
               ),
