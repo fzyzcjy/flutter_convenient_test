@@ -26,7 +26,7 @@ abstract class _GoldenDiffPageStore with Store {
   String? highlightPath;
 
   _GoldenDiffPageStore() {
-    reaction((_) => gitRepo, _syncGitFolderInfoFromRepo);
+    reaction((_) => gitRepo, _syncGitFolderInfoFromRepo, fireImmediately: true);
   }
 
   Future<void> _syncGitFolderInfoFromRepo(String? gitRepo) async {
