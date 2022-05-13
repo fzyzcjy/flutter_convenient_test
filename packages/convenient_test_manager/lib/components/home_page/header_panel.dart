@@ -1,4 +1,5 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_manager/pages/golden_diff_page.dart';
 import 'package:convenient_test_manager/services/misc_flutter_service.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager_dart/services/report_saver_service.dart';
@@ -48,7 +49,11 @@ class HomePageHeaderPanel extends StatelessWidget {
           ),
           ..._buildButton(
             onPressed: miscFlutterService.pickFileAndReadReport,
-            text: 'Open File',
+            text: 'Load Report',
+          ),
+          ..._buildButton(
+            onPressed: () => Navigator.pushNamed(context, GoldenDiffPage.kRouteName),
+            text: 'Golden Diff Page',
           ),
           const SizedBox(width: 8),
           _buildSuperRunStatusHint(),
