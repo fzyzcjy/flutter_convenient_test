@@ -97,7 +97,7 @@ class _ExecutionFilterResolver {
     final strategy = executionFilter.strategy;
     switch (strategy.whichSubType()) {
       case ExecutionFilter_Strategy_SubType.firstMatch:
-        return _createOutput([flattenedTestsMatchingFilter.first]);
+        return _createOutput(flattenedTestsMatchingFilter.take(1).toList());
       case ExecutionFilter_Strategy_SubType.nextMatch:
         final info = strategy.nextMatch;
 
