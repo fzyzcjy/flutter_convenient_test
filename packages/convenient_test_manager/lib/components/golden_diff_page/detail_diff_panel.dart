@@ -13,8 +13,8 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
-    // antialiasing will make it hard to see what is happening
-    const filterQuality = FilterQuality.none;
+    // const filterQuality = FilterQuality.none;
+    const filterQuality = FilterQuality.low;
 
     return Observer(builder: (_) {
       final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
