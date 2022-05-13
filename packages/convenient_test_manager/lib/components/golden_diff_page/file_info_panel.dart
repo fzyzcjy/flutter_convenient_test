@@ -41,7 +41,11 @@ class GoldenDiffPageFileInfoPanel extends StatelessWidget {
       final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
       final active = goldenDiffPageStore.highlightPath == diffFileInfo.path;
-      void toggleActive() => goldenDiffPageStore.highlightPath = active ? null : diffFileInfo.path;
+      void toggleActive() {
+        goldenDiffPageStore
+          ..highlightTransform = Matrix4.identity()
+          ..highlightPath = active ? null : diffFileInfo.path;
+      }
 
       assert(gitFolderInfo.commonPathPrefix == diffFileInfo.path.substring(0, gitFolderInfo.commonPathPrefix.length));
       final displayPath = diffFileInfo.path.substring(gitFolderInfo.commonPathPrefix.length);
