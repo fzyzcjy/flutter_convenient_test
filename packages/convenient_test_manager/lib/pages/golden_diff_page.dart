@@ -38,13 +38,13 @@ class _Body extends StatelessWidget {
       children: [
         const Expanded(
           flex: 1,
-          child: GoldenDiffPageDetailDiffPanel(),
+          child: GoldenDiffPageFileInfoPanel(),
         ),
         Container(width: 8),
         Container(width: 1, color: Colors.grey[200]),
         const Expanded(
           flex: 2,
-          child: GoldenDiffPageFileInfoPanel(),
+          child: GoldenDiffPageDetailDiffPanel(),
         ),
       ],
     );
