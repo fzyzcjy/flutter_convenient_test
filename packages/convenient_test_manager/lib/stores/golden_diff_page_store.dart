@@ -38,14 +38,14 @@ abstract class _GoldenDiffPageStore with Store {
     if (gitRepo == null) return null;
     if (!await GitDir.isGitDir(gitRepo)) return null;
 
-    final gitDir = await GitDir.fromExisting(gitRepo);
+    final git = SimpleGit(gitRepo);
 
-    final diffFilePaths = await gitDir.getDiff();
+    final diffFilePaths = await git.getDiff();
 
     final diffFileInfos = await Stream.fromIterable(diffFilePaths).asyncMap((path) async {
       return GitDiffFileInfo(
         path: path,
-        originalContent: Uint8List.fromList(await gitDir.show(ref: 'HEAD', filePath: path)),
+        originalContent: Uint8List.fromList(await git.show(ref: 'HEAD', filePath: path)),
         newContent: await File(p.join(gitRepo, path)).readAsBytes(),
       );
     }).toList();

@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:git/git.dart';
+class SimpleGit {
+  final String directory;
 
-extension ExtGitDir on GitDir {
+  SimpleGit(this.directory);
+
   Future<List<String>> getDiff() async {
     final pr = await myRunGit(
       ['diff', '--name-only'],
-      processWorkingDir: path,
+      processWorkingDir: directory,
     );
 
     return (pr.stdout as String).split('\n').where((row) => row.isNotEmpty).toList();
@@ -16,7 +18,7 @@ extension ExtGitDir on GitDir {
   Future<List<int>> show({required String ref, required String filePath}) async {
     final pr = await myRunGit(
       ['show', '$ref:$filePath'],
-      processWorkingDir: path,
+      processWorkingDir: directory,
     );
 
     return pr.stdout as List<int>;
