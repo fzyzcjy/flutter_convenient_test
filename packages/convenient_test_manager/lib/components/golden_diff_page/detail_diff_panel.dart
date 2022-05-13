@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:convenient_test_manager/stores/golden_diff_page_store.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -74,10 +75,21 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
   Widget _buildGestureHandlers({required Widget child}) {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
-    return GestureDetector(
-      onPanUpdate: (d) => goldenDiffPageStore.highlightTransform =
-          Matrix4.translationValues(d.delta.dx, d.delta.dy, 0).multiplied(goldenDiffPageStore.highlightTransform),
-      child: child,
+    return Listener(
+      onPointerSignal: (signal) {
+        if (signal is PointerScrollEvent) {
+          const kScaleRatio = 1.5;
+          final scale = signal.scrollDelta.dy > 0 ? kScaleRatio : (1 / kScaleRatio);
+
+          goldenDiffPageStore.highlightTransform =
+              _matrixScale(scale, signal.localPosition).multiplied(goldenDiffPageStore.highlightTransform);
+        }
+      },
+      child: GestureDetector(
+        onPanUpdate: (d) => goldenDiffPageStore.highlightTransform =
+            Matrix4.translationValues(d.delta.dx, d.delta.dy, 0).multiplied(goldenDiffPageStore.highlightTransform),
+        child: child,
+      ),
     );
   }
 
@@ -129,6 +141,19 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
       ),
     );
   }
+}
+
+Matrix4 _matrixScale(double scale, Offset focalPoint) {
+  final dx = (1 - scale) * focalPoint.dx;
+  final dy = (1 - scale) * focalPoint.dy;
+
+  //  ..[0]  = scale   # x scale
+  //  ..[5]  = scale   # y scale
+  //  ..[10] = 1       # diagonal "one"
+  //  ..[12] = dx      # x translation
+  //  ..[13] = dy      # y translation
+  //  ..[15] = 1       # diagonal "one"
+  return Matrix4(scale, 0, 0, 0, 0, scale, 0, 0, 0, 0, 1, 0, dx, dy, 0, 1);
 }
 
 class _HotKeyHandlerWidget extends StatelessWidget {
