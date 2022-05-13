@@ -7,7 +7,7 @@ import 'package:convenient_test_manager_dart/misc/config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:git/git.dart';
 import 'package:mobx/mobx.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as p;
 
 part 'golden_diff_page_store.g.dart';
 
@@ -46,7 +46,7 @@ abstract class _GoldenDiffPageStore with Store {
       return GitDiffFileInfo(
         path: path,
         originalContent: Uint8List.fromList(await gitDir.show(ref: 'HEAD', filePath: path)),
-        newContent: await File(join(gitRepo, path)).readAsBytes(),
+        newContent: await File(p.join(gitRepo, path)).readAsBytes(),
       );
     }).toList();
 
