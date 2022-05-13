@@ -45,10 +45,13 @@ abstract class _GoldenDiffPageStore with Store {
 
     Log.d(_kTag, 'calcGitFolderInfo step get file content');
     final diffFileInfos = await Stream.fromIterable(diffFilePaths).asyncMap((path) async {
+      final originalContent = Uint8List.fromList(await git.show(ref: 'HEAD', filePath: path));
+      final newContent = await File(p.join(gitRepo, path)).readAsBytes();
+
       return GitDiffFileInfo(
         path: path,
-        originalContent: Uint8List.fromList(await git.show(ref: 'HEAD', filePath: path)),
-        newContent: await File(p.join(gitRepo, path)).readAsBytes(),
+        originalContent: originalContent,
+        newContent: newContent,
       );
     }).toList();
 
