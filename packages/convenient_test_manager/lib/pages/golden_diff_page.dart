@@ -1,3 +1,5 @@
+import 'package:convenient_test_manager/components/golden_diff_page/detail_diff_panel.dart';
+import 'package:convenient_test_manager/components/golden_diff_page/file_info_panel.dart';
 import 'package:convenient_test_manager/components/golden_diff_page/header_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -35,6 +37,19 @@ class _Body extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return const Text('TODO');
+    return Row(
+      children: [
+        const Expanded(
+          flex: 1,
+          child: GoldenDiffPageFileInfoPanel(),
+        ),
+        Container(width: 8),
+        Container(width: 1, color: Colors.grey[200]),
+        const Expanded(
+          flex: 2,
+          child: GoldenDiffPageDetailDiffPanel(),
+        ),
+      ],
+    );
   }
 }
