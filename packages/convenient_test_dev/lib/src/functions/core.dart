@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/functions/binding.dart';
 import 'package:convenient_test_dev/src/functions/goldens.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
@@ -12,9 +13,7 @@ import 'package:convenient_test_dev/src/support/setup.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
 
 class ConvenientTest {
@@ -83,15 +82,20 @@ Future<void> _runModeIntegrationTest(
         // thus it should be run lastly
         tearDownAll(_lastTearDownAll);
 
-        if (WidgetsBinding.instance != null) {
+        try {
+          // use *constructor* instead of `ensureInitialized`, such that if it is already initialized it will throw
+          // (TODO add tests)
+          MyIntegrationTestWidgetsFlutterBinding(); // initialize it
+        } catch (e) {
           // This is because:
           // (1) Must call [runZonedGuarded] *outside* [ensureInitialized], otherwise no errors will be captured.
           //     See https://docs.flutter.dev/testing/errors#errors-not-caught-by-flutter for details.
           // (2) [IntegrationTestWidgetsFlutterBinding] must be called *inside* `collectIntoDeclarer`,
           //     because it calls some logic inside it.
-          throw Exception('Please do *not* initialize `WidgetsBinding.instance` outside `convenientTestMain`.');
+          // ignore: avoid_print
+          print('Please do *not* initialize `WidgetsBinding.instance` outside `convenientTestMain`.');
+          rethrow;
         }
-        IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
         unawaited(myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(setUpAll: SetUpAll())));
 
