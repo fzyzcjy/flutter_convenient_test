@@ -34,6 +34,16 @@ extension ExtWidgetTester on WidgetTester {
           'Have tried all infos in convenientTestGeneralizedTextFieldInfos=$convenientTestGeneralizedTextFieldInfos, but none works.');
     });
   }
+
+  // useful in widget-test environment
+  // *not* useful integration-test environment, which is what *this* package does
+  // https://github.com/fzyzcjy/yplusplus/issues/3793#issuecomment-1120570555
+  Future<void> flushRealAsyncTasks([int repeat = 10]) async {
+    for (var i = 0; i < repeat; ++i) {
+      await runAsync(() => Future<void>.delayed(Duration.zero));
+      await pumpAndSettle();
+    }
+  }
 }
 
 const kDefaultConvenientTestGeneralizedTextFieldInfos = <GeneralizedTextFieldInfo>[TextFieldInfo()];
