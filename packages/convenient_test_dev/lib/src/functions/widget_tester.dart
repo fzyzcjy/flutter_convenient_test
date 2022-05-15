@@ -1,6 +1,11 @@
+import 'dart:io';
+import 'dart:ui' as ui;
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_test/src/_matchers_io.dart'; // ignore: implementation_imports
+import 'package:path/path.dart' as p;
 
 typedef EnterTextWithoutReplaceLogCallback = void Function(TextEditingValue oldValue, TextEditingValue newValue);
 
@@ -43,6 +48,14 @@ extension ExtWidgetTester on WidgetTester {
       await runAsync(() => Future<void>.delayed(Duration.zero));
       await pumpAndSettle();
     }
+  }
+
+  // useful for widget tests (not for integration tests)
+  Future<void> debugWidgetTestSaveScreenshot(Finder finder, [String stem = 'debug_screenshot']) async {
+    final image = await captureImage(element(finder));
+    final bytes = (await image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+    final path = p.join((goldenFileComparator as LocalFileComparator).basedir.path, '$stem.png');
+    await File(path).writeAsBytes(bytes);
   }
 }
 
