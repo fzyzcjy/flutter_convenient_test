@@ -51,8 +51,8 @@ extension ExtWidgetTester on WidgetTester {
   }
 
   // useful for widget tests (not for integration tests)
-  Future<void> debugWidgetTestSaveScreenshot(Finder finder, [String stem = 'debug_screenshot']) async {
-    final image = await captureImage(element(finder));
+  Future<void> debugWidgetTestSaveScreenshot([Finder? finder, String stem = 'debug_screenshot']) async {
+    final image = await captureImage(element(finder ?? find.byType(MaterialApp)));
     final bytes = (await image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
     final path = p.join((goldenFileComparator as LocalFileComparator).basedir.path, '$stem.png');
     await File(path).writeAsBytes(bytes);
