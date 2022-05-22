@@ -70,9 +70,12 @@ jobs:
         run: flutter pub get
         working-directory: packages/convenient_test_manager
 
-#      - uses: ruby/setup-ruby@v1
-#        with:
-#          ruby-version: '2.7.2'
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.2'
+
+      - name: install cocoapods
+        run: brew install cocoapods
 
       - uses: maierj/fastlane-action@v2.2.0
         with:
