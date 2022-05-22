@@ -21,6 +21,6 @@ dev_dependencies:
     sdk: flutter
   lint: ^1.8.2
 
-dependency_overrides:
-  convenient_test_common_dart:
-    path: ../convenient_test_common_dart
+# dependency_overrides:
+#   convenient_test_common_dart:
+#     path: ../convenient_test_common_dart

@@ -34,10 +34,10 @@ dependencies:
 dev_dependencies:
   dart_code_metrics: ^4.15.0
 
-dependency_overrides:
-  convenient_test:
-    path: ../convenient_test
-  convenient_test_common:
-    path: ../convenient_test_common
-  convenient_test_common_dart:
-    path: ../convenient_test_common_dart
+# dependency_overrides:
+#   convenient_test:
+#     path: ../convenient_test
+#   convenient_test_common:
+#     path: ../convenient_test_common
+#   convenient_test_common_dart:
+#     path: ../convenient_test_common_dart
