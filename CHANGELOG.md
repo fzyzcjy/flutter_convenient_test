@@ -1,3 +1,12 @@
+## 1.1.1
+
+* Fix when `flutter build macos` for Manager, it shows error: `Undefined symbols for architecture arm64: "_g_players", referenced from: +[VideoOutlet outletForPlayer:withTextureRegistry:] in VideoOutlet.o` #221
+* Allow configuration by reading a config file (e.g. `~/.config/convenient_test.json`), useful for using precompiled Manager #220 
+* Fix building Windows application... dart_vlc-0.1.9/lib/src/widgets/controls.dart(185,55): error G76A9B1F6: The method 'back' isn't defined for the class 'Player'. #217 
+* Make initial window size bigger, otherwise many things overflowed #222
+* Make MacOS CI pass, such that we have precompiled binaries #186
+* Improve documentation
+
 ## 1.1.0
 
 Issues closed:
