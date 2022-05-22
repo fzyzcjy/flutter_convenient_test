@@ -9,7 +9,7 @@ abstract class FsService {
   Future<String> getActiveSuperRunDataSubDirectory({required String category}) async {
     final superRunId = GetIt.I.get<WorkerSuperRunStore>().currSuperRunController.superRunId;
     final ans = '${await getBaseDataDirectory()}/$superRunId/$category/';
-    File(ans).createSync(recursive: true);
+    Directory(ans).createSync(recursive: true);
     return ans;
   }
 
