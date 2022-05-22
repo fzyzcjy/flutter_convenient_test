@@ -50,6 +50,10 @@ dependencies:
   test_api: ^0.4.2
   tuple: ^2.0.0
   vm_service: ^8.0.0
+  window_size:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding
+      path: plugins/window_size
 
 dependency_overrides:
   convenient_test:
