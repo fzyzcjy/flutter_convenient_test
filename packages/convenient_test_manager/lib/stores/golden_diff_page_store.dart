@@ -8,7 +8,6 @@ import 'package:convenient_test_manager/misc/git_extensions.dart';
 import 'package:convenient_test_manager_dart/stores/global_config_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:git/git.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path/path.dart' as p;
