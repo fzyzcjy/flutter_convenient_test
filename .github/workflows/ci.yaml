@@ -54,7 +54,7 @@ jobs:
 
 
   build_manager_macos:
-    runs-on: macOS-latest
+    runs-on: macOS-11
 
     steps:
       - uses: actions/checkout@v2
@@ -74,8 +74,10 @@ jobs:
         with:
           ruby-version: '2.7.2'
 
-      - name: install cocoapods
-        run: brew install cocoapods
+      - name: setup-cocoapods
+        uses: maxim-lobanov/setup-cocoapods@v1
+        with:
+          version: latest
 
       - uses: maierj/fastlane-action@v2.2.0
         with:
