@@ -80,7 +80,7 @@ jobs:
           version: latest
 
       - name: flutter build
-        run: flutter build macos
+        run: flutter build macos --verbose
         working-directory: packages/convenient_test_manager/macos
 
       - name: build_mac_app
