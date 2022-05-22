@@ -17,7 +17,9 @@ class HomePageVideoPanel extends StatelessWidget {
         return const Center(
           child: Text(
             'No selected video or still recording.\n'
-            'Please tap the "play video" button of a test in the left panel.',
+            'Please tap the "play video" button of a test in the left panel.\n'
+            // https://github.com/fzyzcjy/flutter_convenient_test/issues/217#issuecomment-1133922630
+            'Remark: If your (toy) tests are too short, videos may not be recorded.',
           ),
         );
       }
