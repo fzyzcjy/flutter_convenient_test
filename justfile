@@ -57,12 +57,16 @@ release old_version new_version:
     grep -q 'version: {{old_version}}' packages/convenient_test_common/pubspec.yaml
     grep -q 'version: {{old_version}}' packages/convenient_test/pubspec.yaml
     grep -q 'version: {{old_version}}' packages/convenient_test_dev/pubspec.yaml
+    grep -q 'version: {{old_version}}' packages/convenient_test_manager/pubspec.yaml
+    grep -q 'version: {{old_version}}' packages/convenient_test_manager_dart/pubspec.yaml
     grep -q '{{new_version}}' CHANGELOG.md
 
     sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test_common_dart/pubspec.yaml
     sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test_common/pubspec.yaml
     sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test/pubspec.yaml
     sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test_dev/pubspec.yaml
+    sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test_manager/pubspec.yaml
+    sed -i '' 's/version: {{old_version}}/version: {{new_version}}/g' packages/convenient_test_manager_dart/pubspec.yaml
 
     # just pub-get
     # just build-runner
