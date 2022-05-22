@@ -7,11 +7,12 @@
 
 ## 🚀 Advantages
 
-* **Action history**: Gain insight on what has happened to the tests - View all actions/assertions taken in the tests, with friendly descriptions.
+* **Full action history**: Gain insight on what has happened to the tests - View all actions/assertions taken in the tests, with friendly descriptions.
 * **Time travel, with screenshots**: What did the UI look like when that button was tapped 50 steps ago? Now you know everything.
 * **Rapid re-execution**: Edit code, save, run - done within seconds, not minutes.
 * **Videos recorded**: Watch what has happened, in full detail.
 * **Being interactive**: Play with the app interactively, again within seconds.
+* **Isolation mode**: One test will no longer destroy environment of other tests - run each with full isolation (optionally).
 
 And also...
 
@@ -35,7 +36,7 @@ Though used in production environment in my own 200kloc Flutter app, this packag
 
 ## 📚 Features
 
-### Action history
+### Full action history
 
 > See actions/taps/assertions taken in the tests, with friendly descriptions (in the left panel)
 
@@ -76,6 +77,14 @@ P.S. Highlighted action is in sync with the playing video. Tap action to seek vi
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/e_interactive.gif)
 
 <br>
+
+### Isolation mode
+
+One test will no longer destroy environment of other tests - now you can run run each with full isolation.
+
+This is especially helpful in big projects (such as mine), when an end-to-end setup is not easy to tear down, and one failed test can cause all subsequent tests to have damaged execution environment and thus fail.
+
+Technical details: If this mode is enabled, a hot restart will be performed after each attempt of each test.
 
 ### `integration_test` is still there
 
