@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/services/fs_service.dart';
 import 'package:convenient_test_manager_dart/services/screen_video_recorder_service.dart';
@@ -56,11 +54,9 @@ abstract class _VideoRecorderStore with Store {
 
   Future<String> _createVideoPath() async {
     final stem = DateFormat('yyyyMMdd_hhmmss').format(DateTime.now());
-    final path =
+    return
         // ignore: prefer_interpolation_to_compose_strings
         await GetIt.I.get<FsService>().getActiveSuperRunDataSubDirectory(category: 'Video') + '$stem.mov';
-    await File(path).parent.create(recursive: true);
-    return path;
   }
 }
 

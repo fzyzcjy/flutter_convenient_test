@@ -30,12 +30,10 @@ abstract class _ReportSaverService with Store {
   }
 
   static Future<String> _getReportPath() async {
-    final path =
+    return
         // ignore: prefer_interpolation_to_compose_strings
         await GetIt.I.get<FsService>().getActiveSuperRunDataSubDirectory(category: 'Report') +
             'report.$kReportFileExtension';
-    File(path).parent.createSync(recursive: true);
-    return path;
   }
 }
 
