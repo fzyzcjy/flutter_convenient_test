@@ -26,7 +26,7 @@ void setup({
   bool registerHighlightStoreBase = true,
   bool registerVideoPlayerStoreBase = true,
 }) {
-  GlobalConfigStore.config = _parseConfig(args: args, headlessMode: headlessMode);
+  GlobalConfigStore.config = GlobalConfigNullable.parse(args: args, headlessMode: headlessMode);
 
   getIt.registerSingleton<LogStore>(LogStore());
   getIt.registerSingleton<SuiteInfoStore>(SuiteInfoStore());
@@ -47,17 +47,4 @@ void setup({
   GetIt.I.get<ConvenientTestManagerService>().serve();
 
   Log.i('setup', 'GlobalConfig: ${GlobalConfigStore.config}');
-}
-
-GlobalConfig _parseConfig({
-  required List<String>? args,
-  required bool headlessMode,
-}) {
-  var config = GlobalConfigNullable();
-
-  config = GlobalConfigNullable.parseEnvironment(config);
-  if (args != null) config = GlobalConfigNullable.parseArgs(config, args);
-  if (headlessMode) config = GlobalConfigNullable.parseHeadlessMode(config);
-
-  return config.toConfig();
 }

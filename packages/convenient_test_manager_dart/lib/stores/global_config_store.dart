@@ -1,4 +1,5 @@
 import 'package:args/args.dart';
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -36,6 +37,31 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
     bool? enableReportSaver,
     String? goldenDiffGitRepo,
   }) = _GlobalConfigNullable;
+
+  static GlobalConfig parse({
+    required List<String>? args,
+    required bool headlessMode,
+  }) {
+    const _kTag = 'parse';
+
+    var config = GlobalConfigNullable();
+    Log.d(_kTag, 'initial config=$config');
+
+    config = GlobalConfigNullable.parseEnvironment(config);
+    Log.d(_kTag, 'parseEnvironment config=$config');
+
+    if (args != null) {
+      config = GlobalConfigNullable.parseArgs(config, args);
+      Log.d(_kTag, 'parseArgs config=$config args=$args');
+    }
+
+    if (headlessMode) {
+      config = GlobalConfigNullable.parseHeadlessMode(config);
+      Log.d(_kTag, 'parseHeadlessMode config=$config args=$args');
+    }
+
+    return config.toConfig();
+  }
 
   // ignore: prefer_constructors_over_static_methods
   static GlobalConfigNullable parseEnvironment(GlobalConfigNullable upstream) {
