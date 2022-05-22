@@ -52,16 +52,16 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
     var config = await parseConfigFile();
     Log.d(_kTag, 'parse call parseConfigFile config=$config');
 
-    config = parseEnvironment(config);
+    config = config.merge(parseEnvironment());
     Log.d(_kTag, 'parse call parseEnvironment config=$config');
 
     if (args != null) {
-      config = parseArgs(config, args);
+      config = config.merge(parseArgs(args));
       Log.d(_kTag, 'parse call parseArgs config=$config args=$args');
     }
 
     if (headlessMode) {
-      config = parseHeadlessMode(config);
+      config = config.merge(parseHeadlessMode());
       Log.d(_kTag, 'parse call parseHeadlessMode config=$config args=$args');
     }
 
@@ -89,8 +89,8 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
   }
 
   // ignore: prefer_constructors_over_static_methods
-  static GlobalConfigNullable parseEnvironment(GlobalConfigNullable upstream) {
-    return upstream.copyWith(
+  static GlobalConfigNullable parseEnvironment() {
+    return GlobalConfigNullable(
       isolationMode: _stringToNullableBool(const String.fromEnvironment('CONVENIENT_TEST_ISOLATION_MODE')),
       enableReportSaver: _stringToNullableBool(const String.fromEnvironment('CONVENIENT_TEST_ENABLE_REPORT_SAVER')),
       goldenDiffGitRepo: _emptyToNull(const String.fromEnvironment('CONVENIENT_TEST_GOLDEN_DIFF_GIT_REPO')),
@@ -98,14 +98,14 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
   }
 
   // ignore: prefer_constructors_over_static_methods
-  static GlobalConfigNullable parseArgs(GlobalConfigNullable upstream, List<String> args) {
+  static GlobalConfigNullable parseArgs(List<String> args) {
     final results = (ArgParser()
           ..addFlag('isolation-mode', defaultsTo: null)
           ..addFlag('enable-report-saver', defaultsTo: null)
           ..addOption('golden-diff-git-repo', defaultsTo: null))
         .parse(args);
 
-    return upstream.copyWith(
+    return GlobalConfigNullable(
       isolationMode: results['isolation-mode'] as bool?,
       enableReportSaver: results['enable-report-saver'] as bool?,
       goldenDiffGitRepo: results['golden-diff-git-repo'] as String?,
@@ -113,8 +113,8 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
   }
 
   // ignore: prefer_constructors_over_static_methods
-  static GlobalConfigNullable parseHeadlessMode(GlobalConfigNullable upstream) {
-    return upstream.copyWith(
+  static GlobalConfigNullable parseHeadlessMode() {
+    return GlobalConfigNullable(
       // when running the headless binary, we want to save the colorful report such that we can read it later with GUI
       // thus, it [defaultsTo] *true* instead of null
       enableReportSaver: true,
@@ -123,6 +123,12 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
 }
 
 extension ExtGlobalConfigNullable on GlobalConfigNullable {
+  GlobalConfigNullable merge(GlobalConfigNullable other) => GlobalConfigNullable(
+        isolationMode: other.isolationMode ?? isolationMode,
+        enableReportSaver: other.enableReportSaver ?? enableReportSaver,
+        goldenDiffGitRepo: other.goldenDiffGitRepo ?? goldenDiffGitRepo,
+      );
+
   GlobalConfig toConfig() => GlobalConfig(
         isolationMode: isolationMode ?? false,
         enableReportSaver: enableReportSaver ?? false,
