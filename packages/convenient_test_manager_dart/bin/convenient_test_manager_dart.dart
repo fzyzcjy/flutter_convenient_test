@@ -16,7 +16,7 @@ const _kTag = 'main';
 Future<void> main(List<String> args) async {
   Log.i(_kTag, 'main start');
 
-  setup(headlessMode: true);
+  await setup(headlessMode: true);
 
   Log.i(_kTag, 'step awaitWorkerAvailable');
   await _awaitWorkerAvailable();

@@ -18,15 +18,15 @@ import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
 
-void setup({
+Future<void> setup({
   List<String>? args,
   bool headlessMode = false,
   bool registerMiscDartService = true,
   bool registerFsService = true,
   bool registerHighlightStoreBase = true,
   bool registerVideoPlayerStoreBase = true,
-}) {
-  GlobalConfigStore.config = GlobalConfigNullable.parse(args: args, headlessMode: headlessMode);
+}) async {
+  GlobalConfigStore.config = await GlobalConfigNullable.parse(args: args, headlessMode: headlessMode);
 
   getIt.registerSingleton<LogStore>(LogStore());
   getIt.registerSingleton<SuiteInfoStore>(SuiteInfoStore());

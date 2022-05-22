@@ -129,7 +129,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
               child: Center(
                 child: Video(
                   player: player,
-                  playlistLength: 1,
+                  // playlistLength: 1,
                 ),
               ),
             ),

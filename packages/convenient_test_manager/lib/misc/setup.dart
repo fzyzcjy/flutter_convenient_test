@@ -20,14 +20,14 @@ import 'package:window_size/window_size.dart' as window_size;
 final getIt = GetIt.instance;
 
 Future<void> setup() async {
-  convenient_test_manager_dart_setup.setup(
+  await convenient_test_manager_dart_setup.setup(
     registerMiscDartService: false,
     registerFsService: false,
     registerHighlightStoreBase: false,
     registerVideoPlayerStoreBase: false,
   );
 
-  DartVLC.initialize();
+  await DartVLC.initialize();
 
   await _setWindowSize();
 

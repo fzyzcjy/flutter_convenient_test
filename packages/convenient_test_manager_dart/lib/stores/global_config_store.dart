@@ -77,7 +77,7 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
 
       final configFilePath = '$homeDirectory/.config/convenient_test.json';
       Log.d(_kTag, 'parseConfigFile configFilePath=$configFilePath');
-     
+
       if (!await File(configFilePath).exists()) return GlobalConfigNullable();
 
       final configText = await File(configFilePath).readAsString();
