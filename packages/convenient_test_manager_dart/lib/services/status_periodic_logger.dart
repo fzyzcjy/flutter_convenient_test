@@ -32,6 +32,6 @@ class StatusPeriodicLogger {
     final interestTestHint = 'Test=${interestTest?.name}';
 
     // ignore: avoid_print
-    print('[STATUS] [$durationHint] [$stateCountHint] [$interestTestHint]');
+    print('🚀 [STATUS] [$durationHint] [$stateCountHint] [$interestTestHint]');
   }
 }
