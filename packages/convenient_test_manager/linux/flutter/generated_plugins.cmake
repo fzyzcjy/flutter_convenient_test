@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   dart_vlc
+  window_manager
   window_size
 )
 
