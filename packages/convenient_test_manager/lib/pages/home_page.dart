@@ -2,6 +2,7 @@ import 'package:convenient_test_manager/components/home_page/command_info_panel.
 import 'package:convenient_test_manager/components/home_page/header_panel.dart';
 import 'package:convenient_test_manager/components/home_page/secondary_panel.dart';
 import 'package:convenient_test_manager/services/misc_flutter_service.dart';
+import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:convenient_test_manager_dart/stores/worker_super_run_store.dart';
@@ -52,8 +53,9 @@ class _Body extends StatelessWidget {
     final vmServiceWrapperService = GetIt.I.get<VmServiceWrapperService>();
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
     final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
+    final homePageStore = GetIt.I.get<HomePageStore>();
 
-    if (!vmServiceWrapperService.connected) {
+    if (!homePageStore.displayLoadedReportMode && !vmServiceWrapperService.connected) {
       return _buildFullscreenHint(
         onTap: vmServiceWrapperService.connect,
         tapHint: const Text('Tap here to reconnect'),
@@ -62,7 +64,7 @@ class _Body extends StatelessWidget {
       );
     }
 
-    if (suiteInfoStore.suiteInfo == null) {
+    if (!homePageStore.displayLoadedReportMode && suiteInfoStore.suiteInfo == null) {
       return _buildFullscreenHint(
         onTap: () => GetIt.I.get<MiscFlutterService>().reloadInfo(),
         tapHint: const Text('Tap here to reload information'),

@@ -8,6 +8,9 @@ class HomePageStore = _HomePageStore with _$HomePageStore;
 
 abstract class _HomePageStore with Store {
   @observable
+  bool displayLoadedReportMode = false;
+
+  @observable
   var activeSecondaryPanelTab = HomePageSecondaryPanelTab.screenshot;
 
   final itemScrollController = ItemScrollController();

@@ -1,4 +1,5 @@
 import 'package:convenient_test_manager/stores/highlight_store.dart';
+import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/video_player_store.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:file_picker/file_picker.dart';
@@ -23,6 +24,8 @@ class MiscFlutterService extends MiscDartService {
     if (result == null) return;
 
     final path = result.paths.single!;
+
+    GetIt.I.get<HomePageStore>().displayLoadedReportMode = true;
 
     await readReportFromFile(path);
   }
