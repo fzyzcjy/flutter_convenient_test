@@ -27,7 +27,7 @@ dependencies:
   convenient_test_dev: ^1.0.0
   convenient_test_manager_dart: ^1.0.0
   cupertino_icons: ^1.0.2
-  dart_vlc: ^0.1.9
+  dart_vlc: ^0.2.0
   file_picker: ^4.5.1
   flutter:
     sdk: flutter
