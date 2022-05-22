@@ -34,19 +34,19 @@ mixin _$GlobalConfig on _GlobalConfig, Store {
     });
   }
 
-  late final _$ciModeAtom =
-      Atom(name: '_GlobalConfig.ciMode', context: context);
+  late final _$enableReportSaverAtom =
+      Atom(name: '_GlobalConfig.enableReportSaver', context: context);
 
   @override
-  bool get ciMode {
-    _$ciModeAtom.reportRead();
-    return super.ciMode;
+  bool get enableReportSaver {
+    _$enableReportSaverAtom.reportRead();
+    return super.enableReportSaver;
   }
 
   @override
-  set ciMode(bool value) {
-    _$ciModeAtom.reportWrite(value, super.ciMode, () {
-      super.ciMode = value;
+  set enableReportSaver(bool value) {
+    _$enableReportSaverAtom.reportWrite(value, super.enableReportSaver, () {
+      super.enableReportSaver = value;
     });
   }
 
@@ -70,7 +70,7 @@ mixin _$GlobalConfig on _GlobalConfig, Store {
   String toString() {
     return '''
 isolationMode: ${isolationMode},
-ciMode: ${ciMode},
+enableReportSaver: ${enableReportSaver},
 goldenDiffGitRepo: ${goldenDiffGitRepo}
     ''';
   }

@@ -5,9 +5,10 @@ import 'dart:typed_data';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/convenient_test_dev.dart';
 import 'package:convenient_test_manager/misc/git_extensions.dart';
-import 'package:convenient_test_manager_dart/misc/config.dart';
+import 'package:convenient_test_manager_dart/stores/global_config_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:git/git.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path/path.dart' as p;
@@ -19,8 +20,9 @@ class GoldenDiffPageStore = _GoldenDiffPageStore with _$GoldenDiffPageStore;
 abstract class _GoldenDiffPageStore with Store {
   static const _kTag = 'GoldenDiffPageStore';
 
-  @observable
-  String? gitRepo = CompileTimeConfig.kDefaultGoldenDiffGitRepo;
+  String? get gitRepo => GetIt.I.get<GlobalConfigStore>().config.goldenDiffGitRepo;
+
+  set gitRepo(String? val) => GetIt.I.get<GlobalConfigStore>().config.goldenDiffGitRepo = val;
 
   @observable
   GitFolderInfo? gitFolderInfo;

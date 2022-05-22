@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
-import 'package:convenient_test_manager_dart/misc/config.dart';
 import 'package:convenient_test_manager_dart/services/fs_service.dart';
+import 'package:convenient_test_manager_dart/stores/global_config_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -13,8 +13,9 @@ class ReportSaverService = _ReportSaverService with _$ReportSaverService;
 abstract class _ReportSaverService with Store {
   static const _kTag = 'ReportSaverService';
 
-  @observable
-  var enable = _initialEnable;
+  bool get enable => GetIt.I.get<GlobalConfigStore>().config.enableReportSaver;
+
+  set enable(bool val) => GetIt.I.get<GlobalConfigStore>().config.enableReportSaver = val;
 
   Future<void> save(ReportCollection request) async {
     if (!enable) return;
@@ -36,5 +37,3 @@ abstract class _ReportSaverService with Store {
             'report.$kReportFileExtension';
   }
 }
-
-bool get _initialEnable => GlobalConfig.ciMode;

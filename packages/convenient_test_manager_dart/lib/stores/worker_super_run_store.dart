@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
-import 'package:convenient_test_manager_dart/misc/config.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
+import 'package:convenient_test_manager_dart/stores/global_config_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
@@ -23,8 +23,9 @@ class WorkerSuperRunStore = _WorkerSuperRunStore with _$WorkerSuperRunStore;
 abstract class _WorkerSuperRunStore with Store {
   static const _kTag = 'WorkerSuperRunStore';
 
-  @observable
-  bool isolationMode = CompileTimeConfig.kDefaultEnableIsolationMode;
+  bool get isolationMode => GetIt.I.get<GlobalConfigStore>().config.isolationMode;
+
+  set isolationMode(bool val) => GetIt.I.get<GlobalConfigStore>().config.isolationMode = val;
 
   @observable
   var flakyTestTotalAttemptCount = 2;
@@ -65,8 +66,6 @@ abstract class _WorkerSuperRunStore with Store {
   }
 
   _WorkerSuperRunStore() {
-    Log.d(_kTag, 'CompileTimeConfig.kDefaultEnableIsolationMode=${CompileTimeConfig.kDefaultEnableIsolationMode}');
-
     reaction((_) => isolationMode, _handleIsolationModeChange);
   }
 

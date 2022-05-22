@@ -11,18 +11,18 @@ abstract class _GlobalConfigStore with Store {
 class GlobalConfig extends _GlobalConfig with _$GlobalConfig {
   GlobalConfig._({
     required bool isolationMode,
-    required bool ciMode,
+    required bool enableReportSaver,
     required String? goldenDiffGitRepo,
   }) : super._(
           isolationMode: isolationMode,
-          ciMode: ciMode,
+          enableReportSaver: enableReportSaver,
           goldenDiffGitRepo: goldenDiffGitRepo,
         );
 
   factory GlobalConfig.fromEnvironment() {
     return GlobalConfig._(
       isolationMode: const bool.fromEnvironment('CONVENIENT_TEST_ISOLATION_MODE', defaultValue: false),
-      ciMode: false,
+      enableReportSaver: false,
       goldenDiffGitRepo: _emptyToNull(const String.fromEnvironment('CONVENIENT_TEST_GOLDEN_DIFF_GIT_REPO')),
     );
   }
@@ -33,14 +33,14 @@ abstract class _GlobalConfig with Store {
   bool isolationMode;
 
   @observable
-  bool ciMode;
+  bool enableReportSaver;
 
   @observable
   String? goldenDiffGitRepo;
 
   _GlobalConfig._({
     required this.isolationMode,
-    required this.ciMode,
+    required this.enableReportSaver,
     required this.goldenDiffGitRepo,
   });
 }
