@@ -17,6 +17,7 @@ const _kTag = 'main';
 Future<void> main(List<String> args) async {
   Log.i(_kTag, 'main start');
 
+  // when running the headless binary, we want to save the colorful report such that we can read it later with GUI
   GetIt.I.get<GlobalConfigStore>().config.enableReportSaver = true;
 
   setup();
