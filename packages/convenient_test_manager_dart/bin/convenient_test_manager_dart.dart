@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:args/args.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/misc/setup.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
@@ -17,8 +18,7 @@ const _kTag = 'main';
 Future<void> main(List<String> args) async {
   Log.i(_kTag, 'main start');
 
-  // when running the headless binary, we want to save the colorful report such that we can read it later with GUI
-  GetIt.I.get<GlobalConfigStore>().config.enableReportSaver = true;
+  _parseArgs(args);
 
   setup();
 
@@ -39,6 +39,25 @@ Future<void> main(List<String> args) async {
 
   Log.i(_kTag, 'step exit');
   exit(0);
+}
+
+void _parseArgs(List<String> args) {
+  final results = (ArgParser() //
+        ..addFlag('isolation-mode', defaultsTo: null)
+        // when running the headless binary, we want to save the colorful report such that we can read it later with GUI
+        // thus, it [defaultsTo] *true* instead of null
+        ..addFlag('enable-report-saver', defaultsTo: true))
+      .parse(args);
+
+  final config = GetIt.I.get<GlobalConfigStore>().config;
+
+  final isolationMode = results['isolation-mode'] as bool?;
+  if (isolationMode != null) config.isolationMode = isolationMode;
+
+  final enableReportSaver = results['enable-report-saver'] as bool?;
+  if (enableReportSaver != null) config.enableReportSaver = enableReportSaver;
+
+  // add more configs here...
 }
 
 Future<void> _awaitWorkerAvailable() async {
