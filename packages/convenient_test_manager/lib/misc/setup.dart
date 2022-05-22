@@ -54,8 +54,8 @@ Future<void> _setWindowSize() async {
   final screen = window.screen;
   Log.d(_kTag, 'window=${window.customToString()} screen=${screen?.customToString()}');
   if (screen != null) {
-    const width = 1200.0;
-    const height = 900.0;
+    const width = 1350.0;
+    const height = 1000.0;
 
     final screenFrame = screen.visibleFrame;
     final left = ((screenFrame.width - width) / 2).roundToDouble();
