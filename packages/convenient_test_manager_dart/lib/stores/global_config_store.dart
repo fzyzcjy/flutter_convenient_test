@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:args/args.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -32,35 +35,57 @@ abstract class _GlobalConfig with Store {
 
 @freezed
 class GlobalConfigNullable with _$GlobalConfigNullable {
+  static const _kTag = 'GlobalConfigNullable';
+
   factory GlobalConfigNullable({
     bool? isolationMode,
     bool? enableReportSaver,
     String? goldenDiffGitRepo,
   }) = _GlobalConfigNullable;
 
-  static GlobalConfig parse({
+  factory GlobalConfigNullable.fromJson(Map<String, dynamic> json) => _$GlobalConfigNullableFromJson(json);
+
+  static Future<GlobalConfig> parse({
     required List<String>? args,
     required bool headlessMode,
-  }) {
-    const _kTag = 'parse';
+  }) async {
+    var config = await parseConfigFile();
+    Log.d(_kTag, 'parse call parseConfigFile config=$config');
 
-    var config = GlobalConfigNullable();
-    Log.d(_kTag, 'initial config=$config');
-
-    config = GlobalConfigNullable.parseEnvironment(config);
-    Log.d(_kTag, 'parseEnvironment config=$config');
+    config = parseEnvironment(config);
+    Log.d(_kTag, 'parse call parseEnvironment config=$config');
 
     if (args != null) {
-      config = GlobalConfigNullable.parseArgs(config, args);
-      Log.d(_kTag, 'parseArgs config=$config args=$args');
+      config = parseArgs(config, args);
+      Log.d(_kTag, 'parse call parseArgs config=$config args=$args');
     }
 
     if (headlessMode) {
-      config = GlobalConfigNullable.parseHeadlessMode(config);
-      Log.d(_kTag, 'parseHeadlessMode config=$config args=$args');
+      config = parseHeadlessMode(config);
+      Log.d(_kTag, 'parse call parseHeadlessMode config=$config args=$args');
     }
 
     return config.toConfig();
+  }
+
+  // ignore: prefer_constructors_over_static_methods
+  static Future<GlobalConfigNullable> parseConfigFile() async {
+    try {
+      final homeDirectory = Platform.environment['HOME'];
+      Log.d(_kTag, 'parseConfigFile homeDirectory=$homeDirectory');
+      if (homeDirectory == null) return GlobalConfigNullable();
+
+      final configFilePath = '$homeDirectory/.config/convenient_test.json';
+      Log.d(_kTag, 'parseConfigFile configFilePath=$configFilePath');
+     
+      if (!await File(configFilePath).exists()) return GlobalConfigNullable();
+
+      final configText = await File(configFilePath).readAsString();
+      return GlobalConfigNullable.fromJson(jsonDecode(configText) as Map<String, Object?>);
+    } catch (e, s) {
+      Log.w(_kTag, 'parseConfigFile error e=$e s=$s');
+      return GlobalConfigNullable();
+    }
   }
 
   // ignore: prefer_constructors_over_static_methods

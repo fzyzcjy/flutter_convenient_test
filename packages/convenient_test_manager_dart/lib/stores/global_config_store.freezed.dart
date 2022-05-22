@@ -14,12 +14,17 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+GlobalConfigNullable _$GlobalConfigNullableFromJson(Map<String, dynamic> json) {
+  return _GlobalConfigNullable.fromJson(json);
+}
+
 /// @nodoc
 mixin _$GlobalConfigNullable {
   bool? get isolationMode => throw _privateConstructorUsedError;
   bool? get enableReportSaver => throw _privateConstructorUsedError;
   String? get goldenDiffGitRepo => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $GlobalConfigNullableCopyWith<GlobalConfigNullable> get copyWith =>
       throw _privateConstructorUsedError;
@@ -116,10 +121,13 @@ class __$$_GlobalConfigNullableCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_GlobalConfigNullable implements _GlobalConfigNullable {
   _$_GlobalConfigNullable(
       {this.isolationMode, this.enableReportSaver, this.goldenDiffGitRepo});
+
+  factory _$_GlobalConfigNullable.fromJson(Map<String, dynamic> json) =>
+      _$$_GlobalConfigNullableFromJson(json);
 
   @override
   final bool? isolationMode;
@@ -146,6 +154,7 @@ class _$_GlobalConfigNullable implements _GlobalConfigNullable {
                 .equals(other.goldenDiffGitRepo, goldenDiffGitRepo));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -158,6 +167,11 @@ class _$_GlobalConfigNullable implements _GlobalConfigNullable {
   _$$_GlobalConfigNullableCopyWith<_$_GlobalConfigNullable> get copyWith =>
       __$$_GlobalConfigNullableCopyWithImpl<_$_GlobalConfigNullable>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_GlobalConfigNullableToJson(this);
+  }
 }
 
 abstract class _GlobalConfigNullable implements GlobalConfigNullable {
@@ -165,6 +179,9 @@ abstract class _GlobalConfigNullable implements GlobalConfigNullable {
       {final bool? isolationMode,
       final bool? enableReportSaver,
       final String? goldenDiffGitRepo}) = _$_GlobalConfigNullable;
+
+  factory _GlobalConfigNullable.fromJson(Map<String, dynamic> json) =
+      _$_GlobalConfigNullable.fromJson;
 
   @override
   bool? get isolationMode => throw _privateConstructorUsedError;
