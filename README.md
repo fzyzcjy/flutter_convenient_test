@@ -50,6 +50,8 @@ Though used in production environment in my own 200kloc Flutter app, this packag
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/b_time_travel_screenshot.gif)
 
+P.S. Use mouse wheels and dragging to zoom and pan the screenshots.
+
 <br>
 
 ### Rapid re-execution
