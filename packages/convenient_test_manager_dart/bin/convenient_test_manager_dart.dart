@@ -49,7 +49,7 @@ void _parseArgs(List<String> args) {
         ..addFlag('enable-report-saver', defaultsTo: true))
       .parse(args);
 
-  final config = GetIt.I.get<GlobalConfigStore>().config;
+  final config = GlobalConfigStore.config;
 
   final isolationMode = results['isolation-mode'] as bool?;
   if (isolationMode != null) config.isolationMode = isolationMode;

@@ -13,9 +13,9 @@ class ReportSaverService = _ReportSaverService with _$ReportSaverService;
 abstract class _ReportSaverService with Store {
   static const _kTag = 'ReportSaverService';
 
-  bool get enable => GetIt.I.get<GlobalConfigStore>().config.enableReportSaver;
+  bool get enable => GlobalConfigStore.config.enableReportSaver;
 
-  set enable(bool val) => GetIt.I.get<GlobalConfigStore>().config.enableReportSaver = val;
+  set enable(bool val) => GlobalConfigStore.config.enableReportSaver = val;
 
   Future<void> save(ReportCollection request) async {
     if (!enable) return;

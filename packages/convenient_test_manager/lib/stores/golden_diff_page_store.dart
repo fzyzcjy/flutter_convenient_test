@@ -20,9 +20,9 @@ class GoldenDiffPageStore = _GoldenDiffPageStore with _$GoldenDiffPageStore;
 abstract class _GoldenDiffPageStore with Store {
   static const _kTag = 'GoldenDiffPageStore';
 
-  String? get gitRepo => GetIt.I.get<GlobalConfigStore>().config.goldenDiffGitRepo;
+  String? get gitRepo => GlobalConfigStore.config.goldenDiffGitRepo;
 
-  set gitRepo(String? val) => GetIt.I.get<GlobalConfigStore>().config.goldenDiffGitRepo = val;
+  set gitRepo(String? val) => GlobalConfigStore.config.goldenDiffGitRepo = val;
 
   @observable
   GitFolderInfo? gitFolderInfo;

@@ -2,10 +2,8 @@ import 'package:mobx/mobx.dart';
 
 part 'global_config_store.g.dart';
 
-class GlobalConfigStore = _GlobalConfigStore with _$GlobalConfigStore;
-
-abstract class _GlobalConfigStore with Store {
-  final config = GlobalConfig.fromEnvironment();
+class GlobalConfigStore {
+  static final config = GlobalConfig.fromEnvironment();
 }
 
 class GlobalConfig extends _GlobalConfig with _$GlobalConfig {

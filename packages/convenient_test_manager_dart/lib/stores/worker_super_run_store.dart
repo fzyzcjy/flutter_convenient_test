@@ -23,9 +23,9 @@ class WorkerSuperRunStore = _WorkerSuperRunStore with _$WorkerSuperRunStore;
 abstract class _WorkerSuperRunStore with Store {
   static const _kTag = 'WorkerSuperRunStore';
 
-  bool get isolationMode => GetIt.I.get<GlobalConfigStore>().config.isolationMode;
+  bool get isolationMode => GlobalConfigStore.config.isolationMode;
 
-  set isolationMode(bool val) => GetIt.I.get<GlobalConfigStore>().config.isolationMode = val;
+  set isolationMode(bool val) => GlobalConfigStore.config.isolationMode = val;
 
   @observable
   var flakyTestTotalAttemptCount = 2;
