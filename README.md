@@ -5,7 +5,16 @@
 [![Post-release](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/post_release.yaml/badge.svg)](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/post_release.yaml)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/45204254806b4790a2d6403b81156e42)](https://app.codacy.com/gh/fzyzcjy/flutter_convenient_test?utm_source=github.com&utm_medium=referral&utm_content=fzyzcjy/flutter_convenient_test&utm_campaign=Badge_Grade_Settings)
 
-## Quick demo
+## 🚀 Advantages
+
+* **Action history**: View all actions/assertions taken in the tests, with friendly descriptions.
+* **Time travel, with screenshots**: What did the UI look like when that button was tapped 50 steps ago? Now you know everything.
+* **Rapid re-execution**: Edit code, save, run - done within seconds, not minutes.
+* **Videos recorded**: Watch what has happened, in full detail.
+* **Being interactive**: Play with the app interactively, again within seconds.
+* [TODO]
+
+## 📷 Quick demo
 
 <!--README_VIDEO_REPLACEMENT_PLACEHOLDER_ONE-->
 
@@ -17,11 +26,11 @@ https://user-images.githubusercontent.com/5236035/167066810-d0aa36ba-0113-4140-9
 
 Though used in production environment in my own 200kloc Flutter app, this package - especially the doc - is surely not yet perfect. Just [create an issue](https://github.com/fzyzcjy/flutter_convenient_test/issues) and I usually reply quite quickly.
 
-## Features
+## 📚 Features
 
 ### Action history
 
-> See what actions are taken in the tests (in the left panel)
+> See actions/taps/assertions taken in the tests, with friendly descriptions (in the left panel)
 
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/a_action_history.gif)
 
@@ -35,7 +44,7 @@ Though used in production environment in my own 200kloc Flutter app, this packag
 
 <br>
 
-### Rapidly re-execute
+### Rapid re-execution
 
 > Edit code, save, run - within seconds
 
