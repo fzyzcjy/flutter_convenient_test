@@ -113,7 +113,7 @@ More in quickstart and tutorials below.
 
 ### CI / headless mode
 
-This tool can be run without GUI and only produce log data and exit code, making it suitable to be run in a CI. If you want to examine the details with GUI, just open the generated artifact in the GUI using `Open File` button.
+This tool can be run without GUI and only produce log data and exit code, making it suitable to be run in a CI. If you want to examine the details with GUI, just open the generated artifact in the GUI using `Load Report` button.
 
 ### Run single test/group
 
@@ -129,6 +129,28 @@ Useful when replaying videos and screenshots
 ### Raw logs
 
 Tap "Raw Logs" in the right panel to see raw outputs of a test.
+
+### Header panel
+
+Following is a brief description of the functionalities of each button in the header panel.
+
+* Run All: Run all tests below
+* Halt: Stop the currently running worker
+* Interactive Mode: Enter "interactive mode" (described above)
+* Reload Info: Reload test metadata such as the group names and test names
+* Reconnect VM: Connect to the Dart VM of the worker app
+* Load Report: Load and display a report generated when `SaveReport` toggle is enabled or run within CI/headless mode
+* Golden Diff Page: Enter the golden diff page (described above)
+
+Following are about the toggles:
+
+* Isolation: Whether to enable "isolation mode" (described above)
+* UpdateGoldens: Whether to update the golden files on the disk, similar to `--update-goldens` flag in a traditional Flutter test
+* Retry: When a test fails, whether to retry (and mark as flaky), or directly mark it failed
+* SaveReport: Whether to save logs to a report file, such that it can be visualized later via "Load Report"
+* Hover: When hovering the action log panel, whether highlight the hovered entry and immediately show related information
+* AutoJump: Whether to jump to newly received action entries
+* AutoExpand: Whether to expand and collapse automatically for the newly received test and action entries
 
 ## Tutorial: Run examples
 
