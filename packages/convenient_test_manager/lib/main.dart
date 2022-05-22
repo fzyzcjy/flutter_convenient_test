@@ -3,8 +3,8 @@ import 'package:convenient_test_manager/pages/golden_diff_page.dart';
 import 'package:convenient_test_manager/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  setup();
+Future<void> main() async {
+  await setup();
   runApp(const MyApp());
 }
 
