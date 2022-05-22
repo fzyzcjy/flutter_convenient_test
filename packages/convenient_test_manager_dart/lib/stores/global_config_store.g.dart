@@ -9,8 +9,7 @@ part of 'global_config_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$GlobalConfig on _GlobalConfig, Store {
-  late final _$isolationModeAtom =
-      Atom(name: '_GlobalConfig.isolationMode', context: context);
+  late final _$isolationModeAtom = Atom(name: '_GlobalConfig.isolationMode', context: context);
 
   @override
   bool get isolationMode {
@@ -25,8 +24,7 @@ mixin _$GlobalConfig on _GlobalConfig, Store {
     });
   }
 
-  late final _$enableReportSaverAtom =
-      Atom(name: '_GlobalConfig.enableReportSaver', context: context);
+  late final _$enableReportSaverAtom = Atom(name: '_GlobalConfig.enableReportSaver', context: context);
 
   @override
   bool get enableReportSaver {
@@ -41,8 +39,7 @@ mixin _$GlobalConfig on _GlobalConfig, Store {
     });
   }
 
-  late final _$goldenDiffGitRepoAtom =
-      Atom(name: '_GlobalConfig.goldenDiffGitRepo', context: context);
+  late final _$goldenDiffGitRepoAtom = Atom(name: '_GlobalConfig.goldenDiffGitRepo', context: context);
 
   @override
   String? get goldenDiffGitRepo {
