@@ -1,5 +1,5 @@
 name: convenient_test_manager
-description: Write and debug tests easily, built on integration_test
+description: Write and debug tests easily, with full action history, time travel, screenshots, rapid re-execution, video records, interactivity, isolation and more
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.

@@ -1,5 +1,5 @@
 name: convenient_test_dev
-description: Write and debug tests easily, built on integration_test
+description: Write and debug tests easily, with full action history, time travel, screenshots, rapid re-execution, video records, interactivity, isolation and more
 version: 1.1.0
 repository: https://github.com/fzyzcjy/flutter_convenient_test
 

@@ -7,7 +7,7 @@ repository:
   name: flutter_convenient_test
 
   # A short description of the repository that will show up on GitHub
-  description: Write and debug tests easily, built on integration_test
+  description: Write and debug tests easily, with full action history, time travel, screenshots, rapid re-execution, video records, interactivity, isolation and more
 
   # A URL with more information about the repository
   homepage: pub.dev/packages/convenient_test
