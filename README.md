@@ -13,6 +13,7 @@ Write and debug tests easily, with full action history, time travel, screenshots
 * **Time travel, with screenshots**: What did the UI look like when that button was tapped 50 steps ago? Now you know everything.
 * **Rapid re-execution**: Edit code, save, run - done within seconds, not minutes.
 * **Videos recorded**: Watch what has happened, in full detail.
+* **Retryability**: No manual `pump`, wait or retry anymore. Just write down what you want, and the framework will retry and wait.
 * **Being interactive**: Play with the app interactively, again within seconds.
 * **Isolated**: One test will no longer destroy environment of other tests - run each with full isolation (optional feature).
 
@@ -20,7 +21,6 @@ And also...
 
 * **`integration_test` still there**: Freely use everything from `integration_test`, `mockito`,  `test`, etc.
 * **Flaky test awareness**: No false alarms, while no blindly ignoring.
-* **Simpler and shorter code**: No manual `pump`, wait or retry.
 * **Suitable for CI**: Run headlessly, with logs to be visualized when needed. 
 * **Miscellaneous**: Visually see target regions, run single test/group within seconds, raw logs...
 
@@ -82,6 +82,20 @@ P.S. Highlighted action is in sync with the playing video. Tap action to seek vi
 
 <br>
 
+### Retryability
+
+No manual `pump`, wait or retry anymore. Just write down what you want, and the framework will retry and wait.
+
+Example:
+
+```dart
+await t.get(find.byTooltip('Fetch Data From Backend')).tap();
+// OK even if "fetch data" needs undeterministic time interval. Will automatically pump, wait and retry.
+await t.get(find.text('New Data')).should(findsOneWidget);
+```
+
+More in quickstart and tutorials below.
+
 ### Isolation mode
 
 One test will no longer destroy environment of other tests - now you can run run each with full isolation.
@@ -101,19 +115,6 @@ If you want to migrate to this package from raw `integration_test`, have a look 
 Flaky is flaky, and we are aware of it. It is neither failed nor success, so you will not be alarmed by false positives, and not completely ignore it.
 
 <!--[TODO screenshot: Several tests, one failed, one flaky, one success]-->
-
-### Simpler and shorter code
-
-* No manual `pump`
-* No manual wait and retry
-
-```dart
-await t.get(find.byTooltip('Fetch Data From Backend')).tap();
-// OK even if "fetch data" needs undeterministic time interval. Will automatically pump, wait and retry.
-await t.get(find.text('New Data')).should(findsOneWidget);
-```
-
-More in quickstart and tutorials below.
 
 ### CI / headless mode
 
