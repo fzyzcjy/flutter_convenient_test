@@ -29,12 +29,14 @@ analyze:
     cd packages/convenient_test_manager && flutter analyze
     cd packages/convenient_test_manager_dart && flutter analyze
 
+generate_gif_args := '-vf "fps=10,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"'
+
 generate-gif:
-    ffmpeg -y -i doc/videos/a_action_history.mov -r 24 doc/gif/a_action_history.gif
-    ffmpeg -y -i doc/videos/b_time_travel_screenshot.mov -r 24 doc/gif/b_time_travel_screenshot.gif
-    ffmpeg -y -i doc/videos/c_rapid_execute.mov -r 24 doc/gif/c_rapid_execute.gif
-    ffmpeg -y -i doc/videos/d_video_record.mov -r 24 doc/gif/d_video_record.gif
-    ffmpeg -y -i doc/videos/e_interactive.mov -r 24 doc/gif/e_interactive.gif
+    ffmpeg -y -i doc/videos/a_action_history.mov {{generate_gif_args}} doc/gif/a_action_history.gif
+    ffmpeg -y -i doc/videos/b_time_travel_screenshot.mov {{generate_gif_args}} doc/gif/b_time_travel_screenshot.gif
+    ffmpeg -y -i doc/videos/c_rapid_execute.mov {{generate_gif_args}} doc/gif/c_rapid_execute.gif
+    ffmpeg -y -i doc/videos/d_video_record.mov {{generate_gif_args}} doc/gif/d_video_record.gif
+    ffmpeg -y -i doc/videos/e_interactive.mov {{generate_gif_args}} doc/gif/e_interactive.gif
 
 generate-4k:
      ffmpeg -i doc/videos/full_video.mov -vf scale=3018:2160 doc/videos/full_video_4k.mov
