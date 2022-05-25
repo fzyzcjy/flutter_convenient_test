@@ -1,10 +1,6 @@
-# Testing in Flutter: No more time-wasters
+# Rethink testing in Flutter: Reduce the time-wasters
 
-Write and debug tests easily, with full action history, time travel, screenshots, rapid re-execution, video records, retryability, interactivity, isolation, and more, via the open-sourced https://github.com/fzyzcjy/flutter_convenient_test.
-
-## Why (not) tests?
-
-We have all heard that testing is of crucial importance, and it has tons of benefits such as improving confidence and reducing bugs. However, end-to-end/integration tests in Flutter are often time-consuming to write, debug and maintain, and much time is wasted. Thus, testing is not a very pleasant piece of work and it is tempting to skip it. That is why this package is created - testing should be swift and easy.
+We have all heard that testing is of crucial importance, and it has tons of benefits such as improving confidence and reducing bugs. However, end-to-end/integration tests in Flutter are often time-consuming to write, debug and maintain, and much time is wasted. This makes testing not a very pleasant piece of work and it is tempting to skip it (at least for me :( ). Therefore, let us rethink it and try to reduce the time-wasters.
 
 ## Ideal vs (old) reality
 
@@ -22,7 +18,9 @@ That *was* the real world. Can we do it better?
 
 ## The solution
 
-With https://github.com/fzyzcjy/flutter_convenient_test, all time-wasting processes mentioned above are reduced to a minimum. It is built on top of `integration_test`, so you can still use your favorite packages like `integration_test`, `mockito`, `test`, etc, and migrate to this library with minor modifications.
+All the headache above leads me to write the open-source https://github.com/fzyzcjy/flutter_convenient_test. With the package, the time-wasting processes mentioned above are reduced to a minimum. Surely it is not perfect (and young - only a few weeks old), but I hope my small step could help you save some time as well as inspire other time-saving solutions.
+
+It is built on top of `integration_test`, so you can still use your favorite packages like `integration_test`, `mockito`, `test`, etc, and migrate to this library with minor modifications.
 
 Debuggability is strongly enhanced, mainly with the following features. All these are also applicable when running in CI - it will generate a data pack and you can visualize it later on your desktop.
 
@@ -58,4 +56,4 @@ https://user-images.githubusercontent.com/5236035/167066810-d0aa36ba-0113-4140-9
 
 ##### Short description of the blog
 
-Testing is of critical importance, but it has been time-consuming, especially for end-to-end/integration tests. In this blog, we discuss where the time is wasted, and an open-source solution (https://github.com/fzyzcjy/flutter_convenient_test) to reduce the waste.
+Testing is of critical importance, but it has been time-consuming, especially for end-to-end/integration tests. In this blog, we discuss where the time is wasted, including time to locate bug causes, lack of retryability, and flakiness. We then demonstrate an open-source solution (https://github.com/fzyzcjy/flutter_convenient_test) to the problem. (Disclaimer: I wrote that package, but this is a blog about why and how to reduce time-wasting, instead of an ad saying the package is so awesome.)
