@@ -46,8 +46,12 @@ extension ExtWidgetTester on WidgetTester {
   Future<void> flushRealAsyncTasks([int repeat = 10]) async {
     for (var i = 0; i < repeat; ++i) {
       await runAsync(() => Future<void>.delayed(Duration.zero));
-      await pumpAndSettle();
+      // only pump (no "pumpAndSettle") here - since sometimes a runAsync task will trigger some background
+      // execution that has not finished after delaying zero seconds.
+      // see https://github.com/fzyzcjy/yplusplus/issues/4051#issuecomment-1140359618 for more details
+      await pump();
     }
+    await pumpAndSettle();
   }
 
   // useful for widget tests (not for integration tests)
