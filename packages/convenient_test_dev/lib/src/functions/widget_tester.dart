@@ -51,7 +51,8 @@ extension ExtWidgetTester on WidgetTester {
       // see https://github.com/fzyzcjy/yplusplus/issues/4051#issuecomment-1140359618 for more details
       await pump();
     }
-    await pumpAndSettle();
+    // similar to above, only pump
+    await pump();
   }
 
   // useful for widget tests (not for integration tests)
