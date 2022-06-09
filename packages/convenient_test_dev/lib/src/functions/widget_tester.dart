@@ -56,6 +56,20 @@ extension ExtWidgetTester on WidgetTester {
   }
 
   // useful for widget tests (not for integration tests)
+  Future<void> runAsyncAndPumpUntil(bool Function() canStop) async {
+    while (true) {
+      // print('runAsyncAndPumpUntil loop');
+      if (canStop()) break;
+
+      // Use delay 0ms instead of 200ms will make it much fasterhttps://github.com/fzyzcjy/yplusplus/issues/4208
+      // await runAsync(() => Future<void>.delayed(const Duration(milliseconds: 200)));
+      await runAsync(() => Future<void>.delayed(Duration.zero));
+
+      await pump();
+    }
+  }
+
+  // useful for widget tests (not for integration tests)
   Future<void> debugWidgetTestSaveScreenshot([Finder? finder, String stem = 'debug_screenshot']) async {
     await runAsync(() async {
       final image = await captureImage(element(finder ?? find.byType(MaterialApp)));
