@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/services/fs_service.dart';
 import 'package:convenient_test_manager/services/misc_flutter_service.dart';
@@ -64,7 +62,7 @@ Future<void> _setWindowSize() async {
     window_size.setWindowFrame(frame);
     window_size.setWindowMinSize(const Size(width, height));
     window_size.setWindowMaxSize(const Size(width, height));
-    window_size.setWindowTitle('System Network Proxy (${Platform.operatingSystem})');
+    window_size.setWindowTitle('convenient_test_manager');
   }
 }
 
