@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
-import 'package:convenient_test_dev/src/support/compile_time_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_test/flutter_test.dart' as flutter_test;
@@ -34,10 +33,11 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
   GoldenFailureInfo? get lastFailure => _lastFailure;
   GoldenFailureInfo? _lastFailure;
 
-  EnhancedLocalFileComparator()
-      : super(Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart'))) {
-    assert(basedir == Uri.directory(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test')));
-  }
+  EnhancedLocalFileComparator(Uri testFile) : super(testFile);
+
+  // ref https://github.com/flutter/flutter/pull/77014#issuecomment-1048896776
+  factory EnhancedLocalFileComparator.configFromCurrent() => EnhancedLocalFileComparator(
+      Uri.file(path.join(path.fromUri((goldenFileComparator as LocalFileComparator).basedir), 'something.dart')));
 
   // NOTE MODIFIED from [super.compare]
   @override
