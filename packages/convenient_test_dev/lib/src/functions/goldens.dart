@@ -38,14 +38,18 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
 
   static EnhancedLocalFileComparator get instance => goldenFileComparator as EnhancedLocalFileComparator;
 
+  final bool captureFailure;
+
   GoldenFailureInfo? get lastFailure => _lastFailure;
   GoldenFailureInfo? _lastFailure;
 
-  EnhancedLocalFileComparator(Uri testFile) : super(testFile);
+  EnhancedLocalFileComparator(Uri testFile, {required this.captureFailure}) : super(testFile);
 
   // ref https://github.com/flutter/flutter/pull/77014#issuecomment-1048896776
-  factory EnhancedLocalFileComparator.configFromCurrent() => EnhancedLocalFileComparator(
-      Uri.file(path.join(path.fromUri((goldenFileComparator as LocalFileComparator).basedir), 'something.dart')));
+  factory EnhancedLocalFileComparator.configFromCurrent({required bool captureFailure}) => EnhancedLocalFileComparator(
+        Uri.file(path.join(path.fromUri((goldenFileComparator as LocalFileComparator).basedir), 'something.dart')),
+        captureFailure: captureFailure,
+      );
 
   static Uri createUri(String path, GoldenConfig? config) => config.toUri(path);
 
@@ -97,14 +101,16 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
     await super.update(golden, imageBytes);
   }
 
-  // NOTE reference: [super.generateFailureOutput], but this function is (almost) completely rewritten
   @override
-  Future<String> generateFailureOutput(
-    ComparisonResult result,
-    Uri golden,
-    Uri basedir, {
-    String key = '',
-  }) async {
+  Future<String> generateFailureOutput(ComparisonResult result, Uri golden, Uri basedir, {String key = ''}) async {
+    return captureFailure
+        ? _generateFailureOutputByCapturingFailure(result, golden, basedir, key: key)
+        : super.generateFailureOutput(result, golden, basedir, key: key);
+  }
+
+  // NOTE reference: [super.generateFailureOutput], but this function is (almost) completely rewritten
+  Future<String> _generateFailureOutputByCapturingFailure(ComparisonResult result, Uri golden, Uri basedir,
+      {String key = ''}) async {
     Log.i(_kTag, 'generateFailureOutput golden=$golden result=$result');
 
     return TestAsyncUtils.guard<String>(() async {
