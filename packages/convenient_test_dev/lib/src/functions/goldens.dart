@@ -52,6 +52,8 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
         captureFailure: captureFailure,
       );
 
+  String get basedirPath => path.fromUri(basedir);
+
   static Uri createUri(String path, GoldenConfig? config) => config.toUri(path);
 
   // NOTE MODIFIED from [super.compare]
