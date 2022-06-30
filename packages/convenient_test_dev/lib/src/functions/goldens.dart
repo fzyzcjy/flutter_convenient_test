@@ -28,9 +28,10 @@ class GoldenMatcherGenerator {
     this.extension = 'png',
   });
 
-  Matcher call(String stem, {int? version}) => flutter_test.matchesGoldenFile(_generateKey(stem), version: version);
+  Matcher call(String stem, [GoldenConfig? config]) => flutter_test.matchesGoldenFile(_generateKey(stem, config));
 
-  String _generateKey(String stem) => '$folder/$stem.$extension';
+  Uri _generateKey(String stem, GoldenConfig? config) =>
+      EnhancedLocalFileComparator.createUri('$folder/$stem.$extension', config);
 }
 
 class EnhancedLocalFileComparator extends LocalFileComparator {
