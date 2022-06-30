@@ -450,7 +450,11 @@ extension on GoldenConfig {
     if (maxToleration == null ||
         pixelDiffHistogram.maxSample > maxToleration.diffPerPixel ||
         result.diffPercent > maxToleration.countPercent) {
-      Log.d(_kTag, 'check failed because `maxToleration` violates');
+      Log.d(
+          _kTag,
+          'check failed because `maxToleration` violates '
+          '(pixelDiffHistogram.maxSample=${pixelDiffHistogram.maxSample} maxToleration.diffPerPixel=${maxToleration?.diffPerPixel} '
+          'result.diffPercent=${result.diffPercent} > maxToleration.countPercent=${maxToleration?.countPercent})');
       return false;
     }
 
