@@ -5,12 +5,11 @@ import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Future<List<int>> takeSnapshot() async {
+Future<List<int>> takeSnapshot({Future<void> Function()? pumper}) async {
   final element = _findElement();
-  final image = await _captureImageFromElement(element);
+  final image = await _captureImageFromElement(element, pumper: pumper);
   final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
   return byteData!.buffer.asUint8List();
 }
@@ -24,17 +23,19 @@ Element _findElement() {
 }
 
 /// NOTE ref [flutter_test :: _matchers_io.dart :: captureImage]
-Future<ui.Image> _captureImageFromElement(Element element) async {
+Future<ui.Image> _captureImageFromElement(Element element, {Future<void> Function()? pumper}) async {
   assert(element.renderObject != null);
   var renderObject = element.renderObject!;
   while (!renderObject.isRepaintBoundary) {
     renderObject = renderObject.parent! as RenderObject;
   }
 
-  // NOTE MODIFIED add to fix #234
-  while (renderObject.debugNeedsPaint) {
-    Log.i('captureImageFromElement', 'see debugNeedsPaint==true, thus wait until endOfFrame');
-    await SchedulerBinding.instance.endOfFrame;
+  // NOTE MODIFIED add to fix
+  // see #234
+  // see https://github.com/fzyzcjy/yplusplus/issues/4286#issuecomment-1170797044
+  while (renderObject.debugNeedsPaint && pumper != null) {
+    Log.i('captureImageFromElement', 'see debugNeedsPaint==true and has pumper, thus pump');
+    await pumper();
   }
 
   assert(!renderObject.debugNeedsPaint);

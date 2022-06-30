@@ -23,6 +23,8 @@ class ConvenientTest {
 
   ConvenientTest(this.tester);
 
+  static ConvenientTest? get maybeActiveInstance => _activeInstance;
+
   @internal
   static ConvenientTest get activeInstance => _activeInstance!;
   static ConvenientTest? _activeInstance;

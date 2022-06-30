@@ -103,7 +103,7 @@ class LogHandle {
   }
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
-    image ??= await takeSnapshot();
+    image ??= await takeSnapshot(pumper: ConvenientTest.maybeActiveInstance?.tester.pump);
     await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
             snapshot: Snapshot(
           logEntryId: _id.toInt64(),
