@@ -1,3 +1,7 @@
+## 1.2.0
+
+* Enhance golden comparator #232
+
 ## 1.1.1
 
 * Fix when `flutter build macos` for Manager, it shows error: `Undefined symbols for architecture arm64: "_g_players", referenced from: +[VideoOutlet outletForPlayer:withTextureRegistry:] in VideoOutlet.o` #221
