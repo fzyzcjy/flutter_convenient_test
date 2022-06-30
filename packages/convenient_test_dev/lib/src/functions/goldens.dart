@@ -52,17 +52,49 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
   // NOTE MODIFIED from [super.compare]
   @override
   Future<bool> compare(Uint8List imageBytes, Uri golden) async {
+    final config = GoldenConfig.fromUri(golden);
+
     // NOTE MODIFIED [GoldenFileComparator.compareLists] -> [myCompareLists]
-    final ComparisonResult result = await myCompareLists(
+    final MyComparisonResult result = await myCompareLists(
       imageBytes,
       await getGoldenBytes(golden),
     );
 
-    if (!result.passed) {
-      final String error = await generateFailureOutput(result, golden, basedir);
+    // ref https://github.com/flutter/flutter/pull/77014#issuecomment-1048896776
+    if (!config.check(result)) {
+      // print('hi ${basedir.path}');
+      final String error =
+          // ignore: prefer_interpolation_to_compose_strings
+          await generateFailureOutput(result, golden, basedir) + '\npixelDiffHistogram=${result.pixelDiffHistogram}';
       throw FlutterError(error);
     }
-    return result.passed;
+    if (!result.passed) {
+      Log.d(
+          _kTag,
+          'A tolerable difference of '
+          'diffPercent=${result.diffPercent * 100}% '
+          'with pixelDiffHistogram=${result.pixelDiffHistogram} '
+          'was found when comparing $golden.');
+    }
+    return true;
+
+    // if (!result.passed) {
+    //   final String error = await generateFailureOutput(result, golden, basedir);
+    //   throw FlutterError(error);
+    // }
+    // return result.passed;
+  }
+
+  @override
+  Future<void> update(Uri golden, Uint8List imageBytes) async {
+    final config = GoldenConfig.fromUri(golden);
+
+    if (!config.shouldUpdate) {
+      Log.d(_kTag, 'update() is requested but skipped (golden=$golden)');
+      return;
+    }
+
+    await super.update(golden, imageBytes);
   }
 
   // NOTE reference: [super.generateFailureOutput], but this function is (almost) completely rewritten
@@ -89,24 +121,55 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
     });
   }
 
-  static Future<ComparisonResult> myCompareLists(List<int> test, List<int> master) async {
-    const _kTag = 'myCompareLists';
+  static Future<MyComparisonResult> myCompareLists(List<int> test, List<int> master) async =>
+      _compareListsAllowSizeDiffer(test, master);
+}
 
-    final raw = await _myCompareLists(test, master);
+Future<MyComparisonResult> _compareListsAllowSizeDiffer(List<int> test, List<int> master) async {
+  const _kTag = 'myCompareLists';
 
-    if (!raw.passed && (raw.error ?? '').startsWith('Pixel test failed, image sizes do not match.')) {
-      Log.d(_kTag, 'see result.error=${raw.error}, thus change image size and re-compare');
-      return _compareListsGivenSizeDiffer(test, master, raw);
-    }
+  final raw = await _compareListsWithExtraOutput(test, master);
 
-    return raw;
+  if (!raw.passed && (raw.error ?? '').startsWith('Pixel test failed, image sizes do not match.')) {
+    Log.d(_kTag, 'see result.error=${raw.error}, thus change image size and re-compare');
+    return _compareListsGivenSizeDiffer(test, master, raw);
   }
+
+  return raw;
+}
+
+Future<MyComparisonResult> _compareListsGivenSizeDiffer(
+    List<int> testRaw, List<int> masterRaw, ComparisonResult rawResult) async {
+  final testRawImage = image.decodeImage(testRaw)!;
+  final masterRawImage = image.decodeImage(masterRaw)!;
+
+  final targetWidth = max(testRawImage.width, masterRawImage.width);
+  final targetHeight = max(testRawImage.height, masterRawImage.height);
+
+  List<int> padAndEncode(image.Image src) {
+    final dst = image.Image(targetWidth, targetHeight);
+    image.copyInto(dst, src, blend: false);
+    return image.encodeNamedImage(dst, 'temp.png')!;
+  }
+
+  final testTarget = padAndEncode(testRawImage);
+  final masterTarget = padAndEncode(masterRawImage);
+
+  final secondResult = await _compareListsWithExtraOutput(testTarget, masterTarget);
+
+  return MyComparisonResult(
+    passed: false,
+    diffPercent: secondResult.diffPercent,
+    error: '${secondResult.error}\nOriginal result: ${rawResult.error}',
+    diffs: secondResult.diffs,
+    pixelDiffHistogram: secondResult.pixelDiffHistogram,
+  );
 }
 
 // NOTE MODIFIED from [compareLists]
 /// Returns a [MyComparisonResult] to describe the pixel differential of the
 /// [test] and [master] image bytes provided.
-Future<MyComparisonResult> _myCompareLists(List<int>? test, List<int>? master) async {
+Future<MyComparisonResult> _compareListsWithExtraOutput(List<int>? test, List<int>? master) async {
   if (identical(test, master)) {
     return MyComparisonResult(
       passed: true,
@@ -268,33 +331,6 @@ class GoldenFailureInfo {
       await logSnapshot(name: entry.key, image: entry.value);
     }
   }
-}
-
-Future<ComparisonResult> _compareListsGivenSizeDiffer(
-    List<int> testRaw, List<int> masterRaw, ComparisonResult rawResult) async {
-  final testRawImage = image.decodeImage(testRaw)!;
-  final masterRawImage = image.decodeImage(masterRaw)!;
-
-  final targetWidth = max(testRawImage.width, masterRawImage.width);
-  final targetHeight = max(testRawImage.height, masterRawImage.height);
-
-  List<int> padAndEncode(image.Image src) {
-    final dst = image.Image(targetWidth, targetHeight);
-    image.copyInto(dst, src, blend: false);
-    return image.encodeNamedImage(dst, 'temp.png')!;
-  }
-
-  final testTarget = padAndEncode(testRawImage);
-  final masterTarget = padAndEncode(masterRawImage);
-
-  final secondResult = await GoldenFileComparator.compareLists(testTarget, masterTarget);
-
-  return ComparisonResult(
-    passed: false,
-    diffPercent: secondResult.diffPercent,
-    error: '${secondResult.error}\nOriginal result: ${rawResult.error}',
-    diffs: secondResult.diffs,
-  );
 }
 
 class MyComparisonResult extends ComparisonResult {
