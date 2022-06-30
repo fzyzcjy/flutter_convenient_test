@@ -6,6 +6,7 @@ import 'package:convenient_test_dev/src/functions/binding.dart';
 import 'package:convenient_test_dev/src/functions/goldens.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/compile_time_config.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
@@ -15,6 +16,7 @@ import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
+import 'package:path/path.dart' as path;
 
 class ConvenientTest {
   final WidgetTester tester;
@@ -122,7 +124,9 @@ Future<void> _runModeIntegrationTest(
 void _configureGoldens(WorkerCurrentRunConfig_IntegrationTest currentRunConfig) {
   const _kTag = 'ConfigureGoldens';
 
-  goldenFileComparator = EnhancedLocalFileComparator(captureFailure: true);
+  goldenFileComparator = EnhancedLocalFileComparator(
+      Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart')),
+      captureFailure: true);
   autoUpdateGoldenFiles = currentRunConfig.autoUpdateGoldenFiles;
 
   Log.d(
