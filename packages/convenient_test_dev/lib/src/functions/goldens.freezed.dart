@@ -22,8 +22,8 @@ GoldenConfig _$GoldenConfigFromJson(Map<String, dynamic> json) {
       return GoldenConfigSecondary.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'GoldenConfig',
-          'Invalid union type "${json['runtimeType']}"!');
+      throw CheckedFromJsonException(
+          json, 'runtimeType', 'GoldenConfig', 'Invalid union type "${json['runtimeType']}"!');
   }
 }
 
@@ -32,24 +32,21 @@ mixin _$GoldenConfig {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() primary,
-    required TResult Function(GoldenTolerationEntry? maxToleration,
-            List<GoldenTolerationEntry>? greaterThanToleration)
+    required TResult Function(GoldenTolerationEntry? maxToleration, List<GoldenTolerationEntry>? greaterThanToleration)
         secondary,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? primary,
-    TResult Function(GoldenTolerationEntry? maxToleration,
-            List<GoldenTolerationEntry>? greaterThanToleration)?
+    TResult Function(GoldenTolerationEntry? maxToleration, List<GoldenTolerationEntry>? greaterThanToleration)?
         secondary,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? primary,
-    TResult Function(GoldenTolerationEntry? maxToleration,
-            List<GoldenTolerationEntry>? greaterThanToleration)?
+    TResult Function(GoldenTolerationEntry? maxToleration, List<GoldenTolerationEntry>? greaterThanToleration)?
         secondary,
     required TResult orElse(),
   }) =>
@@ -78,8 +75,7 @@ mixin _$GoldenConfig {
 
 /// @nodoc
 abstract class $GoldenConfigCopyWith<$Res> {
-  factory $GoldenConfigCopyWith(
-          GoldenConfig value, $Res Function(GoldenConfig) then) =
+  factory $GoldenConfigCopyWith(GoldenConfig value, $Res Function(GoldenConfig) then) =
       _$GoldenConfigCopyWithImpl<$Res>;
 }
 
@@ -94,17 +90,14 @@ class _$GoldenConfigCopyWithImpl<$Res> implements $GoldenConfigCopyWith<$Res> {
 
 /// @nodoc
 abstract class _$$GoldenConfigPrimaryCopyWith<$Res> {
-  factory _$$GoldenConfigPrimaryCopyWith(_$GoldenConfigPrimary value,
-          $Res Function(_$GoldenConfigPrimary) then) =
+  factory _$$GoldenConfigPrimaryCopyWith(_$GoldenConfigPrimary value, $Res Function(_$GoldenConfigPrimary) then) =
       __$$GoldenConfigPrimaryCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$GoldenConfigPrimaryCopyWithImpl<$Res>
-    extends _$GoldenConfigCopyWithImpl<$Res>
+class __$$GoldenConfigPrimaryCopyWithImpl<$Res> extends _$GoldenConfigCopyWithImpl<$Res>
     implements _$$GoldenConfigPrimaryCopyWith<$Res> {
-  __$$GoldenConfigPrimaryCopyWithImpl(
-      _$GoldenConfigPrimary _value, $Res Function(_$GoldenConfigPrimary) _then)
+  __$$GoldenConfigPrimaryCopyWithImpl(_$GoldenConfigPrimary _value, $Res Function(_$GoldenConfigPrimary) _then)
       : super(_value, (v) => _then(v as _$GoldenConfigPrimary));
 
   @override
@@ -113,14 +106,10 @@ class __$$GoldenConfigPrimaryCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$GoldenConfigPrimary
-    with DiagnosticableTreeMixin
-    implements GoldenConfigPrimary {
-  const _$GoldenConfigPrimary({final String? $type})
-      : $type = $type ?? 'primary';
+class _$GoldenConfigPrimary with DiagnosticableTreeMixin implements GoldenConfigPrimary {
+  const _$GoldenConfigPrimary({final String? $type}) : $type = $type ?? 'primary';
 
-  factory _$GoldenConfigPrimary.fromJson(Map<String, dynamic> json) =>
-      _$$GoldenConfigPrimaryFromJson(json);
+  factory _$GoldenConfigPrimary.fromJson(Map<String, dynamic> json) => _$$GoldenConfigPrimaryFromJson(json);
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -138,8 +127,7 @@ class _$GoldenConfigPrimary
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GoldenConfigPrimary);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$GoldenConfigPrimary);
   }
 
   @JsonKey(ignore: true)
@@ -150,8 +138,7 @@ class _$GoldenConfigPrimary
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() primary,
-    required TResult Function(GoldenTolerationEntry? maxToleration,
-            List<GoldenTolerationEntry>? greaterThanToleration)
+    required TResult Function(GoldenTolerationEntry? maxToleration, List<GoldenTolerationEntry>? greaterThanToleration)
         secondary,
   }) {
     return primary();
@@ -161,8 +148,7 @@ class _$GoldenConfigPrimary
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? primary,
-    TResult Function(GoldenTolerationEntry? maxToleration,
-            List<GoldenTolerationEntry>? greaterThanToleration)?
+    TResult Function(GoldenTolerationEntry? maxToleration, List<GoldenTolerationEntry>? greaterThanToleration)?
         secondary,
   }) {
     return primary?.call();
@@ -172,8 +158,7 @@ class _$GoldenConfigPrimary
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? primary,
-    TResult Function(GoldenTolerationEntry? maxToleration,
-            List<GoldenTolerationEntry>? greaterThanToleration)?
+    TResult Function(GoldenTolerationEntry? maxToleration, List<GoldenTolerationEntry>? greaterThanToleration)?
         secondary,
     required TResult orElse(),
   }) {
@@ -223,26 +208,20 @@ class _$GoldenConfigPrimary
 abstract class GoldenConfigPrimary implements GoldenConfig {
   const factory GoldenConfigPrimary() = _$GoldenConfigPrimary;
 
-  factory GoldenConfigPrimary.fromJson(Map<String, dynamic> json) =
-      _$GoldenConfigPrimary.fromJson;
+  factory GoldenConfigPrimary.fromJson(Map<String, dynamic> json) = _$GoldenConfigPrimary.fromJson;
 }
 
 /// @nodoc
 abstract class _$$GoldenConfigSecondaryCopyWith<$Res> {
-  factory _$$GoldenConfigSecondaryCopyWith(_$GoldenConfigSecondary value,
-          $Res Function(_$GoldenConfigSecondary) then) =
+  factory _$$GoldenConfigSecondaryCopyWith(_$GoldenConfigSecondary value, $Res Function(_$GoldenConfigSecondary) then) =
       __$$GoldenConfigSecondaryCopyWithImpl<$Res>;
-  $Res call(
-      {GoldenTolerationEntry? maxToleration,
-      List<GoldenTolerationEntry>? greaterThanToleration});
+  $Res call({GoldenTolerationEntry? maxToleration, List<GoldenTolerationEntry>? greaterThanToleration});
 }
 
 /// @nodoc
-class __$$GoldenConfigSecondaryCopyWithImpl<$Res>
-    extends _$GoldenConfigCopyWithImpl<$Res>
+class __$$GoldenConfigSecondaryCopyWithImpl<$Res> extends _$GoldenConfigCopyWithImpl<$Res>
     implements _$$GoldenConfigSecondaryCopyWith<$Res> {
-  __$$GoldenConfigSecondaryCopyWithImpl(_$GoldenConfigSecondary _value,
-      $Res Function(_$GoldenConfigSecondary) _then)
+  __$$GoldenConfigSecondaryCopyWithImpl(_$GoldenConfigSecondary _value, $Res Function(_$GoldenConfigSecondary) _then)
       : super(_value, (v) => _then(v as _$GoldenConfigSecondary));
 
   @override
@@ -268,18 +247,13 @@ class __$$GoldenConfigSecondaryCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$GoldenConfigSecondary
-    with DiagnosticableTreeMixin
-    implements GoldenConfigSecondary {
+class _$GoldenConfigSecondary with DiagnosticableTreeMixin implements GoldenConfigSecondary {
   const _$GoldenConfigSecondary(
-      {this.maxToleration,
-      final List<GoldenTolerationEntry>? greaterThanToleration,
-      final String? $type})
+      {this.maxToleration, final List<GoldenTolerationEntry>? greaterThanToleration, final String? $type})
       : _greaterThanToleration = greaterThanToleration,
         $type = $type ?? 'secondary';
 
-  factory _$GoldenConfigSecondary.fromJson(Map<String, dynamic> json) =>
-      _$$GoldenConfigSecondaryFromJson(json);
+  factory _$GoldenConfigSecondary.fromJson(Map<String, dynamic> json) => _$$GoldenConfigSecondaryFromJson(json);
 
   @override
   final GoldenTolerationEntry? maxToleration;
@@ -306,8 +280,7 @@ class _$GoldenConfigSecondary
     properties
       ..add(DiagnosticsProperty('type', 'GoldenConfig.secondary'))
       ..add(DiagnosticsProperty('maxToleration', maxToleration))
-      ..add(
-          DiagnosticsProperty('greaterThanToleration', greaterThanToleration));
+      ..add(DiagnosticsProperty('greaterThanToleration', greaterThanToleration));
   }
 
   @override
@@ -315,31 +288,25 @@ class _$GoldenConfigSecondary
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GoldenConfigSecondary &&
-            const DeepCollectionEquality()
-                .equals(other.maxToleration, maxToleration) &&
-            const DeepCollectionEquality()
-                .equals(other._greaterThanToleration, _greaterThanToleration));
+            const DeepCollectionEquality().equals(other.maxToleration, maxToleration) &&
+            const DeepCollectionEquality().equals(other._greaterThanToleration, _greaterThanToleration));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(maxToleration),
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(maxToleration),
       const DeepCollectionEquality().hash(_greaterThanToleration));
 
   @JsonKey(ignore: true)
   @override
   _$$GoldenConfigSecondaryCopyWith<_$GoldenConfigSecondary> get copyWith =>
-      __$$GoldenConfigSecondaryCopyWithImpl<_$GoldenConfigSecondary>(
-          this, _$identity);
+      __$$GoldenConfigSecondaryCopyWithImpl<_$GoldenConfigSecondary>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() primary,
-    required TResult Function(GoldenTolerationEntry? maxToleration,
-            List<GoldenTolerationEntry>? greaterThanToleration)
+    required TResult Function(GoldenTolerationEntry? maxToleration, List<GoldenTolerationEntry>? greaterThanToleration)
         secondary,
   }) {
     return secondary(maxToleration, greaterThanToleration);
@@ -349,8 +316,7 @@ class _$GoldenConfigSecondary
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? primary,
-    TResult Function(GoldenTolerationEntry? maxToleration,
-            List<GoldenTolerationEntry>? greaterThanToleration)?
+    TResult Function(GoldenTolerationEntry? maxToleration, List<GoldenTolerationEntry>? greaterThanToleration)?
         secondary,
   }) {
     return secondary?.call(maxToleration, greaterThanToleration);
@@ -360,8 +326,7 @@ class _$GoldenConfigSecondary
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? primary,
-    TResult Function(GoldenTolerationEntry? maxToleration,
-            List<GoldenTolerationEntry>? greaterThanToleration)?
+    TResult Function(GoldenTolerationEntry? maxToleration, List<GoldenTolerationEntry>? greaterThanToleration)?
         secondary,
     required TResult orElse(),
   }) {
@@ -410,18 +375,13 @@ class _$GoldenConfigSecondary
 
 abstract class GoldenConfigSecondary implements GoldenConfig {
   const factory GoldenConfigSecondary(
-          {final GoldenTolerationEntry? maxToleration,
-          final List<GoldenTolerationEntry>? greaterThanToleration}) =
-      _$GoldenConfigSecondary;
+      {final GoldenTolerationEntry? maxToleration,
+      final List<GoldenTolerationEntry>? greaterThanToleration}) = _$GoldenConfigSecondary;
 
-  factory GoldenConfigSecondary.fromJson(Map<String, dynamic> json) =
-      _$GoldenConfigSecondary.fromJson;
+  factory GoldenConfigSecondary.fromJson(Map<String, dynamic> json) = _$GoldenConfigSecondary.fromJson;
 
-  GoldenTolerationEntry? get maxToleration =>
-      throw _privateConstructorUsedError;
-  List<GoldenTolerationEntry>? get greaterThanToleration =>
-      throw _privateConstructorUsedError;
+  GoldenTolerationEntry? get maxToleration => throw _privateConstructorUsedError;
+  List<GoldenTolerationEntry>? get greaterThanToleration => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$$GoldenConfigSecondaryCopyWith<_$GoldenConfigSecondary> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$GoldenConfigSecondaryCopyWith<_$GoldenConfigSecondary> get copyWith => throw _privateConstructorUsedError;
 }
