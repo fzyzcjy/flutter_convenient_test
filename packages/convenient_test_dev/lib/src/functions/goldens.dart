@@ -14,8 +14,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image/image.dart' as image;
 import 'package:path/path.dart' as path;
 
-part 'goldens.freezed.dart';
-
 part 'goldens.g.dart';
 
 @immutable
@@ -96,7 +94,7 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
   Future<void> update(Uri golden, Uint8List imageBytes) async {
     final config = GoldenConfig.fromUri(golden);
 
-    if (!config.shouldUpdate) {
+    if (!config.allowUpdate) {
       Log.d(_kTag, 'update() is requested but skipped (golden=$golden)');
       return;
     }
@@ -380,21 +378,39 @@ class SimpleHistogram {
   }
 }
 
-@freezed
-class GoldenConfig with _$GoldenConfig {
-  const factory GoldenConfig.primary() = GoldenConfigPrimary;
+@JsonSerializable()
+@immutable
+class GoldenConfig {
+  final bool allowUpdate;
+  final GoldenTolerationEntry? maxToleration;
+  final List<GoldenTolerationEntry>? greaterThanToleration;
 
-  const factory GoldenConfig.secondary({
-    GoldenTolerationEntry? maxToleration,
-    List<GoldenTolerationEntry>? greaterThanToleration,
-  }) = GoldenConfigSecondary;
+  const GoldenConfig({
+    required this.allowUpdate,
+    this.maxToleration,
+    this.greaterThanToleration,
+  });
+
+  const GoldenConfig.allowUpdate({
+    this.maxToleration,
+    this.greaterThanToleration,
+  }) : allowUpdate = true;
+
+  const GoldenConfig.disallowUpdate({
+    this.maxToleration,
+    this.greaterThanToleration,
+  }) : allowUpdate = false;
+
+  factory GoldenConfig.fromUri(Uri golden) {
+    final configJson = golden.queryParameters['config'];
+    return configJson == null
+        ? const GoldenConfig.allowUpdate()
+        : GoldenConfig.fromJson(jsonDecode(configJson) as Map<String, Object?>);
+  }
 
   factory GoldenConfig.fromJson(Map<String, dynamic> json) => _$GoldenConfigFromJson(json);
 
-  static GoldenConfig? fromUri(Uri golden) {
-    final configJson = golden.queryParameters['config'];
-    return configJson == null ? null : GoldenConfig.fromJson(jsonDecode(configJson) as Map<String, Object?>);
-  }
+  Map<String, dynamic> toJson() => _$GoldenConfigToJson(this);
 }
 
 @JsonSerializable()
@@ -408,34 +424,20 @@ class GoldenTolerationEntry {
     required this.countPercent,
   });
 
+  static GoldenConfig? fromUri(Uri golden) {
+    final configJson = golden.queryParameters['config'];
+    return configJson == null ? null : GoldenConfig.fromJson(jsonDecode(configJson) as Map<String, Object?>);
+  }
+
   factory GoldenTolerationEntry.fromJson(Map<String, dynamic> json) => _$GoldenTolerationEntryFromJson(json);
 
   Map<String, dynamic> toJson() => _$GoldenTolerationEntryToJson(this);
 }
 
-extension on GoldenConfig? {
+extension on GoldenConfig {
+  static const _kTag = 'GoldenConfig';
+
   bool check(MyComparisonResult result) {
-    final that = this;
-    if (that is GoldenConfigSecondary) return that.checkToleration(result);
-    return result.passed;
-  }
-
-  Uri toUri(String path) {
-    final that = this;
-    return Uri.file(path).replace(queryParameters: that == null ? null : <String, Object?>{'config': jsonEncode(that)});
-  }
-
-  bool get shouldUpdate {
-    final that = this;
-    if (that is GoldenConfigSecondary) return false;
-    return true;
-  }
-}
-
-extension on GoldenConfigSecondary {
-  static const _kTag = 'GoldenConfigSecondary';
-
-  bool checkToleration(MyComparisonResult result) {
     final pixelDiffHistogram = result.pixelDiffHistogram;
 
     if (result.passed) return true;
@@ -464,5 +466,12 @@ extension on GoldenConfigSecondary {
       }
     }
     return true;
+  }
+}
+
+extension on GoldenConfig? {
+  Uri toUri(String path) {
+    final that = this;
+    return Uri.file(path).replace(queryParameters: that == null ? null : <String, Object?>{'config': jsonEncode(that)});
   }
 }
