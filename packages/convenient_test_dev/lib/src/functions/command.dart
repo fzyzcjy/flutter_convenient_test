@@ -116,7 +116,7 @@ Future<void> _expectWithRetry(
         );
         await logSnapshot(name: 'failed');
 
-        await MyLocalFileComparator.instance.lastFailure?.dumpToLogSnapshot(logSnapshot);
+        await EnhancedLocalFileComparator.instance.lastFailure?.dumpToLogSnapshot(logSnapshot);
 
         rethrow;
       }

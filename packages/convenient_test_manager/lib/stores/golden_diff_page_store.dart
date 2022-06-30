@@ -54,7 +54,7 @@ abstract class _GoldenDiffPageStore with Store {
     final diffFileInfos = await Stream.fromIterable(diffFilePaths).asyncMap((path) async {
       final originalContent = Uint8List.fromList(await git.show(ref: 'HEAD', filePath: path));
       final newContent = await File(p.join(gitRepo, path)).readAsBytes();
-      final comparisonResult = await MyLocalFileComparator.myCompareLists(originalContent, newContent);
+      final comparisonResult = await EnhancedLocalFileComparator.myCompareLists(originalContent, newContent);
 
       return GitDiffFileInfo(
         path: path,

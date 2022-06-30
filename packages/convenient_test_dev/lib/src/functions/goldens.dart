@@ -26,15 +26,16 @@ class GoldenMatcherGenerator {
   String _generateKey(String stem) => '$folder/$stem.$extension';
 }
 
-class MyLocalFileComparator extends LocalFileComparator {
-  static const _kTag = 'MyLocalFileComparator';
+class EnhancedLocalFileComparator extends LocalFileComparator {
+  static const _kTag = 'EnhancedLocalFileComparator';
 
-  static MyLocalFileComparator get instance => goldenFileComparator as MyLocalFileComparator;
+  static EnhancedLocalFileComparator get instance => goldenFileComparator as EnhancedLocalFileComparator;
 
   GoldenFailureInfo? get lastFailure => _lastFailure;
   GoldenFailureInfo? _lastFailure;
 
-  MyLocalFileComparator() : super(Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart'))) {
+  EnhancedLocalFileComparator()
+      : super(Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart'))) {
     assert(basedir == Uri.directory(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test')));
   }
 
