@@ -1,6 +1,7 @@
 ## 1.2.0
 
 * Enhance golden comparator #232
+* Fix assertion failed when takeSnapshot: '!renderObject.debugNeedsPaint' is not true #234
 
 ## 1.1.1
 

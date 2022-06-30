@@ -2,8 +2,10 @@ import 'dart:ui' as ui;
 
 import 'package:collection/collection.dart';
 import 'package:convenient_test/convenient_test.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Future<List<int>> takeSnapshot() async {
@@ -28,6 +30,13 @@ Future<ui.Image> _captureImageFromElement(Element element) async {
   while (!renderObject.isRepaintBoundary) {
     renderObject = renderObject.parent! as RenderObject;
   }
+
+  // NOTE MODIFIED add to fix #234
+  while (renderObject.debugNeedsPaint) {
+    Log.i('captureImageFromElement', 'see debugNeedsPaint==true, thus wait until endOfFrame');
+    await SchedulerBinding.instance.endOfFrame;
+  }
+
   assert(!renderObject.debugNeedsPaint);
   final layer = renderObject.debugLayer! as OffsetLayer;
   return layer.toImage(renderObject.paintBounds);
