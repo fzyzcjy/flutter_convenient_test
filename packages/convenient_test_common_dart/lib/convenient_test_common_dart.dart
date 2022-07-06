@@ -5,6 +5,7 @@ export 'package:convenient_test_common_dart/src/common_dart/front_log.dart';
 export 'package:convenient_test_common_dart/src/common_dart/relations.dart';
 export 'package:convenient_test_common_dart/src/common_dart/single_running_executor.dart';
 export 'package:convenient_test_common_dart/src/consts.dart';
+export 'package:convenient_test_common_dart/src/devtools_app_utils.dart';
 export 'package:convenient_test_common_dart/src/id_generator.dart';
 export 'package:convenient_test_common_dart/src/misc.dart';
 export 'package:convenient_test_common_dart/src/protobuf/convenient_test.pb.dart';
