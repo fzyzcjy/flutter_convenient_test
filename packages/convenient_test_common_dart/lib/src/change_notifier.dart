@@ -1,6 +1,6 @@
 // copied from: change_notifier.dart
 
-// ignore_for_file: unused_catch_stack, parameter_assignments
+// ignore_for_file: unused_catch_stack, parameter_assignments, curly_braces_in_flow_control_structures
 
 import 'package:meta/meta.dart';
 
