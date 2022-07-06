@@ -21,6 +21,10 @@ Future<void> main(List<String> args) async {
   Log.i(_kTag, 'step awaitWorkerAvailable');
   await _awaitWorkerAvailable();
 
+  // to avoid #4575
+  Log.i(_kTag, 'step extra sleep to avoid too quickly hot-restart worker');
+  await Future<void>.delayed(const Duration(seconds: 6));
+
   Log.i(_kTag, 'step reloadInfo');
   GetIt.I.get<MiscDartService>().reloadInfo();
   await _awaitSuiteInfoNonEmpty();
