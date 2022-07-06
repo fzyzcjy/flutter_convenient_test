@@ -13,6 +13,9 @@ import 'package:mobx/mobx.dart';
 
 const _kTag = 'main';
 
+const kExitCodeFinishExecutionButHasFailure = 1;
+const kExitCodeWorkerDisappeared = 2;
+
 Future<void> main(List<String> args) async {
   Log.i(_kTag, 'main start');
 
@@ -72,10 +75,10 @@ Future<void> _monitorWorkerAvailable() async {
     if (!vmServiceWrapperService.hotRestartAvailable) {
       Log.e(
           _kTag,
-          'monitorWorkerAvailable see hot restart not available, thus exit '
+          'monitorWorkerAvailable see hot restart not available, thus exit with code=$kExitCodeWorkerDisappeared '
           '(vmServiceWrapperService.hotRestartAvailable=${vmServiceWrapperService.hotRestartAvailable}, '
           'vmServiceWrapperService.connected=${vmServiceWrapperService.connected})');
-      exit(1);
+      exit(kExitCodeWorkerDisappeared);
     }
 
     await Future<void>.delayed(const Duration(seconds: 5));
@@ -114,13 +117,15 @@ int _calcExitCode() {
   if (stateCountMap[SimplifiedStateEnum.pending] > 0) throw AssertionError;
 
   if (stateCountMap[SimplifiedStateEnum.completeSuccessButFlaky] > 0) {
-    Log.w('convenient_test_manager_dart', 'See flaky tests.');
+    Log.w(_kTag, 'See flaky tests.');
   }
 
   final hasFailure = stateCountMap[SimplifiedStateEnum.completeFailureOrError] > 0;
   if (hasFailure) {
-    Log.w('convenient_test_manager_dart', 'See failed tests.');
+    Log.w(_kTag, 'See failed tests.');
   }
 
-  return hasFailure ? 1 : 0;
+  final ans = hasFailure ? kExitCodeFinishExecutionButHasFailure : 0;
+  Log.d(_kTag, 'calcExitCode=$ans');
+  return ans;
 }
