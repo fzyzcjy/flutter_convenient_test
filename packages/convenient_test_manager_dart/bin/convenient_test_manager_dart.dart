@@ -22,11 +22,11 @@ Future<void> main(List<String> args) async {
   await _awaitWorkerAvailable();
 
   Log.i(_kTag, 'step reloadInfo');
-  await GetIt.I.get<MiscDartService>().reloadInfo();
+  GetIt.I.get<MiscDartService>().reloadInfo();
   await _awaitSuiteInfoNonEmpty();
 
   Log.i(_kTag, 'step hotRestartAndRunTests');
-  await GetIt.I.get<MiscDartService>().hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
+  GetIt.I.get<MiscDartService>().hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
 
   StatusPeriodicLogger.run();
 

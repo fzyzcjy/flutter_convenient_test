@@ -69,9 +69,9 @@ abstract class _WorkerSuperRunStore with Store {
     reaction((_) => isolationMode, _handleIsolationModeChange);
   }
 
-  Future<void> _handleIsolationModeChange(bool isolationMode) async {
+  void _handleIsolationModeChange(bool isolationMode) {
     Log.d(_kTag, 'see isolationMode($isolationMode) changed, thus reloadInfo to make currSuperRunController updated');
-    await GetIt.I.get<MiscDartService>().reloadInfo();
+    GetIt.I.get<MiscDartService>().reloadInfo();
     assert(isolationMode
         ? currSuperRunController is _WorkerSuperRunControllerIntegrationTestIsolationMode
         : currSuperRunController is _WorkerSuperRunControllerIntegrationTestClassicalMode);
@@ -284,7 +284,7 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
 
     if (state is! _ITIMStateFinished) {
       Log.d(_kTag, 'call hot restart');
-      GetIt.I.get<VmServiceWrapperService>().hotRestart();
+      GetIt.I.get<VmServiceWrapperService>().hotRestartThrottled();
     }
   }
 

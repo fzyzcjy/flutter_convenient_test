@@ -43,7 +43,7 @@ class VmServiceWrapperService {
       _manager.connected && _manager.registeredMethodsForService.keys.contains(_kHotRestartServiceName);
 
   // ref devtools/packages/devtools_app :: HotRestartButton
-  Future<void> hotRestart() async {
+  Future<void> hotRestartRaw() async {
     await _hotRestartActing.withPlusOneAsync(() async {
       Log.i(_kTag, 'hotRestart start');
       // p.s. devtool's code reads isolateId and ensure it is sent to main isolate.
@@ -52,6 +52,16 @@ class VmServiceWrapperService {
       Log.i(_kTag, 'hotRestart end resp=${resp.json}');
     });
   }
+
+  late final _hotRestartThrottledExecutor = SingleRunningExecutor<void>((_) async {
+    await hotRestartRaw();
+
+    // NOTE deliberately wait a few extra seconds to fix #188
+    Log.d(_kTag, 'hotRestartThrottledExecutor deliberately extra wait');
+    await Future<void>.delayed(const Duration(seconds: 6));
+  });
+
+  void hotRestartThrottled() => _hotRestartThrottledExecutor.trigger(arg: null, reason: '');
 }
 
 class _MyLog extends vm_service.Log {

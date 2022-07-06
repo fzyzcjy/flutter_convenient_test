@@ -13,26 +13,26 @@ import 'package:get_it/get_it.dart';
 class MiscDartService {
   static const _kTag = 'MiscDartService';
 
-  Future<void> hotRestartAndRunTests({required String filterNameRegex}) async {
+  void hotRestartAndRunTests({required String filterNameRegex}) {
     Log.d(_kTag, 'hotRestartAndRunTests filterNameRegex=$filterNameRegex');
     GetIt.I.get<WorkerSuperRunStore>().setControllerIntegrationTest(filterNameRegex: filterNameRegex);
-    await GetIt.I.get<VmServiceWrapperService>().hotRestart();
+    GetIt.I.get<VmServiceWrapperService>().hotRestartThrottled();
   }
 
-  Future<void> hotRestartAndRunInAppMode() async {
+  void hotRestartAndRunInAppMode() {
     Log.d(_kTag, 'hotRestartAndRunInAppMode');
     GetIt.I.get<WorkerSuperRunStore>().setControllerInteractiveApp();
-    await GetIt.I.get<VmServiceWrapperService>().hotRestart();
+    GetIt.I.get<VmServiceWrapperService>().hotRestartThrottled();
   }
 
-  Future<void> reloadInfo() async {
+  void reloadInfo() {
     GetIt.I.get<WorkerSuperRunStore>().setControllerIntegrationTest(filterNameRegex: RegexUtils.kMatchNothing);
-    await GetIt.I.get<VmServiceWrapperService>().hotRestart();
+    GetIt.I.get<VmServiceWrapperService>().hotRestartThrottled();
   }
 
-  Future<void> haltWorker() async {
+  void haltWorker() {
     GetIt.I.get<WorkerSuperRunStore>().setControllerHalt();
-    await GetIt.I.get<VmServiceWrapperService>().hotRestart();
+    GetIt.I.get<VmServiceWrapperService>().hotRestartThrottled();
   }
 
   void clearAll() {

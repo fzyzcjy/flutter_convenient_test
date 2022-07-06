@@ -7,9 +7,9 @@ import 'package:get_it/get_it.dart';
 
 class MiscFlutterService extends MiscDartService {
   @override
-  Future<void> reloadInfo() async {
+  void reloadInfo() {
     GetIt.I.get<HighlightStore>().enableAutoExpand = true;
-    await super.reloadInfo();
+    super.reloadInfo();
   }
 
   @override
