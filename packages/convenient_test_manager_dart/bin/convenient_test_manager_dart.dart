@@ -21,6 +21,8 @@ Future<void> main(List<String> args) async {
   Log.i(_kTag, 'step awaitWorkerAvailable');
   await _awaitWorkerAvailable();
 
+  unawaited(_monitorWorkerAvailable());
+
   // to avoid #4575
   Log.i(_kTag, 'step extra sleep to avoid too quickly hot-restart worker');
   await Future<void>.delayed(const Duration(seconds: 6));
@@ -59,6 +61,24 @@ Future<void> _awaitWorkerAvailable() async {
     }
 
     await Future<void>.delayed(const Duration(seconds: 3));
+  }
+}
+
+Future<void> _monitorWorkerAvailable() async {
+  final vmServiceWrapperService = GetIt.I.get<VmServiceWrapperService>();
+
+  while (true) {
+    Log.i(_kTag, 'monitorWorkerAvailable check');
+    if (!vmServiceWrapperService.hotRestartAvailable) {
+      Log.e(
+          _kTag,
+          'monitorWorkerAvailable see hot restart not available, thus exit '
+          '(vmServiceWrapperService.hotRestartAvailable=${vmServiceWrapperService.hotRestartAvailable}, '
+          'vmServiceWrapperService.connected=${vmServiceWrapperService.connected})');
+      exit(1);
+    }
+
+    await Future<void>.delayed(const Duration(seconds: 5));
   }
 }
 
