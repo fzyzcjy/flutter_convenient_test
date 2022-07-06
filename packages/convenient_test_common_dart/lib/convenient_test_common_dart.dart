@@ -1,3 +1,4 @@
+export 'package:convenient_test_common_dart/src/change_notifier.dart';
 export 'package:convenient_test_common_dart/src/common_dart/collections.dart';
 export 'package:convenient_test_common_dart/src/common_dart/counter.dart';
 export 'package:convenient_test_common_dart/src/common_dart/front_log.dart';

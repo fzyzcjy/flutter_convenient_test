@@ -36,8 +36,6 @@ class VmServiceWrapperService {
   bool get hotRestartActing => _hotRestartActing.positive;
   final _hotRestartActing = ObservableCounter();
 
-  static const _kHotRestartServiceName = 'hotRestart';
-
   @computed
   bool get hotRestartAvailable =>
       _manager.connected && _manager.registeredMethodsForService.keys.contains(_kHotRestartServiceName);
@@ -45,11 +43,7 @@ class VmServiceWrapperService {
   // ref devtools/packages/devtools_app :: HotRestartButton
   Future<void> hotRestartRaw() async {
     await _hotRestartActing.withPlusOneAsync(() async {
-      Log.i(_kTag, 'hotRestart start');
-      // p.s. devtool's code reads isolateId and ensure it is sent to main isolate.
-      // Here we have not done that, but seems to work well already.
-      final resp = await _manager.callService(_kHotRestartServiceName);
-      Log.i(_kTag, 'hotRestart end resp=${resp.json}');
+      await _manager.performHotRestart();
     });
   }
 
@@ -92,6 +86,22 @@ abstract class __ServiceConnectionManager with Store {
   Map<String, List<String>> get registeredMethodsForService => _registeredMethodsForService;
   final _registeredMethodsForService = ObservableMap<String, List<String>>();
 
+  static const _kHotRestartServiceName = 'hotRestart';
+
+  final isolateManager = IsolateManager();
+
+  /// This can throw an [RPCError].
+  Future<void> performHotRestart() async {
+    Log.i(_kTag, 'hotRestart start');
+    final resp = await _callServiceOnMainIsolate(_kHotRestartServiceName);
+    Log.i(_kTag, 'hotRestart end resp=${resp.json}');
+  }
+
+  Future<Response> _callServiceOnMainIsolate(String name) async {
+    final isolate = await whenValueNonNull(isolateManager.mainIsolate);
+    return await callService(name, isolateId: isolate?.id);
+  }
+
   /// Call a service that is registered by exactly one client.
   Future<Response> callService(
     String name, {
@@ -133,4 +143,20 @@ abstract class __ServiceConnectionManager with Store {
       this.service = null;
     });
   }
+}
+
+// copied from: devtools_app utils.dart
+Future<T> whenValueNonNull<T>(ValueListenable<T> listenable) {
+  if (listenable.value != null) return Future.value(listenable.value);
+  final completer = Completer<T>();
+  void listener() {
+    final value = listenable.value;
+    if (value != null) {
+      completer.complete(value);
+      listenable.removeListener(listener);
+    }
+  }
+
+  listenable.addListener(listener);
+  return completer.future;
 }
