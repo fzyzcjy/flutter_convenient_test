@@ -40,7 +40,7 @@ Future<void> main(List<String> args) async {
   await _awaitSuperRunStatusTestAllDone();
 
   Log.i(_kTag, 'step exit');
-  exit(0);
+  exit(_calcExitCode());
 }
 
 Future<void> _awaitWorkerAvailable() async {
@@ -104,4 +104,23 @@ Future<void> _awaitSuperRunStatusTestAllDone() async {
   }
 
   await asyncWhen((_) => workerSuperRunStore.currSuperRunController.superRunStatus == WorkerSuperRunStatus.testAllDone);
+}
+
+int _calcExitCode() {
+  final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
+
+  final stateCountMap = suiteInfoStore.calcStateCountMap(suiteInfoStore.suiteInfo!.rootGroup);
+
+  if (stateCountMap[SimplifiedStateEnum.pending] > 0) throw AssertionError;
+
+  if (stateCountMap[SimplifiedStateEnum.completeSuccessButFlaky] > 0) {
+    Log.w('convenient_test_manager_dart', 'See flaky tests.');
+  }
+
+  final hasFailure = stateCountMap[SimplifiedStateEnum.completeFailureOrError] > 0;
+  if (hasFailure) {
+    Log.w('convenient_test_manager_dart', 'See failed tests.');
+  }
+
+  return hasFailure ? 1 : 0;
 }
