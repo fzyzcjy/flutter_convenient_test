@@ -61,7 +61,10 @@ class VmServiceWrapperService {
     await Future<void>.delayed(const Duration(seconds: 6));
   });
 
-  void hotRestartThrottled() => _hotRestartThrottledExecutor.trigger(arg: null, reason: '');
+  void hotRestartThrottled() {
+    Log.i(_kTag, 'hotRestartThrottled triggered');
+    _hotRestartThrottledExecutor.trigger(arg: null, reason: '');
+  }
 }
 
 class _MyLog extends vm_service.Log {
