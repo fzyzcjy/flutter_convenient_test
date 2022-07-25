@@ -118,6 +118,16 @@ Flaky is flaky, and we are aware of it. It is neither failed nor success, so you
 
 <!--[TODO screenshot: Several tests, one failed, one flaky, one success]-->
 
+### Golden utility
+
+* Customizable tolerations - allow a portion of pixels to mismatch golden image
+* Golden overview page - List and check all golden differences within one page with pan and zoom 
+* When a golden assertion fails, its image details will be also shown in the manager panel
+
+(To be documented more thoroughly later [https://github.com/fzyzcjy/flutter_convenient_test/issues/187](#187))
+
+<!--[TODO screenshot]-->
+
 ### CI / headless mode
 
 This tool can be run without GUI and only produce log data and exit code, making it suitable to be run in a CI. If you want to examine the details with GUI, just open the generated artifact in the GUI using `Load Report` button.
