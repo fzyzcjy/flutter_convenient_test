@@ -32,9 +32,11 @@ And also...
 
 https://user-images.githubusercontent.com/5236035/167066810-d0aa36ba-0113-4140-92f9-cec0a9e77ed1.mov
 
-## Have questions?
+## Stability
 
-Though used in production environment in my own 200kloc Flutter app, this package - especially the doc - is surely not yet perfect. Just [create an issue](https://github.com/fzyzcjy/flutter_convenient_test/issues) and I usually reply quite quickly.
+It has been used extensively in my own 200kloc Flutter app in production environment.
+
+P.S. Surely, this package - especially the doc - is not yet perfect. If having problems, just [create an issue](https://github.com/fzyzcjy/flutter_convenient_test/issues) and I usually reply quite quickly.
 
 ## 📚 Features
 
