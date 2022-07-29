@@ -132,6 +132,8 @@ Flaky is flaky, and we are aware of it. It is neither failed nor success, so you
 
 This tool can be run without GUI and only produce log data and exit code, making it suitable to be run in a CI. If you want to examine the details with GUI, just open the generated artifact in the GUI using `Load Report` button.
 
+// TODO: Add more doc about how to use it (informal doc here: https://github.com/fzyzcjy/flutter_convenient_test/issues/240)
+
 ### Run single test/group
 
 Tap "Run" icon button after each test or group to re-run *only* that test/group, without running anything else. All within seconds - no need to recompile like what the original test package did.
