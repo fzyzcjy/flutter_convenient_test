@@ -6,7 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class HomePageRawLogPanel extends StatelessWidget {
-  const HomePageRawLogPanel({Key? key}) : super(key: key);
+  const HomePageRawLogPanel({super.key});
 
   @override
   Widget build(BuildContext context) {

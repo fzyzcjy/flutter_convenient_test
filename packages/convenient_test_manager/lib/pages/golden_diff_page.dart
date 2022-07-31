@@ -4,7 +4,7 @@ import 'package:convenient_test_manager/components/golden_diff_page/header_panel
 import 'package:flutter/material.dart';
 
 class GoldenDiffPage extends StatelessWidget {
-  const GoldenDiffPage({Key? key}) : super(key: key);
+  const GoldenDiffPage({super.key});
 
   static const kRouteName = '/golden_diff';
 
@@ -17,7 +17,7 @@ class GoldenDiffPage extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({Key? key}) : super(key: key);
+  const _Body();
 
   @override
   Widget build(BuildContext context) {

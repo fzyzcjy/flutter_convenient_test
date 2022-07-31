@@ -6,7 +6,7 @@ class RotateAnimation extends StatefulWidget {
   final Widget child;
   final Duration duration;
 
-  const RotateAnimation({Key? key, required this.child, required this.duration}) : super(key: key);
+  const RotateAnimation({super.key, required this.child, required this.duration});
 
   @override
   _RotateAnimationState createState() => _RotateAnimationState();

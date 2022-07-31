@@ -11,7 +11,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class HomePageHeaderPanel extends StatelessWidget {
-  const HomePageHeaderPanel({Key? key}) : super(key: key);
+  const HomePageHeaderPanel({super.key});
 
   @override
   Widget build(BuildContext context) {

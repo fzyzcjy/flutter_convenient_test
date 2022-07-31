@@ -5,7 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class GoldenDiffPageHeaderPanel extends StatelessWidget {
-  const GoldenDiffPageHeaderPanel({Key? key}) : super(key: key);
+  const GoldenDiffPageHeaderPanel({super.key});
 
   @override
   Widget build(BuildContext context) {

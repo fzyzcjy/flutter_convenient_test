@@ -105,11 +105,11 @@ class GroupInfo extends GroupEntryInfo {
   final List<int> entryIds;
 
   const GroupInfo({
-    required int id,
-    required String name,
-    required int parentId,
+    required super.id,
+    required super.name,
+    required super.parentId,
     required this.entryIds,
-  }) : super(id: id, name: name, parentId: parentId);
+  });
 
   factory GroupInfo.fromProto(GroupInfoProto proto) => GroupInfo(
         id: proto.id.toInt(),
@@ -125,10 +125,10 @@ class GroupInfo extends GroupEntryInfo {
 @immutable
 class TestInfo extends GroupEntryInfo {
   const TestInfo({
-    required int id,
-    required String name,
-    required int parentId,
-  }) : super(id: id, name: name, parentId: parentId);
+    required super.id,
+    required super.name,
+    required super.parentId,
+  });
 
   factory TestInfo.fromProto(TestInfoProto proto) => TestInfo(
         id: proto.id.toInt(),

@@ -298,7 +298,7 @@ class TestInfoLogEntrySectionMetadata {
 class _RunTestButton extends StatelessWidget {
   final String filterNameRegex;
 
-  const _RunTestButton({Key? key, required this.filterNameRegex}) : super(key: key);
+  const _RunTestButton({required this.filterNameRegex});
 
   @override
   Widget build(BuildContext context) {

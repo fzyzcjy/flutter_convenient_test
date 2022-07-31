@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class HomePageCommandInfoPanel extends StatelessWidget {
-  const HomePageCommandInfoPanel({Key? key}) : super(key: key);
+  const HomePageCommandInfoPanel({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -116,7 +116,7 @@ class TFinderCommand extends TCommand {
   @protected
   final Finder finder;
 
-  TFinderCommand(ConvenientTest t, this.finder) : super(t);
+  TFinderCommand(super.t, this.finder);
 
   TFinderCommand.auto(this.finder) : super.auto();
 
@@ -216,7 +216,7 @@ class TFinderCommand extends TCommand {
 }
 
 class TRouteNameCommand extends TCommand {
-  TRouteNameCommand(ConvenientTest t) : super(t);
+  TRouteNameCommand(super.t);
 
   @override
   Object? getCurrentActual() {
@@ -239,7 +239,7 @@ class TRouteNameCommand extends TCommand {
 class TRawCommand extends TCommand {
   final Object? value;
 
-  TRawCommand(ConvenientTest t, this.value) : super(t);
+  TRawCommand(super.t, this.value);
 
   @override
   Object? getCurrentActual() => value;

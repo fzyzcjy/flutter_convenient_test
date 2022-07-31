@@ -10,10 +10,10 @@ class EnhancedSelectableText extends StatelessWidget {
 
   const EnhancedSelectableText(
     this.data, {
-    Key? key,
+    super.key,
     this.style,
     this.enableCopyAllButton = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -7,7 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class HomePageScreenshotPanel extends StatelessWidget {
-  const HomePageScreenshotPanel({Key? key}) : super(key: key);
+  const HomePageScreenshotPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +84,7 @@ class HomePageScreenshotPanel extends StatelessWidget {
                     const SizedBox(height: 4),
                     Expanded(
                       child: Center(
+                        // ignore: use_decorated_box
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey, width: 1),
@@ -137,6 +138,7 @@ class HomePageScreenshotPanel extends StatelessWidget {
                         Expanded(
                           child: ConstrainedBox(
                             constraints: const BoxConstraints(maxWidth: 48),
+                            // ignore: use_decorated_box
                             child: Container(
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.grey, width: 1),

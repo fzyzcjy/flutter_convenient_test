@@ -100,6 +100,7 @@ class Mark extends StatelessWidget {
           right: 0,
           bottom: 0,
           child: IgnorePointer(
+            // ignore: use_decorated_box
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(color: color, width: 1.0),

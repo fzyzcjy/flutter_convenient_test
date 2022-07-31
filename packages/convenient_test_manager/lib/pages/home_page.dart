@@ -11,7 +11,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   static const kRouteName = '/home';
 
@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({Key? key}) : super(key: key);
+  const _Body();
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HomePageMiscDialog extends StatelessWidget {
-  const HomePageMiscDialog({Key? key}) : super(key: key);
+  const HomePageMiscDialog({super.key});
 
   @override
   Widget build(BuildContext context) {

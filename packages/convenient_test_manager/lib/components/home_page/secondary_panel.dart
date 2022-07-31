@@ -8,7 +8,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class HomePageSecondaryPanel extends StatelessWidget {
-  const HomePageSecondaryPanel({Key? key}) : super(key: key);
+  const HomePageSecondaryPanel({super.key});
 
   @override
   Widget build(BuildContext context) {

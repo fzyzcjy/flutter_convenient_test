@@ -38,11 +38,11 @@ class AttachableStateAttacherWidget<T extends AttachableStateMixin<S>, S> extend
   final Widget child;
 
   const AttachableStateAttacherWidget({
-    Key? key,
+    super.key,
     required this.target,
     required this.state,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   _AttachableStateAttacherWidgetState<T, S> createState() => _AttachableStateAttacherWidgetState<T, S>();

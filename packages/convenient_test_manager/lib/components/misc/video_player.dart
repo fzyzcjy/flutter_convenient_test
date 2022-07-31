@@ -37,12 +37,12 @@ class VideoPlayer extends StatefulWidget {
   final VideoPlayerController controller;
 
   const VideoPlayer({
-    Key? key,
+    super.key,
     required this.videoPath,
     required this.startTime,
     required this.stopTime,
     required this.controller,
-  }) : super(key: key);
+  });
 
   @override
   State<VideoPlayer> createState() => _VideoPlayerState();

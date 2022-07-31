@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class GoldenDiffPageFileInfoPanel extends StatelessWidget {
-  const GoldenDiffPageFileInfoPanel({Key? key}) : super(key: key);
+  const GoldenDiffPageFileInfoPanel({super.key});
 
   @override
   Widget build(BuildContext context) {

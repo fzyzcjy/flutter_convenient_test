@@ -17,12 +17,12 @@ class HomePageLogEntryWidget extends StatelessWidget {
   final bool running;
 
   const HomePageLogEntryWidget({
-    Key? key,
+    super.key,
     required this.order,
     required this.testEntryId,
     required this.logEntryId,
     required this.running,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

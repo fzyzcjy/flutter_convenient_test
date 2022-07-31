@@ -11,7 +11,7 @@ import 'package:flutter/physics.dart';
 class NonBallisticClampingScrollPhysics extends ScrollPhysics {
   static const _kTag = 'NonBallisticClampingScrollPhysics';
 
-  const NonBallisticClampingScrollPhysics({ScrollPhysics? parent}) : super(parent: parent);
+  const NonBallisticClampingScrollPhysics({super.parent});
 
   @override
   NonBallisticClampingScrollPhysics applyTo(ScrollPhysics? ancestor) {

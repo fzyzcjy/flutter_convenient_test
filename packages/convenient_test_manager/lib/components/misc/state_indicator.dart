@@ -6,7 +6,7 @@ class StateIndicatorWidget extends StatelessWidget {
   final SimplifiedStateEnum state;
   final bool enableAnimation;
 
-  const StateIndicatorWidget({Key? key, required this.state, this.enableAnimation = false}) : super(key: key);
+  const StateIndicatorWidget({super.key, required this.state, this.enableAnimation = false});
 
   @override
   Widget build(BuildContext context) {

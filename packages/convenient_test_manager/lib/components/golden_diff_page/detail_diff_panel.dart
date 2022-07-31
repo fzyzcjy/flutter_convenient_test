@@ -7,7 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
-  const GoldenDiffPageDetailDiffPanel({Key? key}) : super(key: key);
+  const GoldenDiffPageDetailDiffPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -180,10 +180,9 @@ class _HotKeyHandlerWidget extends StatelessWidget {
   final Widget child;
 
   const _HotKeyHandlerWidget({
-    Key? key,
     required this.onMove,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

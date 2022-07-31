@@ -61,7 +61,7 @@ class SyncTextField extends StatefulWidget {
   final bool enableIMEPersonalizedLearning;
 
   const SyncTextField({
-    Key? key,
+    super.key,
     required this.gs,
     // forward
     this.focusNode,
@@ -112,7 +112,7 @@ class SyncTextField extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
-  }) : super(key: key);
+  });
 
   @override
   _SyncTextFieldState createState() => _SyncTextFieldState();
