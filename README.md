@@ -200,6 +200,19 @@ Currently only MacOS has CI for this, and I am willing to accept a PR for Window
 
 Surely, it can also be run via `flutter profile` mode to speed up. Or use `flutter build` and the standard approaches to generate a release version binary and use it.
 
+## Miscellaneous
+
+### Configuration
+
+There are a few ways to configure the manager:
+
+1. From `$HOME/.config/convenient_test.json`.
+2. From various environment variables.
+3. From command line arguments (when run via `convenient_test_manager_dart` command line)
+4. Change configurations via GUI (e.g. switches at right-top)
+
+For all options that are configurable and all environment variable names, please see `global_config_store.dart`. (By doing so you can always see the up-to-date information and there is no possiblility to see outdated doc.)
+
 ---
 
 Thanks for testing frameworks in JavaScript, especially `Cypress`, for giving inspirations!
