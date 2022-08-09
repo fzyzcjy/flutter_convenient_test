@@ -56,16 +56,20 @@ extension ExtWidgetTester on WidgetTester {
   }
 
   // useful for widget tests (not for integration tests)
-  Future<void> runAsyncAndPumpUntil(bool Function() canStop, {Duration delay = Duration.zero}) async {
+  Future<void> runAsyncAndPumpUntil(
+    bool Function() canStop, {
+    Duration runAsyncDelay = Duration.zero,
+    Duration? pumpDuration,
+  }) async {
     while (true) {
       // print('runAsyncAndPumpUntil loop');
       if (canStop()) break;
 
       // Use delay 0ms instead of 200ms will make it much faster, so make `0ms` the default
       // https://github.com/fzyzcjy/yplusplus/issues/4208
-      await runAsync(() => Future<void>.delayed(delay));
+      await runAsync(() => Future<void>.delayed(runAsyncDelay));
 
-      await pump();
+      await pump(pumpDuration);
     }
   }
 
