@@ -14,16 +14,16 @@ extension ExtWidgetTester on WidgetTester {
       {EnterTextWithoutReplaceLogCallback? logCallback}) async {
     // reference: [enterText]
     await TestAsyncUtils.guard<void>(() async {
-      for (final textFieldInfo in convenientTestGeneralizedTextFieldInfos) {
+      for (final textFieldInfo in convenientTestGeneralizedEditableTextInfos) {
         final textField = textFieldInfo.findWidget(this, finder);
         if (textField == null) {
           continue; // try next one
         }
 
         final oldValue = textFieldInfo.extractTextEditingValue(textField);
-        if (oldValue == null) {
-          throw Exception('To use `enterTextWithoutReplace`, please ensure your TextField has non-null controller');
-        }
+        // if (oldValue == null) {
+        //   throw Exception('To use `enterTextWithoutReplace`, please ensure your TextField has non-null controller');
+        // }
 
         final newValue = _enterTextWithoutReplaceActOnValue(oldValue, text);
         logCallback?.call(oldValue, newValue);
@@ -36,7 +36,7 @@ extension ExtWidgetTester on WidgetTester {
       }
 
       throw Exception(
-          'Have tried all infos in convenientTestGeneralizedTextFieldInfos=$convenientTestGeneralizedTextFieldInfos, but none works.');
+          'Have tried all infos in convenientTestGeneralizedTextFieldInfos=$convenientTestGeneralizedEditableTextInfos, but none works.');
     });
   }
 
@@ -86,14 +86,14 @@ extension ExtWidgetTester on WidgetTester {
   }
 }
 
-const kDefaultConvenientTestGeneralizedTextFieldInfos = <GeneralizedTextFieldInfo>[TextFieldInfo()];
+const kDefaultConvenientTestGeneralizedEditableTextInfos = <GeneralizedEditableTextInfo>[EditableTextInfo()];
 
 // users can customize this, for example, if they have a custom MyTextField which is similar to TextField
 // ignore: avoid-global-state
-var convenientTestGeneralizedTextFieldInfos = kDefaultConvenientTestGeneralizedTextFieldInfos;
+var convenientTestGeneralizedEditableTextInfos = kDefaultConvenientTestGeneralizedEditableTextInfos;
 
-abstract class GeneralizedTextFieldInfo<T extends Widget> {
-  const GeneralizedTextFieldInfo();
+abstract class GeneralizedEditableTextInfo<T extends Widget> {
+  const GeneralizedEditableTextInfo();
 
   Type get widgetType => T;
 
@@ -101,19 +101,20 @@ abstract class GeneralizedTextFieldInfo<T extends Widget> {
       .widgetList<T>(find.descendant(of: finder, matching: find.byType(widgetType), matchRoot: true))
       .singleOrNull;
 
-  TextEditingValue? extractTextEditingValue(T widget);
+  TextEditingValue extractTextEditingValue(T widget);
 
   Future<void> showKeyboard(WidgetTester tester, Finder finder) => tester.showKeyboard(finder);
 }
 
-class TextFieldInfo extends GeneralizedTextFieldInfo<TextField> {
-  const TextFieldInfo();
+/// Used for [TextField] and [EditableText]
+class EditableTextInfo extends GeneralizedEditableTextInfo<EditableText> {
+  const EditableTextInfo();
 
   @override
-  TextEditingValue? extractTextEditingValue(TextField widget) => widget.controller?.value;
+  TextEditingValue extractTextEditingValue(EditableText widget) => widget.controller.value;
 
   @override
-  String toString() => 'TextFieldInfo{}';
+  String toString() => 'EditableTextInfo{}';
 }
 
 // TODO ok?
