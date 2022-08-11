@@ -1,5 +1,3 @@
-export 'package:convenient_test_common/convenient_test_common.dart';
-
 export 'src/functions/command.dart';
 export 'src/functions/core.dart';
 export 'src/functions/find.dart';
