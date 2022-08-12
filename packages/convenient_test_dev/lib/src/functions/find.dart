@@ -188,6 +188,7 @@ class TFinderCommand extends TCommand {
     required Future<void> Function(LogHandle log) act,
     required String logTitle,
     required String logMessage,
+    bool settle = true,
   }) async {
     final log = t.log(logTitle, logMessage);
 
@@ -209,7 +210,7 @@ class TFinderCommand extends TCommand {
 
     await act(log);
 
-    await t.pumpAndSettle();
+    settle ? await t.pumpAndSettle() : await t.pump();
 
     await log.snapshot(name: 'after');
   }
