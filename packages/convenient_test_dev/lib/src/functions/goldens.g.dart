@@ -16,13 +16,29 @@ GoldenConfig _$GoldenConfigFromJson(Map<String, dynamic> json) => GoldenConfig(
       greaterThanToleration: (json['greaterThanToleration'] as List<dynamic>?)
           ?.map((e) => GoldenTolerationEntry.fromJson(e as Map<String, dynamic>))
           .toList(),
+      cropBbox: _$JsonConverterFromJson<Map<String, Object?>, Rectangle<int>>(
+          json['cropBbox'], const _RectangleIntJsonConverter().fromJson),
     );
 
 Map<String, dynamic> _$GoldenConfigToJson(GoldenConfig instance) => <String, dynamic>{
       'allowUpdate': instance.allowUpdate,
       'maxToleration': instance.maxToleration,
       'greaterThanToleration': instance.greaterThanToleration,
+      'cropBbox': _$JsonConverterToJson<Map<String, Object?>, Rectangle<int>>(
+          instance.cropBbox, const _RectangleIntJsonConverter().toJson),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
 
 GoldenTolerationEntry _$GoldenTolerationEntryFromJson(Map<String, dynamic> json) => GoldenTolerationEntry(
       diffPerPixel: json['diffPerPixel'] as int,

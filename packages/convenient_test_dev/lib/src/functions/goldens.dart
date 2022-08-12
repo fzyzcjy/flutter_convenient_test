@@ -56,12 +56,14 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
 
   // NOTE MODIFIED from [super.compare]
   @override
-  Future<bool> compare(Uint8List imageBytes, Uri golden) async {
+  Future<bool> compare(Uint8List imageBytesBeforeCrop, Uri golden) async {
     final config = GoldenConfig.fromUri(golden);
+
+    final imageBytesCropped = _cropImage(imageBytesBeforeCrop, config.cropBbox);
 
     // NOTE MODIFIED [GoldenFileComparator.compareLists] -> [myCompareLists]
     final MyComparisonResult result = await myCompareLists(
-      imageBytes,
+      imageBytesCropped,
       await getGoldenBytes(golden),
     );
 
@@ -91,7 +93,7 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
   }
 
   @override
-  Future<void> update(Uri golden, Uint8List imageBytes) async {
+  Future<void> update(Uri golden, Uint8List imageBytesBeforeCrop) async {
     final config = GoldenConfig.fromUri(golden);
 
     if (!config.allowUpdate) {
@@ -99,7 +101,9 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
       return;
     }
 
-    await super.update(golden, imageBytes);
+    final imageBytesCropped = _cropImage(imageBytesBeforeCrop, config.cropBbox);
+
+    await super.update(golden, imageBytesCropped);
   }
 
   @override
@@ -130,6 +134,14 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
 
   static Future<MyComparisonResult> myCompareLists(List<int> test, List<int> master) async =>
       _compareListsAllowSizeDiffer(test, master);
+}
+
+Uint8List _cropImage(Uint8List raw, Rectangle<int>? bbox) {
+  if (bbox == null) return raw;
+
+  final rawImage = image.decodeImage(raw)!;
+  final croppedImage = image.copyCrop(rawImage, bbox.left, bbox.top, bbox.width, bbox.height);
+  return image.encodeBmp(croppedImage) as Uint8List;
 }
 
 Future<MyComparisonResult> _compareListsAllowSizeDiffer(List<int> test, List<int> master) async {
@@ -378,27 +390,52 @@ class SimpleHistogram {
   }
 }
 
+class _RectangleIntJsonConverter extends JsonConverter<Rectangle<int>, Map<String, Object?>> {
+  const _RectangleIntJsonConverter();
+
+  @override
+  Rectangle<int> fromJson(Map<String, Object?> json) => Rectangle(
+        json['left']! as int,
+        json['top']! as int,
+        json['width']! as int,
+        json['height']! as int,
+      );
+
+  @override
+  Map<String, Object?> toJson(Rectangle<int> object) => {
+        'left': object.left,
+        'top': object.top,
+        'width': object.width,
+        'height': object.height,
+      };
+}
+
 @JsonSerializable()
 @immutable
+@_RectangleIntJsonConverter()
 class GoldenConfig {
   final bool allowUpdate;
   final GoldenTolerationEntry? maxToleration;
   final List<GoldenTolerationEntry>? greaterThanToleration;
+  final Rectangle<int>? cropBbox;
 
   const GoldenConfig({
     required this.allowUpdate,
     this.maxToleration,
     this.greaterThanToleration,
+    this.cropBbox,
   });
 
   const GoldenConfig.allowUpdate({
     this.maxToleration,
     this.greaterThanToleration,
+    this.cropBbox,
   }) : allowUpdate = true;
 
   const GoldenConfig.disallowUpdate({
     this.maxToleration,
     this.greaterThanToleration,
+    this.cropBbox,
   }) : allowUpdate = false;
 
   factory GoldenConfig.fromUri(Uri golden) {
