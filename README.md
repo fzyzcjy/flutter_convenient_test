@@ -123,8 +123,9 @@ Flaky is flaky, and we are aware of it. It is neither failed nor success, so you
 * Customizable tolerations - allow a portion of pixels to mismatch golden image
 * Golden overview page - List and check all golden differences within one page with pan and zoom 
 * When a golden assertion fails, its image details will be also shown in the manager panel
+* Crop golden images - when you only want a portion of the widget to be captured
 
-(To be documented more thoroughly later [https://github.com/fzyzcjy/flutter_convenient_test/issues/187](#187))
+(To be documented more thoroughly later [#187](https://github.com/fzyzcjy/flutter_convenient_test/issues/187))
 
 <!--[TODO screenshot]-->
 
