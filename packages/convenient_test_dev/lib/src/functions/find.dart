@@ -219,7 +219,7 @@ class TRouteNameCommand extends TCommand {
   TRouteNameCommand(super.t);
 
   @override
-  Object? getCurrentActual() {
+  String? getCurrentActual() {
     final context = myGetIt.get<ConvenientTestSlot>().getNavContext(t);
     if (context == null) return null;
 
