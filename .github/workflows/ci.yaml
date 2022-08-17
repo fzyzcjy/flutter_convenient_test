@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: "0 10 * * *"
 
 jobs:
   flutter:
@@ -52,7 +52,6 @@ jobs:
         run: flutter format --set-exit-if-changed --line-length 120 .
         working-directory: packages/${{ matrix.package_name }}
 
-
   build_manager_macos:
     runs-on: macOS-11
 
@@ -63,7 +62,7 @@ jobs:
         with:
           channel: stable
           architecture: x64
-      
+
       - name: Enable Macos
         run: flutter config --enable-macos-desktop
 
@@ -73,7 +72,7 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7.2'
+          ruby-version: "2.7.2"
 
       - name: setup-cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1
@@ -95,3 +94,37 @@ jobs:
         with:
           name: manager_macos
           path: packages/convenient_test_manager/macos/build/convenient_test_manager.app.tar
+
+  build_manager_linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          architecture: x64
+
+      - name: Enable Linux
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev libvlc-dev vlc
+          flutter config --enable-linux-desktop
+        working-directory: packages/convenient_test_manager
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: packages/convenient_test_manager
+
+      - name: flutter build
+        run: flutter build linux
+        working-directory: packages/convenient_test_manager
+
+      - name: Tar outputs
+        run: tar -czvf convenient_test_manager.tar.gz packages/convenient_test_manager/build/linux/x64/release/bundle
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: manager_linux
+          path: convenient_test_manager.tar.gz
