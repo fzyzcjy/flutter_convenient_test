@@ -9,20 +9,20 @@ Write and debug tests easily, with full action history, time travel, screenshots
 
 ## 🚀 Advantages
 
-- **Full action history**: Gain insight on what has happened to the tests - View all actions/assertions taken in the tests, with friendly descriptions.
-- **Time travel, with screenshots**: What did the UI look like when that button was tapped 50 steps ago? Now you know everything.
-- **Rapid re-execution**: Edit code, save, run - done within seconds, not minutes.
-- **Videos recorded**: Watch what has happened, in full detail.
-- **Retryability**: No manual `pump`, wait or retry anymore. Just write down what you want, and the framework will retry and wait.
-- **Being interactive**: Play with the app interactively, again within seconds.
-- **Isolated**: One test will no longer destroy environment of other tests - run each with full isolation (optional feature).
+* **Full action history**: Gain insight on what has happened to the tests - View all actions/assertions taken in the tests, with friendly descriptions.
+* **Time travel, with screenshots**: What did the UI look like when that button was tapped 50 steps ago? Now you know everything.
+* **Rapid re-execution**: Edit code, save, run - done within seconds, not minutes.
+* **Videos recorded**: Watch what has happened, in full detail.
+* **Retryability**: No manual `pump`, wait or retry anymore. Just write down what you want, and the framework will retry and wait.
+* **Being interactive**: Play with the app interactively, again within seconds.
+* **Isolated**: One test will no longer destroy environment of other tests - run each with full isolation (optional feature).
 
 And also...
 
-- **`integration_test` still there**: Freely use everything from `integration_test`, `mockito`, `test`, etc.
-- **Flaky test awareness**: No false alarms, while no blindly ignoring.
-- **Suitable for CI**: Run headlessly, with logs to be visualized when needed.
-- **Miscellaneous**: Visually see target regions, run single test/group within seconds, raw logs...
+* **`integration_test` still there**: Freely use everything from `integration_test`, `mockito`,  `test`, etc.
+* **Flaky test awareness**: No false alarms, while no blindly ignoring.
+* **Suitable for CI**: Run headlessly, with logs to be visualized when needed. 
+* **Miscellaneous**: Visually see target regions, run single test/group within seconds, raw logs...
 
 ## 📷 Quick demo
 
@@ -108,7 +108,7 @@ Technical details: If this mode is enabled, a hot restart will be performed afte
 
 ### `integration_test` is still there
 
-You can still use everything from `integration_test`, `mockito`, `test`, etc. This package is not a reinvented wheel, and has exposed the underlying `integration_test` to you.
+You can still use everything from `integration_test`, `mockito`,  `test`, etc. This package is not a reinvented wheel, and has exposed the underlying `integration_test` to you.
 
 If you want to migrate to this package from raw `integration_test`, have a look at Getting Started section below.
 
@@ -120,10 +120,10 @@ Flaky is flaky, and we are aware of it. It is neither failed nor success, so you
 
 ### Golden utility
 
-- Customizable tolerations - allow a portion of pixels to mismatch golden image
-- Golden overview page - List and check all golden differences within one page with pan and zoom
-- When a golden assertion fails, its image details will be also shown in the manager panel
-- Crop golden images - when you only want a portion of the widget to be captured
+* Customizable tolerations - allow a portion of pixels to mismatch golden image
+* Golden overview page - List and check all golden differences within one page with pan and zoom 
+* When a golden assertion fails, its image details will be also shown in the manager panel
+* Crop golden images - when you only want a portion of the widget to be captured
 
 (To be documented more thoroughly later [#187](https://github.com/fzyzcjy/flutter_convenient_test/issues/187))
 
@@ -137,14 +137,14 @@ This tool can be run without GUI and only produce log data and exit code, making
 
 ### Run single test/group
 
-Tap "Run" icon button after each test or group to re-run _only_ that test/group, without running anything else. All within seconds - no need to recompile like what the original test package did.
+Tap "Run" icon button after each test or group to re-run *only* that test/group, without running anything else. All within seconds - no need to recompile like what the original test package did.
 
 ### Visually see target regions
 
 Useful when replaying videos and screenshots
 
-- `Mark`s have colored borders
-- Gestures have visual feedbacks
+* `Mark`s have colored borders
+* Gestures have visual feedbacks
 
 ### Raw logs
 
@@ -154,23 +154,23 @@ Tap "Raw Logs" in the right panel to see raw outputs of a test.
 
 Following is a brief description of the functionalities of each button in the header panel.
 
-- Run All: Run all tests below
-- Halt: Stop the currently running worker
-- Interactive Mode: Enter "interactive mode" (described above)
-- Reload Info: Reload test metadata such as the group names and test names
-- Reconnect VM: Connect to the Dart VM of the worker app
-- Load Report: Load and display a report generated when `SaveReport` toggle is enabled or run within CI/headless mode
-- Golden Diff Page: Enter the golden diff page (described above)
+* Run All: Run all tests below
+* Halt: Stop the currently running worker
+* Interactive Mode: Enter "interactive mode" (described above)
+* Reload Info: Reload test metadata such as the group names and test names
+* Reconnect VM: Connect to the Dart VM of the worker app
+* Load Report: Load and display a report generated when `SaveReport` toggle is enabled or run within CI/headless mode
+* Golden Diff Page: Enter the golden diff page (described above)
 
 Following are about the toggles:
 
-- Isolation: Whether to enable "isolation mode" (described above)
-- UpdateGoldens: Whether to update the golden files on the disk, similar to `--update-goldens` flag in a traditional Flutter test
-- Retry: When a test fails, whether to retry (and mark as flaky), or directly mark it failed
-- SaveReport: Whether to save logs to a report file, such that it can be visualized later via "Load Report"
-- Hover: When hovering the action log panel, whether highlight the hovered entry and immediately show related information
-- AutoJump: Whether to jump to newly received action entries
-- AutoExpand: Whether to expand and collapse automatically for the newly received test and action entries
+* Isolation: Whether to enable "isolation mode" (described above)
+* UpdateGoldens: Whether to update the golden files on the disk, similar to `--update-goldens` flag in a traditional Flutter test
+* Retry: When a test fails, whether to retry (and mark as flaky), or directly mark it failed
+* SaveReport: Whether to save logs to a report file, such that it can be visualized later via "Load Report"
+* Hover: When hovering the action log panel, whether highlight the hovered entry and immediately show related information
+* AutoJump: Whether to jump to newly received action entries
+* AutoExpand: Whether to expand and collapse automatically for the newly received test and action entries
 
 ## Tutorial: Run examples
 
@@ -197,7 +197,7 @@ Currently only MacOS and Linux has CI for this, and I am willing to accept a PR 
 
 #### Method 2: `flutter run` / `flutter profile` / `flutter build`
 
-`packages/convenient_test_manager` is nothing but a _normal_ Flutter Windows/MacOS/Linux app, so run it following the Flutter official doc.
+`packages/convenient_test_manager` is nothing but a *normal* Flutter Windows/MacOS/Linux app, so run it following the Flutter official doc.
 
 Surely, it can also be run via `flutter profile` mode to speed up. Or use `flutter build` and the standard approaches to generate a release version binary and use it.
 

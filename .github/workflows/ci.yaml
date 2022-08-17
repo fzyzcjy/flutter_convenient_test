@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: "0 10 * * *"
+    - cron: '0 10 * * *'
 
 jobs:
   flutter:
@@ -52,6 +52,7 @@ jobs:
         run: flutter format --set-exit-if-changed --line-length 120 .
         working-directory: packages/${{ matrix.package_name }}
 
+
   build_manager_macos:
     runs-on: macOS-11
 
@@ -62,7 +63,7 @@ jobs:
         with:
           channel: stable
           architecture: x64
-
+      
       - name: Enable Macos
         run: flutter config --enable-macos-desktop
 
@@ -72,7 +73,7 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "2.7.2"
+          ruby-version: '2.7.2'
 
       - name: setup-cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1
@@ -95,6 +96,7 @@ jobs:
           name: manager_macos
           path: packages/convenient_test_manager/macos/build/convenient_test_manager.app.tar
 
+          
   build_manager_linux:
     runs-on: ubuntu-latest
 
