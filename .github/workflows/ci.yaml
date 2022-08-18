@@ -124,7 +124,7 @@ jobs:
         working-directory: packages/convenient_test_manager
 
       - name: Tar outputs
-        run: tar -czvf convenient_test_manager.tar.gz packages/convenient_test_manager/build/linux/x64/release/bundle
+        run: tar -czvf convenient_test_manager.tar.gz -C packages/convenient_test_manager/build/linux/x64/release/ bundle
 
       - uses: actions/upload-artifact@v3
         with:
