@@ -193,7 +193,7 @@ Following are about the toggles:
 
 There are precompiled binaries for each commit, at the "artifacts" section in [the CI page](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/ci.yaml). For example, download `manager_macos` artifact, unzip it, and open it.
 
-Currently only MacOS has CI for this, and I am willing to accept a PR for Windows or Linux.
+Currently only MacOS and Linux has CI for this, and I am willing to accept a PR for Windows.
 
 #### Method 2: `flutter run` / `flutter profile` / `flutter build`
 
@@ -219,4 +219,3 @@ If you are trying to use this package with Android Virtual Emulator (AVD), you m
 ---
 
 Thanks for testing frameworks in JavaScript, especially `Cypress`, for giving inspirations!
-
