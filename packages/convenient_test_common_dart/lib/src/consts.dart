@@ -6,3 +6,5 @@ const kWorkerVmServiceHost = '127.0.0.1';
 const kWorkerVmServicePort = 9753;
 
 const kReportFileExtension = 'bin';
+
+const kAutoDetectAVD = true;

@@ -32,6 +32,7 @@ dependencies:
   recase: ^4.0.0
   test_api: ^0.4.2
   web_socket_channel: ^2.1.0
+  device_info_plus: ^3.2.1 #Can't be set to newest version due to dart_vlc ffi: 1.0.0 requirement
 
 dev_dependencies:
   build_runner: ^2.1.2
@@ -39,10 +40,12 @@ dev_dependencies:
   freezed: ^2.0.0
   json_serializable: ^6.1.5
 
-# dependency_overrides:
-#   convenient_test:
-#     path: ../convenient_test
-#   convenient_test_common:
-#     path: ../convenient_test_common
-#   convenient_test_common_dart:
-#     path: ../convenient_test_common_dart
+dependency_overrides:
+  convenient_test:
+    path: ../convenient_test
+  convenient_test_common:
+    path: ../convenient_test_common
+  convenient_test_common_dart:
+    path: ../convenient_test_common_dart
+  # device_info_plus: '4.0.0'
+  # device_info_plus_platform_interface: '2.3.0+1'

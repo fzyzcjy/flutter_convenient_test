@@ -13,6 +13,7 @@ import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/setup.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
@@ -52,6 +53,13 @@ class ConvenientTest {
 /// Please make this the only method in your "main" method.
 Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback testBody) async {
   myGetIt.registerSingleton<ConvenientTestSlot>(slot);
+
+  await runZonedGuarded(() async {
+    MyIntegrationTestWidgetsFlutterBinding();
+    myGetIt
+        .registerSingleton<BaseDeviceInfo>(await DeviceInfoPlugin().deviceInfo);
+  }, (_, __) {});
+
   // MUST do it this early, because we really need the rpc client immediately
   myGetIt.registerSingleton<ConvenientTestManagerClient>(ExtConvenientTestManagerClient.create());
 
