@@ -214,7 +214,7 @@ There are a few ways to configure the manager:
 
 For all options that are configurable and all environment variable names, please see `consts.dart`. (By doing so you can always see the up-to-date information and there is no possiblility to see outdated doc.)
 
-If you are trying to use this package with Android Virtual Emulator (AVD), you may need to set `kConvenientTestManagerHost` to `10.0.2.2` because of its network topology. Please see issue #253 for more details.
+If you are trying to use this package with Android Virtual Emulator (AVD), you may need to set `kConvenientTestManagerHost` to `10.0.2.2` because of its [network topology](https://stackoverflow.com/questions/9808560/why-do-we-use-10-0-2-2-to-connect-to-local-web-server-instead-of-using-computer). Please see issue #253 for more details.
 
 ---
 
