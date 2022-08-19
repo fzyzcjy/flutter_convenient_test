@@ -9,10 +9,8 @@ extension ExtConvenientTestManagerClient on ConvenientTestManagerClient {
       port: CompileTimeConfig.dConvenientTestManagerPort,
       options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
-    return ConvenientTestManagerClient(channel,
-        options: CallOptions(timeout: null));
+    return ConvenientTestManagerClient(channel, options: CallOptions(timeout: null));
   }
 
-  Future<void> reportSingle(ReportItem item) =>
-      report(ReportCollection(items: [item]));
+  Future<void> reportSingle(ReportItem item) => report(ReportCollection(items: [item]));
 }
