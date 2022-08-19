@@ -130,3 +130,34 @@ jobs:
         with:
           name: manager_linux
           path: convenient_test_manager.tar.gz
+
+  build_manager_headless_cli:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          architecture: x64
+
+      - name: Install dependencies
+        run: dart pub get
+        working-directory: packages/convenient_test_manager_dart
+
+      - name: Dart Compile
+        run: |
+          dart compile exe ./bin/convenient_test_manager_dart.dart -o manager_headless
+          dart compile kernel ./bin/convenient_test_manager_dart.dart -o manager_headless_kernel
+        working-directory: packages/convenient_test_manager_dart
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: manager_linux-mac_headless_cli
+          path: packages/convenient_test_manager_dart/manager_headless
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: manager_headless_kernel
+          path: packages/convenient_test_manager_dart/manager_headless_kernel
