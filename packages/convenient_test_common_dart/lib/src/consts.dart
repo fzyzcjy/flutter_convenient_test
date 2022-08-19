@@ -9,13 +9,13 @@ class SharedCompileTimeConfig {
     return value.isEmpty ? defaultVal : value;
   }
 
-  static String get kConvenientTestManagerHost => getConfigFromEnv('MANAGER_HOST', '127.0.0.1');
+  static final String kConvenientTestManagerHost = getConfigFromEnv('MANAGER_HOST', '127.0.0.1');
 
-  static int get kConvenientTestManagerPort => int.parse(getConfigFromEnv('MANAGER_PORT', '3579'));
+  static final int kConvenientTestManagerPort = int.parse(getConfigFromEnv('MANAGER_PORT', '3579'));
 
-  static String get kWorkerVmServiceHost => getConfigFromEnv('WORKER_HOST', '127.0.0.1');
+  static final String kWorkerVmServiceHost = getConfigFromEnv('WORKER_HOST', '127.0.0.1');
 
-  static int get kWorkerVmServicePort => int.parse(getConfigFromEnv('WORKER_PORT', '9753'));
+  static final int kWorkerVmServicePort = int.parse(getConfigFromEnv('WORKER_PORT', '9753'));
 
-  static String get kReportFileExtension => getConfigFromEnv('REPORT_EXT', 'bin');
+  static final String kReportFileExtension = getConfigFromEnv('REPORT_EXT', 'bin');
 }
