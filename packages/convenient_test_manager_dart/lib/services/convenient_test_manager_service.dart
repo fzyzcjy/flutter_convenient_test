@@ -20,7 +20,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
     );
     server.serve(
       address: '0.0.0.0',
-      port: SharedCompileTimeConfig.kConvenientTestManagerPort,
+      port: kConvenientTestManagerPort,
     );
   }
 

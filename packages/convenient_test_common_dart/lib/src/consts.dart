@@ -1,21 +1,9 @@
-class SharedCompileTimeConfig {
-  static String getConfigFromEnv(String key, String defaultVal, {bool required = false}) {
-    final value = String.fromEnvironment(key);
+const String kConvenientTestManagerHost = String.fromEnvironment('MANAGER_HOST', defaultValue: '127.0.0.1');
 
-    if (value.isEmpty && required) {
-      throw Exception('Please provide `$key` via --dart-define');
-    }
+const int kConvenientTestManagerPort = int.fromEnvironment('MANAGER_PORT', defaultValue: 3579);
 
-    return value.isEmpty ? defaultVal : value;
-  }
+const String kWorkerVmServiceHost = String.fromEnvironment('WORKER_HOST', defaultValue: '127.0.0.1');
 
-  static final String kConvenientTestManagerHost = getConfigFromEnv('MANAGER_HOST', '127.0.0.1');
+const int kWorkerVmServicePort = int.fromEnvironment('WORKER_PORT', defaultValue: 9753);
 
-  static final int kConvenientTestManagerPort = int.parse(getConfigFromEnv('MANAGER_PORT', '3579'));
-
-  static final String kWorkerVmServiceHost = getConfigFromEnv('WORKER_HOST', '127.0.0.1');
-
-  static final int kWorkerVmServicePort = int.parse(getConfigFromEnv('WORKER_PORT', '9753'));
-
-  static final String kReportFileExtension = getConfigFromEnv('REPORT_EXT', 'bin');
-}
+const String kReportFileExtension = String.fromEnvironment('REPORT_EXT', defaultValue: 'bin');

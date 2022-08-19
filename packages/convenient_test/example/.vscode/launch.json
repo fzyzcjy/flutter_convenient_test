@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "example",
+            "request": "launch",
+            "program": "./integration_test/main_test.dart",
+            "type": "dart",
+            "args": [
+                "--disable-service-auth-codes",
+                // "--dart-define=CONVENIENT_TEST_APP_CODE_DIR=C:\\Users\\ethan\\Documents\\cadoo\\flutter_convenient_test\\packages\\convenient_test\\example",
+                "--dart-define=MANAGER_HOST=10.0.2.2"
+            ]
+        },
+        {
+            "name": "example (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "example (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

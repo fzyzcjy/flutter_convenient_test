@@ -1,6 +1,8 @@
-import 'package:convenient_test_common/convenient_test_common.dart';
-
 class CompileTimeConfig {
-  static String get kAppCodeDir =>
-      SharedCompileTimeConfig.getConfigFromEnv('CONVENIENT_TEST_APP_CODE_DIR', '', required: true);
+  static final kAppCodeDir = () {
+    const key = 'CONVENIENT_TEST_APP_CODE_DIR';
+    const value = String.fromEnvironment(key);
+    if (value.isEmpty) throw Exception('Please provide `$key` via --dart-define');
+    return value;
+  }();
 }
