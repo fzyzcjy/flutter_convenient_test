@@ -23,8 +23,9 @@ class VmServiceWrapperService {
   bool get connected => _manager.connected;
 
   Future<void> connect() async {
-    const uri = 'ws://$kWorkerVmServiceHost:$kWorkerVmServicePort/ws';
-    Log.i(_kTag, 'Connecting to vm service at $uri. Please ensure your Flutter app has port=$kWorkerVmServicePort');
+    final uri = 'ws://${SharedConfig.kWorkerVmServiceHost}:${SharedConfig.kWorkerVmServicePort}/ws';
+    Log.i(_kTag,
+        'Connecting to vm service at $uri. Please ensure your Flutter app has port=${SharedConfig.kWorkerVmServicePort}');
 
     try {
       final vmService = await vmServiceConnectUri(uri, log: _MyLog());
