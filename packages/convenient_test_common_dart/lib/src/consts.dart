@@ -1,4 +1,4 @@
-class SharedConfig {
+class SharedCompileTimeConfig {
   static String getConfigFromEnv(String key, String defaultVal, {bool required = false}) {
     final value = String.fromEnvironment(key);
 

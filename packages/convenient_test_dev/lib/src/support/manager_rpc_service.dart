@@ -4,8 +4,8 @@ import 'package:grpc/grpc.dart';
 extension ExtConvenientTestManagerClient on ConvenientTestManagerClient {
   static ConvenientTestManagerClient create() {
     final channel = ClientChannel(
-      SharedConfig.kConvenientTestManagerHost,
-      port: SharedConfig.kConvenientTestManagerPort,
+      SharedCompileTimeConfig.kConvenientTestManagerHost,
+      port: SharedCompileTimeConfig.kConvenientTestManagerPort,
       options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
     return ConvenientTestManagerClient(channel, options: CallOptions(timeout: null));

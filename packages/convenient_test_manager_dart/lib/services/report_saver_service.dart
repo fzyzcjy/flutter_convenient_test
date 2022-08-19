@@ -34,6 +34,6 @@ abstract class _ReportSaverService with Store {
     return
         // ignore: prefer_interpolation_to_compose_strings
         await GetIt.I.get<FsService>().getActiveSuperRunDataSubDirectory(category: 'Report') +
-            'report.${SharedConfig.kReportFileExtension}';
+            'report.${SharedCompileTimeConfig.kReportFileExtension}';
   }
 }
