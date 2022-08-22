@@ -19,7 +19,7 @@ const kExitCodeWorkerDisappeared = 2;
 Future<void> main(List<String> args) async {
   Log.i(_kTag, 'main start');
 
-  await setup(headlessMode: true);
+  await setup(headlessMode: true, args: args);
 
   Log.i(_kTag, 'step awaitWorkerAvailable');
   await _awaitWorkerAvailable();
