@@ -130,3 +130,27 @@ jobs:
         with:
           name: manager_linux
           path: convenient_test_manager.tar.gz
+
+  build_manager_dart_linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          architecture: x64
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: packages/convenient_test_manager_dart
+
+      - name: Build
+        run: dart compile exe bin/convenient_test_manager_dart.dart -o convenient_test_manager_dart
+        working-directory: packages/convenient_test_manager_dart
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: manager_dart_linux
+          path: packages/convenient_test_manager_dart/convenient_test_manager_dart
