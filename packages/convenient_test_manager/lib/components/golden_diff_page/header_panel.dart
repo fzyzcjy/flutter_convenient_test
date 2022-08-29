@@ -20,6 +20,17 @@ class GoldenDiffPageHeaderPanel extends StatelessWidget {
           ),
           const SizedBox(width: 24),
           ..._buildGitRepoInfo(),
+          TextButton(
+            onPressed: () async {
+              final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
+              final gitRepo = goldenDiffPageStore.gitRepo;
+              // trigger refresh
+              goldenDiffPageStore
+                ..gitRepo = null
+                ..gitRepo = gitRepo;
+            },
+            child: const Text('Refresh'),
+          ),
         ],
       ),
     );
