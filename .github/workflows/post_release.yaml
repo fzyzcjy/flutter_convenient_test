@@ -25,6 +25,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: ${{ matrix.channel }}
+          flutter-version: '3.0.5' # TODO upgrade later
 
       - name: Use pubspec pointing to release versions
         run: |
