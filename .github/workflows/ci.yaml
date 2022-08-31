@@ -31,6 +31,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: ${{ matrix.channel }}
+          flutter-version: '3.0.5' # TODO upgrade later
 
       - name: Install dependencies
         run: flutter pub get
@@ -63,6 +64,7 @@ jobs:
         with:
           channel: stable
           architecture: x64
+          flutter-version: '3.0.5' # TODO upgrade later
       
       - name: Enable Macos
         run: flutter config --enable-macos-desktop
@@ -107,6 +109,7 @@ jobs:
         with:
           channel: stable
           architecture: x64
+          flutter-version: '3.0.5' # TODO upgrade later
 
       - name: Enable Linux
         run: |
@@ -141,6 +144,7 @@ jobs:
         with:
           channel: stable
           architecture: x64
+          flutter-version: '3.0.5' # TODO upgrade later
 
       - name: Install dependencies
         run: flutter pub get
