@@ -123,13 +123,21 @@ class TFinderCommand extends TCommand {
   @override
   Object? getCurrentActual() => finder;
 
-  Future<void> replaceText(String text) => act(
+  Future<void> replaceText(
+    String text, {
+    bool settle = true,
+  }) =>
+      act(
         act: (log) => t.tester.enterText(finder, text),
         logTitle: 'REPLACE TYPE',
         logMessage: '"$text" to ${finder.description}',
+        settle: settle,
       );
 
-  Future<void> enterTextWithoutReplace(String text) {
+  Future<void> enterTextWithoutReplace(
+    String text, {
+    bool settle = true,
+  }) {
     const logTitle = 'TYPE';
     final basicLogMessage = '"$text" to ${finder.description}';
 
@@ -143,25 +151,42 @@ class TFinderCommand extends TCommand {
       ),
       logTitle: logTitle,
       logMessage: basicLogMessage,
+      settle: settle,
     );
   }
 
-  Future<void> tap({bool warnIfMissed = true}) => act(
+  Future<void> tap({
+    bool warnIfMissed = true,
+    bool settle = true,
+  }) =>
+      act(
         act: (log) => t.tester.tap(finder, warnIfMissed: warnIfMissed),
         logTitle: 'TAP',
         logMessage: finder.description,
+        settle: settle,
       );
 
-  Future<void> longPress({bool warnIfMissed = true}) => act(
+  Future<void> longPress({
+    bool warnIfMissed = true,
+    bool settle = true,
+  }) =>
+      act(
         act: (log) => t.tester.longPress(finder, warnIfMissed: warnIfMissed),
         logTitle: 'LONG PRESS',
         logMessage: finder.description,
+        settle: settle,
       );
 
-  Future<void> drag(Offset offset, {bool warnIfMissed = true}) => act(
+  Future<void> drag(
+    Offset offset, {
+    bool warnIfMissed = true,
+    bool settle = true,
+  }) =>
+      act(
         act: (log) => t.tester.drag(finder, offset, warnIfMissed: warnIfMissed),
         logTitle: 'DRAG',
         logMessage: finder.description,
+        settle: settle,
       );
 
   Future<void> multiDrag({
@@ -170,6 +195,7 @@ class TFinderCommand extends TCommand {
     required List<Offset> firstFingerOffsets,
     required List<Offset> secondFingerOffsets,
     bool? logMove,
+    bool settle = true,
   }) =>
       act(
         act: (log) => t.tester.multiDrag(
@@ -182,6 +208,7 @@ class TFinderCommand extends TCommand {
         ),
         logTitle: 'MULTI DRAG',
         logMessage: finder.description,
+        settle: settle,
       );
 
   Future<void> act({
