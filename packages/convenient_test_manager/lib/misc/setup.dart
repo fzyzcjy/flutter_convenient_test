@@ -61,7 +61,7 @@ Future<void> _setWindowSize() async {
     final frame = Rect.fromLTWH(left, top, width, height);
     window_size.setWindowFrame(frame);
     window_size.setWindowMinSize(const Size(width, height));
-    window_size.setWindowMaxSize(const Size(width, height));
+    // window_size.setWindowMaxSize(const Size(width, height));
     window_size.setWindowTitle('convenient_test_manager');
   }
 }
