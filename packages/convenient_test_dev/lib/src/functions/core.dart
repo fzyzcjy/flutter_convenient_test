@@ -160,19 +160,24 @@ Future<void> _lastTearDownAll() async {
 
 typedef TWidgetTesterCallback = Future<void> Function(ConvenientTest t);
 
+/// Wrapper around [testWidgets].
+///
+/// If the app's main widget contains a widget that never settles (for example:
+/// has animations that repeat infinitely), set [settle] to false.
 @isTest
 void tTestWidgets(
   // ... forward the arguments ...
   String description,
   TWidgetTesterCallback callback, {
   bool skip = false,
+  bool settle = true,
 }) {
   testWidgets(
     description,
     (tester) async => await ConvenientTest.withActiveInstance(tester, (t) async {
       final log = t.log('START APP', '');
       await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
-      await t.pumpAndSettle();
+      settle ? await t.pumpAndSettle() : await t.pump();
       await log.snapshot(name: 'after');
 
       await callback(t);
