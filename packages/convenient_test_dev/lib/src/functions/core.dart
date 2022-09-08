@@ -163,7 +163,7 @@ typedef TWidgetTesterCallback = Future<void> Function(ConvenientTest t);
 /// Wrapper around [testWidgets].
 ///
 /// If the app's main widget contains a widget that never settles (for example:
-/// has animations that repeats infinitely), set [settle] to false.
+/// has animations that repeat infinitely), set [settle] to false.
 @isTest
 void tTestWidgets(
   // ... forward the arguments ...
