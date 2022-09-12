@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -57,13 +58,13 @@ extension ExtWidgetTester on WidgetTester {
 
   // useful for widget tests (not for integration tests)
   Future<void> runAsyncAndPumpUntil(
-    bool Function() canStop, {
+    FutureOr<bool> Function() canStop, {
     Duration runAsyncDelay = Duration.zero,
     Duration? pumpDuration,
   }) async {
     while (true) {
       // print('runAsyncAndPumpUntil loop');
-      if (canStop()) break;
+      if (await canStop()) break;
 
       // Use delay 0ms instead of 200ms will make it much faster, so make `0ms` the default
       // https://github.com/fzyzcjy/yplusplus/issues/4208
