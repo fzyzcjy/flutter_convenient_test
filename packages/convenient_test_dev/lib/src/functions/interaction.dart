@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:convenient_test_dev/src/functions/core.dart';
@@ -6,7 +7,6 @@ import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pedantic/pedantic.dart';
 
 extension ConvenientTestInteraction on ConvenientTest {
   Future<void> visit(String routeName, {Object? arguments}) async {
