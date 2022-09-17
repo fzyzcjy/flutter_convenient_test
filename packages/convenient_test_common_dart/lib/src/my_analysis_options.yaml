@@ -4,9 +4,9 @@ include: package:lint/analysis_options.yaml
 
 # https://dart.dev/guides/language/analysis-options
 analyzer:
-# will use CI to check. this plugin will leak memory
-#   plugins:
-#     - dart_code_metrics
+  # will use CI to check. this plugin will leak memory
+  #   plugins:
+  #     - dart_code_metrics
 
   language:
     strict-casts: true
@@ -46,9 +46,9 @@ dart_code_metrics:
     - avoid-unnecessary-setstate
     - avoid-collection-methods-with-unrelated-types
     - tag-name:
-        var-names: [ _kTag, tag, kTag, TAG ]
-        strip-prefix: '_'
-        strip-postfix: 'State'
+        var-names: [_kTag, tag, kTag, TAG]
+        strip-prefix: "_"
+        strip-postfix: "State"
   anti-patterns:
     - long-method
 
