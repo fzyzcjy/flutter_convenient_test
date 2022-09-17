@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert' hide Codec;
 import 'dart:math';
 import 'dart:math' as math;
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
