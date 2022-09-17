@@ -5,6 +5,7 @@ repository: https://github.com/fzyzcjy/flutter_convenient_test
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
+  flutter: ">=3.0.0"
 
 dependencies:
   collection: ^1.15.0
@@ -38,7 +39,6 @@ dev_dependencies:
   dart_code_metrics: ^4.15.0
   freezed: ^2.0.0
   json_serializable: ^6.1.5
-
 # dependency_overrides:
 #   convenient_test:
 #     path: ../convenient_test

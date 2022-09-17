@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
 
 // ignore_for_file: omit_local_variable_types, curly_braces_in_flow_control_structures
 
