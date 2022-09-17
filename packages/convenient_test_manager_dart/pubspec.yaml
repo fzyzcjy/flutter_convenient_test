@@ -19,7 +19,7 @@ dependencies:
   mobx: ^2.0.6
   recase: ^4.0.0
   test_api: ^0.4.2
-  vm_service: ^9.0.0
+  vm_service: any
 
 dependency_overrides:
   convenient_test_common_dart:
