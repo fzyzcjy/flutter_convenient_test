@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert' hide Codec;
 import 'dart:math';
 import 'dart:math' as math;
+// ignore: unnecessary_import
 import 'dart:typed_data';
 import 'dart:ui';
 

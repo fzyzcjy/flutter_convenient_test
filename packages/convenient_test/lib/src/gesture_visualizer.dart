@@ -12,7 +12,7 @@ const _kRemainAfterPointerUp = Duration(milliseconds: 100);
 /// It does not matter to this widget whether the child accepts the hit events.
 /// Everything hitting the rect of the child will be recorded.
 class GestureVisualizer extends SingleChildRenderObjectWidget {
-  const GestureVisualizer({Key? key, required Widget child}) : super(key: key, child: child);
+  const GestureVisualizer({super.key, required Widget super.child});
 
   @override
   RenderObject createRenderObject(BuildContext context) {

@@ -4,18 +4,16 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: "0 10 * * *"
 
 jobs:
   flutter:
+    name: ${{ matrix.package_name }} on Flutter ${{ matrix.channel_version.channel }}${{ matrix.channel_version.version }}
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        channel:
-          # - beta # too different from stable, thus analyzer will complain
-          - stable
         package_name:
           - convenient_test
           - convenient_test/example
@@ -24,14 +22,19 @@ jobs:
           - convenient_test_dev
           - convenient_test_manager
           - convenient_test_manager_dart
+        channel_version:
+          - { channel: stable }
+          - { channel: beta }
+          - { version: "3.0.0" }
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: subosito/flutter-action@v1
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
         with:
-          channel: ${{ matrix.channel }}
-          flutter-version: '3.0.5' # TODO upgrade later
+          channel: ${{ matrix.channel_version.channel }}
+          flutter-version: ${{ matrix.channel_version.version }}
 
       - name: Install dependencies
         run: flutter pub get
@@ -53,19 +56,17 @@ jobs:
         run: flutter format --set-exit-if-changed --line-length 120 .
         working-directory: packages/${{ matrix.package_name }}
 
-
   build_manager_macos:
-    runs-on: macOS-11
+    runs-on: macos-11
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          architecture: x64
-          flutter-version: '3.0.5' # TODO upgrade later
-      
+          flutter-version: "3.3.2"
+
       - name: Enable Macos
         run: flutter config --enable-macos-desktop
 
@@ -75,7 +76,8 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7.2'
+          ruby-version: "3.1.2"
+          bundler-cache: true
 
       - name: setup-cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1
@@ -98,18 +100,16 @@ jobs:
           name: manager_macos
           path: packages/convenient_test_manager/macos/build/convenient_test_manager.app.tar
 
-          
   build_manager_linux:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          architecture: x64
-          flutter-version: '3.0.5' # TODO upgrade later
+          flutter-version: "3.3.2"
 
       - name: Enable Linux
         run: |
@@ -138,13 +138,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          architecture: x64
-          flutter-version: '3.0.5' # TODO upgrade later
+          flutter-version: "3.3.2"
 
       - name: Install dependencies
         run: flutter pub get

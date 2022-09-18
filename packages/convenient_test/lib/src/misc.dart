@@ -7,7 +7,7 @@ class ConvenientTestWrapperWidget extends StatelessWidget {
 
   static var convenientTestActive = false;
 
-  const ConvenientTestWrapperWidget({Key? key, required this.child}) : super(key: key);
+  const ConvenientTestWrapperWidget({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ConvenientTestWrapperWidget extends StatelessWidget {
 class ConvenientTestImageCaptureWrapper extends StatelessWidget {
   final Widget child;
 
-  const ConvenientTestImageCaptureWrapper({Key? key, required this.child}) : super(key: key);
+  const ConvenientTestImageCaptureWrapper({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +41,11 @@ class MarkCore extends StatelessWidget {
   final Widget child;
 
   const MarkCore({
-    Key? key,
+    super.key,
     required this.name,
     this.data,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) => child;
@@ -64,19 +64,21 @@ class Mark extends StatelessWidget {
   final Widget child;
 
   const Mark({
-    Key? key,
+    super.key,
     this.enable = true,
     required this.name,
     this.repaintBoundary = false,
     this.data,
     required this.child,
-  }) : super(key: key);
+  });
 
   T childTyped<T>() => child as T;
 
   @override
   Widget build(BuildContext context) {
-    if (!enable || !ConvenientTestWrapperWidget.convenientTestActive) return child;
+    if (!enable || !ConvenientTestWrapperWidget.convenientTestActive) {
+      return child;
+    }
 
     final color = kColorList['$name'.hashCode % kColorList.length];
 
