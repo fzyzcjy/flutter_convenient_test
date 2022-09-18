@@ -1,5 +1,19 @@
 ## 1.2.0
 
+* Fix dependency resolution issues and improve Actions #274 (thanks @bartekpacia)
+* Adds a settle argument to tTestWidgets #273 (thanks @ronba)
+* Fix bug causing config switches to be covered #268 (thanks @ethancadoo)
+* flag to prevent pumpAndSettle for other commands #267 (thanks @ostk0069)
+* Build conventient_test_manager_dart on Linux #265 (thanks @vHanda)
+* Pass cmd args through to config #263 (thanks @ethancadoo)
+* Command line args for gRPC connection #258 (thanks @ethancadoo)
+* Add note about AVD in readme #257 (thanks @ethancadoo)
+* Added Linux CI #255 (thanks @ethancadoo)
+* Feature: add a settle flag to act method to prevent pumpAndSettle #252 (thanks @MCord)
+* crop golden images - when you only want a portion of the widget to be captured #251
+* Fix build issues in the CI pipeline #241 (thanks @Rohithgilla12)
+* send hot restart to main isolate #237
+* enhance golden comparator #233
 * Enhance golden comparator #232
 * Fix assertion failed when takeSnapshot: '!renderObject.debugNeedsPaint' is not true #234
 
