@@ -8,7 +8,7 @@ on:
 
 jobs:
   flutter:
-    name: ${{ matrix.package_name }} on Flutter ${{ matrix.channel }}${{ matrix.version }}
+    name: ${{ matrix.package_name }} on Flutter ${{ matrix.channel_version.channel }}${{ matrix.channel_version.version }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -22,12 +22,10 @@ jobs:
           - convenient_test_dev
           - convenient_test_manager
           - convenient_test_manager_dart
-        version: ["3.0.0", ""]
-        channel: [stable, beta, ""]
-        exclude:
-          - { version: "3.0.0", channel: "stable" }
-          - { version: "3.0.0", channel: "beta" }
-          - { version: "", channel: "" }
+        channel_version:
+          - { channel: stable }
+          - { channel: beta }
+          - { version: "3.0.0" }
 
     steps:
       - uses: actions/checkout@v3
@@ -35,8 +33,8 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: ${{ matrix.channel }}
-          flutter-version: ${{ matrix.version }}
+          channel: ${{ matrix.channel_version.channel }}
+          flutter-version: ${{ matrix.channel_version.version }}
 
       - name: Install dependencies
         run: flutter pub get
