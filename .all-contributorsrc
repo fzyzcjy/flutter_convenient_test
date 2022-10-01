@@ -7,13 +7,12 @@
   "commitConvention": "angular",
   "contributors": [
     {
-      "login": "ethancadoo",
-      "name": "ethancadoo",
-      "avatar_url": "https://avatars.githubusercontent.com/u/100008135?v=4",
-      "profile": "https://github.com/ethancadoo",
+      "login": "Rohithgilla12",
+      "name": "Rohith Gilla",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19389850?v=4",
+      "profile": "https://github.com/Rohithgilla12",
       "contributions": [
-        "code",
-        "doc"
+        "code"
       ]
     }, {
       "login": "MCord",
@@ -24,11 +23,20 @@
         "code"
       ]
     }, {
-      "login": "Rohithgilla12",
-      "name": "Rohith Gilla",
-      "avatar_url": "https://avatars.githubusercontent.com/u/19389850?v=4",
-      "profile": "https://github.com/Rohithgilla12",
+      "login": "ethancadoo",
+      "name": "ethancadoo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/100008135?v=4",
+      "profile": "https://github.com/ethancadoo",
       "contributions": [
+        "code",
+        "doc"
+      ]
+    }, {
+      "login": "vHanda",
+      "name": "Vishesh Handa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/426467?v=4",
+      "profile": "http://vhanda.in",
+       "contributions": [
         "code"
       ]
     }
