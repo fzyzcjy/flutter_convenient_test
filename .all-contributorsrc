@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "ronba",
+      "name": "ronba",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10216856?v=4",
+      "profile": "https://github.com/ronba",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "flutter_convenient_test",
+  "projectOwner": "fzyzcjy"
+}
