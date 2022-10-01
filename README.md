@@ -228,6 +228,12 @@ If you are trying to use this package with Android Virtual Emulator (AVD), you m
 <table>
   <tbody>
     <tr>
+      <td align="center"><a href="https://github.com/Rohithgilla12"><img src="https://avatars.githubusercontent.com/u/19389850?v=4?s=100" width="100px;" alt="Rohith Gilla"/><br /><sub><b>Rohith Gilla</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=Rohithgilla12" title="Code">💻</a></td>
+      <td align="center"><a href="http://mehrankordi.com"><img src="https://avatars.githubusercontent.com/u/1547111?v=4?s=100" width="100px;" alt="Mehran Kordi"/><br /><sub><b>Mehran Kordi</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=MCord" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/ethancadoo"><img src="https://avatars.githubusercontent.com/u/100008135?v=4?s=100" width="100px;" alt="ethancadoo"/><br /><sub><b>ethancadoo</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=ethancadoo" title="Code">💻</a> <a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=ethancadoo" title="Documentation">📖</a></td>
+      <td align="center"><a href="http://vhanda.in"><img src="https://avatars.githubusercontent.com/u/426467?v=4?s=100" width="100px;" alt="Vishesh Handa"/><br /><sub><b>Vishesh Handa</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=vHanda" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/ostk0069"><img src="https://avatars.githubusercontent.com/u/27538852?v=4?s=100" width="100px;" alt="Takuma Osada"/><br /><sub><b>Takuma Osada</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=ostk0069" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/ronba"><img src="https://avatars.githubusercontent.com/u/10216856?v=4?s=100" width="100px;" alt="ronba"/><br /><sub><b>ronba</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=ronba" title="Code">💻</a></td>
       <td align="center"><a href="http://pacia.tech"><img src="https://avatars.githubusercontent.com/u/40357511?v=4?s=100" width="100px;" alt="Bartek Pacia"/><br /><sub><b>Bartek Pacia</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=bartekpacia" title="Code">💻</a></td>
     </tr>
   </tbody>

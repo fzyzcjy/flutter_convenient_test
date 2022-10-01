@@ -7,6 +7,55 @@
   "commitConvention": "angular",
   "contributors": [
     {
+      "login": "Rohithgilla12",
+      "name": "Rohith Gilla",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19389850?v=4",
+      "profile": "https://github.com/Rohithgilla12",
+      "contributions": [
+        "code"
+      ]
+    }, {
+      "login": "MCord",
+      "name": "Mehran Kordi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1547111?v=4",
+      "profile": "http://mehrankordi.com",
+      "contributions": [
+        "code"
+      ]
+    }, {
+      "login": "ethancadoo",
+      "name": "ethancadoo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/100008135?v=4",
+      "profile": "https://github.com/ethancadoo",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }, {
+      "login": "vHanda",
+      "name": "Vishesh Handa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/426467?v=4",
+      "profile": "http://vhanda.in",
+       "contributions": [
+        "code"
+      ]
+    }, {
+      "login": "ostk0069",
+      "name": "Takuma Osada",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27538852?v=4",
+      "profile": "https://github.com/ostk0069",
+      "contributions": [
+        "code"
+      ]
+    }, {
+       "login": "ronba",
+      "name": "ronba",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10216856?v=4",
+      "profile": "https://github.com/ronba",
+      "contributions": [
+        "code"
+      ]
+    }, {
       "login": "bartekpacia",
       "name": "Bartek Pacia",
       "avatar_url": "https://avatars.githubusercontent.com/u/40357511?v=4",
