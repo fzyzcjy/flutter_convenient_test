@@ -7,6 +7,14 @@
   "commitConvention": "angular",
   "contributors": [
     {
+      "login": "MCord",
+      "name": "Mehran Kordi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1547111?v=4",
+      "profile": "http://mehrankordi.com",
+      "contributions": [
+        "code"
+      ]
+    }, {
       "login": "Rohithgilla12",
       "name": "Rohith Gilla",
       "avatar_url": "https://avatars.githubusercontent.com/u/19389850?v=4",
