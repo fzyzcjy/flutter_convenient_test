@@ -1,4 +1,7 @@
 # [flutter_convenient_test](https://github.com/fzyzcjy/flutter_convenient_test)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Flutter Package](https://img.shields.io/pub/v/convenient_test.svg)](https://pub.dev/packages/convenient_test)
 [![CI](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/ci.yaml/badge.svg)](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/ci.yaml)
@@ -219,6 +222,24 @@ If you are trying to use this package with Android Virtual Emulator (AVD), you m
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/ostk0069"><img src="https://avatars.githubusercontent.com/u/27538852?v=4?s=100" width="100px;" alt="Takuma Osada"/><br /><sub><b>Takuma Osada</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=ostk0069" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    
+  </tfoot>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
