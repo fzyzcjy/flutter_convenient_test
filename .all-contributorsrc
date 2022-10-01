@@ -7,6 +7,15 @@
   "commitConvention": "angular",
   "contributors": [
     {
+      "login": "ethancadoo",
+      "name": "ethancadoo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/100008135?v=4",
+      "profile": "https://github.com/ethancadoo",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }, {
       "login": "MCord",
       "name": "Mehran Kordi",
       "avatar_url": "https://avatars.githubusercontent.com/u/1547111?v=4",
