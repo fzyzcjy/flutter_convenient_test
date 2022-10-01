@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "vHanda",
+      "name": "Vishesh Handa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/426467?v=4",
+      "profile": "http://vhanda.in",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "flutter_convenient_test",
+  "projectOwner": "fzyzcjy"
+}
