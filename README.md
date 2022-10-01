@@ -216,6 +216,19 @@ For all options that are configurable and all environment variable names, please
 
 If you are trying to use this package with Android Virtual Emulator (AVD), you may need to set `kConvenientTestManagerHost` to `10.0.2.2` because of its [network topology](https://stackoverflow.com/questions/9808560/why-do-we-use-10-0-2-2-to-connect-to-local-web-server-instead-of-using-computer). Please see issue #253 for more details.
 
----
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 Thanks for testing frameworks in JavaScript, especially `Cypress`, for giving inspirations!
