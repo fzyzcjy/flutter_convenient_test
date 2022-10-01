@@ -232,6 +232,7 @@ If you are trying to use this package with Android Virtual Emulator (AVD), you m
       <td align="center"><a href="http://mehrankordi.com"><img src="https://avatars.githubusercontent.com/u/1547111?v=4?s=100" width="100px;" alt="Mehran Kordi"/><br /><sub><b>Mehran Kordi</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=MCord" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/ethancadoo"><img src="https://avatars.githubusercontent.com/u/100008135?v=4?s=100" width="100px;" alt="ethancadoo"/><br /><sub><b>ethancadoo</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=ethancadoo" title="Code">💻</a> <a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=ethancadoo" title="Documentation">📖</a></td>
       <td align="center"><a href="http://vhanda.in"><img src="https://avatars.githubusercontent.com/u/426467?v=4?s=100" width="100px;" alt="Vishesh Handa"/><br /><sub><b>Vishesh Handa</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=vHanda" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/ostk0069"><img src="https://avatars.githubusercontent.com/u/27538852?v=4?s=100" width="100px;" alt="Takuma Osada"/><br /><sub><b>Takuma Osada</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=ostk0069" title="Code">💻</a></td>
     </tr>
   </tbody>
   <tfoot>
