@@ -7,7 +7,9 @@ import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:test_api/src/expect/async_matcher.dart'; // ignore: implementation_imports
+
+// ignore: implementation_imports
+import 'package:test_api/src/expect/async_matcher.dart';
 
 abstract class TCommand {
   @protected
@@ -115,9 +117,7 @@ Future<void> _expectWithRetry(
           printing: true,
         );
         await logSnapshot(name: 'failed');
-
         await EnhancedLocalFileComparator.instance.lastFailure?.dumpToLogSnapshot(logSnapshot);
-
         rethrow;
       }
 
@@ -137,11 +137,11 @@ String _getTestFailureErrorExtraInfo(dynamic actual) {
         reversedAncestors.add(ancestorElement);
         return true;
       });
-      // ignore: prefer_interpolation_to_compose_strings
-      return '[Found Element #$index]\n' + reversedAncestors.reversed.map((e) => '-> ${e.toString()}').join('\n');
+      return '[Found Element #$index]\n'
+          '${reversedAncestors.reversed.map((e) => '-> $e').join('\n')}';
     }).join('\n\n');
-    // ignore: prefer_interpolation_to_compose_strings
-    return 'Extra Info: matched elements are:\n' + info;
+    return 'Extra Info: matched elements are:\n'
+        '$info';
   }
   return '';
 }

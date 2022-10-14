@@ -5,7 +5,9 @@ import 'dart:ui' as ui;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_test/src/_matchers_io.dart'; // ignore: implementation_imports
+
+// ignore: implementation_imports, unnecessary_import
+import 'package:flutter_test/src/_matchers_io.dart';
 import 'package:path/path.dart' as p;
 
 typedef EnterTextWithoutReplaceLogCallback = void Function(TextEditingValue oldValue, TextEditingValue newValue);

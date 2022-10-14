@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert' hide Codec;
 import 'dart:math';
-import 'dart:math' as math;
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
@@ -262,7 +260,7 @@ Future<MyComparisonResult> compareUiImages(Image testImage, Image masterImage) a
         // We grab the max of the 0xAABBGGRR encoded bytes, and then convert
         // back to 0xRRGGBBAA for the actual pixel value, since this is how it
         // was historically done.
-        final int maskPixel = _toRGBA(math.max(
+        final int maskPixel = _toRGBA(max(
           _toABGR(invertedMasterPixel),
           _toABGR(invertedTestPixel),
         ));

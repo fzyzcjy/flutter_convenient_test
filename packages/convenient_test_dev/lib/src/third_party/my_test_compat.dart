@@ -313,7 +313,7 @@ class _Reporter {
     buffer.write(message);
     buffer.write(_noColor);
 
-    print(buffer.toString());
+    print(buffer);
   }
 
   /// Returns a representation of [duration] as `MM:SS`.

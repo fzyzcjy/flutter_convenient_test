@@ -1,16 +1,20 @@
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:convenient_test_dev/convenient_test_dev.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-// ignore: implementation_imports
+// ignore: implementation_imports, unnecessary_import
 import 'package:flutter_test/src/_matchers_io.dart' if (dart.library.html) 'package:flutter_test/src/_matchers_web.dart'
     show captureImage;
-import 'package:test_api/src/expect/async_matcher.dart'; // ignore: implementation_imports
 
-AsyncMatcher matchesEnhancedReferenceImage(ui.Image image, GoldenConfig config) =>
+// ignore: implementation_imports
+import 'package:test_api/src/expect/async_matcher.dart';
+
+AsyncMatcher matchesEnhancedReferenceImage(
+  ui.Image image,
+  GoldenConfig config,
+) =>
     _MatchesEnhancedReferenceImage(image, config);
 
 // NOTE MODIFIED from [_MatchesReferenceImage]
@@ -72,7 +76,8 @@ class _MatchesEnhancedReferenceImage extends AsyncMatcher {
       // ref [EnhancedLocalFileComparator]
       final result = await compareUiImages(image, referenceImage);
       if (!config.check(result)) {
-        return 'does not match some pixels pixelDiffHistogram=${result.pixelDiffHistogram}';
+        return 'does not match some pixels '
+            'pixelDiffHistogram=${result.pixelDiffHistogram}';
       }
       if (!result.passed) {
         debugPrint('A tolerable difference of '
@@ -86,6 +91,8 @@ class _MatchesEnhancedReferenceImage extends AsyncMatcher {
 
   @override
   Description describe(Description description) {
-    return description.add('rasterized image matches that of a $referenceImage reference image');
+    return description.add(
+      'rasterized image matches that of a $referenceImage reference image',
+    );
   }
 }
