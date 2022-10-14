@@ -22,10 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           channel: ${{ matrix.channel }}
-          flutter-version: '3.0.5' # TODO upgrade later
 
       - name: Use pubspec pointing to release versions
         run: |
