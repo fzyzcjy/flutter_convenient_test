@@ -41,15 +41,6 @@ class _MatchesEnhancedReferenceImage extends AsyncMatcher {
     final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.instance;
     return binding.runAsync<String?>(() async {
       final ui.Image image = await imageFuture;
-      final ByteData? bytes = await image.toByteData();
-      if (bytes == null) {
-        return 'could not be encoded.';
-      }
-
-      final ByteData? referenceBytes = await referenceImage.toByteData();
-      if (referenceBytes == null) {
-        return 'could not have its reference image encoded.';
-      }
 
       if (referenceImage.height != image.height || referenceImage.width != image.width) {
         return 'does not match as width or height do not match. $image != $referenceImage';
@@ -58,6 +49,16 @@ class _MatchesEnhancedReferenceImage extends AsyncMatcher {
       // NOTE MODIFIED
       //
       // original
+      //
+      // final ByteData? bytes = await image.toByteData();
+      // if (bytes == null) {
+      //   return 'could not be encoded.';
+      // }
+      //
+      // final ByteData? referenceBytes = await referenceImage.toByteData();
+      // if (referenceBytes == null) {
+      //   return 'could not have its reference image encoded.';
+      // }
       //
       // final int countDifferentPixels = _countDifferentPixels(
       //   Uint8List.view(bytes.buffer),
@@ -69,10 +70,7 @@ class _MatchesEnhancedReferenceImage extends AsyncMatcher {
       //
       // new (below)
       // ref [EnhancedLocalFileComparator]
-      final result = await EnhancedLocalFileComparator.myCompareLists(
-        Uint8List.view(bytes.buffer),
-        Uint8List.view(referenceBytes.buffer),
-      );
+      final result = await compareUiImages(image, referenceImage);
       if (!config.check(result)) {
         return 'does not match some pixels pixelDiffHistogram=${result.pixelDiffHistogram}';
       }

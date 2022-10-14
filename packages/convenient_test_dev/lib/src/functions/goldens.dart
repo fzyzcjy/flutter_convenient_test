@@ -208,10 +208,16 @@ Future<MyComparisonResult> _compareListsWithExtraOutput(List<int>? test, List<in
 
   final Codec testImageCodec = await instantiateImageCodec(Uint8List.fromList(test));
   final Image testImage = (await testImageCodec.getNextFrame()).image;
-  final ByteData? testImageRgba = await testImage.toByteData();
 
   final Codec masterImageCodec = await instantiateImageCodec(Uint8List.fromList(master));
   final Image masterImage = (await masterImageCodec.getNextFrame()).image;
+
+  return await compareUiImages(testImage, masterImage);
+}
+
+// NOTE extracted from [_compareLists]
+Future<MyComparisonResult> compareUiImages(Image testImage, Image masterImage) async {
+  final ByteData? testImageRgba = await testImage.toByteData();
   final ByteData? masterImageRgba = await masterImage.toByteData();
 
   final int width = testImage.width;
