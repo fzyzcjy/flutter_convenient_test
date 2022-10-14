@@ -14,7 +14,8 @@
       "contributions": [
         "code"
       ]
-    }, {
+    },
+    {
       "login": "MCord",
       "name": "Mehran Kordi",
       "avatar_url": "https://avatars.githubusercontent.com/u/1547111?v=4",
@@ -22,7 +23,8 @@
       "contributions": [
         "code"
       ]
-    }, {
+    },
+    {
       "login": "ethancadoo",
       "name": "ethancadoo",
       "avatar_url": "https://avatars.githubusercontent.com/u/100008135?v=4",
@@ -31,15 +33,17 @@
         "code",
         "doc"
       ]
-    }, {
+    },
+    {
       "login": "vHanda",
       "name": "Vishesh Handa",
       "avatar_url": "https://avatars.githubusercontent.com/u/426467?v=4",
       "profile": "http://vhanda.in",
-       "contributions": [
+      "contributions": [
         "code"
       ]
-    }, {
+    },
+    {
       "login": "ostk0069",
       "name": "Takuma Osada",
       "avatar_url": "https://avatars.githubusercontent.com/u/27538852?v=4",
@@ -47,19 +51,30 @@
       "contributions": [
         "code"
       ]
-    }, {
-       "login": "ronba",
+    },
+    {
+      "login": "ronba",
       "name": "ronba",
       "avatar_url": "https://avatars.githubusercontent.com/u/10216856?v=4",
       "profile": "https://github.com/ronba",
       "contributions": [
         "code"
       ]
-    }, {
+    },
+    {
       "login": "bartekpacia",
       "name": "Bartek Pacia",
       "avatar_url": "https://avatars.githubusercontent.com/u/40357511?v=4",
       "profile": "http://pacia.tech",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "AlexV525",
+      "name": "Alex Li",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15884415?v=4",
+      "profile": "https://blog.alexv525.com",
       "contributions": [
         "code"
       ]
