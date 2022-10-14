@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // ignore: implementation_imports, unnecessary_import
-import 'package:flutter_test/src/_matchers_io.dart'
-    if (dart.library.html) 'package:flutter_test/src/_matchers_web.dart'
+import 'package:flutter_test/src/_matchers_io.dart' if (dart.library.html) 'package:flutter_test/src/_matchers_web.dart'
     show captureImage;
 
 // ignore: implementation_imports
@@ -43,15 +42,12 @@ class _MatchesEnhancedReferenceImage extends AsyncMatcher {
       imageFuture = captureImage(elements.single);
     }
 
-    final TestWidgetsFlutterBinding binding =
-        TestWidgetsFlutterBinding.instance;
+    final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.instance;
     return binding.runAsync<String?>(() async {
       final ui.Image image = await imageFuture;
 
-      if (referenceImage.height != image.height ||
-          referenceImage.width != image.width) {
-        return 'does not match as width or height do not match. '
-            '$image != $referenceImage';
+      if (referenceImage.height != image.height || referenceImage.width != image.width) {
+        return 'does not match as width or height do not match. $image != $referenceImage';
       }
 
       // NOTE MODIFIED
