@@ -8,7 +8,7 @@ on:
 
 jobs:
   flutter:
-    name: ${{ matrix.package_name }} on Flutter ${{ matrix.channel_version.channel }}${{ matrix.channel_version.version }}
+    name: ${{ matrix.package_name }} on Flutter ${{ matrix.channel_version.channel }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -33,7 +33,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: ${{ matrix.channel_version.channel }}
-          flutter-version: ${{ matrix.channel_version.version }}
+          # flutter-version: ${{ matrix.channel_version.version }}
 
       - name: Install dependencies
         run: flutter pub get
