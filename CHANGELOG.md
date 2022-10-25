@@ -1,3 +1,7 @@
+## 1.2.1
+
+* Fix CI #287 (thanks @AlexV525)
+
 ## 1.2.0
 
 * Fix dependency resolution issues and improve Actions #274 (thanks @bartekpacia)
