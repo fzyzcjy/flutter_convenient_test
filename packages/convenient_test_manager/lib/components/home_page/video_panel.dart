@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:convenient_test_manager/components/misc/video_player.dart';
 import 'package:convenient_test_manager/stores/video_player_store.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,10 @@ class HomePageVideoPanel extends StatelessWidget {
             // https://github.com/fzyzcjy/flutter_convenient_test/issues/217#issuecomment-1133922630
             'Remark: If your (toy) tests are too short, videos may not be recorded.',
           ),
+        );
+      } else if (Platform.isMacOS) {
+        return const Center(
+          child: Text('MacOS does not yet support video playback'),
         );
       }
 
