@@ -139,7 +139,7 @@ Uint8List _cropImage(Uint8List raw, Rectangle<int>? bbox) {
 
   final rawImage = image.decodeImage(raw)!;
   final croppedImage = image.copyCrop(rawImage, bbox.left, bbox.top, bbox.width, bbox.height);
-  return image.encodeBmp(croppedImage) as Uint8List;
+  return image.encodePng(croppedImage) as Uint8List;
 }
 
 Future<MyComparisonResult> _compareListsAllowSizeDiffer(List<int> test, List<int> master) async {
