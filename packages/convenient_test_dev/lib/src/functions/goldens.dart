@@ -138,8 +138,8 @@ Uint8List _cropImage(Uint8List raw, Rectangle<int>? bbox) {
   if (bbox == null) return raw;
 
   final rawImage = image.decodeImage(raw)!;
-  final croppedImage = image.copyCrop(rawImage, bbox.left, bbox.top, bbox.width, bbox.height);
-  return image.encodePng(croppedImage) as Uint8List;
+  final croppedImage = image.copyCrop(rawImage, x: bbox.left, y: bbox.top, width: bbox.width, height: bbox.height);
+  return image.encodePng(croppedImage);
 }
 
 Future<MyComparisonResult> _compareListsAllowSizeDiffer(List<int> test, List<int> master) async {
@@ -157,16 +157,16 @@ Future<MyComparisonResult> _compareListsAllowSizeDiffer(List<int> test, List<int
 
 Future<MyComparisonResult> _compareListsGivenSizeDiffer(
     List<int> testRaw, List<int> masterRaw, ComparisonResult rawResult) async {
-  final testRawImage = image.decodeImage(testRaw)!;
-  final masterRawImage = image.decodeImage(masterRaw)!;
+  final testRawImage = image.decodeImage(Uint8List.fromList(testRaw))!;
+  final masterRawImage = image.decodeImage(Uint8List.fromList(masterRaw))!;
 
   final targetWidth = max(testRawImage.width, masterRawImage.width);
   final targetHeight = max(testRawImage.height, masterRawImage.height);
 
   List<int> padAndEncode(image.Image src) {
-    final dst = image.Image(targetWidth, targetHeight);
-    image.copyInto(dst, src, blend: false);
-    return image.encodeNamedImage(dst, 'temp.png')!;
+    final dst = image.Image(width: targetWidth, height: targetHeight);
+    image.compositeImage(dst, src, blend: image.BlendMode.direct);
+    return image.encodeNamedImage('temp.png', dst)!;
   }
 
   final testTarget = padAndEncode(testRawImage);
