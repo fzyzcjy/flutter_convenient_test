@@ -35,28 +35,33 @@ class _Body extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const HomePageHeaderPanel(),
-              Divider(height: 1, thickness: 1, color: Colors.grey[200]),
+              Divider(
+                  height: 1,
+                  thickness: 1,
+                  color: Theme.of(context).colorScheme.outline),
               Expanded(
-                child: _buildBody(),
+                child: _buildBody(context),
               ),
               // temporarily disable because of #25
               // const HomePageInputKeyHandler(),
             ],
           ),
-          _buildHotRestartHint(),
+          _buildHotRestartHint(context),
         ],
       );
     });
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     final vmServiceWrapperService = GetIt.I.get<VmServiceWrapperService>();
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
     final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
     final homePageStore = GetIt.I.get<HomePageStore>();
 
-    if (!homePageStore.displayLoadedReportMode && !vmServiceWrapperService.connected) {
+    if (!homePageStore.displayLoadedReportMode &&
+        !vmServiceWrapperService.connected) {
       return _buildFullscreenHint(
+        context: context,
         onTap: vmServiceWrapperService.connect,
         tapHint: const Text('Tap here to reconnect'),
         child: const Text('VMService not connected. '
@@ -64,8 +69,10 @@ class _Body extends StatelessWidget {
       );
     }
 
-    if (!homePageStore.displayLoadedReportMode && suiteInfoStore.suiteInfo == null) {
+    if (!homePageStore.displayLoadedReportMode &&
+        suiteInfoStore.suiteInfo == null) {
       return _buildFullscreenHint(
+        context: context,
         onTap: () => GetIt.I.get<MiscFlutterService>().reloadInfo(),
         tapHint: const Text('Tap here to reload information'),
         child: const Text(
@@ -77,6 +84,7 @@ class _Body extends StatelessWidget {
 
     if (workerSuperRunStore.currSuperRunController.isInteractiveApp) {
       return _buildFullscreenHint(
+        context: context,
         onTap: () => GetIt.I.get<MiscFlutterService>().reloadInfo(),
         tapHint: const Text('Tap here to end the mode and reload information'),
         child: const Text(
@@ -93,7 +101,7 @@ class _Body extends StatelessWidget {
           child: HomePageCommandInfoPanel(),
         ),
         Container(width: 8),
-        Container(width: 1, color: Colors.grey[200]),
+        Container(width: 1, color: Theme.of(context).colorScheme.outline),
         const Expanded(
           flex: 1,
           child: HomePageSecondaryPanel(),
@@ -106,6 +114,7 @@ class _Body extends StatelessWidget {
     required VoidCallback onTap,
     required Widget tapHint,
     required Widget child,
+    required BuildContext context,
   }) {
     return Center(
       child: ConstrainedBox(
@@ -116,7 +125,10 @@ class _Body extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               DefaultTextStyle(
-                style: const TextStyle(fontSize: 15, height: 1.8, color: Colors.black87),
+                style: TextStyle(
+                    fontSize: 15,
+                    height: 1.8,
+                    color: Theme.of(context).colorScheme.onBackground),
                 child: child,
               ),
               const SizedBox(height: 20),
@@ -131,7 +143,7 @@ class _Body extends StatelessWidget {
     );
   }
 
-  Widget _buildHotRestartHint() {
+  Widget _buildHotRestartHint(BuildContext context) {
     final vmServiceWrapperService = GetIt.I.get<VmServiceWrapperService>();
 
     return Positioned(
@@ -142,16 +154,17 @@ class _Body extends StatelessWidget {
         child: Observer(
           builder: (_) => vmServiceWrapperService.hotRestartActing
               ? Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Worker Restarting...',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onBackground,
                       // fontWeight: FontWeight.w600,
                       height: 1.05,
                     ),

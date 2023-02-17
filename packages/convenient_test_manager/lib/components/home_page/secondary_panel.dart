@@ -13,10 +13,10 @@ class HomePageSecondaryPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Observer(
-      builder: (_) => Column(
+      builder: (context) => Column(
         children: [
           const SizedBox(height: 12),
-          _buildTabBar(),
+          _buildTabBar(context),
           Expanded(
             child: _buildTab(),
           ),
@@ -25,7 +25,7 @@ class HomePageSecondaryPanel extends StatelessWidget {
     );
   }
 
-  Widget _buildTabBar() {
+  Widget _buildTabBar(BuildContext context) {
     final homePageStore = GetIt.I.get<HomePageStore>();
 
     return Row(
@@ -34,7 +34,8 @@ class HomePageSecondaryPanel extends StatelessWidget {
         ...HomePageSecondaryPanelTab.values.mapIndexed((index, tab) {
           final active = homePageStore.activeSecondaryPanelTab == tab;
 
-          const borderSide = BorderSide(color: Colors.grey, width: 0.5);
+          final borderSide = BorderSide(
+              color: Theme.of(context).colorScheme.outline, width: 0.5);
 
           return InkWell(
             onTap: () => homePageStore.activeSecondaryPanelTab = tab,
@@ -44,12 +45,15 @@ class HomePageSecondaryPanel extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border(
                     left: index == 0 ? borderSide : BorderSide.none,
-                    right: index == HomePageSecondaryPanelTab.values.length - 1 ? borderSide : BorderSide.none,
+                    right: index == HomePageSecondaryPanelTab.values.length - 1
+                        ? borderSide
+                        : BorderSide.none,
                     top: borderSide,
                     bottom: borderSide,
                   ),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 child: Text(
                   tab.title,
                   style: TextStyle(
