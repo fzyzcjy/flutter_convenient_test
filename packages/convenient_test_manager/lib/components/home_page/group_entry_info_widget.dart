@@ -31,12 +31,14 @@ class HomePageGroupEntryInfoSectionBuilder extends StaticSectionBuilder {
     final info = suiteInfoStore.suiteInfo?.entryMap[groupEntryId];
     if (info == null) return const [];
 
-    if (info is GroupInfo)
+    if (info is GroupInfo) {
       return _GroupInfoSectionBuilder(
               info: info, depth: depth, showHeader: showHeader)
           .build();
-    if (info is TestInfo)
+    }
+    if (info is TestInfo) {
       return _TestInfoSectionBuilder(info: info, depth: depth).build();
+    }
     throw Exception('unknown info=$info');
   }
 }

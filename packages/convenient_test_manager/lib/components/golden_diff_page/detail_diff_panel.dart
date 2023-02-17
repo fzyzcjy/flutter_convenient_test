@@ -15,14 +15,16 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
 
     return Observer(builder: (_) {
       final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
-      if (gitFolderInfo == null)
+      if (gitFolderInfo == null) {
         return const Center(child: Text('Please choose a folder first'));
+      }
 
       final highlightInfo = gitFolderInfo.diffFileInfos.singleWhereOrNull(
           (info) => info.path == goldenDiffPageStore.highlightPath);
-      if (highlightInfo == null)
+      if (highlightInfo == null) {
         return const Center(
             child: Text('Please choose an item from left panel'));
+      }
 
       final maskedDiff = highlightInfo.comparisonResult.diffs?['maskedDiff'];
       final isolatedDiff =

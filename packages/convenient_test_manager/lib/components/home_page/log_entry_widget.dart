@@ -54,8 +54,9 @@ class HomePageLogEntryWidget extends StatelessWidget {
         children: [
           InkWell(
             onHover: (hovering) {
-              if (highlightStore.enableHoverMode && hovering)
+              if (highlightStore.enableHoverMode && hovering) {
                 _handleTapOrHover(interestLogSubEntry, targetState: true);
+              }
             },
             onTap: () =>
                 _handleTapOrHover(interestLogSubEntry, targetState: !active),

@@ -129,9 +129,10 @@ class HomePageScreenshotPanel extends StatelessWidget {
                     : null,
                 child: InkWell(
                   onHover: (hovering) {
-                    if (hovering)
+                    if (hovering) {
                       highlightStore.highlightSnapshot =
                           LogEntryAndSnapshot(logEntryId, snapshotEntry.key);
+                    }
                   },
                   // seems to need onTap if want onHover
                   onTap: () {},
