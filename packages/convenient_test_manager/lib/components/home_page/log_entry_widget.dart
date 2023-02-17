@@ -58,22 +58,16 @@ class HomePageLogEntryWidget extends StatelessWidget {
                 _handleTapOrHover(interestLogSubEntry, targetState: true);
               }
             },
-            onTap: () =>
-                _handleTapOrHover(interestLogSubEntry, targetState: !active),
+            onTap: () => _handleTapOrHover(interestLogSubEntry, targetState: !active),
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8),
               margin: isSection //
                   ? const EdgeInsets.only(left: 32, top: 16)
                   : const EdgeInsets.only(left: 32),
               decoration: BoxDecoration(
-                color: _calcDecorationColor(context,
-                    isSection: isSection, active: active),
+                color: _calcDecorationColor(context, isSection: isSection, active: active),
                 border: Border(
-                  left: running
-                      ? BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                          width: 2)
-                      : BorderSide.none,
+                  left: running ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 2) : BorderSide.none,
                   // top: isSection ? BorderSide(color: Theme.of(context).primaryColor, width: 2) : BorderSide.none,
                 ),
               ),
@@ -98,11 +92,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
                                 padding: const EdgeInsets.only(top: 4, left: 8),
                                 child: Text(
                                   '$order',
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface,
-                                      fontSize: 9),
+                                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 9),
                                 ),
                               ),
                             ),
@@ -114,7 +104,6 @@ class HomePageLogEntryWidget extends StatelessWidget {
                   Expanded(
                     child: EnhancedSelectableText(
                       interestLogSubEntry.message,
-                      // style: const TextStyle(fontFamily: 'RobotoMono'),
                       enableCopyAllButton: false,
                     ),
                   ),
@@ -126,26 +115,22 @@ class HomePageLogEntryWidget extends StatelessWidget {
               ),
             ),
           ),
-          if (interestLogSubEntry.error.isNotEmpty)
-            _buildError(context, interestLogSubEntry)
+          if (interestLogSubEntry.error.isNotEmpty) _buildError(context, interestLogSubEntry)
         ],
       );
     });
   }
 
-  Color _calcDecorationColor(BuildContext context,
-      {required bool isSection, required bool active}) {
-    if (isSection) return Colors.blue[50]!;
-
+  Color _calcDecorationColor(BuildContext context, {required bool isSection, required bool active}) {
     double elevation = 1;
-    if (active) elevation = 2;
+    if (isSection) elevation = 2;
+
+    if (active) elevation = 3;
     final colorScheme = Theme.of(context).colorScheme;
-    return ElevationOverlay.applySurfaceTint(
-        colorScheme.surface, colorScheme.surfaceTint, elevation);
+    return ElevationOverlay.applySurfaceTint(colorScheme.surface, colorScheme.surfaceTint, elevation);
   }
 
-  void _handleTapOrHover(LogSubEntry interestLogSubEntry,
-      {required bool targetState}) {
+  void _handleTapOrHover(LogSubEntry interestLogSubEntry, {required bool targetState}) {
     final highlightStore = GetIt.I.get<HighlightStore>();
     final videoPlayerStore = GetIt.I.get<VideoPlayerStore>();
 
@@ -155,8 +140,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
     if (targetState) {
       final activeVideo = videoPlayerStore.activeVideo;
       if (activeVideo != null) {
-        videoPlayerStore.mainPlayerController.seek(
-            activeVideo.absoluteToVideoTime(interestLogSubEntry.timeTyped));
+        videoPlayerStore.mainPlayerController.seek(activeVideo.absoluteToVideoTime(interestLogSubEntry.timeTyped));
       }
     }
   }
@@ -188,9 +172,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerLeft,
         child: Container(
-          padding: backgroundColor == null
-              ? null
-              : const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          padding: backgroundColor == null ? null : const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
           decoration: BoxDecoration(
             color: backgroundColor,
           ),
@@ -212,8 +194,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
     return Observer(builder: (_) {
       final expand = homePageStore.logEntryExpandErrorInfoMap[logEntryId];
 
-      final text =
-          '${interestLogSubEntry.error}\n${interestLogSubEntry.stackTrace}';
+      final text = '${interestLogSubEntry.error}\n${interestLogSubEntry.stackTrace}';
 
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -245,13 +226,10 @@ class HomePageLogEntryWidget extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () => homePageStore
-                    .logEntryExpandErrorInfoMap[logEntryId] = !expand,
+                onPressed: () => homePageStore.logEntryExpandErrorInfoMap[logEntryId] = !expand,
                 child: Text(
                   '[${expand ? "Collapse" : "Expand"}]',
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: Theme.of(context).colorScheme.onBackground),
+                  style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onBackground),
                 ),
               ),
             ),
@@ -261,26 +239,17 @@ class HomePageLogEntryWidget extends StatelessWidget {
     });
   }
 
-  Widget _buildTime(
-      {required List<int> logSubEntryIds, required BuildContext context}) {
+  Widget _buildTime({required List<int> logSubEntryIds, required BuildContext context}) {
     final logStore = GetIt.I.get<LogStore>();
 
-    final testStartTime = logStore
-        .logSubEntryMap[logStore.logSubEntryInTest(testEntryId).first]!
-        .timeTyped;
-    final logEntryStartTime =
-        logStore.logSubEntryMap[logSubEntryIds.first]!.timeTyped;
-    final logEntryEndTime =
-        logStore.logSubEntryMap[logSubEntryIds.last]!.timeTyped;
+    final testStartTime = logStore.logSubEntryMap[logStore.logSubEntryInTest(testEntryId).first]!.timeTyped;
+    final logEntryStartTime = logStore.logSubEntryMap[logSubEntryIds.first]!.timeTyped;
+    final logEntryEndTime = logStore.logSubEntryMap[logSubEntryIds.last]!.timeTyped;
 
-    final logEntryStartDisplay =
-        _formatDuration(logEntryStartTime.difference(testStartTime));
-    final logEntryEndDisplay =
-        _formatDuration(logEntryEndTime.difference(testStartTime));
+    final logEntryStartDisplay = _formatDuration(logEntryStartTime.difference(testStartTime));
+    final logEntryEndDisplay = _formatDuration(logEntryEndTime.difference(testStartTime));
 
-    final shouldShowLogEndDisplay =
-        logEntryEndTime.difference(logEntryStartTime) >
-            const Duration(milliseconds: 300);
+    final shouldShowLogEndDisplay = logEntryEndTime.difference(logEntryStartTime) > const Duration(milliseconds: 300);
 
     return Text(
       '$logEntryStartDisplay${shouldShowLogEndDisplay ? '-$logEntryEndDisplay' : ''}s',
@@ -292,6 +261,5 @@ class HomePageLogEntryWidget extends StatelessWidget {
     );
   }
 
-  String _formatDuration(Duration d) =>
-      (d.inMilliseconds / 1000).toStringAsFixed(1);
+  String _formatDuration(Duration d) => (d.inMilliseconds / 1000).toStringAsFixed(1);
 }

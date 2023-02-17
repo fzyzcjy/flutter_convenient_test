@@ -34,8 +34,7 @@ class HomePageSecondaryPanel extends StatelessWidget {
         ...HomePageSecondaryPanelTab.values.mapIndexed((index, tab) {
           final active = homePageStore.activeSecondaryPanelTab == tab;
 
-          final borderSide = BorderSide(
-              color: Theme.of(context).colorScheme.outline, width: 0.5);
+          final borderSide = BorderSide(color: Theme.of(context).colorScheme.outline, width: 0.5);
 
           return InkWell(
             onTap: () => homePageStore.activeSecondaryPanelTab = tab,
@@ -45,15 +44,12 @@ class HomePageSecondaryPanel extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border(
                     left: index == 0 ? borderSide : BorderSide.none,
-                    right: index == HomePageSecondaryPanelTab.values.length - 1
-                        ? borderSide
-                        : BorderSide.none,
+                    right: index == HomePageSecondaryPanelTab.values.length - 1 ? borderSide : BorderSide.none,
                     top: borderSide,
                     bottom: borderSide,
                   ),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 child: Text(
                   tab.title,
                   style: TextStyle(

@@ -32,8 +32,7 @@ class HomePageHeaderPanel extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: IconButton(
-                    onPressed: () =>
-                        homePageStore.displayLoadedReportMode = false,
+                    onPressed: () => homePageStore.displayLoadedReportMode = false,
                     icon: const Icon(Icons.arrow_back),
                   ),
                 ),
@@ -60,8 +59,7 @@ class HomePageHeaderPanel extends StatelessWidget {
               context: context,
               onPressed: () {
                 highlightStore.enableAutoExpand = true;
-                miscFlutterService.hotRestartAndRunTests(
-                    filterNameRegex: RegexUtils.kMatchEverything);
+                miscFlutterService.hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
               },
               text: 'Run All',
             ),
@@ -91,8 +89,7 @@ class HomePageHeaderPanel extends StatelessWidget {
               text: 'Load Report',
             ),
             ..._buildButton(
-              onPressed: () =>
-                  Navigator.pushNamed(context, GoldenDiffPage.kRouteName),
+              onPressed: () => Navigator.pushNamed(context, GoldenDiffPage.kRouteName),
               context: context,
               text: 'Golden Diff Page',
             ),
@@ -169,8 +166,7 @@ class HomePageHeaderPanel extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
-          style: TextStyle(
-              fontSize: 12, color: Theme.of(context).colorScheme.onBackground),
+          style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onBackground),
         ),
       ),
       const SizedBox(width: 4),

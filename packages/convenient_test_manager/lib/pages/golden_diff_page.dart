@@ -25,10 +25,7 @@ class _Body extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const GoldenDiffPageHeaderPanel(),
-        Divider(
-            height: 1,
-            thickness: 1,
-            color: Theme.of(context).colorScheme.outline),
+        Divider(height: 1, thickness: 1, color: Theme.of(context).colorScheme.outline),
         Expanded(
           child: _buildBody(context),
         ),
