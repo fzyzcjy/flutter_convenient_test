@@ -71,7 +71,8 @@ class HomePageLogEntryWidget extends StatelessWidget {
                 border: Border(
                   left: running
                       ? BorderSide(
-                          color: Theme.of(context).primaryColor, width: 2)
+                          color: Theme.of(context).colorScheme.primary,
+                          width: 2)
                       : BorderSide.none,
                   // top: isSection ? BorderSide(color: Theme.of(context).primaryColor, width: 2) : BorderSide.none,
                 ),
@@ -134,10 +135,13 @@ class HomePageLogEntryWidget extends StatelessWidget {
 
   Color _calcDecorationColor(BuildContext context,
       {required bool isSection, required bool active}) {
-    if (active) return Colors.green[50]!;
-    // if (running) return Colors.blue[50]!;
     if (isSection) return Colors.blue[50]!;
-    return Colors.blueGrey[50]!.withAlpha(150);
+
+    double elevation = 1;
+    if (active) elevation = 2;
+    final colorScheme = Theme.of(context).colorScheme;
+    return ElevationOverlay.applySurfaceTint(
+        colorScheme.surface, colorScheme.surfaceTint, elevation);
   }
 
   void _handleTapOrHover(LogSubEntry interestLogSubEntry,
