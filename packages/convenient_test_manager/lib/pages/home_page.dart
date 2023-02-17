@@ -151,11 +151,11 @@ class _Body extends StatelessWidget {
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Worker Restarting...',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Theme.of(context).colorScheme.onBackground,
+                      color: Colors.white,
                       // fontWeight: FontWeight.w600,
                       height: 1.05,
                     ),
