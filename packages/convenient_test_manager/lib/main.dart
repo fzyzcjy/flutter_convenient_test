@@ -9,7 +9,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final ThemeMode theme;
+  const MyApp({super.key, this.theme = ThemeMode.system});
   ThemeData _getTheme({required Brightness brightness}) =>
       ThemeData(brightness: brightness, colorSchemeSeed: Colors.blue);
   @override
