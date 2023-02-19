@@ -1,15 +1,13 @@
-import 'dart:ffi' hide Size;
-
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager/main.dart';
 import 'package:convenient_test_manager/misc/setup.dart';
-import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager_dart/services/convenient_test_manager_service.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fixnum/fixnum.dart';
+
 import 'fake_vm_service_wrapper.dart';
 
 var isSetup = false;
@@ -41,7 +39,7 @@ Future<void> myAppGoldenTest(ThemeMode theme) async {
      await mService.reportInner(ReportCollection(
        items: [
          ReportItem(
-          runnerMessage: RunnerMessage(message: "the test passed") 
+          runnerMessage: RunnerMessage(message: 'the test passed') 
          )
        ],
      ));
