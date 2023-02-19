@@ -2,6 +2,7 @@ import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/services/convenient_test_manager_service.dart';
 import 'package:convenient_test_manager_dart/services/fs_service.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
+import 'package:convenient_test_manager_dart/services/real_vm_service_wrapper_service.dart';
 import 'package:convenient_test_manager_dart/services/report_handler_service.dart';
 import 'package:convenient_test_manager_dart/services/report_saver_service.dart';
 import 'package:convenient_test_manager_dart/services/screen_video_recorder_service.dart';
@@ -25,24 +26,29 @@ Future<void> setup({
   bool registerFsService = true,
   bool registerHighlightStoreBase = true,
   bool registerVideoPlayerStoreBase = true,
+  bool registerVmServiceWrapper = true,
 }) async {
-  GlobalConfigStore.config = await GlobalConfigNullable.parse(args: args, headlessMode: headlessMode);
+  GlobalConfigStore.config =
+      await GlobalConfigNullable.parse(args: args, headlessMode: headlessMode);
 
   getIt.registerSingleton<LogStore>(LogStore());
   getIt.registerSingleton<SuiteInfoStore>(SuiteInfoStore());
   getIt.registerSingleton<RawLogStore>(RawLogStore());
   getIt.registerSingleton<WorkerSuperRunStore>(WorkerSuperRunStore());
   getIt.registerSingleton<VideoRecorderStore>(VideoRecorderStore());
-  getIt.registerSingleton<ConvenientTestManagerService>(ConvenientTestManagerService());
-  getIt.registerSingleton<VmServiceWrapperService>(VmServiceWrapperService());
+  getIt.registerSingleton<ConvenientTestManagerService>(
+      ConvenientTestManagerService());
+
   getIt.registerSingleton<ReportHandlerService>(ReportHandlerService());
   getIt.registerSingleton<ReportSaverService>(ReportSaverService());
-  getIt.registerSingleton<ScreenVideoRecorderService>(ScreenVideoRecorderService.create());
+  getIt.registerSingleton<ScreenVideoRecorderService>(
+      ScreenVideoRecorderService.create());
 
   if (registerMiscDartService) getIt.registerSingleton<MiscDartService>(MiscDartService());
   if (registerFsService) getIt.registerSingleton<FsService>(FsServiceDart());
   if (registerHighlightStoreBase) getIt.registerSingleton<HighlightStoreBase>(HighlightStoreDummy());
   if (registerVideoPlayerStoreBase) getIt.registerSingleton<VideoPlayerStoreBase>(VideoPlayerStoreDummy());
+  if (registerVmServiceWrapper) getIt.registerSingleton<VmServiceWrapperService>(RealVmServiceWrapperService());
 
   GetIt.I.get<ConvenientTestManagerService>().serve();
 
