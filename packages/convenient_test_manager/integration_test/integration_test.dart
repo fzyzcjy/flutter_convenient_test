@@ -21,6 +21,8 @@ Future<void> myAppGoldenTest(ThemeMode theme) async {
       isSetup = true;
     }
 
+    await tester.pumpWidget(MyApp(theme: theme));
+
     await ConvenientTestManagerService().reportInner(ReportCollection(
       items: [
         ReportItem(
@@ -29,7 +31,6 @@ Future<void> myAppGoldenTest(ThemeMode theme) async {
       ],
     ));
 
-    await tester.pumpWidget(MyApp(theme: theme));
     await expectLater(find.byType(MyApp),
         matchesGoldenFile('manager-golden-${theme.name}.png'));
   });

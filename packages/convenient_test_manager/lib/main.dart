@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ConvenientTestManager',
-      themeMode: ThemeMode.system,
+      themeMode: theme,
       theme: _getTheme(brightness: Brightness.light),
       darkTheme: _getTheme(brightness: Brightness.dark),
       initialRoute: HomePage.kRouteName,
