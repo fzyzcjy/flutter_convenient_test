@@ -16,20 +16,27 @@ import 'package:mobx/mobx.dart';
 class ReportHandlerService {
   static const _kTag = 'ReportHandlerService';
 
-  Future<void> handle(ReportCollection reportCollection, {required bool offlineFile}) async {
+  /// handle a report sent by the worker.
+  /// doClear: if handleSuiteInfoProto should clear the already known suite info.
+  /// set to false on widget tests.
+  Future<void> handle(
+    ReportCollection reportCollection, {
+    required bool offlineFile,
+    bool doClear = true,
+  }) async {
     for (final item in reportCollection.items) {
-      await _handleItem(item, offlineFile: offlineFile);
+      await _handleItem(item, offlineFile: offlineFile, doClear: doClear);
     }
   }
 
-  Future<void> _handleItem(ReportItem item, {required bool offlineFile}) async {
+  Future<void> _handleItem(ReportItem item, {required bool offlineFile, bool doClear = true}) async {
     switch (item.whichSubType()) {
       case ReportItem_SubType.setUpAll:
         return _handleSetUpAll(item.setUpAll, offlineFile: offlineFile);
       case ReportItem_SubType.tearDownAll:
         return _handleTearDownAll(item.tearDownAll, offlineFile: offlineFile);
       case ReportItem_SubType.suiteInfoProto:
-        return _handleSuiteInfoProto(item.suiteInfoProto);
+        return _handleSuiteInfoProto(item.suiteInfoProto, doClear);
       case ReportItem_SubType.logEntry:
         return _handleLogEntry(item.logEntry);
       case ReportItem_SubType.runnerStateChange:
@@ -106,7 +113,7 @@ class ReportHandlerService {
     _logStore.snapshotInLog[logEntryId]![request.name] = request.image as Uint8List;
   }
 
-  Future<void> _handleSuiteInfoProto(SuiteInfoProto request) async {
+  Future<void> _handleSuiteInfoProto(SuiteInfoProto request, bool doClear) async {
     Log.d(_kTag, 'handleReportSuiteInfo called $request');
 
     Log.d(_kTag, 'handleReportSuiteInfo thus clearAll');
@@ -114,7 +121,7 @@ class ReportHandlerService {
 
     Log.d(_kTag, 'handleReportSuiteInfo thus clear');
     // in case data from previous super-run are logged into current run
-    await GetIt.I.get<ReportSaverService>().clear();
+    if (doClear) await GetIt.I.get<ReportSaverService>().clear();
 
     _suiteInfoStore.suiteInfo = SuiteInfo.fromProto(request);
   }

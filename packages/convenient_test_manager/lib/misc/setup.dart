@@ -5,8 +5,7 @@ import 'package:convenient_test_manager/stores/golden_diff_page_store.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
 import 'package:convenient_test_manager/stores/video_player_store.dart';
-import 'package:convenient_test_manager_dart/misc/setup.dart'
-    as convenient_test_manager_dart_setup;
+import 'package:convenient_test_manager_dart/misc/setup.dart' as convenient_test_manager_dart_setup;
 import 'package:convenient_test_manager_dart/services/fs_service.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:convenient_test_manager_dart/stores/highlight_store.dart';
@@ -18,18 +17,24 @@ import 'package:window_size/window_size.dart' as window_size;
 
 final getIt = GetIt.instance;
 
-Future<void> setup({bool registerVmServiceWrapper = true}) async {
+Future<void> setup({
+  bool registerVmServiceWrapper = true,
+  bool parseConfigFile = true,
+  bool initVLC = true,
+  bool setWinSize = true,
+}) async {
   await convenient_test_manager_dart_setup.setup(
     registerMiscDartService: false,
     registerFsService: false,
     registerHighlightStoreBase: false,
     registerVideoPlayerStoreBase: false,
     registerVmServiceWrapper: registerVmServiceWrapper,
+    parseConfigFile: parseConfigFile,
   );
 
-  await DartVLC.initialize();
+  if (initVLC) await DartVLC.initialize();
 
-  await _setWindowSize();
+  if (setWinSize) await _setWindowSize();
 
   getIt.registerSingleton<VideoPlayerStore>(VideoPlayerStore());
   getIt.registerSingleton<HighlightStore>(HighlightStore());
@@ -39,8 +44,7 @@ Future<void> setup({bool registerVmServiceWrapper = true}) async {
   getIt.registerSingleton<MiscFlutterService>(MiscFlutterService());
 
   getIt.registerSingleton<HighlightStoreBase>(GetIt.I.get<HighlightStore>());
-  getIt
-      .registerSingleton<VideoPlayerStoreBase>(GetIt.I.get<VideoPlayerStore>());
+  getIt.registerSingleton<VideoPlayerStoreBase>(GetIt.I.get<VideoPlayerStore>());
   getIt.registerSingleton<MiscDartService>(GetIt.I.get<MiscFlutterService>());
 }
 
@@ -53,8 +57,7 @@ Future<void> _setWindowSize() async {
   // https://github.com/flutter/flutter/issues/30736#issuecomment-706977876
   final window = await window_size.getWindowInfo();
   final screen = window.screen;
-  Log.d(_kTag,
-      'window=${window.customToString()} screen=${screen?.customToString()}');
+  Log.d(_kTag, 'window=${window.customToString()} screen=${screen?.customToString()}');
   if (screen != null) {
     const width = 1350.0;
     const height = 1000.0;
@@ -71,11 +74,9 @@ Future<void> _setWindowSize() async {
 }
 
 extension on window_size.PlatformWindow {
-  String customToString() =>
-      'PlatformWindow{frame: $frame, scaleFactor: $scaleFactor, screen: $screen}';
+  String customToString() => 'PlatformWindow{frame: $frame, scaleFactor: $scaleFactor, screen: $screen}';
 }
 
 extension on window_size.Screen {
-  String customToString() =>
-      'Screen{frame: $frame, visibleFrame: $visibleFrame, scaleFactor: $scaleFactor}';
+  String customToString() => 'Screen{frame: $frame, visibleFrame: $visibleFrame, scaleFactor: $scaleFactor}';
 }

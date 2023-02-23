@@ -27,22 +27,24 @@ Future<void> setup({
   bool registerHighlightStoreBase = true,
   bool registerVideoPlayerStoreBase = true,
   bool registerVmServiceWrapper = true,
+  bool parseConfigFile = true,
 }) async {
-  GlobalConfigStore.config =
-      await GlobalConfigNullable.parse(args: args, headlessMode: headlessMode);
+  if (parseConfigFile) {
+    GlobalConfigStore.config = await GlobalConfigNullable.parse(args: args, headlessMode: headlessMode);
+  } else {
+    GlobalConfigStore.config = GlobalConfigNullable().toConfig();
+  }
 
   getIt.registerSingleton<LogStore>(LogStore());
   getIt.registerSingleton<SuiteInfoStore>(SuiteInfoStore());
   getIt.registerSingleton<RawLogStore>(RawLogStore());
   getIt.registerSingleton<WorkerSuperRunStore>(WorkerSuperRunStore());
   getIt.registerSingleton<VideoRecorderStore>(VideoRecorderStore());
-  getIt.registerSingleton<ConvenientTestManagerService>(
-      ConvenientTestManagerService());
+  getIt.registerSingleton<ConvenientTestManagerService>(ConvenientTestManagerService());
 
   getIt.registerSingleton<ReportHandlerService>(ReportHandlerService());
   getIt.registerSingleton<ReportSaverService>(ReportSaverService());
-  getIt.registerSingleton<ScreenVideoRecorderService>(
-      ScreenVideoRecorderService.create());
+  getIt.registerSingleton<ScreenVideoRecorderService>(ScreenVideoRecorderService.create());
 
   if (registerMiscDartService) getIt.registerSingleton<MiscDartService>(MiscDartService());
   if (registerFsService) getIt.registerSingleton<FsService>(FsServiceDart());

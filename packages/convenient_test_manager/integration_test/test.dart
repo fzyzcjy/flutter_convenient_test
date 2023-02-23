@@ -25,19 +25,23 @@ Future<void> myAppGoldenTest(ThemeMode theme) async {
     await tester.binding.setSurfaceSize(const Size(1920, 1080));
 
     if (!isSetup) {
-      await setup(registerVmServiceWrapper: false);
+      await setup(registerVmServiceWrapper: false, initVLC: false, parseConfigFile: false, setWinSize: false);
+
       getIt.registerSingleton<VmServiceWrapperService>(FakeVmServiceWrapper());
       isSetup = true;
       Log.d('myAppGoldenTest', 'setup finished');
     }
+
     final report = File('./integration_test/report.bin').path;
     final mFS = getIt.get<MiscFlutterService>();
 
-    await mFS.pickFileAndReadReport(pathOverride: report);
-    mFS.reloadInfo();
+    await mFS.pickFileAndReadReport(pathOverride: report, readSync: true, clear: false);
 
+    // mFS.reloadInfo();
+
+    Log.d("myAppGoldenTest", "before pump widget");
     await tester.pumpWidget(MyApp(theme: theme));
-    await expectLater(find.byType(MyApp),
-        matchesGoldenFile('manager-golden-${theme.name}.png'));
+    Log.d("myAppGoldenTest", "pumped widget");
+    await expectLater(find.byType(MyApp), matchesGoldenFile('manager-golden-${theme.name}.png'));
   });
 }
