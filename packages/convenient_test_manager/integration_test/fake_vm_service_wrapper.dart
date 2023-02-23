@@ -1,3 +1,4 @@
+import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
 
 class FakeVmServiceWrapper extends VmServiceWrapperService {
@@ -13,13 +14,15 @@ class FakeVmServiceWrapper extends VmServiceWrapperService {
   bool get hotRestartAvailable => false;
 
   @override
-  Future<void> hotRestartRaw() {
-    throw UnimplementedError();
+  Future<void> hotRestartRaw() async {
+    Log.d('FakeVMServiceWrapper',
+        'user requested hotRestartRaw but doing nothing');
   }
 
   @override
   void hotRestartThrottled() {
-    throw UnimplementedError();
+    Log.d('FakeVMServiceWrapper',
+        'user requested hotRestartThrottled but doing nothing');
   }
 
   @override
