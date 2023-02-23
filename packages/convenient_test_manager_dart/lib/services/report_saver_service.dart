@@ -27,6 +27,7 @@ abstract class _ReportSaverService with Store {
   Future<void> clear() async {
     Log.d(_kTag, 'clear');
     final path = File(await _getReportPath());
+
     if (path.existsSync()) path.deleteSync();
   }
 

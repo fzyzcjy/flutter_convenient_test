@@ -35,10 +35,7 @@ class _Body extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const HomePageHeaderPanel(),
-              Divider(
-                  height: 1,
-                  thickness: 1,
-                  color: Theme.of(context).colorScheme.outline),
+              Divider(height: 1, thickness: 1, color: Theme.of(context).colorScheme.outline),
               Expanded(
                 child: _buildBody(context),
               ),
@@ -58,8 +55,7 @@ class _Body extends StatelessWidget {
     final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
     final homePageStore = GetIt.I.get<HomePageStore>();
 
-    if (!homePageStore.displayLoadedReportMode &&
-        !vmServiceWrapperService.connected) {
+    if (!homePageStore.displayLoadedReportMode && !vmServiceWrapperService.connected) {
       return _buildFullscreenHint(
         context: context,
         onTap: vmServiceWrapperService.connect,
@@ -69,8 +65,7 @@ class _Body extends StatelessWidget {
       );
     }
 
-    if (!homePageStore.displayLoadedReportMode &&
-        suiteInfoStore.suiteInfo == null) {
+    if (!homePageStore.displayLoadedReportMode && suiteInfoStore.suiteInfo == null) {
       return _buildFullscreenHint(
         context: context,
         onTap: () => GetIt.I.get<MiscFlutterService>().reloadInfo(),
@@ -125,10 +120,7 @@ class _Body extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               DefaultTextStyle(
-                style: TextStyle(
-                    fontSize: 15,
-                    height: 1.8,
-                    color: Theme.of(context).colorScheme.onBackground),
+                style: TextStyle(fontSize: 15, height: 1.8, color: Theme.of(context).colorScheme.onBackground),
                 child: child,
               ),
               const SizedBox(height: 20),
@@ -154,8 +146,7 @@ class _Body extends StatelessWidget {
         child: Observer(
           builder: (_) => vmServiceWrapperService.hotRestartActing
               ? Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(4),

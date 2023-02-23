@@ -32,9 +32,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
   /// [report()] but without a [ServiceCall]
   Future<void> reportInner(ReportCollection request) async {
-    await GetIt.I
-        .get<ReportHandlerService>()
-        .handle(request, offlineFile: false);
+    await GetIt.I.get<ReportHandlerService>().handle(request, offlineFile: false);
 
     // NOTE *first* handle by ReportHandlerService, *then* by ReportSaverService,
     //      because ReportHandlerService may let ReportSaverService change target file
@@ -42,8 +40,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   }
 
   @override
-  Future<WorkerCurrentRunConfig> getWorkerCurrentRunConfig(
-      grpc.ServiceCall call, Empty request) async {
+  Future<WorkerCurrentRunConfig> getWorkerCurrentRunConfig(grpc.ServiceCall call, Empty request) async {
     final ans = _workerSuperRunStore.calcCurrentRunConfig();
     Log.d(_kTag,
         'getWorkerCurrentRunConfig ans=$ans currSuperRunController=${_workerSuperRunStore.currSuperRunController}');
@@ -51,8 +48,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   }
 
   static void _responseErrorHandler(Object? error, Object? stackTrace) {
-    Log.e(_kTag,
-        'error when handling grpc requests. error=$error stack=$stackTrace');
+    Log.e(_kTag, 'error when handling grpc requests. error=$error stack=$stackTrace');
   }
 
   final _workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();

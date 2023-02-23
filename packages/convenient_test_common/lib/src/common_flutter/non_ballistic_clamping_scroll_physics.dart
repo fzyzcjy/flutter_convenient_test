@@ -51,7 +51,7 @@ class NonBallisticClampingScrollPhysics extends ScrollPhysics {
   @override
   Simulation? createBallisticSimulation(ScrollMetrics position, double velocity) {
     // Log.i(_kTag, 'createBallisticSimulation position=$position outOfRange=${position.outOfRange} velocity=$velocity');
-    final Tolerance tolerance = this.tolerance;
+
     if (position.outOfRange) {
       double? end;
       if (position.pixels > position.maxScrollExtent) end = position.maxScrollExtent;
