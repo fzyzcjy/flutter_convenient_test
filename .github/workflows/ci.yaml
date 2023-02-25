@@ -24,7 +24,8 @@ jobs:
           - convenient_test_manager_dart
         channel_version:
           - { channel: stable }
-          - { channel: beta }
+          # - { channel: beta }
+          # see https://github.com/fzyzcjy/flutter_convenient_test/pull/319#issuecomment-1445048397
 
     steps:
       - uses: actions/checkout@v3

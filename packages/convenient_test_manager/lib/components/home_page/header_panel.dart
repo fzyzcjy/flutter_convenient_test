@@ -56,6 +56,7 @@ class HomePageHeaderPanel extends StatelessWidget {
           children: [
             const SizedBox(width: 8),
             ..._buildButton(
+              context: context,
               onPressed: () {
                 highlightStore.enableAutoExpand = true;
                 miscFlutterService.hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
@@ -65,25 +66,31 @@ class HomePageHeaderPanel extends StatelessWidget {
             ..._buildButton(
               onPressed: miscFlutterService.haltWorker,
               text: 'Halt',
+              context: context,
             ),
             ..._buildButton(
               onPressed: miscFlutterService.hotRestartAndRunInAppMode,
+              context: context,
               text: 'Interactive Mode',
             ),
             ..._buildButton(
+              context: context,
               onPressed: miscFlutterService.reloadInfo,
               text: 'Reload Info',
             ),
             ..._buildButton(
               onPressed: GetIt.I.get<VmServiceWrapperService>().connect,
+              context: context,
               text: 'Reconnect VM',
             ),
             ..._buildButton(
               onPressed: miscFlutterService.pickFileAndReadReport,
+              context: context,
               text: 'Load Report',
             ),
             ..._buildButton(
               onPressed: () => Navigator.pushNamed(context, GoldenDiffPage.kRouteName),
+              context: context,
               text: 'Golden Diff Page',
             ),
             const SizedBox(width: 8),
@@ -152,13 +159,14 @@ class HomePageHeaderPanel extends StatelessWidget {
   List<Widget> _buildButton({
     required String text,
     required VoidCallback onPressed,
+    required BuildContext context,
   }) {
     return [
       TextButton(
         onPressed: onPressed,
         child: Text(
           text,
-          style: const TextStyle(fontSize: 12, color: Colors.black87),
+          style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onBackground),
         ),
       ),
       const SizedBox(width: 4),

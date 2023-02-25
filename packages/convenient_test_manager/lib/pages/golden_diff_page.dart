@@ -25,15 +25,15 @@ class _Body extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const GoldenDiffPageHeaderPanel(),
-        Divider(height: 1, thickness: 1, color: Colors.grey[200]),
+        Divider(height: 1, thickness: 1, color: Theme.of(context).colorScheme.outline),
         Expanded(
-          child: _buildBody(),
+          child: _buildBody(context),
         ),
       ],
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return Row(
       children: [
         const Expanded(
@@ -41,7 +41,7 @@ class _Body extends StatelessWidget {
           child: GoldenDiffPageFileInfoPanel(),
         ),
         Container(width: 8),
-        Container(width: 1, color: Colors.grey[200]),
+        Container(width: 1, color: Theme.of(context).colorScheme.outline),
         const Expanded(
           flex: 2,
           child: GoldenDiffPageDetailDiffPanel(),

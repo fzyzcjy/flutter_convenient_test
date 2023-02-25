@@ -17,17 +17,24 @@ import 'package:window_size/window_size.dart' as window_size;
 
 final getIt = GetIt.instance;
 
-Future<void> setup() async {
+Future<void> setup({
+  bool registerVmServiceWrapper = true,
+  bool parseConfigFile = true,
+  bool initVLC = true,
+  bool setWinSize = true,
+}) async {
   await convenient_test_manager_dart_setup.setup(
     registerMiscDartService: false,
     registerFsService: false,
     registerHighlightStoreBase: false,
     registerVideoPlayerStoreBase: false,
+    registerVmServiceWrapper: registerVmServiceWrapper,
+    parseConfigFile: parseConfigFile,
   );
 
-  await DartVLC.initialize();
+  if (initVLC) await DartVLC.initialize();
 
-  await _setWindowSize();
+  if (setWinSize) await _setWindowSize();
 
   getIt.registerSingleton<VideoPlayerStore>(VideoPlayerStore());
   getIt.registerSingleton<HighlightStore>(HighlightStore());

@@ -26,13 +26,17 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
   @override
   Future<Empty> report(ServiceCall call, ReportCollection request) async {
+    await reportInner(request);
+    return Empty();
+  }
+
+  /// [report()] but without a [ServiceCall]
+  Future<void> reportInner(ReportCollection request) async {
     await GetIt.I.get<ReportHandlerService>().handle(request, offlineFile: false);
 
     // NOTE *first* handle by ReportHandlerService, *then* by ReportSaverService,
     //      because ReportHandlerService may let ReportSaverService change target file
     await GetIt.I.get<ReportSaverService>().save(request);
-
-    return Empty();
   }
 
   @override

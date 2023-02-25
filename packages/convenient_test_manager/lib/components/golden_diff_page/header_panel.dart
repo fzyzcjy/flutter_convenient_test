@@ -42,7 +42,7 @@ class GoldenDiffPageHeaderPanel extends StatelessWidget {
     return [
       const Text(
         'Active Folder: ',
-        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+        style: TextStyle(fontWeight: FontWeight.w600),
       ),
       Observer(
         builder: (_) => Text(
