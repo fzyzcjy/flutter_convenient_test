@@ -29,14 +29,14 @@ class ReportHandlerService {
     }
   }
 
-  Future<void> _handleItem(ReportItem item, {required bool offlineFile, bool doClear = true}) async {
+  Future<void> _handleItem(ReportItem item, {required bool offlineFile, required bool doClear}) async {
     switch (item.whichSubType()) {
       case ReportItem_SubType.setUpAll:
         return _handleSetUpAll(item.setUpAll, offlineFile: offlineFile);
       case ReportItem_SubType.tearDownAll:
         return _handleTearDownAll(item.tearDownAll, offlineFile: offlineFile);
       case ReportItem_SubType.suiteInfoProto:
-        return _handleSuiteInfoProto(item.suiteInfoProto, doClear);
+        return _handleSuiteInfoProto(item.suiteInfoProto, doClear: doClear);
       case ReportItem_SubType.logEntry:
         return _handleLogEntry(item.logEntry);
       case ReportItem_SubType.runnerStateChange:
@@ -113,7 +113,7 @@ class ReportHandlerService {
     _logStore.snapshotInLog[logEntryId]![request.name] = request.image as Uint8List;
   }
 
-  Future<void> _handleSuiteInfoProto(SuiteInfoProto request, bool doClear) async {
+  Future<void> _handleSuiteInfoProto(SuiteInfoProto request, {required bool doClear}) async {
     Log.d(_kTag, 'handleReportSuiteInfo called $request');
 
     Log.d(_kTag, 'handleReportSuiteInfo thus clearAll');
