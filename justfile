@@ -12,22 +12,10 @@ build-runner:
     cd packages/convenient_test_manager && flutter pub run build_runner build --delete-conflicting-outputs
 
 format:
-    cd packages/convenient_test && flutter format . --line-length 120
-    cd packages/convenient_test/example && flutter format . --line-length 120
-    cd packages/convenient_test_common && flutter format . --line-length 120
-    cd packages/convenient_test_common_dart && flutter format . --line-length 120
-    cd packages/convenient_test_dev && flutter format . --line-length 120
-    cd packages/convenient_test_manager && flutter format . --line-length 120
-    cd packages/convenient_test_manager_dart && flutter format . --line-length 120
+    flutter format . --line-length 120
 
 analyze:
-    cd packages/convenient_test && flutter analyze
-    cd packages/convenient_test/example && flutter analyze
-    cd packages/convenient_test_common && flutter analyze
-    cd packages/convenient_test_common_dart && flutter analyze
-    cd packages/convenient_test_dev && flutter analyze
-    cd packages/convenient_test_manager && flutter analyze
-    cd packages/convenient_test_manager_dart && flutter analyze
+    flutter analyze
 
 generate_gif_args := '-vf "fps=10,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"'
 
