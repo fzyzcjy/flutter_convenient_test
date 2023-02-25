@@ -1,6 +1,11 @@
+# https://github.com/passsy/dart-lint/blob/master/lib/analysis_options.yaml
+# #2958
 ---
 include: package:lint/analysis_options.yaml
 analyzer:
+  # will use CI to check. this plugin will leak memory
+  #   plugins:
+  #     - dart_code_metrics
   language:
     strict-casts: true
     strict-inference: true
@@ -60,5 +65,5 @@ linter:
     require_trailing_commas: false
     join_return_with_assignment: false
     prefer_if_elements_to_conditional_expressions: false
-    use_late_for_private_fields_and_variables: false
+    use_late_for_private_fields_and_variables: false # seem to have bugs
     unnecessary_await_in_return: false
