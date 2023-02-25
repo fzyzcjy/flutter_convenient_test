@@ -10,35 +10,41 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'fake_vm_service_wrapper.dart';
 
-var isSetup = false;
-void main() {
+Future<void> setupForTesting() async {
+  await setup(
+      registerVmServiceWrapper: false,
+      initVLC: false,
+      parseConfigFile: false,
+      setWinSize: false);
+
+  getIt.registerSingleton<VmServiceWrapperService>(FakeVmServiceWrapper());
+  Log.d('myAppGoldenTest', 'setup finished');
+}
+
+void main() async {
+  await setupForTesting();
   // color scheme breaks goldens, so we need two variants
-  myAppGoldenTest(ThemeMode.light);
-  myAppGoldenTest(ThemeMode.dark);
+  await myAppGoldenTest(ThemeMode.light);
+  await myAppGoldenTest(ThemeMode.dark);
 }
 
 Future<void> myAppGoldenTest(ThemeMode theme) async {
   testWidgets('UI Golden theme=$theme', (tester) async {
     await tester.binding.setSurfaceSize(const Size(1920, 1080));
 
-    if (!isSetup) {
-      await setup(registerVmServiceWrapper: false, initVLC: false, parseConfigFile: false, setWinSize: false);
-
-      getIt.registerSingleton<VmServiceWrapperService>(FakeVmServiceWrapper());
-      isSetup = true;
-      Log.d('myAppGoldenTest', 'setup finished');
-    }
-
+    // you can generate this report
+    // by running the app in packages/convenient_test/example
+    // and using the save report functionality of the manager.
     final report = File('./test/report.bin').path;
-    final mFS = getIt.get<MiscFlutterService>();
+    final miscFlutterService = getIt.get<MiscFlutterService>();
 
-    await mFS.pickFileAndReadReport(pathOverride: report, readSync: true, clear: false);
-
-    // mFS.reloadInfo();
+    await miscFlutterService.pickFileAndReadReport(
+        pathOverride: report, readSync: true, clear: false);
 
     Log.d('myAppGoldenTest', 'before pump widget');
-    await tester.pumpWidget(MyApp(theme: theme));
+    await tester.pumpWidget(MyApp(themeMode: theme));
     Log.d('myAppGoldenTest', 'pumped widget');
-    await expectLater(find.byType(MyApp), matchesGoldenFile('manager-golden-${theme.name}.png'));
+    await expectLater(find.byType(MyApp),
+        matchesGoldenFile('manager-golden-${theme.name}.png'));
   });
 }

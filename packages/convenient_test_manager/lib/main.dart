@@ -9,15 +9,15 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final ThemeMode theme;
-  const MyApp({super.key, this.theme = ThemeMode.system});
+  final ThemeMode themeMode;
+  const MyApp({super.key, this.themeMode = ThemeMode.system});
   ThemeData _getTheme({required Brightness brightness}) =>
       ThemeData(brightness: brightness, colorSchemeSeed: Colors.blue);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ConvenientTestManager',
-      themeMode: theme,
+      themeMode: themeMode,
       theme: _getTheme(brightness: Brightness.light),
       darkTheme: _getTheme(brightness: Brightness.dark),
       initialRoute: HomePage.kRouteName,

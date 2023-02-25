@@ -27,30 +27,37 @@ Future<void> setup({
   bool registerHighlightStoreBase = true,
   bool registerVideoPlayerStoreBase = true,
   bool registerVmServiceWrapper = true,
+  // widget tests cannot handle async io, so
+  // you might want to disable config parsing
   bool parseConfigFile = true,
 }) async {
-  if (parseConfigFile) {
-    GlobalConfigStore.config = await GlobalConfigNullable.parse(args: args, headlessMode: headlessMode);
-  } else {
-    GlobalConfigStore.config = GlobalConfigNullable().toConfig();
-  }
+  GlobalConfigStore.config = parseConfigFile
+      ? await GlobalConfigNullable.parse(args: args, headlessMode: headlessMode)
+      : GlobalConfigNullable().toConfig();
 
   getIt.registerSingleton<LogStore>(LogStore());
   getIt.registerSingleton<SuiteInfoStore>(SuiteInfoStore());
   getIt.registerSingleton<RawLogStore>(RawLogStore());
   getIt.registerSingleton<WorkerSuperRunStore>(WorkerSuperRunStore());
   getIt.registerSingleton<VideoRecorderStore>(VideoRecorderStore());
-  getIt.registerSingleton<ConvenientTestManagerService>(ConvenientTestManagerService());
+  getIt.registerSingleton<ConvenientTestManagerService>(
+      ConvenientTestManagerService());
 
   getIt.registerSingleton<ReportHandlerService>(ReportHandlerService());
   getIt.registerSingleton<ReportSaverService>(ReportSaverService());
-  getIt.registerSingleton<ScreenVideoRecorderService>(ScreenVideoRecorderService.create());
+  getIt.registerSingleton<ScreenVideoRecorderService>(
+      ScreenVideoRecorderService.create());
 
-  if (registerMiscDartService) getIt.registerSingleton<MiscDartService>(MiscDartService());
+  if (registerMiscDartService)
+    getIt.registerSingleton<MiscDartService>(MiscDartService());
   if (registerFsService) getIt.registerSingleton<FsService>(FsServiceDart());
-  if (registerHighlightStoreBase) getIt.registerSingleton<HighlightStoreBase>(HighlightStoreDummy());
-  if (registerVideoPlayerStoreBase) getIt.registerSingleton<VideoPlayerStoreBase>(VideoPlayerStoreDummy());
-  if (registerVmServiceWrapper) getIt.registerSingleton<VmServiceWrapperService>(RealVmServiceWrapperService());
+  if (registerHighlightStoreBase)
+    getIt.registerSingleton<HighlightStoreBase>(HighlightStoreDummy());
+  if (registerVideoPlayerStoreBase)
+    getIt.registerSingleton<VideoPlayerStoreBase>(VideoPlayerStoreDummy());
+  if (registerVmServiceWrapper)
+    getIt.registerSingleton<VmServiceWrapperService>(
+        RealVmServiceWrapperService());
 
   GetIt.I.get<ConvenientTestManagerService>().serve();
 
