@@ -11,7 +11,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'fake_vm_service_wrapper.dart';
 
 Future<void> setupForTesting() async {
-  await setup(registerVmServiceWrapper: false, initVLC: false, parseConfigFile: false, setWinSize: false);
+  await setup(
+      registerVmServiceWrapper: false,
+      initVLC: false,
+      parseConfigFile: false,
+      setWinSize: false);
 
   getIt.registerSingleton<VmServiceWrapperService>(FakeVmServiceWrapper());
   Log.d('myAppGoldenTest', 'setup finished');
@@ -25,7 +29,7 @@ void main() async {
 }
 
 Future<void> myAppGoldenTest(ThemeMode theme) async {
-  testWidgets('UI Golden theme=$theme', (tester) async {
+  testWidgets('Report Golden ($theme)', (tester) async {
     await tester.binding.setSurfaceSize(const Size(1920, 1080));
 
     // you can generate this report
@@ -34,11 +38,13 @@ Future<void> myAppGoldenTest(ThemeMode theme) async {
     final report = File('./test/report.bin').path;
     final miscFlutterService = getIt.get<MiscFlutterService>();
 
-    await miscFlutterService.pickFileAndReadReport(pathOverride: report, readSync: true, clear: false);
+    await miscFlutterService.pickFileAndReadReport(
+        pathOverride: report, readSync: true, clear: false);
 
     Log.d('myAppGoldenTest', 'before pump widget');
     await tester.pumpWidget(MyApp(themeMode: theme));
     Log.d('myAppGoldenTest', 'pumped widget');
-    await expectLater(find.byType(MyApp), matchesGoldenFile('manager-golden-${theme.name}.png'));
+    await expectLater(find.byType(MyApp),
+        matchesGoldenFile('./test/goldens/report-golden-${theme.name}.png'));
   });
 }

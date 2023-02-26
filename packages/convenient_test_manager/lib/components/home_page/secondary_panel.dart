@@ -1,4 +1,3 @@
-import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/home_page/raw_log_panel.dart';
 import 'package:convenient_test_manager/components/home_page/screenshot_panel.dart';
 import 'package:convenient_test_manager/components/home_page/video_panel.dart';
@@ -67,7 +66,8 @@ class _SecondaryPanelTabBar extends StatelessWidget {
     return ToggleButtons(
       isSelected: selected,
       children: tabWidgets,
-      onPressed: (idx) => homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.values[idx],
+      onPressed: (idx) => homePageStore.activeSecondaryPanelTab =
+          HomePageSecondaryPanelTab.values[idx],
     );
   }
 }
