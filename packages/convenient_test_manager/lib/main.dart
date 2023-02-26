@@ -4,7 +4,7 @@ import 'package:convenient_test_manager/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  await setup();
+  await setup(setWinSize: false);
   runApp(const MyApp());
 }
 
@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key, this.themeMode = ThemeMode.system});
   ThemeData _getTheme({required Brightness brightness}) =>
       ThemeData(brightness: brightness, colorSchemeSeed: Colors.blue);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

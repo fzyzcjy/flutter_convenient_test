@@ -32,7 +32,7 @@ class _Body extends StatelessWidget {
       return Stack(
         children: [
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const HomePageHeaderPanel(),
               Divider(height: 1, thickness: 1, color: Theme.of(context).colorScheme.outline),

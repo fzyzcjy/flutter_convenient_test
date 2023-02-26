@@ -64,8 +64,6 @@ class _SecondaryPanelTabBar extends StatelessWidget {
       if (tab == homePageStore.activeSecondaryPanelTab) selected[i] = true;
     }
 
-    Log.d('buildTabBar', 'active tab: ${homePageStore.activeSecondaryPanelTab}');
-
     return ToggleButtons(
       isSelected: selected,
       children: tabWidgets,

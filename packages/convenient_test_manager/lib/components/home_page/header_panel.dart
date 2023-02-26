@@ -52,153 +52,107 @@ class HomePageHeaderPanel extends StatelessWidget {
 
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Row(
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          alignment: WrapAlignment.spaceBetween,
+          runSpacing: 24,
           children: [
-            const SizedBox(width: 8),
-            ..._buildButton(
-              context: context,
-              onPressed: () {
-                highlightStore.enableAutoExpand = true;
-                miscFlutterService.hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
-              },
-              text: 'Run All',
-            ),
-            ..._buildButton(
-              onPressed: miscFlutterService.haltWorker,
-              text: 'Halt',
-              context: context,
-            ),
-            ..._buildButton(
-              onPressed: miscFlutterService.hotRestartAndRunInAppMode,
-              context: context,
-              text: 'Interactive Mode',
-            ),
-            ..._buildButton(
-              context: context,
-              onPressed: miscFlutterService.reloadInfo,
-              text: 'Reload Info',
-            ),
-            ..._buildButton(
-              onPressed: GetIt.I.get<VmServiceWrapperService>().connect,
-              context: context,
-              text: 'Reconnect VM',
-            ),
-            ..._buildButton(
-              onPressed: miscFlutterService.pickFileAndReadReport,
-              context: context,
-              text: 'Load Report',
-            ),
-            ..._buildButton(
-              onPressed: () => Navigator.pushNamed(context, GoldenDiffPage.kRouteName),
-              context: context,
-              text: 'Golden Diff Page',
-            ),
-            const SizedBox(width: 8),
-            _buildSuperRunStatusHint(),
-            Expanded(child: Container()),
+            Wrap(runSpacing: 8, children: [
+              _HeaderButton(
+                onPressed: () {
+                  highlightStore.enableAutoExpand = true;
+                  miscFlutterService.hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
+                },
+                text: 'Run All',
+              ),
+              _HeaderButton(
+                onPressed: miscFlutterService.haltWorker,
+                text: 'Halt',
+              ),
+              _HeaderButton(
+                onPressed: miscFlutterService.hotRestartAndRunInAppMode,
+                text: 'Interactive Mode',
+              ),
+              _HeaderButton(
+                onPressed: miscFlutterService.reloadInfo,
+                text: 'Reload Info',
+              ),
+              _HeaderButton(
+                onPressed: GetIt.I.get<VmServiceWrapperService>().connect,
+                text: 'Reconnect VM',
+              ),
+              _HeaderButton(
+                onPressed: miscFlutterService.pickFileAndReadReport,
+                text: 'Load Report',
+              ),
+              _HeaderButton(
+                onPressed: () => Navigator.pushNamed(context, GoldenDiffPage.kRouteName),
+                text: 'Golden Diff Page',
+              ),
+              _buildSuperRunStatusHint(),
+            ]),
+
+            //Expanded(child: Container()),
             // TextButton(
             //   onPressed: () => showDialog<dynamic>(context: context, builder: (_) => const HomePageMiscDialog()),
             //   child: const Text('Misc'),
             // ),
             // const SizedBox(width: 8),
-            ..._buildSwitch(
-              text: 'Isolation',
-              gs: GetSet.gs(
-                () => workerSuperRunStore.isolationMode,
-                (v) => workerSuperRunStore.isolationMode = v,
+            Wrap(runSpacing: 8, children: [
+              _HeaderSwitch(
+                text: 'Isolation',
+                gs: GetSet.gs(
+                  () => workerSuperRunStore.isolationMode,
+                  (v) => workerSuperRunStore.isolationMode = v,
+                ),
               ),
-            ),
-            ..._buildSwitch(
-              text: 'UpdateGoldens',
-              gs: GetSet.gs(
-                () => workerSuperRunStore.autoUpdateGoldenFiles,
-                (v) => workerSuperRunStore.autoUpdateGoldenFiles = v,
+              _HeaderSwitch(
+                text: 'UpdateGoldens',
+                gs: GetSet.gs(
+                  () => workerSuperRunStore.autoUpdateGoldenFiles,
+                  (v) => workerSuperRunStore.autoUpdateGoldenFiles = v,
+                ),
               ),
-            ),
-            ..._buildSwitch(
-              text: 'Retry',
-              gs: GetSet.gs(
-                () => workerSuperRunStore.retryMode,
-                (v) => workerSuperRunStore.retryMode = v,
+              _HeaderSwitch(
+                text: 'Retry',
+                gs: GetSet.gs(
+                  () => workerSuperRunStore.retryMode,
+                  (v) => workerSuperRunStore.retryMode = v,
+                ),
               ),
-            ),
-            ..._buildSwitch(
-              text: 'SaveReport',
-              gs: GetSet.gs(
-                () => reportSaverService.enable,
-                (v) => reportSaverService.enable = v,
+              _HeaderSwitch(
+                text: 'SaveReport',
+                gs: GetSet.gs(
+                  () => reportSaverService.enable,
+                  (v) => reportSaverService.enable = v,
+                ),
               ),
-            ),
-            ..._buildSwitch(
-              text: 'Hover',
-              gs: GetSet.gs(
-                () => highlightStore.enableHoverMode,
-                (v) => highlightStore.enableHoverMode = v,
+              _HeaderSwitch(
+                text: 'Hover',
+                gs: GetSet.gs(
+                  () => highlightStore.enableHoverMode,
+                  (v) => highlightStore.enableHoverMode = v,
+                ),
               ),
-            ),
-            ..._buildSwitch(
-              text: 'AutoJump',
-              gs: GetSet.gs(
-                () => highlightStore.enableAutoJump,
-                (v) => highlightStore.enableAutoJump = v,
+              _HeaderSwitch(
+                text: 'AutoJump',
+                gs: GetSet.gs(
+                  () => highlightStore.enableAutoJump,
+                  (v) => highlightStore.enableAutoJump = v,
+                ),
               ),
-            ),
-            ..._buildSwitch(
-              text: 'AutoExpand',
-              gs: GetSet.gs(
-                () => highlightStore.enableAutoExpand,
-                (v) => highlightStore.enableAutoExpand = v,
+              _HeaderSwitch(
+                text: 'AutoExpand',
+                gs: GetSet.gs(
+                  () => highlightStore.enableAutoExpand,
+                  (v) => highlightStore.enableAutoExpand = v,
+                ),
               ),
-            ),
+            ]),
           ],
         ),
       );
     });
-  }
-
-  List<Widget> _buildButton({
-    required String text,
-    required VoidCallback onPressed,
-    required BuildContext context,
-  }) {
-    return [
-      TextButton(
-        onPressed: onPressed,
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onBackground),
-        ),
-      ),
-      const SizedBox(width: 4),
-    ];
-  }
-
-  List<Widget> _buildSwitch({
-    required String text,
-    required GetSet<bool> gs,
-  }) {
-    return [
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            text,
-            style: const TextStyle(fontSize: 11.5, height: 1),
-          ),
-          Observer(
-            builder: (_) => SizedBox(
-              height: 24,
-              child: Switch(
-                value: gs.getter(),
-                onChanged: gs.setter,
-              ),
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(width: 8),
-    ];
   }
 
   Widget _buildSuperRunStatusHint() {
@@ -208,19 +162,22 @@ class HomePageHeaderPanel extends StatelessWidget {
       required Color color,
       required Widget child,
     }) =>
-        Container(
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(4),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          child: DefaultTextStyle(
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.normal,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: Container(
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(4),
             ),
-            child: child,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: DefaultTextStyle(
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.normal,
+              ),
+              child: child,
+            ),
           ),
         );
 
@@ -234,5 +191,61 @@ class HomePageHeaderPanel extends StatelessWidget {
           return const SizedBox.shrink();
       }
     });
+  }
+}
+
+class _HeaderSwitch extends StatelessWidget {
+  final String text;
+  final GetSet<bool> gs;
+
+  const _HeaderSwitch({required this.text, required this.gs});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            text,
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(height: 1),
+          ),
+          Observer(
+            builder: (_) => SizedBox(
+              height: 24,
+              child: Switch(
+                value: gs.getter(),
+                onChanged: gs.setter,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HeaderButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+
+  const _HeaderButton({
+    required this.text,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2),
+      child: TextButton(
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: Theme.of(context).textTheme.labelMedium,
+        ),
+      ),
+    );
   }
 }
