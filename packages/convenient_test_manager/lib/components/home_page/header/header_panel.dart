@@ -1,4 +1,5 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_manager/components/home_page/header/header_status_hint.dart';
 import 'package:convenient_test_manager/pages/golden_diff_page.dart';
 import 'package:convenient_test_manager/services/misc_flutter_service.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
@@ -32,7 +33,8 @@ class HomePageHeaderPanel extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: IconButton(
-                    onPressed: () => homePageStore.displayLoadedReportMode = false,
+                    onPressed: () =>
+                        homePageStore.displayLoadedReportMode = false,
                     icon: const Icon(Icons.arrow_back),
                   ),
                 ),
@@ -61,7 +63,8 @@ class HomePageHeaderPanel extends StatelessWidget {
               _HeaderButton(
                 onPressed: () {
                   highlightStore.enableAutoExpand = true;
-                  miscFlutterService.hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
+                  miscFlutterService.hotRestartAndRunTests(
+                      filterNameRegex: RegexUtils.kMatchEverything);
                 },
                 text: 'Run All',
               ),
@@ -86,10 +89,17 @@ class HomePageHeaderPanel extends StatelessWidget {
                 text: 'Load Report',
               ),
               _HeaderButton(
-                onPressed: () => Navigator.pushNamed(context, GoldenDiffPage.kRouteName),
+                onPressed: () =>
+                    Navigator.pushNamed(context, GoldenDiffPage.kRouteName),
                 text: 'Golden Diff Page',
               ),
-              _buildSuperRunStatusHint(),
+              Observer(builder: (context) {
+                final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
+                final status =
+                    workerSuperRunStore.currSuperRunController.superRunStatus;
+
+                return HeaderStatusHint(status: status);
+              }),
             ]),
 
             //Expanded(child: Container()),
@@ -152,44 +162,6 @@ class HomePageHeaderPanel extends StatelessWidget {
           ],
         ),
       );
-    });
-  }
-
-  Widget _buildSuperRunStatusHint() {
-    final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
-
-    Widget _buildCore({
-      required Color color,
-      required Widget child,
-    }) =>
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          child: Container(
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: DefaultTextStyle(
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.normal,
-              ),
-              child: child,
-            ),
-          ),
-        );
-
-    return Observer(builder: (_) {
-      switch (workerSuperRunStore.currSuperRunController.superRunStatus) {
-        case WorkerSuperRunStatus.runningTest:
-          return _buildCore(color: Colors.blue, child: const Text('Running'));
-        case WorkerSuperRunStatus.testAllDone:
-          return _buildCore(color: Colors.green, child: const Text('Idle'));
-        case WorkerSuperRunStatus.na:
-          return const SizedBox.shrink();
-      }
     });
   }
 }

@@ -22,6 +22,8 @@ class MyApp extends StatelessWidget {
       themeMode: themeMode,
       theme: _getTheme(brightness: Brightness.light),
       darkTheme: _getTheme(brightness: Brightness.dark),
+      // to allow test overriding of routes for getting all the benefits
+      // of a MaterialApp (correct theme, Direction, etc).
       initialRoute: builder == null ? HomePage.kRouteName : null,
       builder: builder,
       routes: {

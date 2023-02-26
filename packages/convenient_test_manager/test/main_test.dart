@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
-import 'package:convenient_test_manager/components/home_page/header_panel.dart';
+import 'package:convenient_test_manager/components/home_page/header/header_panel.dart';
 import 'package:convenient_test_manager/main.dart';
 import 'package:convenient_test_manager/misc/setup.dart';
 import 'package:convenient_test_manager/services/misc_flutter_service.dart';
