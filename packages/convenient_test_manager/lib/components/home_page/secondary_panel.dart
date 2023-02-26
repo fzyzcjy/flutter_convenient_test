@@ -1,4 +1,4 @@
-import 'package:collection/collection.dart';
+import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/home_page/raw_log_panel.dart';
 import 'package:convenient_test_manager/components/home_page/screenshot_panel.dart';
 import 'package:convenient_test_manager/components/home_page/video_panel.dart';
@@ -14,55 +14,18 @@ class HomePageSecondaryPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 12),
-          _buildTabBar(context),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: _SecondaryPanelTabBar(),
+          ),
           Expanded(
             child: _buildTab(),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildTabBar(BuildContext context) {
-    final homePageStore = GetIt.I.get<HomePageStore>();
-
-    return Row(
-      children: [
-        const SizedBox(width: 8),
-        ...HomePageSecondaryPanelTab.values.mapIndexed((index, tab) {
-          final active = homePageStore.activeSecondaryPanelTab == tab;
-
-          final borderSide = BorderSide(color: Theme.of(context).colorScheme.outline, width: 0.5);
-
-          return InkWell(
-            onTap: () => homePageStore.activeSecondaryPanelTab = tab,
-            child: Material(
-              color: active ? Colors.blue : Colors.white,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    left: index == 0 ? borderSide : BorderSide.none,
-                    right: index == HomePageSecondaryPanelTab.values.length - 1 ? borderSide : BorderSide.none,
-                    top: borderSide,
-                    bottom: borderSide,
-                  ),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                child: Text(
-                  tab.title,
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: active ? Colors.white : Colors.black87,
-                    height: 1,
-                  ),
-                ),
-              ),
-            ),
-          );
-        }),
-      ],
     );
   }
 
@@ -79,5 +42,34 @@ class HomePageSecondaryPanel extends StatelessWidget {
       case HomePageSecondaryPanelTab.none:
         return Container();
     }
+  }
+}
+
+class _SecondaryPanelTabBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final homePageStore = GetIt.I.get<HomePageStore>();
+    const tabs = HomePageSecondaryPanelTab.values;
+    // a pre-filled list is faster: https://gist.github.com/gilice/a7f3230f623f0b8995a1b2b0a5e5782b
+    final tabWidgets = List<Widget>.filled(tabs.length, const Placeholder());
+    final selected = List<bool>.filled(tabs.length, false);
+
+    for (int i = 0; i < tabs.length; ++i) {
+      final tab = tabs[i];
+      tabWidgets[i] = Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Text(tab.title),
+      );
+
+      if (tab == homePageStore.activeSecondaryPanelTab) selected[i] = true;
+    }
+
+    Log.d('buildTabBar', 'active tab: ${homePageStore.activeSecondaryPanelTab}');
+
+    return ToggleButtons(
+      isSelected: selected,
+      children: tabWidgets,
+      onPressed: (idx) => homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.values[idx],
+    );
   }
 }
