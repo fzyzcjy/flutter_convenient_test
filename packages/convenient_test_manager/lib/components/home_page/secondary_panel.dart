@@ -49,18 +49,26 @@ class _SecondaryPanelTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homePageStore = GetIt.I.get<HomePageStore>();
-    final tabs = HomePageSecondaryPanelTab.values.map((e) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(e.title),
-        ));
+    const tabs = HomePageSecondaryPanelTab.values;
+    // a pre-filled list is faster: https://gist.github.com/gilice/a7f3230f623f0b8995a1b2b0a5e5782b
+    final tabWidgets = List<Widget>.filled(tabs.length, const Placeholder());
+    final selected = List<bool>.filled(tabs.length, false);
 
-    final selected = HomePageSecondaryPanelTab.values.map((e) => e == homePageStore.activeSecondaryPanelTab).toList();
+    for (int i = 0; i < tabs.length; ++i) {
+      final tab = tabs[i];
+      tabWidgets[i] = Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Text(tab.title),
+      );
+
+      if (tab == homePageStore.activeSecondaryPanelTab) selected[i] = true;
+    }
 
     Log.d('buildTabBar', 'active tab: ${homePageStore.activeSecondaryPanelTab}');
 
     return ToggleButtons(
       isSelected: selected,
-      children: tabs.toList(),
+      children: tabWidgets,
       onPressed: (idx) => homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.values[idx],
     );
   }
