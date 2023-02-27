@@ -1,4 +1,3 @@
-import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/services/fs_service.dart';
 import 'package:convenient_test_manager/services/misc_flutter_service.dart';
 import 'package:convenient_test_manager/stores/golden_diff_page_store.dart';
