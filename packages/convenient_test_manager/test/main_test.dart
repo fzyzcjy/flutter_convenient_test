@@ -27,20 +27,23 @@ void main() async {
 }
 
 Future<void> goldenMain(ThemeMode theme) async {
-  headerBar(theme);
+  for (final size in [const Size(2000, 400), const Size(1080, 400), const Size(720, 400)]) {
+    headerBar(theme: theme, size: size);
+  }
+
   report(theme);
 }
 
-void headerBar(ThemeMode theme) => testWidgets('Header Golden ($theme)', (tester) async {
-      await tester.binding.setSurfaceSize(const Size(2000, 60));
+void headerBar({required ThemeMode theme, required Size size}) => testWidgets('Header Golden ($theme)', (tester) async {
+      await tester.binding.setSurfaceSize(size);
       getIt.get<HomePageStore>().displayLoadedReportMode = false;
       await tester.pumpWidget(MyApp(
         themeMode: theme,
         builder: (context, _) => const Scaffold(body: HomePageHeaderPanel()),
       ));
 
-      await expectLater(
-          find.byType(HomePageHeaderPanel), matchesGoldenFile('./goldens/header-golden-${theme.name}.png'));
+      await expectLater(find.byType(HomePageHeaderPanel),
+          matchesGoldenFile('./goldens/header-golden-${size.width}-${theme.name}.png'));
     });
 
 void report(ThemeMode theme) => testWidgets('Report Golden ($theme)', (tester) async {
