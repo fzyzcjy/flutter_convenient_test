@@ -66,8 +66,7 @@ class _SecondaryPanelTabBar extends StatelessWidget {
     return ToggleButtons(
       isSelected: selected,
       children: tabWidgets,
-      onPressed: (idx) => homePageStore.activeSecondaryPanelTab =
-          HomePageSecondaryPanelTab.values[idx],
+      onPressed: (idx) => homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.values[idx],
     );
   }
 }

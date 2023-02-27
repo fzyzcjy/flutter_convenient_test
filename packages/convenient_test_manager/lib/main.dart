@@ -4,7 +4,7 @@ import 'package:convenient_test_manager/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  await setup(setWinSize: false);
+  await setup();
   runApp(const MyApp());
 }
 

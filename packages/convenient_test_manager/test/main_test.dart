@@ -13,11 +13,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'fake_vm_service_wrapper.dart';
 
 Future<void> setupForTesting() async {
-  await setup(
-      registerVmServiceWrapper: false,
-      initVLC: false,
-      parseConfigFile: false,
-      setWinSize: false);
+  await setup(registerVmServiceWrapper: false, initVLC: false, parseConfigFile: false);
+
   getIt.registerSingleton<VmServiceWrapperService>(FakeVmServiceWrapper());
   Log.d('goldenMain', 'setup finished');
 }
@@ -34,8 +31,7 @@ Future<void> goldenMain(ThemeMode theme) async {
   report(theme);
 }
 
-void headerBar(ThemeMode theme) =>
-    testWidgets('Header Golden ($theme)', (tester) async {
+void headerBar(ThemeMode theme) => testWidgets('Header Golden ($theme)', (tester) async {
       await tester.binding.setSurfaceSize(const Size(2000, 60));
       getIt.get<HomePageStore>().displayLoadedReportMode = false;
       await tester.pumpWidget(MyApp(
@@ -43,12 +39,11 @@ void headerBar(ThemeMode theme) =>
         builder: (context, _) => const Scaffold(body: HomePageHeaderPanel()),
       ));
 
-      await expectLater(find.byType(HomePageHeaderPanel),
-          matchesGoldenFile('./goldens/header-golden-${theme.name}.png'));
+      await expectLater(
+          find.byType(HomePageHeaderPanel), matchesGoldenFile('./goldens/header-golden-${theme.name}.png'));
     });
 
-void report(ThemeMode theme) =>
-    testWidgets('Report Golden ($theme)', (tester) async {
+void report(ThemeMode theme) => testWidgets('Report Golden ($theme)', (tester) async {
       await tester.binding.setSurfaceSize(const Size(1920, 1080));
 
       // you can generate this report
@@ -57,12 +52,10 @@ void report(ThemeMode theme) =>
       final report = File('./test/report.bin').path;
       final miscFlutterService = getIt.get<MiscFlutterService>();
 
-      await miscFlutterService.pickFileAndReadReport(
-          pathOverride: report, readSync: true, clear: false);
+      await miscFlutterService.pickFileAndReadReport(pathOverride: report, readSync: true, clear: false);
 
       Log.d('goldenMain', 'before pump widget');
       await tester.pumpWidget(MyApp(themeMode: theme));
       Log.d('goldenMain', 'pumped widget');
-      await expectLater(find.byType(MyApp),
-          matchesGoldenFile('./goldens/report-golden-${theme.name}.png'));
+      await expectLater(find.byType(MyApp), matchesGoldenFile('./goldens/report-golden-${theme.name}.png'));
     });
