@@ -1,5 +1,5 @@
 import 'package:convenient_test_manager/components/home_page/command_info_panel.dart';
-import 'package:convenient_test_manager/components/home_page/header_panel.dart';
+import 'package:convenient_test_manager/components/home_page/header/header_panel.dart';
 import 'package:convenient_test_manager/components/home_page/secondary_panel.dart';
 import 'package:convenient_test_manager/services/misc_flutter_service.dart';
 import 'package:convenient_test_manager/stores/home_page_store.dart';
@@ -32,7 +32,7 @@ class _Body extends StatelessWidget {
       return Stack(
         children: [
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const HomePageHeaderPanel(),
               Divider(height: 1, thickness: 1, color: Theme.of(context).colorScheme.outline),
