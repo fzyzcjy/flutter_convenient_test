@@ -171,6 +171,7 @@ void tTestWidgets(
   TWidgetTesterCallback callback, {
   bool skip = false,
   bool settle = true,
+  Timeout? timeout,
 }) {
   testWidgets(
     description,
@@ -187,5 +188,6 @@ void tTestWidgets(
       debugDefaultTargetPlatformOverride = null;
     }),
     skip: skip,
+    timeout: timeout,
   );
 }
