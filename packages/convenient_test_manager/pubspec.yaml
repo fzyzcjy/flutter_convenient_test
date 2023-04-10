@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dart_vlc: ^0.2.0
   file_picker: ^4.5.1
+  fixnum: ^1.0.0
   flutter:
     sdk: flutter
   flutter_mobx:
@@ -49,11 +50,7 @@ dependencies:
   protobuf: ^2.0.0
   scrollable_positioned_list: ^0.3.2
   test_api: ^0.4.2
-  tuple: ^2.0.0
-  window_size:
-    git:
-      url: https://github.com/google/flutter-desktop-embedding
-      path: plugins/window_size
+  tuple: ^2.0.0 
 
 dependency_overrides:
   convenient_test:

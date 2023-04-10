@@ -9,16 +9,23 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final ThemeMode themeMode;
+  final Widget Function(BuildContext context, Widget? child)? builder;
+  const MyApp({super.key, this.themeMode = ThemeMode.system, this.builder});
+  ThemeData _getTheme({required Brightness brightness}) =>
+      ThemeData(brightness: brightness, colorSchemeSeed: Colors.blue);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ConvenientTestManager',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      initialRoute: HomePage.kRouteName,
+      themeMode: themeMode,
+      theme: _getTheme(brightness: Brightness.light),
+      darkTheme: _getTheme(brightness: Brightness.dark),
+      // to allow test overriding of routes for getting all the benefits
+      // of a MaterialApp (correct theme, Direction, etc).
+      initialRoute: builder == null ? HomePage.kRouteName : null,
+      builder: builder,
       routes: {
         HomePage.kRouteName: (_) => const HomePage(),
         GoldenDiffPage.kRouteName: (_) => const GoldenDiffPage(),

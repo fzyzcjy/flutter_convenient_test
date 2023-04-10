@@ -40,9 +40,9 @@ class HomePageScreenshotPanel extends StatelessWidget {
       return Column(
         children: [
           Expanded(
-            child: _buildBigImage(bigImageInterestSnapshots),
+            child: _buildBigImage(bigImageInterestSnapshots, context),
           ),
-          if (selectiveDisplayMode) _buildThumbnails(highlightLogEntryId, snapshots),
+          if (selectiveDisplayMode) _buildThumbnails(highlightLogEntryId, snapshots, context),
         ],
       );
     });
@@ -63,7 +63,7 @@ class HomePageScreenshotPanel extends StatelessWidget {
     return [highlightSnapshot.snapshotName];
   }
 
-  Widget _buildBigImage(Map<String, Uint8List> interestSnapshots) {
+  Widget _buildBigImage(Map<String, Uint8List> interestSnapshots, BuildContext context) {
     return Row(
       children: [
         for (final snapshotEntry in interestSnapshots.entries)
@@ -87,7 +87,7 @@ class HomePageScreenshotPanel extends StatelessWidget {
                         // ignore: use_decorated_box
                         child: Container(
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
+                            border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
                           ),
                           child: Image.memory(snapshotEntry.value),
                         ),
@@ -102,11 +102,11 @@ class HomePageScreenshotPanel extends StatelessWidget {
     );
   }
 
-  Widget _buildThumbnails(int logEntryId, Map<String, Uint8List> snapshots) {
+  Widget _buildThumbnails(int logEntryId, Map<String, Uint8List> snapshots, BuildContext context) {
     final highlightStore = GetIt.I.get<HighlightStore>();
-
+    final colorScheme = Theme.of(context).colorScheme;
     return Material(
-      color: Colors.grey.shade100,
+      color: ElevationOverlay.applySurfaceTint(colorScheme.surface, colorScheme.surfaceTint, 1),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Row(
@@ -114,11 +114,13 @@ class HomePageScreenshotPanel extends StatelessWidget {
             for (final snapshotEntry in snapshots.entries)
               Material(
                 color: highlightStore.highlightSnapshot == LogEntryAndSnapshot(logEntryId, snapshotEntry.key)
-                    ? Colors.grey.shade200
+                    ? colorScheme.outline
                     : null,
                 child: InkWell(
                   onHover: (hovering) {
-                    if (hovering) highlightStore.highlightSnapshot = LogEntryAndSnapshot(logEntryId, snapshotEntry.key);
+                    if (hovering) {
+                      highlightStore.highlightSnapshot = LogEntryAndSnapshot(logEntryId, snapshotEntry.key);
+                    }
                   },
                   // seems to need onTap if want onHover
                   onTap: () {},
@@ -141,7 +143,7 @@ class HomePageScreenshotPanel extends StatelessWidget {
                             // ignore: use_decorated_box
                             child: Container(
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey, width: 1),
+                                border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
                               ),
                               child: Image.memory(snapshotEntry.value),
                             ),

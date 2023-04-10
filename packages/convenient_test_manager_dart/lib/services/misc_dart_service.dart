@@ -44,12 +44,16 @@ class MiscDartService {
     GetIt.I.get<VideoRecorderStore>().clear();
   }
 
-  Future<void> readReportFromFile(String path) async {
+  Future<void> readReportFromFile(String path, {bool sync = false, bool doClear = true}) async {
     Log.d(_kTag, 'readReportFromFile start path=$path');
 
     clearAll();
-    final reportCollection = ReportCollection.fromBuffer(await File(path).readAsBytes());
-    await GetIt.I.get<ReportHandlerService>().handle(reportCollection, offlineFile: true);
+    final file = sync ? File(path).readAsBytesSync() : await File(path).readAsBytes();
+
+    final reportCollection = ReportCollection.fromBuffer(file);
+
+    Log.d(_kTag, 'readReportFromFile read reportCollection');
+    await GetIt.I.get<ReportHandlerService>().handle(reportCollection, offlineFile: true, doClear: doClear);
 
     Log.d(_kTag, 'readReportFromFile end');
   }

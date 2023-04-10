@@ -31,8 +31,12 @@ class HomePageGroupEntryInfoSectionBuilder extends StaticSectionBuilder {
     final info = suiteInfoStore.suiteInfo?.entryMap[groupEntryId];
     if (info == null) return const [];
 
-    if (info is GroupInfo) return _GroupInfoSectionBuilder(info: info, depth: depth, showHeader: showHeader).build();
-    if (info is TestInfo) return _TestInfoSectionBuilder(info: info, depth: depth).build();
+    if (info is GroupInfo) {
+      return _GroupInfoSectionBuilder(info: info, depth: depth, showHeader: showHeader).build();
+    }
+    if (info is TestInfo) {
+      return _TestInfoSectionBuilder(info: info, depth: depth).build();
+    }
     throw Exception('unknown info=$info');
   }
 }
@@ -261,12 +265,13 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
 
     if (logEntryIds.isEmpty) {
       yield StaticSection.single(
-        child: const Padding(
-          padding: EdgeInsets.only(left: 16, right: 16, bottom: 12),
-          child: Text(
-            'No log entries for this test. This is usually because the test is not executed.',
-            style: TextStyle(fontSize: 11, color: Colors.grey),
-          ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
+          child: Builder(
+              builder: (context) => Text(
+                    'No log entries for this test. This is usually because the test is not executed.',
+                    style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.outline),
+                  )),
         ),
       );
     } else {

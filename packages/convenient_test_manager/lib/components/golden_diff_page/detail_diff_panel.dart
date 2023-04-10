@@ -15,11 +15,15 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
 
     return Observer(builder: (_) {
       final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
-      if (gitFolderInfo == null) return const Center(child: Text('Please choose a folder first'));
+      if (gitFolderInfo == null) {
+        return const Center(child: Text('Please choose a folder first'));
+      }
 
       final highlightInfo =
           gitFolderInfo.diffFileInfos.singleWhereOrNull((info) => info.path == goldenDiffPageStore.highlightPath);
-      if (highlightInfo == null) return const Center(child: Text('Please choose an item from left panel'));
+      if (highlightInfo == null) {
+        return const Center(child: Text('Please choose an item from left panel'));
+      }
 
       final maskedDiff = highlightInfo.comparisonResult.diffs?['maskedDiff'];
       final isolatedDiff = highlightInfo.comparisonResult.diffs?['isolatedDiff'];
@@ -92,7 +96,7 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
 
     return Expanded(
       child: LayoutBuilder(builder: (_, constraints) {
-        return Observer(builder: (_) {
+        return Observer(builder: (context) {
           final isLargeScale = imageSize != null &&
               constraints.maxWidth / imageSize.width * goldenDiffPageStore.highlightTransform[0] > 1.5;
           final filterQuality = isLargeScale ? FilterQuality.none : FilterQuality.medium;
@@ -101,7 +105,7 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Material(
-              color: Colors.grey.shade200,
+              color: Theme.of(context).colorScheme.outline,
               child: ClipRect(
                 child: Column(
                   children: [

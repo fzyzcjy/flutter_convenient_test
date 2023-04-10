@@ -13,14 +13,14 @@ class StateIndicatorWidget extends StatelessWidget {
     return SizedBox(
       width: 16,
       height: 16,
-      child: _buildCore(),
+      child: _buildCore(context),
     );
   }
 
-  Widget _buildCore() {
+  Widget _buildCore(BuildContext context) {
     switch (state) {
       case SimplifiedStateEnum.pending:
-        return const Icon(Icons.hourglass_empty, color: Colors.black87, size: 14);
+        return Icon(Icons.hourglass_empty, color: Theme.of(context).colorScheme.onBackground, size: 14);
       // return Center(
       //   child: SizedBox(
       //     width: 12,

@@ -54,7 +54,9 @@ class HomePageLogEntryWidget extends StatelessWidget {
         children: [
           InkWell(
             onHover: (hovering) {
-              if (highlightStore.enableHoverMode && hovering) _handleTapOrHover(interestLogSubEntry, targetState: true);
+              if (highlightStore.enableHoverMode && hovering) {
+                _handleTapOrHover(interestLogSubEntry, targetState: true);
+              }
             },
             onTap: () => _handleTapOrHover(interestLogSubEntry, targetState: !active),
             child: Container(
@@ -65,7 +67,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: _calcDecorationColor(context, isSection: isSection, active: active),
                 border: Border(
-                  left: running ? BorderSide(color: Theme.of(context).primaryColor, width: 2) : BorderSide.none,
+                  left: running ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 2) : BorderSide.none,
                   // top: isSection ? BorderSide(color: Theme.of(context).primaryColor, width: 2) : BorderSide.none,
                 ),
               ),
@@ -90,24 +92,23 @@ class HomePageLogEntryWidget extends StatelessWidget {
                                 padding: const EdgeInsets.only(top: 4, left: 8),
                                 child: Text(
                                   '$order',
-                                  style: const TextStyle(color: Colors.grey, fontSize: 9),
+                                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 9),
                                 ),
                               ),
                             ),
                     ),
                   ),
                   Container(width: 12),
-                  _buildTitle(interestLogSubEntry),
+                  _buildTitle(interestLogSubEntry, context),
                   Container(width: 12),
                   Expanded(
                     child: EnhancedSelectableText(
                       interestLogSubEntry.message,
-                      // style: const TextStyle(fontFamily: 'RobotoMono'),
                       enableCopyAllButton: false,
                     ),
                   ),
                   Container(width: 4),
-                  _buildTime(logSubEntryIds: logSubEntryIds),
+                  _buildTime(logSubEntryIds: logSubEntryIds, context: context),
                   Container(width: 4),
                   Container(width: 4),
                 ],
@@ -121,10 +122,12 @@ class HomePageLogEntryWidget extends StatelessWidget {
   }
 
   Color _calcDecorationColor(BuildContext context, {required bool isSection, required bool active}) {
-    if (active) return Colors.green[50]!;
-    // if (running) return Colors.blue[50]!;
-    if (isSection) return Colors.blue[50]!;
-    return Colors.blueGrey[50]!.withAlpha(150);
+    double elevation = 1;
+    if (isSection) elevation = 2;
+
+    if (active) elevation = 3;
+    final colorScheme = Theme.of(context).colorScheme;
+    return ElevationOverlay.applySurfaceTint(colorScheme.surface, colorScheme.surfaceTint, elevation);
   }
 
   void _handleTapOrHover(LogSubEntry interestLogSubEntry, {required bool targetState}) {
@@ -142,7 +145,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
     }
   }
 
-  Widget _buildTitle(LogSubEntry interestLogSubEntry) {
+  Widget _buildTitle(LogSubEntry interestLogSubEntry, BuildContext context) {
     final Color? backgroundColor;
     final Color textColor;
     switch (interestLogSubEntry.type) {
@@ -151,16 +154,16 @@ class HomePageLogEntryWidget extends StatelessWidget {
         textColor = Colors.white;
         break;
       case LogSubEntryType.ASSERT_FAIL:
-        backgroundColor = Colors.red;
-        textColor = Colors.white;
+        backgroundColor = Theme.of(context).colorScheme.error;
+        textColor = Theme.of(context).colorScheme.onError;
         break;
       case LogSubEntryType.SECTION:
-        backgroundColor = Colors.blue;
-        textColor = Colors.white;
+        backgroundColor = Theme.of(context).colorScheme.primary;
+        textColor = Theme.of(context).colorScheme.onPrimary;
         break;
       default:
         backgroundColor = null;
-        textColor = Colors.black;
+        textColor = Theme.of(context).colorScheme.onBackground;
         break;
     }
 
@@ -226,7 +229,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
                 onPressed: () => homePageStore.logEntryExpandErrorInfoMap[logEntryId] = !expand,
                 child: Text(
                   '[${expand ? "Collapse" : "Expand"}]',
-                  style: const TextStyle(fontSize: 12, color: Colors.black87),
+                  style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onBackground),
                 ),
               ),
             ),
@@ -236,7 +239,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
     });
   }
 
-  Widget _buildTime({required List<int> logSubEntryIds}) {
+  Widget _buildTime({required List<int> logSubEntryIds, required BuildContext context}) {
     final logStore = GetIt.I.get<LogStore>();
 
     final testStartTime = logStore.logSubEntryMap[logStore.logSubEntryInTest(testEntryId).first]!.timeTyped;
@@ -250,9 +253,9 @@ class HomePageLogEntryWidget extends StatelessWidget {
 
     return Text(
       '$logEntryStartDisplay${shouldShowLogEndDisplay ? '-$logEntryEndDisplay' : ''}s',
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 10,
-        color: Colors.grey,
+        color: Theme.of(context).colorScheme.outline,
         fontFamily: 'RobotoMono',
       ),
     );

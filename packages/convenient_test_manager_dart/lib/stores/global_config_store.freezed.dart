@@ -32,18 +32,22 @@ mixin _$GlobalConfigNullable {
 /// @nodoc
 abstract class $GlobalConfigNullableCopyWith<$Res> {
   factory $GlobalConfigNullableCopyWith(GlobalConfigNullable value, $Res Function(GlobalConfigNullable) then) =
-      _$GlobalConfigNullableCopyWithImpl<$Res>;
+      _$GlobalConfigNullableCopyWithImpl<$Res, GlobalConfigNullable>;
+  @useResult
   $Res call({bool? isolationMode, bool? enableReportSaver, String? goldenDiffGitRepo});
 }
 
 /// @nodoc
-class _$GlobalConfigNullableCopyWithImpl<$Res> implements $GlobalConfigNullableCopyWith<$Res> {
+class _$GlobalConfigNullableCopyWithImpl<$Res, $Val extends GlobalConfigNullable>
+    implements $GlobalConfigNullableCopyWith<$Res> {
   _$GlobalConfigNullableCopyWithImpl(this._value, this._then);
 
-  final GlobalConfigNullable _value;
   // ignore: unused_field
-  final $Res Function(GlobalConfigNullable) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? isolationMode = freezed,
@@ -51,19 +55,19 @@ class _$GlobalConfigNullableCopyWithImpl<$Res> implements $GlobalConfigNullableC
     Object? goldenDiffGitRepo = freezed,
   }) {
     return _then(_value.copyWith(
-      isolationMode: isolationMode == freezed
+      isolationMode: freezed == isolationMode
           ? _value.isolationMode
           : isolationMode // ignore: cast_nullable_to_non_nullable
               as bool?,
-      enableReportSaver: enableReportSaver == freezed
+      enableReportSaver: freezed == enableReportSaver
           ? _value.enableReportSaver
           : enableReportSaver // ignore: cast_nullable_to_non_nullable
               as bool?,
-      goldenDiffGitRepo: goldenDiffGitRepo == freezed
+      goldenDiffGitRepo: freezed == goldenDiffGitRepo
           ? _value.goldenDiffGitRepo
           : goldenDiffGitRepo // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -72,18 +76,18 @@ abstract class _$$_GlobalConfigNullableCopyWith<$Res> implements $GlobalConfigNu
   factory _$$_GlobalConfigNullableCopyWith(_$_GlobalConfigNullable value, $Res Function(_$_GlobalConfigNullable) then) =
       __$$_GlobalConfigNullableCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool? isolationMode, bool? enableReportSaver, String? goldenDiffGitRepo});
 }
 
 /// @nodoc
-class __$$_GlobalConfigNullableCopyWithImpl<$Res> extends _$GlobalConfigNullableCopyWithImpl<$Res>
+class __$$_GlobalConfigNullableCopyWithImpl<$Res>
+    extends _$GlobalConfigNullableCopyWithImpl<$Res, _$_GlobalConfigNullable>
     implements _$$_GlobalConfigNullableCopyWith<$Res> {
   __$$_GlobalConfigNullableCopyWithImpl(_$_GlobalConfigNullable _value, $Res Function(_$_GlobalConfigNullable) _then)
-      : super(_value, (v) => _then(v as _$_GlobalConfigNullable));
+      : super(_value, _then);
 
-  @override
-  _$_GlobalConfigNullable get _value => super._value as _$_GlobalConfigNullable;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? isolationMode = freezed,
@@ -91,15 +95,15 @@ class __$$_GlobalConfigNullableCopyWithImpl<$Res> extends _$GlobalConfigNullable
     Object? goldenDiffGitRepo = freezed,
   }) {
     return _then(_$_GlobalConfigNullable(
-      isolationMode: isolationMode == freezed
+      isolationMode: freezed == isolationMode
           ? _value.isolationMode
           : isolationMode // ignore: cast_nullable_to_non_nullable
               as bool?,
-      enableReportSaver: enableReportSaver == freezed
+      enableReportSaver: freezed == enableReportSaver
           ? _value.enableReportSaver
           : enableReportSaver // ignore: cast_nullable_to_non_nullable
               as bool?,
-      goldenDiffGitRepo: goldenDiffGitRepo == freezed
+      goldenDiffGitRepo: freezed == goldenDiffGitRepo
           ? _value.goldenDiffGitRepo
           : goldenDiffGitRepo // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -131,24 +135,26 @@ class _$_GlobalConfigNullable implements _GlobalConfigNullable {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GlobalConfigNullable &&
-            const DeepCollectionEquality().equals(other.isolationMode, isolationMode) &&
-            const DeepCollectionEquality().equals(other.enableReportSaver, enableReportSaver) &&
-            const DeepCollectionEquality().equals(other.goldenDiffGitRepo, goldenDiffGitRepo));
+            (identical(other.isolationMode, isolationMode) || other.isolationMode == isolationMode) &&
+            (identical(other.enableReportSaver, enableReportSaver) || other.enableReportSaver == enableReportSaver) &&
+            (identical(other.goldenDiffGitRepo, goldenDiffGitRepo) || other.goldenDiffGitRepo == goldenDiffGitRepo));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(isolationMode),
-      const DeepCollectionEquality().hash(enableReportSaver), const DeepCollectionEquality().hash(goldenDiffGitRepo));
+  int get hashCode => Object.hash(runtimeType, isolationMode, enableReportSaver, goldenDiffGitRepo);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GlobalConfigNullableCopyWith<_$_GlobalConfigNullable> get copyWith =>
       __$$_GlobalConfigNullableCopyWithImpl<_$_GlobalConfigNullable>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GlobalConfigNullableToJson(this);
+    return _$$_GlobalConfigNullableToJson(
+      this,
+    );
   }
 }
 
@@ -161,11 +167,11 @@ abstract class _GlobalConfigNullable implements GlobalConfigNullable {
   factory _GlobalConfigNullable.fromJson(Map<String, dynamic> json) = _$_GlobalConfigNullable.fromJson;
 
   @override
-  bool? get isolationMode => throw _privateConstructorUsedError;
+  bool? get isolationMode;
   @override
-  bool? get enableReportSaver => throw _privateConstructorUsedError;
+  bool? get enableReportSaver;
   @override
-  String? get goldenDiffGitRepo => throw _privateConstructorUsedError;
+  String? get goldenDiffGitRepo;
   @override
   @JsonKey(ignore: true)
   _$$_GlobalConfigNullableCopyWith<_$_GlobalConfigNullable> get copyWith => throw _privateConstructorUsedError;

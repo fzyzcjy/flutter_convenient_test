@@ -75,18 +75,17 @@ extension ExtWidgetTester on WidgetTester {
       await pump(pumpDuration);
     }
   }
+}
 
-  // useful for widget tests (not for integration tests)
-  Future<void> debugWidgetTestSaveScreenshot([Finder? finder, String stem = 'debug_screenshot']) async {
-    await runAsync(() async {
-      final image = await captureImage(element(finder ?? find.byType(MaterialApp)));
-      final bytes = (await image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
-      final path = p.join((goldenFileComparator as LocalFileComparator).basedir.path, '$stem.png');
-      debugPrint(
-          'debugWidgetTestSaveScreenshot save to path=$path image.size=${image.width}x${image.height} byte.length=${bytes.length}');
-      File(path).writeAsBytesSync(bytes);
-    });
-  }
+Future<void> debugWidgetTestSaveScreenshot([Finder? finder, String stem = 'debug_screenshot']) async {
+  await TestWidgetsFlutterBinding.instance.runAsync(() async {
+    final image = await captureImage((finder ?? find.byType(MaterialApp)).evaluate().single);
+    final bytes = (await image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+    final path = p.join((goldenFileComparator as LocalFileComparator).basedir.path, '$stem.png');
+    debugPrint(
+        'debugWidgetTestSaveScreenshot save to path=$path image.size=${image.width}x${image.height} byte.length=${bytes.length}');
+    File(path).writeAsBytesSync(bytes);
+  });
 }
 
 const kDefaultConvenientTestGeneralizedEditableTextInfos = <GeneralizedEditableTextInfo>[EditableTextInfo()];
