@@ -51,7 +51,9 @@ class StandardLogFormatter extends BaseLogFormatter {
 
     final contextStr = context != null && context.isNotEmpty ? ' (${context.join(" ")})' : '';
 
-    final msgAndContextTransformed = (msg + contextStr).replaceAll('\n', '[NL]');
+    // NOTE do not use `NL` for better stdout printing
+    // final msgAndContextTransformed = (msg + contextStr).replaceAll('\n', '[NL]');
+    final msgAndContextTransformed = msg + contextStr;
 
     return '$timeStr|$levelStr|$tag|$msgAndContextTransformed';
   }
