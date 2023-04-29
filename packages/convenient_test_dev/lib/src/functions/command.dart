@@ -121,8 +121,7 @@ Future<void> _expectWithRetry(
         rethrow;
       }
 
-      await t.pumpAndSettle();
-      // TODO Not sure whether to add `Future.delayed`. Be careful: Future "delay" may be fake in test environment
+      await t.pumpAndSettleWithRunAsync();
     }
   }
 }
