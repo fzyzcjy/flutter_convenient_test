@@ -24,7 +24,9 @@ void tTestWidgets(
     description,
     (tester) async => await ConvenientTest.withActiveInstance(tester, (t) async {
       final log = t.log('START APP', '');
-      await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
+      await tester.runAsync(() async {
+        await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
+      });
       settle ? await t.pumpAndSettle() : await t.pump();
       await log.snapshot(name: 'after');
 
