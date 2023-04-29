@@ -18,7 +18,10 @@ Future<List<int>> takeSnapshot({Future<void> Function()? pumper}) async {
 Element _findElement() {
   final finder = find.byType(ConvenientTestImageCaptureWrapper);
   final element = finder.evaluate().singleOrNull;
-  if (element == null) throw Exception('Please put `ConvenientTestWrapperWidget` in the widget tree near root');
+  if (element == null) {
+    throw Exception('Please put `ConvenientTestWrapperWidget` in the widget tree near root, '
+        'or ensure ConvenientTestWrapperWidget.convenientTestActive=true');
+  }
   return element;
 }
 
