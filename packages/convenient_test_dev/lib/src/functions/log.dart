@@ -4,6 +4,7 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/instance.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
+import 'package:convenient_test_dev/src/support/static_config.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -116,8 +117,11 @@ class LogHandle {
         image: image,
       )));
     } else {
-      // TODO when no manager but in debug mode, should save to disk
-      Log.i(_kTag, 'snapshot() is no-op since no manager');
+      if (StaticConfig.kVerbose) {
+        TODO;
+      } else {
+        Log.i(_kTag, 'snapshot() is no-op; specify `${StaticConfig.kVerboseKey}` to save screenshots to disk.');
+      }
     }
   }
 }
