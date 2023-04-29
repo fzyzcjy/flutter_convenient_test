@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_dev/src/functions/entrypoint_env_device.dart';
 import 'package:convenient_test_dev/src/functions/entrypoint_env_widget.dart';
 import 'package:convenient_test_dev/src/functions/execution_env.dart';
@@ -13,6 +14,7 @@ Future<void> convenientTestMain(
   ExecutionEnv executionEnv = ExecutionEnv.deviceTest,
 }) async {
   myGetIt.registerSingleton<ConvenientTestSlot>(slot);
+  ConvenientTestWrapperWidget.convenientTestActive = true;
 
   switch (executionEnv) {
     case ExecutionEnv.deviceTest:
