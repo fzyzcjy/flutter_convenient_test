@@ -23,12 +23,13 @@ void tTestWidgets(
   testWidgets(
     description,
     (tester) async => await ConvenientTest.withActiveInstance(tester, (t) async {
-      final log = t.log('START APP', '');
+      t.log('START APP', '');
       await tester.runAsync(() async {
         await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
       });
       settle ? await t.pumpAndSettle() : await t.pump();
-      await log.snapshot(name: 'after');
+      // https://github.com/fzyzcjy/yplusplus/issues/8470#issuecomment-1528784564
+      // await log.snapshot(name: 'after');
 
       await callback(t);
 
