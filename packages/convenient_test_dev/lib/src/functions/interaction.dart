@@ -19,7 +19,7 @@ extension ConvenientTestInteraction on ConvenientTest {
     unawaited(
         Navigator.pushNamed(myGetIt.get<ConvenientTestSlot>().getNavContext(this)!, routeName, arguments: arguments));
 
-    await pumpAndSettle();
+    await pumpAndSettleWithRunAsync();
     await log.snapshot(name: 'after');
   }
 
@@ -31,7 +31,7 @@ extension ConvenientTestInteraction on ConvenientTest {
 
     await tester.pageBack();
 
-    await pumpAndSettle();
+    await pumpAndSettleWithRunAsync();
     await log.snapshot(name: 'after');
   }
 
@@ -44,7 +44,7 @@ extension ConvenientTestInteraction on ConvenientTest {
     // ref https://github.com/peng8350/flutter_pulltorefresh/blob/master/test/refresh_test.dart
     await tester.drag(find.byType(MaterialApp), const Offset(0, 100));
 
-    await pumpAndSettle();
+    await pumpAndSettleWithRunAsync();
     await log.snapshot(name: 'after');
   }
 

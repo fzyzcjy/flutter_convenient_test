@@ -27,7 +27,7 @@ void tTestWidgets(
       await tester.runAsync(() async {
         await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
       });
-      settle ? await t.pumpAndSettle() : await t.pump();
+      settle ? await t.pumpAndSettleWithRunAsync() : await t.pump();
       // https://github.com/fzyzcjy/yplusplus/issues/8470#issuecomment-1528784564
       // await log.snapshot(name: 'after');
 
