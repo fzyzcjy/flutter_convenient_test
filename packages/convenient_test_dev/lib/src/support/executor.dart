@@ -37,7 +37,7 @@ class ConvenientTestExecutor {
 
   static void _reportSuiteInfo(Group group) {
     final suiteInfo = SuiteInfoConverter.convert(group);
-    ConvenientTestManagerRpcService.I.reportSingle(ReportItem(suiteInfoProto: suiteInfo));
+    ConvenientTestManagerRpcService.I?.reportSingle(ReportItem(suiteInfoProto: suiteInfo));
   }
 
   static void _ensureNoDuplicateTestNames(Group group) {

@@ -197,7 +197,7 @@ class _Reporter {
       print(text);
 
       // NOTE XXX add
-      ConvenientTestManagerRpcService.I.reportSingle(ReportItem(
+      ConvenientTestManagerRpcService.I?.reportSingle(ReportItem(
           runnerMessage: RunnerMessage(
         testName: liveTest.test.name,
         message: message.text,
@@ -208,7 +208,7 @@ class _Reporter {
   /// A callback called when [liveTest]'s state becomes [state].
   void _onStateChange(LiveTest liveTest, State state) {
     // NOTE XXX add
-    ConvenientTestManagerRpcService.I.reportSingle(ReportItem(
+    ConvenientTestManagerRpcService.I?.reportSingle(ReportItem(
         runnerStateChange: RunnerStateChange(
       testName: liveTest.test.name,
       state: state.toProto(),
@@ -222,7 +222,7 @@ class _Reporter {
   /// A callback called when [liveTest] throws [error].
   void _onError(LiveTest liveTest, Object error, StackTrace stackTrace) {
     // NOTE XXX add
-    ConvenientTestManagerRpcService.I.reportSingle(ReportItem(
+    ConvenientTestManagerRpcService.I?.reportSingle(ReportItem(
         runnerError: RunnerError(
       testName: liveTest.test.name,
       error: error.toString(),

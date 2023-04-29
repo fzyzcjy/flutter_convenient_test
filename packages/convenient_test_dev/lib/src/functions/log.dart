@@ -83,33 +83,42 @@ class LogHandle {
       Log.i(_kTag, '${_typeToLeading(type)} $title $message $error $stackTrace');
     }
 
-    await ConvenientTestManagerRpcService.I.reportSingle(ReportItem(
-        logEntry: LogEntry(
-      id: _id.toInt64(),
-      testName: _testName,
-      subEntries: [
-        LogSubEntry(
-          id: IdGenerator.instance.nextId().toInt64(),
-          type: type,
-          time: Int64(DateTime.now().microsecondsSinceEpoch),
-          title: title,
-          message: message,
-          error: error,
-          stackTrace: stackTrace,
-        ),
-      ],
-    )));
+    final managerRpcService = ConvenientTestManagerRpcService.I;
+    if (managerRpcService != null) {
+      await managerRpcService.reportSingle(ReportItem(
+          logEntry: LogEntry(
+        id: _id.toInt64(),
+        testName: _testName,
+        subEntries: [
+          LogSubEntry(
+            id: IdGenerator.instance.nextId().toInt64(),
+            type: type,
+            time: Int64(DateTime.now().microsecondsSinceEpoch),
+            title: title,
+            message: message,
+            error: error,
+            stackTrace: stackTrace,
+          ),
+        ],
+      )));
+    }
   }
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
-    final tester = ConvenientTest.maybeActiveInstance?.tester;
-    image ??= await _maybeRunAsync(tester, () => takeSnapshot(pumper: tester?.pump));
-    await ConvenientTestManagerRpcService.I.reportSingle(ReportItem(
-        snapshot: Snapshot(
-      logEntryId: _id.toInt64(),
-      name: name,
-      image: image,
-    )));
+    final managerRpcService = ConvenientTestManagerRpcService.I;
+    if (managerRpcService != null) {
+      final tester = ConvenientTest.maybeActiveInstance?.tester;
+      image ??= await _maybeRunAsync(tester, () => takeSnapshot(pumper: tester?.pump));
+      await managerRpcService.reportSingle(ReportItem(
+          snapshot: Snapshot(
+        logEntryId: _id.toInt64(),
+        name: name,
+        image: image,
+      )));
+    } else {
+      // TODO when no manager but in debug mode, should save to disk
+      Log.i(_kTag, 'snapshot() is no-op since no manager');
+    }
   }
 }
 

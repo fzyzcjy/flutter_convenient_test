@@ -67,7 +67,7 @@ Future<void> _runModeIntegrationTest(
           rethrow;
         }
 
-        unawaited(ConvenientTestManagerRpcService.I.reportSingle(ReportItem(setUpAll: SetUpAll())));
+        unawaited(ConvenientTestManagerRpcService.I?.reportSingle(ReportItem(setUpAll: SetUpAll())));
 
         setup();
 
@@ -107,12 +107,15 @@ void _configureGoldens(WorkerCurrentRunConfig_IntegrationTest currentRunConfig) 
 Future<void> _lastTearDownAll() async {
   // const _kTag = 'LastTearDownAll';
 
-  // need to `await` to ensure it is sent
-  await ConvenientTestManagerRpcService.I.reportSingle(ReportItem(
-    tearDownAll: TearDownAll(
-      resolvedExecutionFilter: myGetIt.get<ConvenientTestExecutor>().resolvedExecutionFilter.toProto(),
-    ),
-  ));
+  final managerRpcService = ConvenientTestManagerRpcService.I;
+  if (managerRpcService != null) {
+    // need to `await` to ensure it is sent
+    await managerRpcService.reportSingle(ReportItem(
+      tearDownAll: TearDownAll(
+        resolvedExecutionFilter: myGetIt.get<ConvenientTestExecutor>().resolvedExecutionFilter.toProto(),
+      ),
+    ));
+  }
 
   // TODO
   // if (CompileTimeConfig.kCIMode) {
