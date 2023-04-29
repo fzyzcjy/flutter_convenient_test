@@ -130,17 +130,28 @@ String _getTestFailureErrorExtraInfo(dynamic actual) {
   if (actual is Finder) {
     // ref: [Finder.toString]
     final elements = actual.evaluate().toList();
-    final info = elements.mapIndexed((index, Element element) {
+
+    final bboxInfos = elements
+        .map((element) {
+          if (!element.debugIsActive) return null;
+          final renderBox = element.findRenderObject();
+          if (renderBox is! RenderBox || !renderBox.hasSize) return null;
+          return renderBox.localToGlobal(Offset.zero) & renderBox.size;
+        })
+        .mapIndexed((index, bbox) => '📦 Bounding box of element #$index: $bbox')
+        .join('\n\n');
+
+    final ancestorInfos = elements.mapIndexed((index, element) {
       final reversedAncestors = [element];
       element.visitAncestorElements((ancestorElement) {
         reversedAncestors.add(ancestorElement);
         return true;
       });
-      return '[Found Element #$index]\n'
+      return '🌳 Ancestors of element #$index:\n'
           '${reversedAncestors.reversed.map((e) => '-> $e').join('\n')}';
     }).join('\n\n');
-    return 'Extra Info: matched elements are:\n'
-        '$info';
+
+    return 'Extra info for matched elements: \n$bboxInfos\n$ancestorInfos';
   }
   return '';
 }
