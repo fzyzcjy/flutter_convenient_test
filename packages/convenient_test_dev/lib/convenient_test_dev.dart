@@ -1,5 +1,6 @@
 export 'src/functions/command.dart';
 export 'src/functions/entrypoint.dart';
+export 'src/functions/execution_env.dart';
 export 'src/functions/find.dart';
 export 'src/functions/goldens.dart';
 export 'src/functions/instance.dart';
