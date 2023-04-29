@@ -4,7 +4,6 @@ import 'package:convenient_test_dev/src/functions/entrypoint_env_device.dart';
 import 'package:convenient_test_dev/src/functions/entrypoint_env_widget.dart';
 import 'package:convenient_test_dev/src/functions/execution_env.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
-import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 
 /// Please make this the only method in your "main" method.
@@ -14,7 +13,6 @@ Future<void> convenientTestMain(
   ExecutionEnv executionEnv = ExecutionEnv.deviceTest,
 }) async {
   myGetIt.registerSingleton<ConvenientTestSlot>(slot);
-  myGetIt.registerSingleton<ConvenientTestManagerRpcService>(_createConvenientTestManagerRpcService(executionEnv));
 
   switch (executionEnv) {
     case ExecutionEnv.deviceTest:
@@ -23,14 +21,5 @@ Future<void> convenientTestMain(
     case ExecutionEnv.widgetTest:
       await convenientTestEntrypointWhenEnvWidget(testBody);
       break;
-  }
-}
-
-ConvenientTestManagerRpcService _createConvenientTestManagerRpcService(ExecutionEnv executionEnv) {
-  switch (executionEnv) {
-    case ExecutionEnv.deviceTest:
-      return ConvenientTestManagerRpcServiceReal();
-    case ExecutionEnv.widgetTest:
-      return ConvenientTestManagerRpcServiceFake();
   }
 }

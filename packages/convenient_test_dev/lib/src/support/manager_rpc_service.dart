@@ -1,34 +1,27 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:grpc/grpc.dart';
 
-abstract class ConvenientTestManagerRpcService {
-  Future<void> reportSingle(ReportItem item);
-}
+class ConvenientTestManagerRpcService {
+  /// Nullable - e.g. null when in widget test mode since there is no manager
+  static ConvenientTestManagerRpcService? get I =>
+      myGetIt.isRegistered<ConvenientTestManagerRpcService>() ? ConvenientTestManagerRpcService.I : null;
 
-class ConvenientTestManagerRpcServiceReal implements ConvenientTestManagerRpcService {
   final ConvenientTestManagerClient _client;
 
-  factory ConvenientTestManagerRpcServiceReal() {
+  factory ConvenientTestManagerRpcService() {
     final channel = ClientChannel(
       kConvenientTestManagerHost,
       port: kConvenientTestManagerPort,
       options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
     final client = ConvenientTestManagerClient(channel, options: CallOptions(timeout: null));
-    return ConvenientTestManagerRpcServiceReal._(client);
+    return ConvenientTestManagerRpcService._(client);
   }
 
-  ConvenientTestManagerRpcServiceReal._(this._client);
+  ConvenientTestManagerRpcService._(this._client);
 
-  @override
   Future<void> reportSingle(ReportItem item) => _client.report(ReportCollection(items: [item]));
 
   Future<WorkerCurrentRunConfig> getWorkerCurrentRunConfig() => _client.getWorkerCurrentRunConfig(Empty());
-}
-
-class ConvenientTestManagerRpcServiceFake implements ConvenientTestManagerRpcService {
-  @override
-  Future<void> reportSingle(ReportItem item) async {
-    // no op
-  }
 }

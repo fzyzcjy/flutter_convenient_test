@@ -1,6 +1,5 @@
 // ignore_for_file: implementation_imports
 import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
@@ -38,7 +37,7 @@ class ConvenientTestExecutor {
 
   static void _reportSuiteInfo(Group group) {
     final suiteInfo = SuiteInfoConverter.convert(group);
-    myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(suiteInfoProto: suiteInfo));
+    ConvenientTestManagerRpcService.I.reportSingle(ReportItem(suiteInfoProto: suiteInfo));
   }
 
   static void _ensureNoDuplicateTestNames(Group group) {

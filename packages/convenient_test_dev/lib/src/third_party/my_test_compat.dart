@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/declarer.dart';
-import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:test_api/src/backend/declarer.dart';
@@ -198,22 +197,22 @@ class _Reporter {
       print(text);
 
       // NOTE XXX add
-      myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(
-              runnerMessage: RunnerMessage(
-            testName: liveTest.test.name,
-            message: message.text,
-          )));
+      ConvenientTestManagerRpcService.I.reportSingle(ReportItem(
+          runnerMessage: RunnerMessage(
+        testName: liveTest.test.name,
+        message: message.text,
+      )));
     }));
   }
 
   /// A callback called when [liveTest]'s state becomes [state].
   void _onStateChange(LiveTest liveTest, State state) {
     // NOTE XXX add
-    myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(
-            runnerStateChange: RunnerStateChange(
-          testName: liveTest.test.name,
-          state: state.toProto(),
-        )));
+    ConvenientTestManagerRpcService.I.reportSingle(ReportItem(
+        runnerStateChange: RunnerStateChange(
+      testName: liveTest.test.name,
+      state: state.toProto(),
+    )));
 
     if (state.status != Status.complete) {
       return;
@@ -223,12 +222,12 @@ class _Reporter {
   /// A callback called when [liveTest] throws [error].
   void _onError(LiveTest liveTest, Object error, StackTrace stackTrace) {
     // NOTE XXX add
-    myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(
-            runnerError: RunnerError(
-          testName: liveTest.test.name,
-          error: error.toString(),
-          stackTrace: '$stackTrace',
-        )));
+    ConvenientTestManagerRpcService.I.reportSingle(ReportItem(
+        runnerError: RunnerError(
+      testName: liveTest.test.name,
+      error: error.toString(),
+      stackTrace: '$stackTrace',
+    )));
     // print('hi _onError e.type=${error.runtimeType} error=$error');
     // print('hi _onError errors=${liveTest.errors}');
     convenientTestLog(

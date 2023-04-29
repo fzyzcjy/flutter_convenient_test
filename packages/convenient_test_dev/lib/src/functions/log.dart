@@ -3,7 +3,6 @@
 // ignore_for_file: implementation_imports
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/instance.dart';
-import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
 import 'package:fixnum/fixnum.dart';
@@ -84,33 +83,33 @@ class LogHandle {
       Log.i(_kTag, '${_typeToLeading(type)} $title $message $error $stackTrace');
     }
 
-    await myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(
-            logEntry: LogEntry(
-          id: _id.toInt64(),
-          testName: _testName,
-          subEntries: [
-            LogSubEntry(
-              id: IdGenerator.instance.nextId().toInt64(),
-              type: type,
-              time: Int64(DateTime.now().microsecondsSinceEpoch),
-              title: title,
-              message: message,
-              error: error,
-              stackTrace: stackTrace,
-            ),
-          ],
-        )));
+    await ConvenientTestManagerRpcService.I.reportSingle(ReportItem(
+        logEntry: LogEntry(
+      id: _id.toInt64(),
+      testName: _testName,
+      subEntries: [
+        LogSubEntry(
+          id: IdGenerator.instance.nextId().toInt64(),
+          type: type,
+          time: Int64(DateTime.now().microsecondsSinceEpoch),
+          title: title,
+          message: message,
+          error: error,
+          stackTrace: stackTrace,
+        ),
+      ],
+    )));
   }
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
     final tester = ConvenientTest.maybeActiveInstance?.tester;
     image ??= await _maybeRunAsync(tester, () => takeSnapshot(pumper: tester?.pump));
-    await myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(
-            snapshot: Snapshot(
-          logEntryId: _id.toInt64(),
-          name: name,
-          image: image,
-        )));
+    await ConvenientTestManagerRpcService.I.reportSingle(ReportItem(
+        snapshot: Snapshot(
+      logEntryId: _id.toInt64(),
+      name: name,
+      image: image,
+    )));
   }
 }
 
