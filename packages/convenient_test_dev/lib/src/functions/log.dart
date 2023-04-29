@@ -1,6 +1,8 @@
 // ref: https://docs.cypress.io/api/cypress-api/cypress-log#Arguments
 
 // ignore_for_file: implementation_imports
+import 'dart:io';
+
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/instance.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
@@ -106,19 +108,23 @@ class LogHandle {
   }
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
+    Future<List<int>> computeImage() async {
+      final tester = ConvenientTest.maybeActiveInstance?.tester;
+      return image ?? await _maybeRunAsync(tester, () => takeSnapshot(pumper: tester?.pump));
+    }
+
     final managerRpcService = ConvenientTestManagerRpcService.I;
     if (managerRpcService != null) {
-      final tester = ConvenientTest.maybeActiveInstance?.tester;
-      image ??= await _maybeRunAsync(tester, () => takeSnapshot(pumper: tester?.pump));
       await managerRpcService.reportSingle(ReportItem(
           snapshot: Snapshot(
         logEntryId: _id.toInt64(),
         name: name,
-        image: image,
+        image: await computeImage(),
       )));
     } else {
       if (StaticConfig.kVerbose) {
-        TODO;
+        final briefTime = DateTime.now().toLocal().toIso8601String().replaceAll(':', '').replaceAll('.', '-');
+        File('debug_screenshot_${briefTime}_$name.png').writeAsBytesSync(await computeImage());
       } else {
         Log.i(_kTag, 'snapshot() is no-op; specify `${StaticConfig.kVerboseKey}` to save screenshots to disk.');
       }
