@@ -4,7 +4,6 @@ import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/binding.dart';
 import 'package:convenient_test_dev/src/functions/goldens.dart';
-import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/compile_time_config.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
@@ -15,40 +14,7 @@ import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
-
-class ConvenientTest {
-  final WidgetTester tester;
-
-  ConvenientTest._(this.tester);
-
-  static ConvenientTest? get maybeActiveInstance => _activeInstance;
-
-  @internal
-  static ConvenientTest get activeInstance => _activeInstance!;
-  static ConvenientTest? _activeInstance;
-
-  static set activeInstance(ConvenientTest? value) {
-    if (!((value != null) ^ (_activeInstance != null))) {
-      throw Exception(
-          'Cannot set activeInstance, either overwrite existing instance or removing non-existing instance. '
-          'old=$_activeInstance new=$value');
-    }
-    _activeInstance = value;
-  }
-
-  @internal
-  static Future<void> withActiveInstance(WidgetTester tester, Future<void> Function(ConvenientTest) body) async {
-    final t = ConvenientTest._(tester);
-    activeInstance = t;
-    try {
-      await body(t);
-    } finally {
-      activeInstance = null;
-    }
-  }
-}
 
 /// Please make this the only method in your "main" method.
 Future<void> convenientTestMain(ConvenientTestSlot slot, VoidCallback testBody) async {
@@ -157,38 +123,4 @@ Future<void> _lastTearDownAll() async {
   //   Log.i(_kTag, 'exit the process');
   //   exit(0);
   // }
-}
-
-typedef TWidgetTesterCallback = Future<void> Function(ConvenientTest t);
-
-/// Wrapper around [testWidgets].
-///
-/// If the app's main widget contains a widget that never settles (for example:
-/// has animations that repeat infinitely), set [settle] to false.
-@isTest
-void tTestWidgets(
-  // ... forward the arguments ...
-  String description,
-  TWidgetTesterCallback callback, {
-  bool skip = false,
-  bool settle = true,
-  Timeout? timeout,
-}) {
-  testWidgets(
-    description,
-    (tester) async => await ConvenientTest.withActiveInstance(tester, (t) async {
-      final log = t.log('START APP', '');
-      await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
-      settle ? await t.pumpAndSettle() : await t.pump();
-      await log.snapshot(name: 'after');
-
-      await callback(t);
-
-      // hack, otherwise `hot restart` sometimes makes this variable set strangely, making assertions failed
-      // TODO is it ok?
-      debugDefaultTargetPlatformOverride = null;
-    }),
-    skip: skip,
-    timeout: timeout,
-  );
 }
