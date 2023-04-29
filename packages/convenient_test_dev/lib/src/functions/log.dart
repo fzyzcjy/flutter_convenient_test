@@ -103,7 +103,8 @@ class LogHandle {
   }
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
-    image ??= await takeSnapshot(pumper: ConvenientTest.maybeActiveInstance?.tester.pump);
+    final tester = ConvenientTest.maybeActiveInstance?.tester;
+    image ??= await _maybeRunAsync(tester, () => takeSnapshot(pumper: tester?.pump));
     await myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(
             snapshot: Snapshot(
           logEntryId: _id.toInt64(),
@@ -111,6 +112,11 @@ class LogHandle {
           image: image,
         )));
   }
+}
+
+Future<T> _maybeRunAsync<T extends Object>(WidgetTester? tester, Future<T> Function() f) async {
+  if (tester == null) return await f();
+  return (await tester.runAsync(f))!;
 }
 
 String _typeToLeading(LogSubEntryType type) {
