@@ -124,7 +124,9 @@ class LogHandle {
     } else {
       if (StaticConfig.kVerbose) {
         final briefTime = DateTime.now().toLocal().toIso8601String().replaceAll(':', '').replaceAll('.', '-');
-        File('debug_screenshot_${briefTime}_$name.png').writeAsBytesSync(await computeImage());
+        final filename = 'debug_screenshot_${briefTime}_$name.png';
+        File(filename).writeAsBytesSync(await computeImage());
+        Log.i(_kTag, 'snapshot() saved file to disk at: $filename');
       } else {
         Log.i(_kTag, 'snapshot() is no-op; specify `${StaticConfig.kVerboseKey}` to save screenshots to disk.');
       }
