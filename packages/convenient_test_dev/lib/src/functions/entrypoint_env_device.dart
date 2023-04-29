@@ -19,10 +19,8 @@ import 'package:path/path.dart' as path;
 
 @internal
 Future<void> convenientTestEntrypointWhenEnvDevice(VoidCallback testBody) async {
-  // MUST do it this early, because we really need the rpc client immediately
-  myGetIt.registerSingleton<ConvenientTestManagerClient>(ExtConvenientTestManagerClient.create());
-
-  final currentRunConfig = await myGetIt.get<ConvenientTestManagerClient>().getWorkerCurrentRunConfig(Empty());
+  final currentRunConfig = await (myGetIt.get<ConvenientTestManagerRpcService>() as ConvenientTestManagerRpcServiceReal)
+      .getWorkerCurrentRunConfig();
   switch (currentRunConfig.whichSubType()) {
     case WorkerCurrentRunConfig_SubType.interactiveApp:
       return _runModeInteractiveApp();
@@ -68,7 +66,7 @@ Future<void> _runModeIntegrationTest(
           rethrow;
         }
 
-        unawaited(myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(setUpAll: SetUpAll())));
+        unawaited(myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(setUpAll: SetUpAll())));
 
         setup();
 
@@ -109,7 +107,7 @@ Future<void> _lastTearDownAll() async {
   // const _kTag = 'LastTearDownAll';
 
   // need to `await` to ensure it is sent
-  await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
+  await myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(
         tearDownAll: TearDownAll(
           resolvedExecutionFilter: myGetIt.get<ConvenientTestExecutor>().resolvedExecutionFilter.toProto(),
         ),

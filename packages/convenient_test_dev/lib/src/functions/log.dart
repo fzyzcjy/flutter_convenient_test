@@ -84,7 +84,7 @@ class LogHandle {
       Log.i(_kTag, '${_typeToLeading(type)} $title $message $error $stackTrace');
     }
 
-    await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
+    await myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(
             logEntry: LogEntry(
           id: _id.toInt64(),
           testName: _testName,

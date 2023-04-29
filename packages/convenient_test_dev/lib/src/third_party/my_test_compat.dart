@@ -198,7 +198,7 @@ class _Reporter {
       print(text);
 
       // NOTE XXX add
-      myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
+      myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(
               runnerMessage: RunnerMessage(
             testName: liveTest.test.name,
             message: message.text,
@@ -209,7 +209,7 @@ class _Reporter {
   /// A callback called when [liveTest]'s state becomes [state].
   void _onStateChange(LiveTest liveTest, State state) {
     // NOTE XXX add
-    myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
+    myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(
             runnerStateChange: RunnerStateChange(
           testName: liveTest.test.name,
           state: state.toProto(),
@@ -223,7 +223,7 @@ class _Reporter {
   /// A callback called when [liveTest] throws [error].
   void _onError(LiveTest liveTest, Object error, StackTrace stackTrace) {
     // NOTE XXX add
-    myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
+    myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(ReportItem(
             runnerError: RunnerError(
           testName: liveTest.test.name,
           error: error.toString(),
