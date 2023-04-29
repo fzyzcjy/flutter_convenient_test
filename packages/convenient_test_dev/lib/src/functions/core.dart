@@ -21,7 +21,7 @@ import 'package:path/path.dart' as path;
 class ConvenientTest {
   final WidgetTester tester;
 
-  ConvenientTest(this.tester);
+  ConvenientTest._(this.tester);
 
   static ConvenientTest? get maybeActiveInstance => _activeInstance;
 
@@ -38,8 +38,9 @@ class ConvenientTest {
     _activeInstance = value;
   }
 
+  @internal
   static Future<void> withActiveInstance(WidgetTester tester, Future<void> Function(ConvenientTest) body) async {
-    final t = ConvenientTest(tester);
+    final t = ConvenientTest._(tester);
     activeInstance = t;
     try {
       await body(t);
