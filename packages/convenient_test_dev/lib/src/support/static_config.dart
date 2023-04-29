@@ -1,4 +1,4 @@
-class CompileTimeConfig {
+class StaticConfig {
   static final kAppCodeDir = () {
     const key = 'CONVENIENT_TEST_APP_CODE_DIR';
     const value = String.fromEnvironment(key);

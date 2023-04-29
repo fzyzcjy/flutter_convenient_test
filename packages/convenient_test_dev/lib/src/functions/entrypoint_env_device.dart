@@ -93,7 +93,7 @@ void _configureGoldens(WorkerCurrentRunConfig_IntegrationTest currentRunConfig) 
   const _kTag = 'ConfigureGoldens';
 
   goldenFileComparator = EnhancedLocalFileComparator(
-      Uri.file(path.join(CompileTimeConfig.kAppCodeDir, 'integration_test/dummy.dart')),
+      Uri.file(path.join(StaticConfig.kAppCodeDir, 'integration_test/dummy.dart')),
       captureFailure: true);
   autoUpdateGoldenFiles = currentRunConfig.autoUpdateGoldenFiles;
 
