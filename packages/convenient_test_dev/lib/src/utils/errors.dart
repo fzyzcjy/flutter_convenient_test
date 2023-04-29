@@ -4,7 +4,11 @@ import 'package:test_api/test_api.dart' as test_package; // ignore: deprecated_m
 
 void setUpConvenientTestExceptionReporter() {
   // NOTE By reading comments of [reportTestException], we see its purpose is just what we want - customize error catching
-  reportTestException = _convenientTestTestExceptionReporter;
+  final oldReportTestException = reportTestException;
+  reportTestException = (errorDetails, testDescription) {
+    _convenientTestTestExceptionReporter(errorDetails, testDescription);
+    oldReportTestException(errorDetails, testDescription);
+  };
 }
 
 void setUpFlutterOnError() {
