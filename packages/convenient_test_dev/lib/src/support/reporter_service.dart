@@ -6,7 +6,7 @@ import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 
 abstract class ReporterService {
   /// Nullable - e.g. null when in widget test mode since there is no manager
-  static ReporterService? get I => myGetIt.isRegistered<ReporterService>() ? ReporterService.I : null;
+  static ReporterService? get I => myGetIt.isRegistered<ReporterService>() ? myGetIt.get<ReporterService>() : null;
 
   Future<void> report(ReportItem item);
 }
