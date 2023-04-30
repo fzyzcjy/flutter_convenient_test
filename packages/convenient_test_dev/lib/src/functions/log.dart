@@ -38,6 +38,7 @@ LogHandle convenientTestLog(
     type: type ?? LogSubEntryType.GENERAL_MESSAGE,
     error: error,
     stackTrace: stackTrace,
+    initial: true,
     printing: true, // <--
   );
 
@@ -81,9 +82,11 @@ class LogHandle {
     String? stackTrace,
     LogSubEntryType type = LogSubEntryType.GENERAL_MESSAGE,
     bool printing = false,
+    bool initial = false,
   }) async {
     if (printing) {
-      Log.i(_kTag, '${_typeToLeading(type)} $title $message $error $stackTrace');
+      Log.i(_kTag,
+          '${_typeToLeading(type)} (#$_id, ${initial ? "create" : "update"}) $title $message $error $stackTrace');
     }
 
     final managerRpcService = ConvenientTestManagerRpcService.I;
