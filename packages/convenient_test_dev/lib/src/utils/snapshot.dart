@@ -36,9 +36,18 @@ Future<ui.Image> _captureImageFromElement(Element element, {Future<void> Functio
   // NOTE MODIFIED add to fix
   // see #234
   // see https://github.com/fzyzcjy/yplusplus/issues/4286#issuecomment-1170797044
-  while (renderObject.debugNeedsPaint && pumper != null) {
-    Log.i('captureImageFromElement', 'see debugNeedsPaint==true and has pumper, thus pump');
-    await pumper();
+  {
+    var count = 0;
+    while (renderObject.debugNeedsPaint && pumper != null) {
+      if (count >= 20) {
+        Log.i('captureImageFromElement', 'see debugNeedsPaint==true, but already pumped too many times, thus skip');
+        break;
+      }
+
+      Log.i('captureImageFromElement', 'see debugNeedsPaint==true and has pumper, thus pump');
+      await pumper();
+      count++;
+    }
   }
 
   assert(!renderObject.debugNeedsPaint);
