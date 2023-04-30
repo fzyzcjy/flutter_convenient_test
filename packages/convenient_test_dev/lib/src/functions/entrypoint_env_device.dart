@@ -8,6 +8,7 @@ import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/executor.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
+import 'package:convenient_test_dev/src/support/reporter_service.dart';
 import 'package:convenient_test_dev/src/support/setup.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/support/static_config.dart';
@@ -20,8 +21,9 @@ import 'package:path/path.dart' as path;
 @internal
 Future<void> convenientTestEntrypointWhenEnvDevice(VoidCallback testBody) async {
   myGetIt.registerSingleton<ConvenientTestManagerRpcService>(ConvenientTestManagerRpcService());
+  TODO_register_reporter_service;
 
-  final currentRunConfig = await ConvenientTestManagerRpcService.I!.getWorkerCurrentRunConfig();
+  final currentRunConfig = await myGetIt.get<ConvenientTestManagerRpcService>().getWorkerCurrentRunConfig();
   switch (currentRunConfig.whichSubType()) {
     case WorkerCurrentRunConfig_SubType.interactiveApp:
       return _runModeInteractiveApp();
@@ -67,7 +69,7 @@ Future<void> _runModeIntegrationTest(
           rethrow;
         }
 
-        unawaited(ConvenientTestManagerRpcService.I?.reportSingle(ReportItem(setUpAll: SetUpAll())));
+        unawaited(ReporterService.I?.report(ReportItem(setUpAll: SetUpAll())));
 
         setup();
 
@@ -107,10 +109,10 @@ void _configureGoldens(WorkerCurrentRunConfig_IntegrationTest currentRunConfig) 
 Future<void> _lastTearDownAll() async {
   // const _kTag = 'LastTearDownAll';
 
-  final managerRpcService = ConvenientTestManagerRpcService.I;
-  if (managerRpcService != null) {
+  final reporterService = ReporterService.I;
+  if (reporterService != null) {
     // need to `await` to ensure it is sent
-    await managerRpcService.reportSingle(ReportItem(
+    await reporterService.report(ReportItem(
       tearDownAll: TearDownAll(
         resolvedExecutionFilter: myGetIt.get<ConvenientTestExecutor>().resolvedExecutionFilter.toProto(),
       ),

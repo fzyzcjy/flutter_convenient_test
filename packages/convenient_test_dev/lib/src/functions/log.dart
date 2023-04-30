@@ -5,7 +5,7 @@ import 'dart:io';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/instance.dart';
-import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
+import 'package:convenient_test_dev/src/support/reporter_service.dart';
 import 'package:convenient_test_dev/src/support/static_config.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
 import 'package:fixnum/fixnum.dart';
@@ -89,9 +89,9 @@ class LogHandle {
           '${_typeToLeading(type)} (#$_id, ${initial ? "create" : "update"}) $title $message $error $stackTrace');
     }
 
-    final managerRpcService = ConvenientTestManagerRpcService.I;
-    if (managerRpcService != null) {
-      await managerRpcService.reportSingle(ReportItem(
+    final reporterService = ReporterService.I;
+    if (reporterService != null) {
+      await reporterService.report(ReportItem(
           logEntry: LogEntry(
         id: _id.toInt64(),
         testName: _testName,
@@ -116,9 +116,9 @@ class LogHandle {
       return image ?? await _maybeRunAsync(tester, () => takeSnapshot(pumper: tester?.pump));
     }
 
-    final managerRpcService = ConvenientTestManagerRpcService.I;
-    if (managerRpcService != null) {
-      await managerRpcService.reportSingle(ReportItem(
+    final reporterService = ReporterService.I;
+    if (reporterService != null) {
+      await reporterService.report(ReportItem(
           snapshot: Snapshot(
         logEntryId: _id.toInt64(),
         name: name,

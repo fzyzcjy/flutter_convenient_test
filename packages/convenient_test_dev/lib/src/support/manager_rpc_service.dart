@@ -1,12 +1,7 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:grpc/grpc.dart';
 
 class ConvenientTestManagerRpcService {
-  /// Nullable - e.g. null when in widget test mode since there is no manager
-  static ConvenientTestManagerRpcService? get I =>
-      myGetIt.isRegistered<ConvenientTestManagerRpcService>() ? ConvenientTestManagerRpcService.I : null;
-
   final ConvenientTestManagerClient _client;
 
   factory ConvenientTestManagerRpcService() {

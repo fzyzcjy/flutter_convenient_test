@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/declarer.dart';
-import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
+import 'package:convenient_test_dev/src/support/reporter_service.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:test_api/src/backend/declarer.dart';
 import 'package:test_api/src/backend/group.dart';
@@ -197,7 +197,7 @@ class _Reporter {
       print(text);
 
       // NOTE XXX add
-      ConvenientTestManagerRpcService.I?.reportSingle(ReportItem(
+      ReporterService.I?.report(ReportItem(
           runnerMessage: RunnerMessage(
         testName: liveTest.test.name,
         message: message.text,
@@ -208,7 +208,7 @@ class _Reporter {
   /// A callback called when [liveTest]'s state becomes [state].
   void _onStateChange(LiveTest liveTest, State state) {
     // NOTE XXX add
-    ConvenientTestManagerRpcService.I?.reportSingle(ReportItem(
+    ReporterService.I?.report(ReportItem(
         runnerStateChange: RunnerStateChange(
       testName: liveTest.test.name,
       state: state.toProto(),
@@ -222,7 +222,7 @@ class _Reporter {
   /// A callback called when [liveTest] throws [error].
   void _onError(LiveTest liveTest, Object error, StackTrace stackTrace) {
     // NOTE XXX add
-    ConvenientTestManagerRpcService.I?.reportSingle(ReportItem(
+    ReporterService.I?.report(ReportItem(
         runnerError: RunnerError(
       testName: liveTest.test.name,
       error: error.toString(),
