@@ -79,12 +79,9 @@ Future<void> _expectWithRetry(
   var failedCount = 0;
   while (true) {
     // Why need log "update": Because `actualGetter` can change
-    // ignore: avoid_dynamic_calls
-    logUpdate(
-      'ASSERT',
-      Descriptor().formatLogOfExpect(actualGetter(), matcher, overrideActualDescription: overrideActualDescription),
-      type: LogSubEntryType.ASSERT,
-    );
+    final logMessage =
+        Descriptor().formatLogOfExpect(actualGetter(), matcher, overrideActualDescription: overrideActualDescription);
+    logUpdate('ASSERT', logMessage, type: LogSubEntryType.ASSERT);
 
     final actual = actualGetter();
     try {
@@ -102,6 +99,7 @@ Future<void> _expectWithRetry(
       }
 
       if (snapshotWhenSuccess) await logSnapshot(name: 'after');
+      logUpdate('ASSERT', logMessage, type: LogSubEntryType.ASSERT, printing: true); // #8484
       return;
     } on TestFailure catch (e, s) {
       failedCount++;
@@ -110,7 +108,7 @@ Future<void> _expectWithRetry(
       if (duration >= timeout) {
         logUpdate(
           'ASSERT',
-          'after $failedCount retries with ${duration.inMilliseconds} milliseconds',
+          'after $failedCount retries with ${duration.inMilliseconds} milliseconds, when $logMessage',
           type: LogSubEntryType.ASSERT_FAIL,
           error: '$e\n${_getTestFailureErrorExtraInfo(actual)}',
           stackTrace: '$s',
