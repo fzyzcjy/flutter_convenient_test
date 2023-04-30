@@ -127,7 +127,8 @@ class LogHandle {
     } else {
       if (StaticConfig.kVerbose) {
         final briefTime = DateTime.now().toLocal().toIso8601String().replaceAll(':', '').replaceAll('.', '-');
-        final filename = 'debug_screenshot_${briefTime}_$name.png';
+        final filename = 'convenient_test_debug_screenshots/debug_screenshot_${briefTime}_$name.png';
+        File(filename).parent.createSync(recursive: true);
         File(filename).writeAsBytesSync(await computeImage());
         Log.i(_kTag, 'snapshot() saved file to disk at: $filename');
       } else {
