@@ -62,8 +62,6 @@ Future<void> _runModeIntegrationTest(
           rethrow;
         }
 
-        unawaited(ReporterService.I?.report(ReportItem(setUpAll: SetUpAll())));
-
         setup();
       },
     );

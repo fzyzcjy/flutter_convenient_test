@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:convenient_test/convenient_test.dart';
@@ -49,9 +50,8 @@ void collectIntoDeclarerAndExecute(
       // `IntegrationTestWidgetsFlutterBinding.ensureInitialized` which adds another tearDownAll)
       // thus it should be run lastly
       tearDownAll(_lastTearDownAll);
-
       insideSetup();
-
+      unawaited(ReporterService.I?.report(ReportItem(setUpAll: SetUpAll())));
       setUpLogTestStartAndEnd();
       testBody();
     },

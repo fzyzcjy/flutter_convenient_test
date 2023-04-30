@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
+import 'package:convenient_test_dev/src/functions/entrypoint.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/reporter_service.dart';
@@ -25,6 +27,17 @@ Future<void> convenientTestEntrypointWhenEnvWidget(VoidCallback testBody) async 
 
   setUpLogTestStartAndEnd();
   testBody();
+
+  collectIntoDeclarerAndExecute(
+    testBody,
+    defaultRetry: null,
+    reportSuiteInfo: true,
+    executionFilter: ExecutionFilter(
+      filterNameRegex: '.*',
+      strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
+    ),
+    insideSetup: () {},
+  );
 }
 
 String _createReportName() =>
