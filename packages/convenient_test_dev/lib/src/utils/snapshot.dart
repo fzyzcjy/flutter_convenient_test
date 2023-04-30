@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Future<List<int>> takeSnapshot({Future<void> Function()? pumper}) async {
+Future<List<int>> takeSnapshot({Future<void> Function()? pumpAndRunAsync}) async {
   final element = _findElement();
-  final image = await _captureImageFromElement(element, pumper: pumper);
+  final image = await _captureImageFromElement(element, pumpAndRunAsync: pumpAndRunAsync);
   final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
   return byteData!.buffer.asUint8List();
 }
@@ -26,7 +26,7 @@ Element _findElement() {
 }
 
 /// NOTE ref [flutter_test :: _matchers_io.dart :: captureImage]
-Future<ui.Image> _captureImageFromElement(Element element, {Future<void> Function()? pumper}) async {
+Future<ui.Image> _captureImageFromElement(Element element, {Future<void> Function()? pumpAndRunAsync}) async {
   assert(element.renderObject != null);
   var renderObject = element.renderObject!;
   while (!renderObject.isRepaintBoundary) {
@@ -38,14 +38,14 @@ Future<ui.Image> _captureImageFromElement(Element element, {Future<void> Functio
   // see https://github.com/fzyzcjy/yplusplus/issues/4286#issuecomment-1170797044
   {
     var count = 0;
-    while (renderObject.debugNeedsPaint && pumper != null) {
+    while (renderObject.debugNeedsPaint && pumpAndRunAsync != null) {
       if (count >= 20) {
         Log.i('captureImageFromElement', 'see debugNeedsPaint==true, but already pumped too many times, thus skip');
         break;
       }
 
-      Log.i('captureImageFromElement', 'see debugNeedsPaint==true and has pumper, thus pump');
-      await pumper();
+      Log.i('captureImageFromElement', 'see debugNeedsPaint==true and has pumpAndRunAsync, thus pump');
+      await pumpAndRunAsync();
       count++;
     }
   }
