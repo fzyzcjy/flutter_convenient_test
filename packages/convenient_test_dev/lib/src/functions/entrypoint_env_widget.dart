@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_dev/src/functions/entrypoint.dart';
-import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/reporter_service.dart';
 import 'package:convenient_test_dev/src/support/static_config.dart';
@@ -24,9 +23,6 @@ Future<void> convenientTestEntrypointWhenEnvWidget(VoidCallback testBody) async 
     // do not register - since we will not report to anywhere
     Log.i(_kTag, 'will not save any report');
   }
-
-  setUpLogTestStartAndEnd();
-  testBody();
 
   collectIntoDeclarerAndExecute(
     testBody,
