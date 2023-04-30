@@ -19,7 +19,7 @@ import 'package:test_api/src/backend/suite.dart';
 import 'package:test_api/src/backend/suite_platform.dart';
 import 'package:test_api/src/backend/test.dart';
 
-Declarer collectIntoDeclarer({required void Function() body, required int defaultRetry}) {
+Declarer collectIntoDeclarer({required void Function() body, required int? defaultRetry}) {
   // NOTE use MyDeclarer instead of Declarer
   return MyDeclarer(defaultRetry: defaultRetry)..declare(body);
 }
