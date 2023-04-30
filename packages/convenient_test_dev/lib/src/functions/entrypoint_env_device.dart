@@ -21,7 +21,7 @@ import 'package:path/path.dart' as path;
 @internal
 Future<void> convenientTestEntrypointWhenEnvDevice(VoidCallback testBody) async {
   myGetIt.registerSingleton<ConvenientTestManagerRpcService>(ConvenientTestManagerRpcService());
-  TODO_register_reporter_service;
+  myGetIt.registerSingleton<ReporterService>(ReporterServiceSendToManager());
 
   final currentRunConfig = await myGetIt.get<ConvenientTestManagerRpcService>().getWorkerCurrentRunConfig();
   switch (currentRunConfig.whichSubType()) {

@@ -15,6 +15,10 @@ class ReporterServiceSendToManager implements ReporterService {
 }
 
 class ReporterServiceSaveToLocal implements ReporterService {
+  final String reportSaverDirectory;
+
+  const ReporterServiceSaveToLocal({required this.reportSaverDirectory});
+
   @override
   Future<void> report(ReportItem item) async {
     TODO;
