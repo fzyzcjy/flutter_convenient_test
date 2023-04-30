@@ -2,14 +2,16 @@ import 'dart:async';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/binding.dart';
-import 'package:convenient_test_dev/src/functions/entrypoint.dart';
 import 'package:convenient_test_dev/src/functions/goldens.dart';
+import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/support/executor.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/reporter_service.dart';
 import 'package:convenient_test_dev/src/support/setup.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/support/static_config.dart';
+import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
@@ -41,12 +43,15 @@ Future<void> _runModeIntegrationTest(
 ) async {
   runZonedGuarded(() {
     _configureGoldens(currentRunConfig);
-    collectIntoDeclarerAndExecute(
-      testBody,
+
+    final declarer = collectIntoDeclarer(
       defaultRetry: currentRunConfig.defaultRetryCount,
-      reportSuiteInfo: currentRunConfig.reportSuiteInfo,
-      executionFilter: currentRunConfig.executionFilter,
-      insideSetup: () {
+      body: () {
+        // put this tearDownAll *before* everything else (including
+        // `IntegrationTestWidgetsFlutterBinding.ensureInitialized` which adds another tearDownAll)
+        // thus it should be run lastly
+        tearDownAll(_lastTearDownAll);
+
         try {
           // use *constructor* instead of `ensureInitialized`, such that if it is already initialized it will throw
           // (TODO add tests)
@@ -65,8 +70,19 @@ Future<void> _runModeIntegrationTest(
         unawaited(ReporterService.I?.report(ReportItem(setUpAll: SetUpAll())));
 
         setup();
+
+        setUpLogTestStartAndEnd();
+        testBody();
       },
     );
+
+    myGetIt.get<ConvenientTestExecutor>()
+      ..input = ConvenientTestExecutorInput(
+        declarer: declarer,
+        reportSuiteInfo: currentRunConfig.reportSuiteInfo,
+        executionFilter: currentRunConfig.executionFilter,
+      )
+      ..execute();
   }, (e, s) {
     Log.w('ConvenientTestMain',
         'ConvenientTest captured error (via runZonedGuarded). type(e)=${e.runtimeType} exception=$e stackTrace=$s');
@@ -86,4 +102,27 @@ void _configureGoldens(WorkerCurrentRunConfig_IntegrationTest currentRunConfig) 
       'configure '
       'autoUpdateGoldenFiles=$autoUpdateGoldenFiles '
       'comparator.basedir=${(goldenFileComparator as LocalFileComparator).basedir}');
+}
+
+Future<void> _lastTearDownAll() async {
+  // const _kTag = 'LastTearDownAll';
+
+  final reporterService = ReporterService.I;
+  if (reporterService != null) {
+    // need to `await` to ensure it is sent
+    await reporterService.report(ReportItem(
+      tearDownAll: TearDownAll(
+        resolvedExecutionFilter: myGetIt.get<ConvenientTestExecutor>().resolvedExecutionFilter.toProto(),
+      ),
+    ));
+  }
+
+  // TODO
+  // if (CompileTimeConfig.kCIMode) {
+  //   Log.i(_kTag, 'wait for a few seconds, hoping everything is really finished');
+  //   await Future<void>.delayed(const Duration(seconds: 3));
+  //
+  //   Log.i(_kTag, 'exit the process');
+  //   exit(0);
+  // }
 }
