@@ -113,7 +113,7 @@ class LogHandle {
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
     Future<List<int>> computeImage() async {
       final tester = ConvenientTest.maybeActiveInstance?.tester;
-      return image ?? await _maybeRunAsync(tester, () => takeSnapshot(pumpAndRunAsync: tester?.pumpAndRunAsync));
+      return image ?? await _maybeRunAsync(tester, () => takeSnapshot(pumper: tester?.pump));
     }
 
     final managerRpcService = ConvenientTestManagerRpcService.I;
@@ -134,14 +134,6 @@ class LogHandle {
         Log.i(_kTag, 'snapshot() is no-op; specify `${StaticConfig.kVerboseKey}` to save screenshots to disk.');
       }
     }
-  }
-}
-
-extension on WidgetTester {
-  Future<void> pumpAndRunAsync() async {
-    await pump();
-    // https://github.com/fzyzcjy/yplusplus/issues/8485#issuecomment-1528908471
-    await runAsync(() => Future<void>.delayed(const Duration(milliseconds: 100)));
   }
 }
 
