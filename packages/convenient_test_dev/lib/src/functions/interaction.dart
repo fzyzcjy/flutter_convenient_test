@@ -57,8 +57,10 @@ extension ConvenientTestInteraction on ConvenientTest {
   // https://github.com/fzyzcjy/yplusplus/issues/8477#issuecomment-1528799681
   Future<void> pumpAndSettleWithRunAsync({
     int maxCount = 50,
+    // pumpAndSettle's default value
     Duration pumpDuration = const Duration(milliseconds: 100),
-    Duration realDelayDuration = const Duration(milliseconds: 100),
+    // https://github.com/fzyzcjy/yplusplus/issues/8481#issuecomment-1529038831
+    Duration realDelayDuration = const Duration(milliseconds: 10),
   }) {
     // impl ref `pumpAndSettle`
     return TestAsyncUtils.guard<int>(() async {
