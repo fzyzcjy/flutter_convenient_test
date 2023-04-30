@@ -15,4 +15,12 @@ class StaticConfig {
     if (const bool.hasEnvironment(key)) return const bool.fromEnvironment(key);
     return int.parse(Platform.environment[key] ?? '0') != 0;
   }();
+
+  static const kWidgetTestReportSaverDirectoryKey = 'CONVENIENT_TEST_WIDGET_TEST_REPORT_SAVER_DIRECTORY';
+
+  static final String? kWidgetTestReportSaverDirectory = () {
+    const key = kWidgetTestReportSaverDirectoryKey;
+    if (const bool.hasEnvironment(key)) return const String.fromEnvironment(key);
+    return Platform.environment[key];
+  }();
 }
