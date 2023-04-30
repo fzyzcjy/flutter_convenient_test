@@ -6,7 +6,7 @@ import FlutterMacOS
 import Foundation
 
 import dart_vlc
-import path_provider_foundation
+import path_provider_macos
 import screen_retriever
 import window_manager
 
