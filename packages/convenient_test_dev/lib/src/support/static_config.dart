@@ -1,17 +1,10 @@
 import 'dart:io';
 
 class StaticConfig {
-  static const kAppCodeDirKey = 'CONVENIENT_TEST_APP_CODE_DIR';
-
   static final kAppCodeDir = () {
-    final value = kAppCodeDirOptional;
-    if (value == null) throw Exception('Please provide `$kAppCodeDirKey` via --dart-define');
-    return value;
-  }();
-
-  static final kAppCodeDirOptional = () {
-    const value = String.fromEnvironment(kAppCodeDirKey);
-    if (value.isEmpty) return null;
+    const key = 'CONVENIENT_TEST_APP_CODE_DIR';
+    const value = String.fromEnvironment(key);
+    if (value.isEmpty) throw Exception('Please provide `$key` via --dart-define');
     return value;
   }();
 
