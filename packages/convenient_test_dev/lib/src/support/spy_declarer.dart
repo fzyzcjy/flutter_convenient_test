@@ -14,7 +14,7 @@ class SpyDeclarer implements Declarer {
 
   SpyDeclarer(this.inner, this.info);
 
-  static SpyDeclarerGroupEntry withSpy(void Function() body, {SpyDeclarerGroup? info}) {
+  static SpyDeclarerGroup withSpy(void Function() body, {SpyDeclarerGroup? info}) {
     final originalDeclarer = Declarer.current!;
     final spyDeclarer = SpyDeclarer(originalDeclarer, info ?? SpyDeclarerGroup(name: ''));
     runZoned(body, zoneValues: {#test.declarer: spyDeclarer});

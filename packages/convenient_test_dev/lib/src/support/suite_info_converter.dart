@@ -1,21 +1,18 @@
-// ignore_for_file: implementation_imports
 import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:test_api/src/backend/group.dart';
-import 'package:test_api/src/backend/group_entry.dart';
-import 'package:test_api/src/backend/test.dart';
+import 'package:convenient_test_dev/src/support/spy_declarer.dart';
 
 class SuiteInfoConverter {
   final _idStableGenerator = _GroupEntryIdStableGenerator();
 
   SuiteInfoConverter._();
 
-  static SuiteInfoProto convert(Group root) {
+  static SuiteInfoProto convert(SpyDeclarerGroup root) {
     final target = SuiteInfoProto();
     target.groupId = SuiteInfoConverter._()._convertGroup(root, target, -1).toInt64();
     return target;
   }
 
-  int _convertGroup(Group entry, SuiteInfoProto target, int parentId) {
+  int _convertGroup(SpyDeclarerGroup entry, SuiteInfoProto target, int parentId) {
     final id = _idStableGenerator.generate(entry.name);
     target.groups.add(GroupInfoProto(
       id: id.toInt64(),
@@ -26,7 +23,7 @@ class SuiteInfoConverter {
     return id;
   }
 
-  int _convertTest(Test entry, SuiteInfoProto target, int parentId) {
+  int _convertTest(SpyDeclarerTest entry, SuiteInfoProto target, int parentId) {
     final id = _idStableGenerator.generate(entry.name);
     target.tests.add(TestInfoProto(
       id: id.toInt64(),
@@ -36,9 +33,9 @@ class SuiteInfoConverter {
     return id;
   }
 
-  int _convertGroupEntry(GroupEntry entry, SuiteInfoProto target, int parentId) {
-    if (entry is Group) return _convertGroup(entry, target, parentId);
-    if (entry is Test) return _convertTest(entry, target, parentId);
+  int _convertGroupEntry(SpyDeclarerGroupEntry entry, SuiteInfoProto target, int parentId) {
+    if (entry is SpyDeclarerGroup) return _convertGroup(entry, target, parentId);
+    if (entry is SpyDeclarerTest) return _convertTest(entry, target, parentId);
     throw Exception('Unknown entry=$entry');
   }
 }
