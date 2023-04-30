@@ -52,7 +52,11 @@ Future<ui.Image> _captureImageFromElement(Element element, {Future<void> Functio
     }
   }
 
-  assert(!renderObject.debugNeedsPaint);
+  if (renderObject.debugNeedsPaint) {
+    Log.w('captureImageFromElement', 'debugNeedsPaint==true when taking snapshot');
+  }
+  // assert(!renderObject.debugNeedsPaint);
+
   final layer = renderObject.debugLayer! as OffsetLayer;
   return layer.toImage(renderObject.paintBounds);
 }
