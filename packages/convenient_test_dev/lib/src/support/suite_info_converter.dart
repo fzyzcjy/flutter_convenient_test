@@ -13,7 +13,7 @@ class SuiteInfoConverter {
   }
 
   int _convertGroup(SpyDeclarerGroup entry, SuiteInfoProto target, int parentId) {
-    final id = _idStableGenerator.generate(entry.name);
+    final id = _idStableGenerator.generate(entry.name ?? '');
     target.groups.add(GroupInfoProto(
       id: id.toInt64(),
       name: entry.name,
@@ -24,7 +24,7 @@ class SuiteInfoConverter {
   }
 
   int _convertTest(SpyDeclarerTest entry, SuiteInfoProto target, int parentId) {
-    final id = _idStableGenerator.generate(entry.name);
+    final id = _idStableGenerator.generate(entry.name ?? '');
     target.tests.add(TestInfoProto(
       id: id.toInt64(),
       name: entry.name,

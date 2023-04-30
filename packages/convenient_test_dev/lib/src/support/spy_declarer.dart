@@ -16,7 +16,7 @@ class SpyDeclarer implements Declarer {
 
   static SpyDeclarerGroup withSpy(void Function() body, {SpyDeclarerGroup? info}) {
     final originalDeclarer = Declarer.current!;
-    final spyDeclarer = SpyDeclarer(originalDeclarer, info ?? SpyDeclarerGroup(name: ''));
+    final spyDeclarer = SpyDeclarer(originalDeclarer, info ?? SpyDeclarerGroup(name: null));
     runZoned(body, zoneValues: {#test.declarer: spyDeclarer});
     return spyDeclarer.info;
   }
@@ -54,7 +54,7 @@ class SpyDeclarer implements Declarer {
     int? retry,
     bool solo = false,
   }) {
-    final innerInfo = SpyDeclarerGroup(name: name);
+    final innerInfo = SpyDeclarerGroup(name: _prefix(name));
     info.entries.add(innerInfo);
 
     inner.group(
@@ -82,7 +82,7 @@ class SpyDeclarer implements Declarer {
     int? retry,
     bool solo = false,
   }) {
-    info.entries.add(SpyDeclarerTest(name: name));
+    info.entries.add(SpyDeclarerTest(name: _prefix(name)));
     inner.test(
       name,
       body,
@@ -95,11 +95,15 @@ class SpyDeclarer implements Declarer {
       solo: solo,
     );
   }
+
+  // ref: [Declarer._prefix]
+  /// Returns [name] prefixed with this declarer's group name.
+  String _prefix(String name) => info.name == null ? name : '${info.name} $name';
 }
 
 /// 类比[GroupEntry]
 abstract class SpyDeclarerGroupEntry {
-  final String name;
+  final String? name;
 
   const SpyDeclarerGroupEntry({required this.name});
 }
