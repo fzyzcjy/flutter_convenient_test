@@ -70,7 +70,10 @@ class ReportHandlerService {
     Log.d(_kTag, 'handleReportLogEntry called');
 
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
-    if (testEntryId == null) return;
+    if (testEntryId == null) {
+      Log.i(_kTag, 'handleReportLogEntry skipped since getEntryIdFromName failed');
+      return;
+    }
 
     final requestId = request.id.toInt();
     _logStore.addLogEntry(testEntryId: testEntryId, logEntryId: requestId, subEntries: request.subEntries);
