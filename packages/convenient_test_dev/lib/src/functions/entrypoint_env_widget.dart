@@ -25,7 +25,10 @@ Future<void> convenientTestEntrypointWhenEnvWidget(VoidCallback testBody) async 
   }
 
   setUpLogTestStartAndEnd();
-  SpyDeclarer.withSpy(testBody);
+  final spyDeclarerInfo = SpyDeclarer.withSpy(testBody);
+ 
+  // TODO utilize it
+  print('spyDeclarerInfo=$spyDeclarerInfo');
 }
 
 String _createReportName() =>

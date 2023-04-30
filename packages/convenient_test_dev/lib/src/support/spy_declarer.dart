@@ -1,23 +1,24 @@
+// ignore_for_file: implementation_imports
+
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-// ignore: implementation_imports
 import 'package:test_api/src/backend/declarer.dart';
-
-// ignore: implementation_imports
 import 'package:test_api/src/backend/group.dart';
+import 'package:test_api/src/backend/group_entry.dart';
+import 'package:test_api/src/backend/test.dart';
 
 class SpyDeclarer implements Declarer {
   final Declarer inner;
+  final SpyDeclarerGroup info;
 
-  SpyDeclarer(this.inner);
+  SpyDeclarer(this.inner, this.info);
 
-  static void withSpy(void Function() body) {
+  static SpyDeclarerGroupEntry withSpy(void Function() body, {SpyDeclarerGroup? info}) {
     final originalDeclarer = Declarer.current!;
-    final spyDeclarer = SpyDeclarer(originalDeclarer);
+    final spyDeclarer = SpyDeclarer(originalDeclarer, info ?? SpyDeclarerGroup(name: ''));
     runZoned(body, zoneValues: {#test.declarer: spyDeclarer});
+    return spyDeclarer.info;
   }
 
   @override
@@ -53,10 +54,12 @@ class SpyDeclarer implements Declarer {
     int? retry,
     bool solo = false,
   }) {
-    print('${describeIdentity(this)}.group $name');
+    final innerInfo = SpyDeclarerGroup(name: name);
+    info.entries.add(innerInfo);
+
     inner.group(
       name,
-      () => SpyDeclarer.withSpy(body),
+      () => SpyDeclarer.withSpy(body, info: innerInfo),
       testOn: testOn,
       timeout: timeout,
       skip: skip,
@@ -79,7 +82,7 @@ class SpyDeclarer implements Declarer {
     int? retry,
     bool solo = false,
   }) {
-    print('${describeIdentity(this)}.test $name');
+    info.entries.add(SpyDeclarerTest(name: name));
     inner.test(
       name,
       body,
@@ -92,4 +95,29 @@ class SpyDeclarer implements Declarer {
       solo: solo,
     );
   }
+}
+
+/// 类比[GroupEntry]
+abstract class SpyDeclarerGroupEntry {
+  final String name;
+
+  const SpyDeclarerGroupEntry({required this.name});
+}
+
+/// 类比[Group]
+class SpyDeclarerGroup extends SpyDeclarerGroupEntry {
+  final entries = <SpyDeclarerGroupEntry>[];
+
+  SpyDeclarerGroup({required super.name});
+
+  @override
+  String toString() => 'SpyDeclarerGroup{name: $name, entries: $entries}';
+}
+
+/// 类比[Test]
+class SpyDeclarerTest extends SpyDeclarerGroupEntry {
+  const SpyDeclarerTest({required super.name});
+
+  @override
+  String toString() => 'SpyDeclarerTest{name: $name}';
 }
