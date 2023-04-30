@@ -11,6 +11,7 @@ import 'package:convenient_test_dev/src/support/reporter_service.dart';
 import 'package:convenient_test_dev/src/support/setup.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/support/static_config.dart';
+import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -76,10 +77,11 @@ Future<void> _runModeIntegrationTest(
       },
     );
 
+    ReporterService.I?.reportSuiteInfo(TODO);
+
     myGetIt.get<ConvenientTestExecutor>()
       ..input = ConvenientTestExecutorInput(
         declarer: declarer,
-        reportSuiteInfo: currentRunConfig.reportSuiteInfo,
         executionFilter: currentRunConfig.executionFilter,
       )
       ..execute();
