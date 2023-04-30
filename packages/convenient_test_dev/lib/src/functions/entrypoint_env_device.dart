@@ -10,8 +10,8 @@ import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
 import 'package:convenient_test_dev/src/support/reporter_service.dart';
 import 'package:convenient_test_dev/src/support/setup.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
+import 'package:convenient_test_dev/src/support/spy_declarer.dart';
 import 'package:convenient_test_dev/src/support/static_config.dart';
-import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -45,39 +45,42 @@ Future<void> _runModeIntegrationTest(
   runZonedGuarded(() {
     _configureGoldens(currentRunConfig);
 
+    late final SpyDeclarerGroup spyDeclarerGroup;
     final declarer = collectIntoDeclarer(
       defaultRetry: currentRunConfig.defaultRetryCount,
       body: () {
-        // put this tearDownAll *before* everything else (including
-        // `IntegrationTestWidgetsFlutterBinding.ensureInitialized` which adds another tearDownAll)
-        // thus it should be run lastly
-        tearDownAll(_lastTearDownAll);
+        spyDeclarerGroup = SpyDeclarer.withSpy(() {
+          // put this tearDownAll *before* everything else (including
+          // `IntegrationTestWidgetsFlutterBinding.ensureInitialized` which adds another tearDownAll)
+          // thus it should be run lastly
+          tearDownAll(_lastTearDownAll);
 
-        try {
-          // use *constructor* instead of `ensureInitialized`, such that if it is already initialized it will throw
-          // (TODO add tests)
-          MyIntegrationTestWidgetsFlutterBinding(); // initialize it
-        } catch (e) {
-          // This is because:
-          // (1) Must call [runZonedGuarded] *outside* [ensureInitialized], otherwise no errors will be captured.
-          //     See https://docs.flutter.dev/testing/errors#errors-not-caught-by-flutter for details.
-          // (2) [IntegrationTestWidgetsFlutterBinding] must be called *inside* `collectIntoDeclarer`,
-          //     because it calls some logic inside it.
-          // ignore: avoid_print
-          print('Please do *not* initialize `WidgetsBinding.instance` outside `convenientTestMain`.');
-          rethrow;
-        }
+          try {
+            // use *constructor* instead of `ensureInitialized`, such that if it is already initialized it will throw
+            // (TODO add tests)
+            MyIntegrationTestWidgetsFlutterBinding(); // initialize it
+          } catch (e) {
+            // This is because:
+            // (1) Must call [runZonedGuarded] *outside* [ensureInitialized], otherwise no errors will be captured.
+            //     See https://docs.flutter.dev/testing/errors#errors-not-caught-by-flutter for details.
+            // (2) [IntegrationTestWidgetsFlutterBinding] must be called *inside* `collectIntoDeclarer`,
+            //     because it calls some logic inside it.
+            // ignore: avoid_print
+            print('Please do *not* initialize `WidgetsBinding.instance` outside `convenientTestMain`.');
+            rethrow;
+          }
 
-        unawaited(ReporterService.I?.report(ReportItem(setUpAll: SetUpAll())));
+          unawaited(ReporterService.I?.report(ReportItem(setUpAll: SetUpAll())));
 
-        setup();
+          setup();
 
-        setUpLogTestStartAndEnd();
-        testBody();
+          setUpLogTestStartAndEnd();
+          testBody();
+        });
       },
     );
 
-    ReporterService.I?.reportSuiteInfo(TODO);
+    ReporterService.I?.reportSuiteInfo(spyDeclarerGroup);
 
     myGetIt.get<ConvenientTestExecutor>()
       ..input = ConvenientTestExecutorInput(
