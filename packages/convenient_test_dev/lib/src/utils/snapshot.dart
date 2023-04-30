@@ -46,6 +46,8 @@ Future<ui.Image> _captureImageFromElement(Element element, {Future<void> Functio
 
       Log.i('captureImageFromElement', 'see debugNeedsPaint==true and has pumper, thus pump');
       await pumper();
+      // https://github.com/fzyzcjy/yplusplus/issues/8485#issuecomment-1528908471
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       count++;
     }
   }
