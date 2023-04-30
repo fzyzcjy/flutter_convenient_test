@@ -10,8 +10,6 @@ PODS:
   - VLCKit (3.4.0)
   - window_manager (0.2.0):
     - FlutterMacOS
-  - window_size (0.0.2):
-    - FlutterMacOS
 
 DEPENDENCIES:
   - dart_vlc (from `Flutter/ephemeral/.symlinks/plugins/dart_vlc/macos`)
@@ -19,7 +17,6 @@ DEPENDENCIES:
   - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
   - screen_retriever (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
-  - window_size (from `Flutter/ephemeral/.symlinks/plugins/window_size/macos`)
 
 SPEC REPOS:
   trunk:
@@ -36,18 +33,15 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos
   window_manager:
     :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
-  window_size:
-    :path: Flutter/ephemeral/.symlinks/plugins/window_size/macos
 
 SPEC CHECKSUMS:
   dart_vlc: 3067a969f0abee3d2df3d8b0ca0a855cd78c2042
-  FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   path_provider_macos: 3c0c3b4b0d4a76d2bf989a913c2de869c5641a19
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
   VLCKit: 961554c1befd749326a5b44e39db83a12276c2fc
   window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
-  window_size: 339dafa0b27a95a62a843042038fa6c3c48de195
 
-PODFILE CHECKSUM: 858b18ee3baef43c1d76bff54abbff101b2e99c0
+PODFILE CHECKSUM: 2bc59d2ceff8b456bb4b287b5632d1210ecaee75
 
 COCOAPODS: 1.11.3
