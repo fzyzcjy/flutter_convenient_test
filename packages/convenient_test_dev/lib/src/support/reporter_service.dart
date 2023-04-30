@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
@@ -15,12 +17,13 @@ class ReporterServiceSendToManager implements ReporterService {
 }
 
 class ReporterServiceSaveToLocal implements ReporterService {
-  final String reportSaverDirectory;
+  final String path;
 
-  const ReporterServiceSaveToLocal({required this.reportSaverDirectory});
+  const ReporterServiceSaveToLocal({required this.path});
 
   @override
   Future<void> report(ReportItem item) async {
-    TODO;
+    final request = ReportCollection(items: [item]);
+    File(path).writeAsBytesSync(request.writeToBuffer(), mode: FileMode.append);
   }
 }
