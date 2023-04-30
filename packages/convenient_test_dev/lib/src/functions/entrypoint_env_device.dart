@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/binding.dart';
 import 'package:convenient_test_dev/src/functions/goldens.dart';
@@ -43,7 +42,6 @@ Future<void> _runModeIntegrationTest(
   WorkerCurrentRunConfig_IntegrationTest currentRunConfig,
 ) async {
   runZonedGuarded(() {
-    ConvenientTestWrapperWidget.convenientTestActive = true;
     _configureGoldens(currentRunConfig);
 
     final declarer = collectIntoDeclarer(
