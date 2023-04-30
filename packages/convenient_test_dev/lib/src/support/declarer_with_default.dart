@@ -3,11 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 // ignore: implementation_imports
 import 'package:test_api/src/backend/declarer.dart';
 
-class MyDeclarer extends Declarer {
+class DeclarerWithDefault extends Declarer {
   // NOTE use this for flaky test retrying, see #16
   final int? defaultRetry;
 
-  MyDeclarer({required this.defaultRetry});
+  DeclarerWithDefault({required this.defaultRetry});
 
   @override
   void test(

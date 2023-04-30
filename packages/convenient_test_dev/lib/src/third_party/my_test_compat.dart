@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
-import 'package:convenient_test_dev/src/support/declarer.dart';
+import 'package:convenient_test_dev/src/support/declarer_with_default.dart';
 import 'package:convenient_test_dev/src/support/reporter_service.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:test_api/src/backend/declarer.dart';
@@ -21,7 +21,7 @@ import 'package:test_api/src/backend/test.dart';
 
 Declarer collectIntoDeclarer({required void Function() body, required int? defaultRetry}) {
   // NOTE use MyDeclarer instead of Declarer
-  return MyDeclarer(defaultRetry: defaultRetry)..declare(body);
+  return DeclarerWithDefault(defaultRetry: defaultRetry)..declare(body);
 }
 
 /// NOTE XXX ref: [flutter_test :: test_compat.dart :: get _declarer ]
