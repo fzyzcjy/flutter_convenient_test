@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // ignore: implementation_imports
@@ -10,6 +13,12 @@ class SpyDeclarer implements Declarer {
   final Declarer inner;
 
   SpyDeclarer(this.inner);
+
+  static void withSpy(void Function() body) {
+    final originalDeclarer = Declarer.current!;
+    final spyDeclarer = SpyDeclarer(originalDeclarer);
+    runZoned(body, zoneValues: {#test.declarer: spyDeclarer});
+  }
 
   @override
   void addTearDownAll(dynamic Function() callback) => inner.addTearDownAll(callback);
@@ -43,18 +52,20 @@ class SpyDeclarer implements Declarer {
     dynamic tags,
     int? retry,
     bool solo = false,
-  }) =>
-      inner.group(
-        name,
-        body,
-        testOn: testOn,
-        timeout: timeout,
-        skip: skip,
-        onPlatform: onPlatform,
-        tags: tags,
-        retry: retry,
-        solo: solo,
-      );
+  }) {
+    print('${describeIdentity(this)}.group $name');
+    inner.group(
+      name,
+      () => SpyDeclarer.withSpy(body),
+      testOn: testOn,
+      timeout: timeout,
+      skip: skip,
+      onPlatform: onPlatform,
+      tags: tags,
+      retry: retry,
+      solo: solo,
+    );
+  }
 
   @override
   void test(
@@ -67,16 +78,18 @@ class SpyDeclarer implements Declarer {
     dynamic tags,
     int? retry,
     bool solo = false,
-  }) =>
-      inner.test(
-        name,
-        body,
-        testOn: testOn,
-        timeout: timeout,
-        skip: skip,
-        onPlatform: onPlatform,
-        tags: tags,
-        retry: retry,
-        solo: solo,
-      );
+  }) {
+    print('${describeIdentity(this)}.test $name');
+    inner.test(
+      name,
+      body,
+      testOn: testOn,
+      timeout: timeout,
+      skip: skip,
+      onPlatform: onPlatform,
+      tags: tags,
+      retry: retry,
+      solo: solo,
+    );
+  }
 }

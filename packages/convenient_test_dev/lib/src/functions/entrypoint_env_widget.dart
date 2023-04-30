@@ -5,6 +5,7 @@ import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/reporter_service.dart';
+import 'package:convenient_test_dev/src/support/spy_declarer.dart';
 import 'package:convenient_test_dev/src/support/static_config.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
@@ -24,7 +25,7 @@ Future<void> convenientTestEntrypointWhenEnvWidget(VoidCallback testBody) async 
   }
 
   setUpLogTestStartAndEnd();
-  testBody();
+  SpyDeclarer.withSpy(testBody);
 }
 
 String _createReportName() =>
