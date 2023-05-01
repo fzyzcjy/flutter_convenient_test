@@ -18,7 +18,7 @@ Future<void> convenientTestEntrypointWhenEnvWidget(VoidCallback testBody) async 
   if (widgetTestReportSaverDirectory != null) {
     final path = '$widgetTestReportSaverDirectory/${_createReportName()}';
     Log.i(_kTag, 'will save report to path=$path');
-    myGetIt.registerSingleton<ReporterService>(ReporterServiceSaveToLocal(path: path));
+    myGetIt.registerSingleton<WorkerReportSaverService>(WorkerReportSaverServiceSaveToLocal(path: path));
   } else {
     // do not register - since we will not report to anywhere
     Log.i(_kTag, 'will not save any report');
@@ -27,7 +27,7 @@ Future<void> convenientTestEntrypointWhenEnvWidget(VoidCallback testBody) async 
   setUpLogTestStartAndEnd();
   final spyDeclarerGroup = SpyDeclarer.withSpy(testBody);
 
-  await ReporterService.I?.reportSuiteInfo(spyDeclarerGroup);
+  await WorkerReportSaverService.I?.reportSuiteInfo(spyDeclarerGroup);
 }
 
 String _createReportName() =>

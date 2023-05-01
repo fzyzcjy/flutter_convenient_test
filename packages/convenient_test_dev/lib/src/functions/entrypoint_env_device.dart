@@ -21,7 +21,7 @@ import 'package:path/path.dart' as path;
 @internal
 Future<void> convenientTestEntrypointWhenEnvDevice(VoidCallback testBody) async {
   myGetIt.registerSingleton<ConvenientTestManagerRpcService>(ConvenientTestManagerRpcService());
-  myGetIt.registerSingleton<ReporterService>(ReporterServiceSendToManager());
+  myGetIt.registerSingleton<WorkerReportSaverService>(WorkerReportSaverServiceSendToManager());
 
   final currentRunConfig = await myGetIt.get<ConvenientTestManagerRpcService>().getWorkerCurrentRunConfig();
   switch (currentRunConfig.whichSubType()) {
@@ -70,7 +70,7 @@ Future<void> _runModeIntegrationTest(
             rethrow;
           }
 
-          unawaited(ReporterService.I?.report(ReportItem(setUpAll: SetUpAll())));
+          unawaited(WorkerReportSaverService.I?.report(ReportItem(setUpAll: SetUpAll())));
 
           setup();
 
@@ -81,7 +81,7 @@ Future<void> _runModeIntegrationTest(
     );
 
     if (currentRunConfig.reportSuiteInfo) {
-      ReporterService.I?.reportSuiteInfo(spyDeclarerGroup);
+      WorkerReportSaverService.I?.reportSuiteInfo(spyDeclarerGroup);
     }
 
     myGetIt.get<ConvenientTestExecutor>()
@@ -114,7 +114,7 @@ void _configureGoldens(WorkerCurrentRunConfig_IntegrationTest currentRunConfig) 
 Future<void> _lastTearDownAll() async {
   // const _kTag = 'LastTearDownAll';
 
-  final reporterService = ReporterService.I;
+  final reporterService = WorkerReportSaverService.I;
   if (reporterService != null) {
     // need to `await` to ensure it is sent
     await reporterService.report(ReportItem(

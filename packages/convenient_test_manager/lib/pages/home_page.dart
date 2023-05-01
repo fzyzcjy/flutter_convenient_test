@@ -65,8 +65,6 @@ class _Body extends StatelessWidget {
       );
     }
 
-    print(
-        'hi build suiteInfoStore.suiteInfo=${suiteInfoStore.suiteInfo} homePageStore.displayLoadedReportMode=${homePageStore.displayLoadedReportMode}');
     if (!homePageStore.displayLoadedReportMode && suiteInfoStore.suiteInfo == null) {
       return _buildFullscreenHint(
         context: context,

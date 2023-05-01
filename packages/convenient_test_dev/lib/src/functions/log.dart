@@ -89,7 +89,7 @@ class LogHandle {
           '${_typeToLeading(type)} (#$_id, ${initial ? "create" : "update"}) $title $message $error $stackTrace');
     }
 
-    final reporterService = ReporterService.I;
+    final reporterService = WorkerReportSaverService.I;
     if (reporterService != null) {
       await reporterService.report(ReportItem(
           logEntry: LogEntry(
@@ -116,7 +116,7 @@ class LogHandle {
       return image ?? await _maybeRunAsync(tester, () => takeSnapshot(pumper: tester?.pump));
     }
 
-    final reporterService = ReporterService.I;
+    final reporterService = WorkerReportSaverService.I;
     if (reporterService != null) {
       await reporterService.report(ReportItem(
           snapshot: Snapshot(

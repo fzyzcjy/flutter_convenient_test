@@ -103,7 +103,6 @@ class ReportHandlerService {
     Log.d(_kTag, 'StateChange: testName=${request.testName} state=${request.state}');
 
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
-    print('hi testEntryId=$testEntryId _suiteInfoStore.suiteInfo=${_suiteInfoStore.suiteInfo?.entryIdOfName}');
     if (testEntryId == null) return;
 
     _suiteInfoStore.testEntryStateMap[testEntryId] = request.state;
@@ -126,7 +125,7 @@ class ReportHandlerService {
     // in case data from previous super-run are logged into current run
     if (doClear) {
       Log.d(_kTag, 'handleReportSuiteInfo thus ReportSaverService.clear');
-      await GetIt.I.get<ReportSaverService>().clear();
+      await GetIt.I.get<ManagerReportSaverService>().clear();
     }
 
     Log.d(_kTag, 'handleReportSuiteInfo set new suitInfo');

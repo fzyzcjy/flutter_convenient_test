@@ -41,7 +41,7 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
 
       // NOTE *first* handle by ReportHandlerService, *then* by ReportSaverService,
       //      because ReportHandlerService may let ReportSaverService change target file
-      await GetIt.I.get<ReportSaverService>().save(request);
+      await GetIt.I.get<ManagerReportSaverService>().save(request);
     });
   }
 
