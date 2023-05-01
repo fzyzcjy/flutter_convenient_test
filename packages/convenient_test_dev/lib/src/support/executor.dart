@@ -16,7 +16,9 @@ class ConvenientTestExecutor {
   ResolvedExecutionFilter get resolvedExecutionFilter => _resolvedExecutionFilter;
   late final ResolvedExecutionFilter _resolvedExecutionFilter;
 
-  void execute() {
+  void execute({
+    required void Function(Group) onGroupBuilt,
+  }) {
     runTestsInDeclarer(
       _input.declarer,
       onGroupBuilt: (group) {
@@ -26,6 +28,8 @@ class ConvenientTestExecutor {
           root: group,
           executionFilter: _input.executionFilter,
         );
+       
+        onGroupBuilt(group);
       },
       shouldSkip: (entry) => !_resolvedExecutionFilter.allowExecute(entry),
     );
