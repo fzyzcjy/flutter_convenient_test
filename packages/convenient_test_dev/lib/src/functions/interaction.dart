@@ -55,23 +55,34 @@ extension ConvenientTestInteraction on ConvenientTest {
   // need `runAsync` between pumps, because when running in widget test, the time in pump is fake.
   // If we do not `runAsync` and *really* sleep, things like real network requests may not be able to be finished.
   // https://github.com/fzyzcjy/yplusplus/issues/8477#issuecomment-1528799681
+  //
+  // implementation ref: `pumpAndSettle`
   Future<void> pumpAndSettleWithRunAsync({
-    int maxCount = 50,
     // pumpAndSettle's default value
     Duration pumpDuration = const Duration(milliseconds: 100),
     // https://github.com/fzyzcjy/yplusplus/issues/8481#issuecomment-1529038831
     Duration realDelayDuration = const Duration(milliseconds: 10),
+    // #8516
+    // p.s. The `pumpAndSettle` timeouts at 10 minutes
+    Duration fakeClockTimeout = const Duration(minutes: 1),
+    Duration wallClockTimeout = const Duration(minutes: 1),
   }) {
-    // impl ref `pumpAndSettle`
-    return TestAsyncUtils.guard<int>(() async {
-      int count = 0;
+    final DateTime fakeClockEndTime = tester.binding.clock.fromNowBy(fakeClockTimeout);
+    final DateTime wallClockEndTime = DateTime.now().add(wallClockTimeout);
+
+    return TestAsyncUtils.guard(() async {
       do {
-        if (count >= maxCount) throw FlutterError('pumpAndSettleWithRunAsync timed out');
+        final fakeClockNow = tester.binding.clock.now();
+        final wallClockNow = DateTime.now();
+        if (fakeClockNow.isAfter(fakeClockEndTime) || wallClockNow.isAfter(wallClockEndTime)) {
+          throw FlutterError('pumpAndSettleWithRunAsync timed out '
+              '(fakeClockEndTime=$fakeClockEndTime, wallClockEndTime=$wallClockEndTime, '
+              'fakeClockNow=$fakeClockNow, wallClockNow=$wallClockNow)');
+        }
+
         await tester.binding.pump(pumpDuration);
         await tester.runAsync(() => Future<void>.delayed(realDelayDuration));
-        count += 1;
       } while (tester.binding.hasScheduledFrame);
-      return count;
     });
   }
 }
