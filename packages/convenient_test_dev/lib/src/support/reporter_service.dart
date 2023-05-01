@@ -14,7 +14,7 @@ abstract class ReporterService {
 }
 
 extension ExtReporterService on ReporterService {
-  Future<void> reportSuiteInfo(SpyDeclarerGroup group) =>
+  Future<void> reportSuiteInfo(GeneralizedGroup group) =>
       report(ReportItem(suiteInfoProto: SuiteInfoConverter.convert(group)));
 }
 
