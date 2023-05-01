@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_dev/src/functions/instance.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
@@ -71,6 +72,7 @@ extension ConvenientTestInteraction on ConvenientTest {
     final DateTime wallClockEndTime = DateTime.now().add(wallClockTimeout);
 
     return TestAsyncUtils.guard(() async {
+      var count = 0;
       do {
         final fakeClockNow = tester.binding.clock.now();
         final wallClockNow = DateTime.now();
@@ -80,8 +82,13 @@ extension ConvenientTestInteraction on ConvenientTest {
               'fakeClockNow=$fakeClockNow, wallClockNow=$wallClockNow)');
         }
 
+        if (count > 0 && count % 10 == 0) {
+          Log.d('ConvenientTestInteraction', 'pumpAndSettleWithRunAsync has been running for $count cycles');
+        }
+
         await tester.binding.pump(pumpDuration);
         await tester.runAsync(() => Future<void>.delayed(realDelayDuration));
+        count++;
       } while (tester.binding.hasScheduledFrame);
     });
   }
