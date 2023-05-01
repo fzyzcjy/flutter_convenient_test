@@ -61,7 +61,7 @@ class _Body extends StatelessWidget {
         onTap: vmServiceWrapperService.connect,
         tapHint: const Text('Tap here to reconnect'),
         child: const Text('VMService not connected. '
-            'This may because the Worker is not running, or network has problem. '),
+            'This may be because the Worker is not running, or network has problem. '),
       );
     }
 
@@ -72,7 +72,7 @@ class _Body extends StatelessWidget {
         tapHint: const Text('Tap here to reload information'),
         child: const Text(
           'No tests found. '
-          'This may because the information is not loaded.',
+          'This may be because the information is not loaded.',
         ),
       );
     }
