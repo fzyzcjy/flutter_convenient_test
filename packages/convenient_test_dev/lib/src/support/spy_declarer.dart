@@ -106,12 +106,6 @@ abstract class GeneralizedGroupEntry {
   final String? name;
 
   const GeneralizedGroupEntry({required this.name});
-
-  factory GeneralizedGroupEntry.from(GroupEntry entry) {
-    if (entry is Group) return GeneralizedGroup.from(entry);
-    if (entry is Test) return GeneralizedTest.from(entry);
-    throw UnimplementedError;
-  }
 }
 
 /// 类比[Group]
@@ -120,9 +114,6 @@ class GeneralizedGroup extends GeneralizedGroupEntry {
 
   GeneralizedGroup({required super.name});
 
-  factory GeneralizedGroup.from(Group group) =>
-      GeneralizedGroup(name: group.name)..entries.addAll(group.entries.map(GeneralizedGroupEntry.from).toList());
-
   @override
   String toString() => 'GeneralizedGroup{name: $name, entries: $entries}';
 }
@@ -130,8 +121,6 @@ class GeneralizedGroup extends GeneralizedGroupEntry {
 /// 类比[Test]
 class GeneralizedTest extends GeneralizedGroupEntry {
   const GeneralizedTest({required super.name});
-
-  factory GeneralizedTest.from(Test test) => GeneralizedTest(name: test.name);
 
   @override
   String toString() => 'GeneralizedTest{name: $name}';
