@@ -10,13 +10,13 @@ import 'package:test_api/src/backend/test.dart';
 
 class SpyDeclarer implements Declarer {
   final Declarer inner;
-  final GeneralizedGroup info;
+  final SpyDeclarerGroup info;
 
   SpyDeclarer(this.inner, this.info);
 
-  static GeneralizedGroup withSpy(void Function() body, {GeneralizedGroup? info}) {
+  static SpyDeclarerGroup withSpy(void Function() body, {SpyDeclarerGroup? info}) {
     final originalDeclarer = Declarer.current!;
-    final spyDeclarer = SpyDeclarer(originalDeclarer, info ?? GeneralizedGroup(name: null));
+    final spyDeclarer = SpyDeclarer(originalDeclarer, info ?? SpyDeclarerGroup(name: null));
     runZoned(body, zoneValues: {#test.declarer: spyDeclarer});
     return spyDeclarer.info;
   }
@@ -54,7 +54,7 @@ class SpyDeclarer implements Declarer {
     int? retry,
     bool solo = false,
   }) {
-    final innerInfo = GeneralizedGroup(name: _prefix(name));
+    final innerInfo = SpyDeclarerGroup(name: _prefix(name));
     info.entries.add(innerInfo);
 
     inner.group(
@@ -82,7 +82,7 @@ class SpyDeclarer implements Declarer {
     int? retry,
     bool solo = false,
   }) {
-    info.entries.add(GeneralizedTest(name: _prefix(name)));
+    info.entries.add(SpyDeclarerTest(name: _prefix(name)));
     inner.test(
       name,
       body,
@@ -102,26 +102,26 @@ class SpyDeclarer implements Declarer {
 }
 
 /// 类比[GroupEntry]
-abstract class GeneralizedGroupEntry {
+abstract class SpyDeclarerGroupEntry {
   final String? name;
 
-  const GeneralizedGroupEntry({required this.name});
+  const SpyDeclarerGroupEntry({required this.name});
 }
 
 /// 类比[Group]
-class GeneralizedGroup extends GeneralizedGroupEntry {
-  final entries = <GeneralizedGroupEntry>[];
+class SpyDeclarerGroup extends SpyDeclarerGroupEntry {
+  final entries = <SpyDeclarerGroupEntry>[];
 
-  GeneralizedGroup({required super.name});
+  SpyDeclarerGroup({required super.name});
 
   @override
-  String toString() => 'GeneralizedGroup{name: $name, entries: $entries}';
+  String toString() => 'SpyDeclarerGroup{name: $name, entries: $entries}';
 }
 
 /// 类比[Test]
-class GeneralizedTest extends GeneralizedGroupEntry {
-  const GeneralizedTest({required super.name});
+class SpyDeclarerTest extends SpyDeclarerGroupEntry {
+  const SpyDeclarerTest({required super.name});
 
   @override
-  String toString() => 'GeneralizedTest{name: $name}';
+  String toString() => 'SpyDeclarerTest{name: $name}';
 }

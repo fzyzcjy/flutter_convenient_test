@@ -6,13 +6,13 @@ class SuiteInfoConverter {
 
   SuiteInfoConverter._();
 
-  static SuiteInfoProto convert(GeneralizedGroup root) {
+  static SuiteInfoProto convert(SpyDeclarerGroup root) {
     final target = SuiteInfoProto();
     target.groupId = SuiteInfoConverter._()._convertGroup(root, target, -1).toInt64();
     return target;
   }
 
-  int _convertGroup(GeneralizedGroup entry, SuiteInfoProto target, int parentId) {
+  int _convertGroup(SpyDeclarerGroup entry, SuiteInfoProto target, int parentId) {
     final id = _idStableGenerator.generate(entry.name ?? '');
     target.groups.add(GroupInfoProto(
       id: id.toInt64(),
@@ -23,7 +23,7 @@ class SuiteInfoConverter {
     return id;
   }
 
-  int _convertTest(GeneralizedTest entry, SuiteInfoProto target, int parentId) {
+  int _convertTest(SpyDeclarerTest entry, SuiteInfoProto target, int parentId) {
     final id = _idStableGenerator.generate(entry.name ?? '');
     target.tests.add(TestInfoProto(
       id: id.toInt64(),
@@ -33,9 +33,9 @@ class SuiteInfoConverter {
     return id;
   }
 
-  int _convertGroupEntry(GeneralizedGroupEntry entry, SuiteInfoProto target, int parentId) {
-    if (entry is GeneralizedGroup) return _convertGroup(entry, target, parentId);
-    if (entry is GeneralizedTest) return _convertTest(entry, target, parentId);
+  int _convertGroupEntry(SpyDeclarerGroupEntry entry, SuiteInfoProto target, int parentId) {
+    if (entry is SpyDeclarerGroup) return _convertGroup(entry, target, parentId);
+    if (entry is SpyDeclarerTest) return _convertTest(entry, target, parentId);
     throw Exception('Unknown entry=$entry');
   }
 }
