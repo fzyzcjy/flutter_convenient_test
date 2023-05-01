@@ -41,7 +41,7 @@ void runTestsInDeclarer(
 }
 
 // NOTE MODIFIED added
-typedef ShouldSkipPredicate = Future<bool> Function(GroupEntry entry);
+typedef ShouldSkipPredicate = bool Function(GroupEntry entry);
 
 /// NOTE XXX ref: [flutter_test :: test_compat.dart]
 Future<void> _runGroup(
@@ -64,7 +64,7 @@ Future<void> _runGroup(
       for (final GroupEntry entry in group.entries) {
         if (entry is Group) {
           await _runGroup(suiteConfig, entry, parents, reporter, shouldSkip);
-        } else if (entry.metadata.skip || /* NOTE MODIFIED add "shouldSkip" */ await shouldSkip(entry)) {
+        } else if (entry.metadata.skip || /* NOTE MODIFIED add "shouldSkip" */ shouldSkip(entry)) {
           await _runSkippedTest(suiteConfig, entry as Test, parents, reporter);
         } else {
           final Test test = entry as Test;

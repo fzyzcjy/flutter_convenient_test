@@ -27,7 +27,7 @@ class ConvenientTestExecutor {
           executionFilter: _input.executionFilter,
         );
       },
-      shouldSkip: (entry) async => !_resolvedExecutionFilter.allowExecute(entry),
+      shouldSkip: (entry) => !_resolvedExecutionFilter.allowExecute(entry),
     );
   }
 
