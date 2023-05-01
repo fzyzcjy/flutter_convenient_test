@@ -8,6 +8,18 @@ enum ExecutionEnv {
   /// Run without a simulator / real device, just like a standard widget test
   widgetTest;
 
+  T map<T>({
+    required T Function(LiveTestWidgetsFlutterBinding binding) deviceTest,
+    required T Function(AutomatedTestWidgetsFlutterBinding binding) widgetTest,
+  }) {
+    switch (this) {
+      case ExecutionEnv.deviceTest:
+        return deviceTest(LiveTestWidgetsFlutterBinding.instance);
+      case ExecutionEnv.widgetTest:
+        return widgetTest(AutomatedTestWidgetsFlutterBinding.instance);
+    }
+  }
+
   factory ExecutionEnv.detect() {
     final binding = TestWidgetsFlutterBinding.instance;
     if (binding is IntegrationTestWidgetsFlutterBinding) return ExecutionEnv.deviceTest;
