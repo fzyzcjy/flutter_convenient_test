@@ -80,7 +80,9 @@ Future<void> _runModeIntegrationTest(
       },
     );
 
-    ReporterService.I?.reportSuiteInfo(spyDeclarerGroup);
+    if (currentRunConfig.reportSuiteInfo) {
+      ReporterService.I?.reportSuiteInfo(spyDeclarerGroup);
+    }
 
     myGetIt.get<ConvenientTestExecutor>()
       ..input = ConvenientTestExecutorInput(
