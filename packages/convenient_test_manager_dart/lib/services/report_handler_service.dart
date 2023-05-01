@@ -103,6 +103,7 @@ class ReportHandlerService {
     Log.d(_kTag, 'StateChange: testName=${request.testName} state=${request.state}');
 
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
+    print('hi testEntryId=$testEntryId _suiteInfoStore.suiteInfo=${_suiteInfoStore.suiteInfo?.entryIdOfName}');
     if (testEntryId == null) return;
 
     _suiteInfoStore.testEntryStateMap[testEntryId] = request.state;
@@ -119,13 +120,16 @@ class ReportHandlerService {
   Future<void> _handleSuiteInfoProto(SuiteInfoProto request, {required bool doClear}) async {
     Log.d(_kTag, 'handleReportSuiteInfo called $request');
 
-    Log.d(_kTag, 'handleReportSuiteInfo thus clearAll');
+    Log.d(_kTag, 'handleReportSuiteInfo thus MiscDartService.clearAll');
     GetIt.I.get<MiscDartService>().clearAll();
 
-    Log.d(_kTag, 'handleReportSuiteInfo thus clear');
     // in case data from previous super-run are logged into current run
-    if (doClear) await GetIt.I.get<ReportSaverService>().clear();
+    if (doClear) {
+      Log.d(_kTag, 'handleReportSuiteInfo thus ReportSaverService.clear');
+      await GetIt.I.get<ReportSaverService>().clear();
+    }
 
+    Log.d(_kTag, 'handleReportSuiteInfo set new suitInfo');
     _suiteInfoStore.suiteInfo = SuiteInfo.fromProto(request);
   }
 
