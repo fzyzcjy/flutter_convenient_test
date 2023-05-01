@@ -40,7 +40,7 @@ class HomePageScreenshotPanel extends StatelessWidget {
       return Column(
         children: [
           Expanded(
-            child: _buildBigImage(bigImageInterestSnapshots, context),
+            child: _buildBigImages(bigImageInterestSnapshots, context),
           ),
           if (selectiveDisplayMode) _buildThumbnails(highlightLogEntryId, snapshots, context),
         ],
@@ -63,42 +63,46 @@ class HomePageScreenshotPanel extends StatelessWidget {
     return [highlightSnapshot.snapshotName];
   }
 
-  Widget _buildBigImage(Map<String, Uint8List> interestSnapshots, BuildContext context) {
+  Widget _buildBigImages(Map<String, Uint8List> interestSnapshots, BuildContext context) {
     return Row(
       children: [
         for (final snapshotEntry in interestSnapshots.entries)
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: _buildBigImage(snapshotEntry.key, snapshotEntry.value, context),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildBigImage(String name, Uint8List bytes, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              name,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Expanded(
               child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      snapshotEntry.key,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Expanded(
-                      child: Center(
-                        // ignore: use_decorated_box
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
-                          ),
-                          child: Image.memory(snapshotEntry.value),
-                        ),
-                      ),
-                    ),
-                  ],
+                // ignore: use_decorated_box
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
+                  ),
+                  child: Image.memory(bytes),
                 ),
               ),
             ),
-          ),
-      ],
+          ],
+        ),
+      ),
     );
   }
 
