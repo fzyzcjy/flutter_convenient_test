@@ -58,15 +58,21 @@ extension ExtFinder on Finder {
       );
 }
 
+typedef ConvenientTestGetFinder = Finder Function(Object arg);
+
+ConvenientTestGetFinder convenientTestGetFinder = _defaultGetFinder;
+
+Finder _defaultGetFinder(Object arg) {
+  if (arg is Finder) return arg;
+  if (arg is List) return find.byArray(arg.map((Object? e) => find.get(e!)).toList());
+  return find.bySel(arg);
+}
+
 extension ExtCommonFinders on CommonFinders {
   Finder root() => _RootFinder();
 
   /// smart "get"
-  Finder get(Object arg) {
-    if (arg is Finder) return arg;
-    if (arg is List) return byArray(arg.map((Object? e) => get(e!)).toList());
-    return bySel(arg);
-  }
+  Finder get(Object arg) => convenientTestGetFinder(arg);
 
   // ref
   // 1. cypress-realworld-app command: getBySel
