@@ -4,9 +4,8 @@ import 'dart:async';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
-import 'package:convenient_test_dev/src/support/declarer.dart';
-import 'package:convenient_test_dev/src/support/get_it.dart';
-import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
+import 'package:convenient_test_dev/src/support/declarer_with_default.dart';
+import 'package:convenient_test_dev/src/support/reporter_service.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:test_api/src/backend/declarer.dart';
 import 'package:test_api/src/backend/group.dart';
@@ -20,9 +19,9 @@ import 'package:test_api/src/backend/suite.dart';
 import 'package:test_api/src/backend/suite_platform.dart';
 import 'package:test_api/src/backend/test.dart';
 
-Declarer collectIntoDeclarer({required void Function() body, required int defaultRetry}) {
+Declarer collectIntoDeclarer({required void Function() body, required int? defaultRetry}) {
   // NOTE use MyDeclarer instead of Declarer
-  return MyDeclarer(defaultRetry: defaultRetry)..declare(body);
+  return DeclarerWithDefault(defaultRetry: defaultRetry)..declare(body);
 }
 
 /// NOTE XXX ref: [flutter_test :: test_compat.dart :: get _declarer ]
@@ -42,7 +41,7 @@ void runTestsInDeclarer(
 }
 
 // NOTE MODIFIED added
-typedef ShouldSkipPredicate = Future<bool> Function(GroupEntry entry);
+typedef ShouldSkipPredicate = bool Function(GroupEntry entry);
 
 /// NOTE XXX ref: [flutter_test :: test_compat.dart]
 Future<void> _runGroup(
@@ -65,7 +64,7 @@ Future<void> _runGroup(
       for (final GroupEntry entry in group.entries) {
         if (entry is Group) {
           await _runGroup(suiteConfig, entry, parents, reporter, shouldSkip);
-        } else if (entry.metadata.skip || /* NOTE MODIFIED add "shouldSkip" */ await shouldSkip(entry)) {
+        } else if (entry.metadata.skip || /* NOTE MODIFIED add "shouldSkip" */ shouldSkip(entry)) {
           await _runSkippedTest(suiteConfig, entry as Test, parents, reporter);
         } else {
           final Test test = entry as Test;
@@ -198,22 +197,22 @@ class _Reporter {
       print(text);
 
       // NOTE XXX add
-      myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
-              runnerMessage: RunnerMessage(
-            testName: liveTest.test.name,
-            message: message.text,
-          )));
+      WorkerReportSaverService.I?.report(ReportItem(
+          runnerMessage: RunnerMessage(
+        testName: liveTest.test.name,
+        message: message.text,
+      )));
     }));
   }
 
   /// A callback called when [liveTest]'s state becomes [state].
   void _onStateChange(LiveTest liveTest, State state) {
     // NOTE XXX add
-    myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
-            runnerStateChange: RunnerStateChange(
-          testName: liveTest.test.name,
-          state: state.toProto(),
-        )));
+    WorkerReportSaverService.I?.report(ReportItem(
+        runnerStateChange: RunnerStateChange(
+      testName: liveTest.test.name,
+      state: state.toProto(),
+    )));
 
     if (state.status != Status.complete) {
       return;
@@ -223,12 +222,12 @@ class _Reporter {
   /// A callback called when [liveTest] throws [error].
   void _onError(LiveTest liveTest, Object error, StackTrace stackTrace) {
     // NOTE XXX add
-    myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
-            runnerError: RunnerError(
-          testName: liveTest.test.name,
-          error: error.toString(),
-          stackTrace: '$stackTrace',
-        )));
+    WorkerReportSaverService.I?.report(ReportItem(
+        runnerError: RunnerError(
+      testName: liveTest.test.name,
+      error: error.toString(),
+      stackTrace: '$stackTrace',
+    )));
     // print('hi _onError e.type=${error.runtimeType} error=$error');
     // print('hi _onError errors=${liveTest.errors}');
     convenientTestLog(

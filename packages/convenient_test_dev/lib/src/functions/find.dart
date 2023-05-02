@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/command.dart';
-import 'package:convenient_test_dev/src/functions/core.dart';
+import 'package:convenient_test_dev/src/functions/instance.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:convenient_test_dev/src/functions/widget_controller.dart';
 import 'package:convenient_test_dev/src/functions/widget_tester.dart';
+import 'package:convenient_test_dev/src/support/element_hit_testable_matcher.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
@@ -22,6 +23,8 @@ extension ConvenientTestFind on ConvenientTest {
   TCommand routeName() => TRouteNameCommand(this);
 
   TRawCommand raw(Object value) => TRawCommand(this, value);
+
+  TValueGetterCommand value(ValueGetter<Object?> valueGetter) => TValueGetterCommand(this, valueGetter);
 }
 
 extension ExtFinder on Finder {
@@ -57,15 +60,22 @@ extension ExtFinder on Finder {
       );
 }
 
+typedef ConvenientTestGetFinder = Finder Function(Object arg);
+
+ConvenientTestGetFinder convenientTestGetFinder = _defaultGetFinder;
+
+Finder _defaultGetFinder(Object arg) {
+  if (arg is Finder) return arg;
+  if (arg is Type) return find.byType(arg);
+  if (arg is List) return find.byArray(arg.map((Object? e) => find.get(e!)).toList());
+  return find.bySel(arg);
+}
+
 extension ExtCommonFinders on CommonFinders {
   Finder root() => _RootFinder();
 
   /// smart "get"
-  Finder get(Object arg) {
-    if (arg is Finder) return arg;
-    if (arg is List) return byArray(arg.map((Object? e) => get(e!)).toList());
-    return bySel(arg);
-  }
+  Finder get(Object arg) => convenientTestGetFinder(arg);
 
   // ref
   // 1. cypress-realworld-app command: getBySel
@@ -129,6 +139,7 @@ class TFinderCommand extends TCommand {
   }) =>
       act(
         act: (log) => t.tester.enterText(finder, text),
+        preCondition: null,
         logTitle: 'REPLACE TYPE',
         logMessage: '"$text" to ${finder.description}',
         settle: settle,
@@ -149,6 +160,7 @@ class TFinderCommand extends TCommand {
           log.update(logTitle, '$basicLogMessage (old text: "${oldValue.text}")');
         },
       ),
+      preCondition: null,
       logTitle: logTitle,
       logMessage: basicLogMessage,
       settle: settle,
@@ -161,6 +173,7 @@ class TFinderCommand extends TCommand {
   }) =>
       act(
         act: (log) => t.tester.tap(finder, warnIfMissed: warnIfMissed),
+        preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
         logTitle: 'TAP',
         logMessage: finder.description,
         settle: settle,
@@ -172,6 +185,7 @@ class TFinderCommand extends TCommand {
   }) =>
       act(
         act: (log) => t.tester.longPress(finder, warnIfMissed: warnIfMissed),
+        preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
         logTitle: 'LONG PRESS',
         logMessage: finder.description,
         settle: settle,
@@ -184,6 +198,7 @@ class TFinderCommand extends TCommand {
   }) =>
       act(
         act: (log) => t.tester.drag(finder, offset, warnIfMissed: warnIfMissed),
+        preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
         logTitle: 'DRAG',
         logMessage: finder.description,
         settle: settle,
@@ -206,6 +221,7 @@ class TFinderCommand extends TCommand {
           secondFingerOffsets: secondFingerOffsets,
           afterMove: (logMove ?? false) ? (i) async => log.snapshot(name: 'move #$i') : null,
         ),
+        preCondition: null,
         logTitle: 'MULTI DRAG',
         logMessage: finder.description,
         settle: settle,
@@ -213,6 +229,7 @@ class TFinderCommand extends TCommand {
 
   Future<void> act({
     required Future<void> Function(LogHandle log) act,
+    required Matcher? preCondition,
     required String logTitle,
     required String logMessage,
     bool settle = true,
@@ -225,7 +242,7 @@ class TFinderCommand extends TCommand {
     // Firstly wait until the button is visible before tapping
     // ref https://docs.cypress.io/guides/core-concepts/retry-ability#Built-in-assertions
     await shouldRaw(
-      findsOneWidget,
+      allOf(findsOneWidget, preCondition),
       logUpdate: (title, message, {error, stackTrace, required type, printing = false}) =>
           log.update('$logTitle ASSERT', message, type: type, error: error, stackTrace: stackTrace, printing: printing),
       logSnapshot: log.snapshot,
@@ -237,7 +254,7 @@ class TFinderCommand extends TCommand {
 
     await act(log);
 
-    settle ? await t.pumpAndSettle() : await t.pump();
+    settle ? await t.pumpAndSettleWithRunAsync() : await t.pump();
 
     await log.snapshot(name: 'after');
   }
@@ -271,6 +288,15 @@ class TRawCommand extends TCommand {
 
   @override
   Object? getCurrentActual() => value;
+}
+
+class TValueGetterCommand extends TCommand {
+  final ValueGetter<Object?> valueGetter;
+
+  TValueGetterCommand(super.t, this.valueGetter);
+
+  @override
+  Object? getCurrentActual() => valueGetter();
 }
 
 // https://stackoverflow.com/questions/53924131/how-to-check-if-value-is-enum

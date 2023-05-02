@@ -31,6 +31,7 @@ dependencies:
   path_provider: ^2.0.9
   recase: ^4.0.0
   test_api: ^0.4.2
+  tuple: ^2.0.0
   web_socket_channel: ^2.1.0
 
 dev_dependencies:

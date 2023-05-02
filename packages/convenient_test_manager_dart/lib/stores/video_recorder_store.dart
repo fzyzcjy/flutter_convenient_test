@@ -53,7 +53,7 @@ abstract class _VideoRecorderStore with Store {
   }
 
   Future<String> _createVideoPath() async {
-    final stem = DateFormat('yyyyMMdd_hhmmss').format(DateTime.now());
+    final stem = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
     return
         // ignore: prefer_interpolation_to_compose_strings
         await GetIt.I.get<FsService>().getActiveSuperRunDataSubDirectory(category: 'Video') + '$stem.mov';

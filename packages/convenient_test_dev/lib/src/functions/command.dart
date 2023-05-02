@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_dev/src/functions/core.dart';
 import 'package:convenient_test_dev/src/functions/descriptor.dart';
 import 'package:convenient_test_dev/src/functions/goldens.dart';
+import 'package:convenient_test_dev/src/functions/instance.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:flutter/material.dart';
@@ -79,12 +79,9 @@ Future<void> _expectWithRetry(
   var failedCount = 0;
   while (true) {
     // Why need log "update": Because `actualGetter` can change
-    // ignore: avoid_dynamic_calls
-    logUpdate(
-      'ASSERT',
-      Descriptor().formatLogOfExpect(actualGetter(), matcher, overrideActualDescription: overrideActualDescription),
-      type: LogSubEntryType.ASSERT,
-    );
+    final logMessage =
+        Descriptor().formatLogOfExpect(actualGetter(), matcher, overrideActualDescription: overrideActualDescription);
+    logUpdate('ASSERT', logMessage, type: LogSubEntryType.ASSERT);
 
     final actual = actualGetter();
     try {
@@ -102,6 +99,7 @@ Future<void> _expectWithRetry(
       }
 
       if (snapshotWhenSuccess) await logSnapshot(name: 'after');
+      logUpdate('ASSERT', logMessage, type: LogSubEntryType.ASSERT, printing: true); // #8484
       return;
     } on TestFailure catch (e, s) {
       failedCount++;
@@ -110,7 +108,7 @@ Future<void> _expectWithRetry(
       if (duration >= timeout) {
         logUpdate(
           'ASSERT',
-          'after $failedCount retries with ${duration.inMilliseconds} milliseconds',
+          'after $failedCount retries with ${duration.inMilliseconds} milliseconds, when $logMessage',
           type: LogSubEntryType.ASSERT_FAIL,
           error: '$e\n${_getTestFailureErrorExtraInfo(actual)}',
           stackTrace: '$s',
@@ -121,8 +119,7 @@ Future<void> _expectWithRetry(
         rethrow;
       }
 
-      await t.pumpAndSettle();
-      // TODO Not sure whether to add `Future.delayed`. Be careful: Future "delay" may be fake in test environment
+      await t.pumpAndSettleWithRunAsync();
     }
   }
 }
@@ -131,17 +128,28 @@ String _getTestFailureErrorExtraInfo(dynamic actual) {
   if (actual is Finder) {
     // ref: [Finder.toString]
     final elements = actual.evaluate().toList();
-    final info = elements.mapIndexed((index, Element element) {
+
+    final bboxInfos = elements
+        .map((element) {
+          if (!element.debugIsActive) return null;
+          final renderBox = element.findRenderObject();
+          if (renderBox is! RenderBox || !renderBox.hasSize) return null;
+          return renderBox.localToGlobal(Offset.zero) & renderBox.size;
+        })
+        .mapIndexed((index, bbox) => '📦 Bounding box of element #$index: $bbox')
+        .join('\n\n');
+
+    final ancestorInfos = elements.mapIndexed((index, element) {
       final reversedAncestors = [element];
       element.visitAncestorElements((ancestorElement) {
         reversedAncestors.add(ancestorElement);
         return true;
       });
-      return '[Found Element #$index]\n'
+      return '🌳 Ancestors of element #$index:\n'
           '${reversedAncestors.reversed.map((e) => '-> $e').join('\n')}';
     }).join('\n\n');
-    return 'Extra Info: matched elements are:\n'
-        '$info';
+
+    return 'Extra info for matched elements: \n$bboxInfos\n$ancestorInfos';
   }
   return '';
 }

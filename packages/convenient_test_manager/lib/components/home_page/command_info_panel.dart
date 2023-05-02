@@ -20,7 +20,7 @@ class HomePageCommandInfoPanel extends StatelessWidget {
 
       adapter.add(StaticSection.single(child: const SizedBox(height: 8)));
       adapter.addAll(HomePageGroupEntryInfoSectionBuilder(
-        groupEntryId: suiteInfoStore.suiteInfo!.rootGroupId,
+        groupEntryId: suiteInfoStore.suiteInfo?.rootGroupId,
         depth: -1,
         showHeader: false,
       ).build());

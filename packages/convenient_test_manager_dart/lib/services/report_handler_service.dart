@@ -70,7 +70,10 @@ class ReportHandlerService {
     Log.d(_kTag, 'handleReportLogEntry called');
 
     final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
-    if (testEntryId == null) return;
+    if (testEntryId == null) {
+      Log.i(_kTag, 'handleReportLogEntry skipped since getEntryIdFromName failed');
+      return;
+    }
 
     final requestId = request.id.toInt();
     _logStore.addLogEntry(testEntryId: testEntryId, logEntryId: requestId, subEntries: request.subEntries);
@@ -116,13 +119,16 @@ class ReportHandlerService {
   Future<void> _handleSuiteInfoProto(SuiteInfoProto request, {required bool doClear}) async {
     Log.d(_kTag, 'handleReportSuiteInfo called $request');
 
-    Log.d(_kTag, 'handleReportSuiteInfo thus clearAll');
+    Log.d(_kTag, 'handleReportSuiteInfo thus MiscDartService.clearAll');
     GetIt.I.get<MiscDartService>().clearAll();
 
-    Log.d(_kTag, 'handleReportSuiteInfo thus clear');
     // in case data from previous super-run are logged into current run
-    if (doClear) await GetIt.I.get<ReportSaverService>().clear();
+    if (doClear) {
+      Log.d(_kTag, 'handleReportSuiteInfo thus ReportSaverService.clear');
+      await GetIt.I.get<ManagerReportSaverService>().clear();
+    }
 
+    Log.d(_kTag, 'handleReportSuiteInfo set new suitInfo');
     _suiteInfoStore.suiteInfo = SuiteInfo.fromProto(request);
   }
 

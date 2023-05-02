@@ -14,7 +14,7 @@ import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 
 class HomePageGroupEntryInfoSectionBuilder extends StaticSectionBuilder {
-  final int groupEntryId;
+  final int? groupEntryId;
   final int depth;
   final bool showHeader;
 

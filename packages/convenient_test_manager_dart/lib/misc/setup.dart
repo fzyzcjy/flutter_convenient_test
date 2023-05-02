@@ -43,7 +43,7 @@ Future<void> setup({
   getIt.registerSingleton<ConvenientTestManagerService>(ConvenientTestManagerService());
 
   getIt.registerSingleton<ReportHandlerService>(ReportHandlerService());
-  getIt.registerSingleton<ReportSaverService>(ReportSaverService());
+  getIt.registerSingleton<ManagerReportSaverService>(ManagerReportSaverService());
   getIt.registerSingleton<ScreenVideoRecorderService>(ScreenVideoRecorderService.create());
 
   if (registerMiscDartService) getIt.registerSingleton<MiscDartService>(MiscDartService());

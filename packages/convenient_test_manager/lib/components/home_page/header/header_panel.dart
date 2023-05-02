@@ -19,7 +19,7 @@ class HomePageHeaderPanel extends StatelessWidget {
     final highlightStore = GetIt.I.get<HighlightStore>();
     final miscFlutterService = GetIt.I.get<MiscFlutterService>();
     final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
-    final reportSaverService = GetIt.I.get<ReportSaverService>();
+    final reportSaverService = GetIt.I.get<ManagerReportSaverService>();
     final homePageStore = GetIt.I.get<HomePageStore>();
 
     return Observer(builder: (_) {

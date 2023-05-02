@@ -1,8 +1,5 @@
 // ignore_for_file: implementation_imports
 import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_dev/src/support/get_it.dart';
-import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
-import 'package:convenient_test_dev/src/support/suite_info_converter.dart';
 import 'package:convenient_test_dev/src/third_party/my_test_compat.dart';
 import 'package:meta/meta.dart';
 import 'package:test_api/src/backend/declarer.dart';
@@ -25,20 +22,13 @@ class ConvenientTestExecutor {
       onGroupBuilt: (group) {
         _ensureNoDuplicateTestNames(group);
 
-        if (_input.reportSuiteInfo) _reportSuiteInfo(group);
-
         _resolvedExecutionFilter = _ExecutionFilterResolver.resolve(
           root: group,
           executionFilter: _input.executionFilter,
         );
       },
-      shouldSkip: (entry) async => !_resolvedExecutionFilter.allowExecute(entry),
+      shouldSkip: (entry) => !_resolvedExecutionFilter.allowExecute(entry),
     );
-  }
-
-  static void _reportSuiteInfo(Group group) {
-    final suiteInfo = SuiteInfoConverter.convert(group);
-    myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(suiteInfoProto: suiteInfo));
   }
 
   static void _ensureNoDuplicateTestNames(Group group) {
@@ -54,12 +44,10 @@ class ConvenientTestExecutor {
 @immutable
 class ConvenientTestExecutorInput {
   final Declarer declarer;
-  final bool reportSuiteInfo;
   final ExecutionFilter executionFilter;
 
   const ConvenientTestExecutorInput({
     required this.declarer,
-    required this.reportSuiteInfo,
     required this.executionFilter,
   });
 }
