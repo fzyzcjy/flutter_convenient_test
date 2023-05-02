@@ -23,6 +23,8 @@ extension ConvenientTestFind on ConvenientTest {
   TCommand routeName() => TRouteNameCommand(this);
 
   TRawCommand raw(Object value) => TRawCommand(this, value);
+
+  TValueGetterCommand value(ValueGetter<Object?> valueGetter) => TValueGetterCommand(this, valueGetter);
 }
 
 extension ExtFinder on Finder {
@@ -286,6 +288,15 @@ class TRawCommand extends TCommand {
 
   @override
   Object? getCurrentActual() => value;
+}
+
+class TValueGetterCommand extends TCommand {
+  final ValueGetter<Object?> valueGetter;
+
+  TValueGetterCommand(super.t, this.valueGetter);
+
+  @override
+  Object? getCurrentActual() => valueGetter();
 }
 
 // https://stackoverflow.com/questions/53924131/how-to-check-if-value-is-enum
