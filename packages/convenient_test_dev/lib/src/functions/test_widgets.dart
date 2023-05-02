@@ -1,3 +1,4 @@
+import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_dev/src/functions/instance.dart';
 import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
@@ -23,7 +24,13 @@ void tTestWidgets(
   testWidgets(
     description,
     (tester) async => await ConvenientTest.withActiveInstance(tester, (t) async {
-      t.log('START APP', '');
+      // Only log START/END for the `tTestWidgets`. Thus, when using `test` or `testWidgets`, i.e. when
+      // users setup convenient_test but not use it for that specific test, we do not waste time doing logging
+      // https://github.com/fzyzcjy/yplusplus/issues/8554#issuecomment-1530977507
+      convenientTestLog('START', '', type: LogSubEntryType.TEST_START);
+      addTearDown(() => convenientTestLog('END', '', type: LogSubEntryType.TEST_END));
+      // t.log('START APP', '');
+
       await tester.runAsync(() async {
         await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
       });
