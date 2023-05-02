@@ -43,7 +43,7 @@ class WorkerReportSaverServiceSaveToLocal implements WorkerReportSaverService {
     }
 
     final filename =
-        'WIDGET-TEST-${DateFormat('yyyyMMdd-hhmmss').format(DateTime.now())}-${Random().nextInt(1000).toString().padLeft(3, '0')}.bin';
+        'WIDGET-TEST-${DateFormat('yyyyMMdd-HHmmss').format(DateTime.now())}-${Random().nextInt(1000).toString().padLeft(3, '0')}.bin';
     final path = '$dir/ConvenientTestWidgetTest/$filename';
     Log.i(_kTag, 'will save report to path=$path');
 
