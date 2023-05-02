@@ -19,7 +19,7 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 
 @internal
-Future<void> convenientTestEntrypointWhenEnvDevice(VoidCallback testBody) async {
+Future<void> convenientTestEntrypointWhenEnvDevice(FutureOr<void> Function() testBody) async {
   myGetIt.registerSingleton<ConvenientTestManagerRpcService>(ConvenientTestManagerRpcService());
   myGetIt.registerSingleton<WorkerReportSaverService>(WorkerReportSaverServiceSendToManager());
 
@@ -39,7 +39,7 @@ Future<void> _runModeInteractiveApp() async {
 }
 
 Future<void> _runModeIntegrationTest(
-  VoidCallback testBody,
+  FutureOr<void> Function() testBody,
   WorkerCurrentRunConfig_IntegrationTest currentRunConfig,
 ) async {
   runZonedGuarded(() {
@@ -76,7 +76,7 @@ Future<void> _runModeIntegrationTest(
 
           setUpLogTestStartAndEnd();
           testBody();
-        });
+        }).item2;
       },
     );
 

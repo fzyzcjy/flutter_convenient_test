@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'dart:async';
 
 import 'package:convenient_test/convenient_test.dart';
 import 'package:convenient_test_dev/src/functions/entrypoint_env_device.dart';
@@ -10,7 +10,7 @@ import 'package:convenient_test_dev/src/support/slot.dart';
 /// Please make this the only method in your "main" method.
 Future<void> convenientTestMain(
   ConvenientTestSlot slot,
-  VoidCallback testBody, {
+  FutureOr<void> Function() testBody, {
   ExecutionEnv executionEnv = ExecutionEnv.deviceTest,
 }) async {
   myGetIt.registerSingleton<ConvenientTestSlot>(slot);

@@ -7,6 +7,7 @@ import 'package:test_api/src/backend/declarer.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/group_entry.dart';
 import 'package:test_api/src/backend/test.dart';
+import 'package:tuple/tuple.dart';
 
 class SpyDeclarer implements Declarer {
   final Declarer inner;
@@ -14,11 +15,11 @@ class SpyDeclarer implements Declarer {
 
   SpyDeclarer(this.inner, this.info);
 
-  static SpyDeclarerGroup withSpy(void Function() body, {SpyDeclarerGroup? info}) {
+  static Tuple2<T, SpyDeclarerGroup> withSpy<T>(T Function() body, {SpyDeclarerGroup? info}) {
     final originalDeclarer = Declarer.current!;
     final spyDeclarer = SpyDeclarer(originalDeclarer, info ?? SpyDeclarerGroup(name: null));
-    runZoned(body, zoneValues: {#test.declarer: spyDeclarer});
-    return spyDeclarer.info;
+    final bodyResult = runZoned(body, zoneValues: {#test.declarer: spyDeclarer});
+    return Tuple2(bodyResult, spyDeclarer.info);
   }
 
   @override
