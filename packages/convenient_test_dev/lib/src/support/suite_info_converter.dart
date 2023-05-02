@@ -45,7 +45,7 @@ class _GroupEntryIdStableGenerator {
   final _seenIds = <int>{};
 
   int generate(String name) {
-    if (_seenNames.contains(name)) throw AssertionError;
+    if (_seenNames.contains(name)) throw AssertionError('test name should be unique (name=$name)');
 
     final id = _generateWithoutSave(name);
     if (_seenIds.contains(id)) throw AssertionError;
