@@ -54,6 +54,7 @@ class WorkerReportSaverServiceSaveToLocal implements WorkerReportSaverService {
   @override
   Future<void> report(ReportItem item) async {
     final request = ReportCollection(items: [item]);
+    // NOTE should be sync instead of async, otherwise in widget test mode, there may be concurrency / race conditions
     File(path).writeAsBytesSync(request.writeToBuffer(), mode: FileMode.append);
   }
 }
