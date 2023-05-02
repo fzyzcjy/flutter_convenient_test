@@ -7,15 +7,19 @@ class ConvenientTestWrapperWidget extends StatelessWidget {
 
   static var convenientTestActive = false;
 
+  // disable by default, since recent Flutter test already paints interactions
+  // https://github.com/fzyzcjy/yplusplus/issues/8554#issuecomment-1531011789
+  static var enableGestureVisualizer = false;
+
   const ConvenientTestWrapperWidget({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
     if (!convenientTestActive) return child;
 
-    return ConvenientTestImageCaptureWrapper(
-      child: GestureVisualizer(child: child),
-    );
+    var result = child;
+    if (enableGestureVisualizer) result = GestureVisualizer(child: result);
+    return ConvenientTestImageCaptureWrapper(child: result);
   }
 }
 
