@@ -94,8 +94,11 @@ Future<void> _expectWithRetry(
       // happens e.g. when golden test fails, see #179 for details
       final Object? caughtException = t.tester.takeException();
       if (caughtException != null) {
-        // TODO add more details like stacktrace after https://github.com/flutter/flutter/pull/103486 is implemented
-        throw TestFailure('See caught exception: $caughtException');
+        // NOTE Must *NOT* be a `TestFailure`. Otherwise, consider an exception that happens only *once* but is
+        // quite fatal. If we are throwing TestFailure, we will catch that in the nearby try-catch block.
+        // Then, since the next retry succeeds, we wrongly thought everything is good, but indeed we have a fatal error.
+        // https://github.com/fzyzcjy/yplusplus/issues/8472#issuecomment-1531438419
+        throw Exception('See caught exception: $caughtException');
       }
 
       if (snapshotWhenSuccess) await logSnapshot(name: 'after');
