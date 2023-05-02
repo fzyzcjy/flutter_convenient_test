@@ -52,6 +52,7 @@ class _RenderGestureVisualizer extends RenderProxyBox {
 
     if (event is PointerUpEvent || event is PointerCancelEvent) {
       Future.delayed(_kRemainAfterPointerUp, () {
+        if (debugDisposed ?? false) return;
         _recordedPointerInfoMap.remove(event.pointer);
         markNeedsPaint();
       });
