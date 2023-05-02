@@ -74,6 +74,12 @@ extension ConvenientTestInteraction on ConvenientTest {
     return TestAsyncUtils.guard(() async {
       var count = 0;
       do {
+        // https://github.com/fzyzcjy/yplusplus/issues/8545#issuecomment-1530741884
+        if (!tester.binding.inTest) {
+          Log.w('ConvenientTestInteraction', 'pumpAndSettleWithRunAsync see !inTest thus break');
+          break;
+        }
+
         final fakeClockNow = tester.binding.clock.now();
         final wallClockNow = DateTime.now();
         if (fakeClockNow.isAfter(fakeClockEndTime) || wallClockNow.isAfter(wallClockEndTime)) {
