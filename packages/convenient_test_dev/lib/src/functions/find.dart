@@ -179,6 +179,19 @@ class TFinderCommand extends TCommand {
         settle: settle,
       );
 
+  Future<void> tapAtAlignment(
+    Alignment alignment, {
+    bool warnIfMissed = true,
+    bool settle = true,
+  }) =>
+      act(
+        act: (log) => t.tester.tapAt(alignment.withinRect(t.tester.getRect(finder))),
+        preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
+        logTitle: 'TAP',
+        logMessage: finder.description,
+        settle: settle,
+      );
+
   Future<void> longPress({
     bool warnIfMissed = true,
     bool settle = true,
