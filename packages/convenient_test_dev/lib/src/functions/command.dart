@@ -19,7 +19,7 @@ abstract class TCommand {
   //      This is because we need retry-ability. For example, suppose `actual` is a String. Then
   //      if we save it, we will always get that initial same string no matter how we retry.
   @protected
-  Object? getCurrentActual();
+  Future<Object?> getCurrentActual();
 
   @protected
   String? get overrideActualDescription => null;
@@ -65,7 +65,7 @@ extension ExtTCommand on TCommand {
 // NOTE "retry-ability" methodology, please see https://docs.cypress.io/guides/core-concepts/retry-ability
 Future<void> _expectWithRetry(
   ConvenientTest t,
-  ValueGetter<Object?> actualGetter,
+  Future<Object?> Function() actualGetter,
   Matcher matcher, {
   required String? overrideActualDescription,
   String? reason,
@@ -79,11 +79,11 @@ Future<void> _expectWithRetry(
   var failedCount = 0;
   while (true) {
     // Why need log "update": Because `actualGetter` can change
-    final logMessage =
-        Descriptor().formatLogOfExpect(actualGetter(), matcher, overrideActualDescription: overrideActualDescription);
+    final logMessage = Descriptor()
+        .formatLogOfExpect(await actualGetter(), matcher, overrideActualDescription: overrideActualDescription);
     logUpdate('ASSERT', logMessage, type: LogSubEntryType.ASSERT);
 
-    final actual = actualGetter();
+    final actual = await actualGetter();
     try {
       if (matcher is AsyncMatcher) {
         await expectLater(actual, matcher, reason: reason, skip: skip);

@@ -25,6 +25,8 @@ extension ConvenientTestFind on ConvenientTest {
   TRawCommand raw(Object value) => TRawCommand(this, value);
 
   TValueGetterCommand value(ValueGetter<Object?> valueGetter) => TValueGetterCommand(this, valueGetter);
+
+  TValueAsyncGetterCommand valueAsync(Future<Object?> Function() getter) => TValueAsyncGetterCommand(this, getter);
 }
 
 extension ExtFinder on Finder {
@@ -131,7 +133,7 @@ class TFinderCommand extends TCommand {
   TFinderCommand.auto(this.finder) : super.auto();
 
   @override
-  Object? getCurrentActual() => finder;
+  Future<Object?> getCurrentActual() async => finder;
 
   Future<void> replaceText(
     String text, {
@@ -277,7 +279,7 @@ class TRouteNameCommand extends TCommand {
   TRouteNameCommand(super.t);
 
   @override
-  String? getCurrentActual() {
+  Future<String?> getCurrentActual() async {
     final context = myGetIt.get<ConvenientTestSlot>().getNavContext(t);
     if (context == null) return null;
 
@@ -300,7 +302,7 @@ class TRawCommand extends TCommand {
   TRawCommand(super.t, this.value);
 
   @override
-  Object? getCurrentActual() => value;
+  Future<Object?> getCurrentActual() async => value;
 }
 
 class TValueGetterCommand extends TCommand {
@@ -309,7 +311,16 @@ class TValueGetterCommand extends TCommand {
   TValueGetterCommand(super.t, this.valueGetter);
 
   @override
-  Object? getCurrentActual() => valueGetter();
+  Future<Object?> getCurrentActual() async => valueGetter();
+}
+
+class TValueAsyncGetterCommand extends TCommand {
+  final Future<Object?> Function() getter;
+
+  TValueAsyncGetterCommand(super.t, this.getter);
+
+  @override
+  Future<Object?> getCurrentActual() => getter();
 }
 
 // https://stackoverflow.com/questions/53924131/how-to-check-if-value-is-enum
