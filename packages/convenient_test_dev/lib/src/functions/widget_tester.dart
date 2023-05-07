@@ -14,6 +14,8 @@ import 'package:path/path.dart' as p;
 typedef EnterTextWithoutReplaceLogCallback = void Function(TextEditingValue oldValue, TextEditingValue newValue);
 
 extension ExtWidgetTester on WidgetTester {
+  static const _kTag = 'ExtWidgetTester';
+
   Future<void> enterTextWithoutReplace(Finder finder, String text,
       {EnterTextWithoutReplaceLogCallback? logCallback}) async {
     // reference: [enterText]
@@ -77,6 +79,19 @@ extension ExtWidgetTester on WidgetTester {
     }
   }
 
+  Future<T> runAsyncEnhanced<T>(Future<T> Function() callback) async {
+    if (binding.runningAsyncTasks) {
+      // when already have runAsync, should not call it again, otherwise error "Reentrant call to runAsyncEnhanced() denied."
+      Log.d(_kTag, 'runAsyncEnhanced skip executing real runAsync since already has pending tasks');
+      return callback();
+    } else {
+      final result = await runAsync(callback);
+      // runAsync will eat error https://github.com/fzyzcjy/yplusplus/issues/8054#issuecomment-1503370451
+      expect(takeException(), null);
+      return result as T;
+    }
+  }
+
   // need `runAsync` between pumps, because when running in widget test, the time in pump is fake.
   // If we do not `runAsync` and *really* sleep, things like real network requests may not be able to be finished.
   // https://github.com/fzyzcjy/yplusplus/issues/8477#issuecomment-1528799681
@@ -117,7 +132,7 @@ extension ExtWidgetTester on WidgetTester {
         }
 
         await binding.pump(pumpDuration);
-        await runAsync(() => Future<void>.delayed(realDelayDuration));
+        await runAsyncEnhanced(() => Future<void>.delayed(realDelayDuration));
         count++;
       } while (binding.hasScheduledFrame);
     });
