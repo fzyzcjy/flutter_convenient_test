@@ -1,7 +1,7 @@
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_dev/src/functions/instance.dart';
-import 'package:convenient_test_dev/src/functions/interaction.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
+import 'package:convenient_test_dev/src/functions/widget_tester.dart';
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:flutter/foundation.dart';
@@ -34,7 +34,7 @@ void tTestWidgets(
       await tester.runAsync(() async {
         await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
       });
-      settle ? await t.pumpAndSettleWithRunAsync() : await t.pump();
+      settle ? await t.tester.pumpAndSettleWithRunAsync() : await t.tester.pumpWithRunAsync();
       // https://github.com/fzyzcjy/yplusplus/issues/8470#issuecomment-1528784564
       // await log.snapshot(name: 'after');
 
