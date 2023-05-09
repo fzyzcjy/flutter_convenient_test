@@ -98,10 +98,6 @@ extension ExtWidgetTester on WidgetTester {
   //
   // implementation ref: `pumpAndSettle`
   Future<void> pumpAndSettleWithRunAsync({
-    // pumpAndSettle's default value
-    Duration pumpDuration = const Duration(milliseconds: 100),
-    // https://github.com/fzyzcjy/yplusplus/issues/8481#issuecomment-1529038831
-    Duration realDelayDuration = const Duration(milliseconds: 10),
     // #8516
     // p.s. The `pumpAndSettle` timeouts at 10 minutes
     Duration fakeClockTimeout = const Duration(minutes: 1),
@@ -131,11 +127,20 @@ extension ExtWidgetTester on WidgetTester {
           Log.d('ConvenientTestInteraction', 'pumpAndSettleWithRunAsync has been running for $count cycles');
         }
 
-        await binding.pump(pumpDuration);
-        await runAsyncEnhanced(() => Future<void>.delayed(realDelayDuration));
+        await pumpWithRunAsync();
         count++;
       } while (binding.hasScheduledFrame);
     });
+  }
+
+  Future<void> pumpWithRunAsync({
+    // pumpAndSettle's default value
+    Duration pumpDuration = const Duration(milliseconds: 100),
+    // https://github.com/fzyzcjy/yplusplus/issues/8481#issuecomment-1529038831
+    Duration realDelayDuration = const Duration(milliseconds: 10),
+  }) async {
+    await binding.pump(pumpDuration);
+    await runAsyncEnhanced(() => Future<void>.delayed(realDelayDuration));
   }
 }
 
