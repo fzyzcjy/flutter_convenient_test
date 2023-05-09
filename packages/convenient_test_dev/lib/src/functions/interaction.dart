@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 extension ConvenientTestInteraction on ConvenientTest {
-  Future<void> visit(String routeName, {Object? arguments}) async {
+  Future<void> visit(String routeName, {Object? arguments, bool? settle}) async {
     final log = this.log('VISIT', routeName + (arguments != null ? ' arg=${jsonEncode(arguments)}' : ''));
 
     await pump();
@@ -17,11 +17,11 @@ extension ConvenientTestInteraction on ConvenientTest {
     unawaited(
         Navigator.pushNamed(myGetIt.get<ConvenientTestSlot>().getNavContext(this)!, routeName, arguments: arguments));
 
-    await pumpAndSettleWithRunAsync();
+    (settle ?? true) ? await tester.pumpAndSettleWithRunAsync() : await tester.pumpWithRunAsync();
     await log.snapshot(name: 'after');
   }
 
-  Future<void> pageBack() async {
+  Future<void> pageBack({bool? settle}) async {
     final log = this.log('POP', '');
 
     await pump();
@@ -29,11 +29,11 @@ extension ConvenientTestInteraction on ConvenientTest {
 
     await tester.pageBack();
 
-    await pumpAndSettleWithRunAsync();
+    (settle ?? true) ? await tester.pumpAndSettleWithRunAsync() : await tester.pumpWithRunAsync();
     await log.snapshot(name: 'after');
   }
 
-  Future<void> pullDownToRefresh() async {
+  Future<void> pullDownToRefresh({bool? settle}) async {
     final log = this.log('PULL REFRESH', '');
 
     await pump();
@@ -42,7 +42,7 @@ extension ConvenientTestInteraction on ConvenientTest {
     // ref https://github.com/peng8350/flutter_pulltorefresh/blob/master/test/refresh_test.dart
     await tester.drag(find.byType(MaterialApp), const Offset(0, 100));
 
-    await pumpAndSettleWithRunAsync();
+    (settle ?? true) ? await tester.pumpAndSettleWithRunAsync() : await tester.pumpWithRunAsync();
     await log.snapshot(name: 'after');
   }
 

@@ -1,10 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
+import 'package:convenient_test_dev/convenient_test_dev.dart';
 import 'package:convenient_test_dev/src/functions/descriptor.dart';
-import 'package:convenient_test_dev/src/functions/goldens.dart';
-import 'package:convenient_test_dev/src/functions/instance.dart';
-import 'package:convenient_test_dev/src/functions/interaction.dart';
-import 'package:convenient_test_dev/src/functions/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -30,13 +27,14 @@ abstract class TCommand {
 }
 
 extension ExtTCommand on TCommand {
-  Future<void> should(Matcher matcher, {String? reason}) async {
+  Future<void> should(Matcher matcher, {String? reason, bool? settle}) async {
     final log = t.log('ASSERT', '', type: LogSubEntryType.ASSERT);
     await shouldRaw(
       matcher,
       logUpdate: log.update,
       logSnapshot: log.snapshot,
       snapshotWhenSuccess: true,
+      settle: settle,
     );
   }
 
@@ -46,6 +44,7 @@ extension ExtTCommand on TCommand {
     required LogUpdate logUpdate,
     required LogSnapshot logSnapshot,
     required bool snapshotWhenSuccess,
+    bool? settle,
   }) =>
       _expectWithRetry(
         t,
@@ -56,6 +55,7 @@ extension ExtTCommand on TCommand {
         logUpdate: logUpdate,
         logSnapshot: logSnapshot,
         snapshotWhenSuccess: snapshotWhenSuccess,
+        settle: settle,
       );
 
   // syntax sugar
@@ -74,6 +74,7 @@ Future<void> _expectWithRetry(
   required LogUpdate logUpdate,
   required LogSnapshot logSnapshot,
   required bool snapshotWhenSuccess,
+  bool? settle,
 }) async {
   final startTime = DateTime.now();
   var failedCount = 0;
@@ -122,7 +123,7 @@ Future<void> _expectWithRetry(
         rethrow;
       }
 
-      await t.pumpAndSettleWithRunAsync();
+      (settle ?? true) ? await t.tester.pumpAndSettleWithRunAsync() : await t.tester.pumpWithRunAsync();
     }
   }
 }

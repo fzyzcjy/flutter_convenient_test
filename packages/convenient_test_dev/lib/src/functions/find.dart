@@ -32,19 +32,21 @@ extension ConvenientTestFind on ConvenientTest {
 extension ExtFinder on Finder {
   // forward methods
 
-  Future<void> should(Matcher matcher, {String? reason}) async =>
-      TFinderCommand.auto(this).should(matcher, reason: reason);
+  Future<void> should(Matcher matcher, {String? reason, bool? settle}) async =>
+      TFinderCommand.auto(this).should(matcher, reason: reason, settle: settle);
 
   Future<void> replaceText(String text) => TFinderCommand.auto(this).replaceText(text);
 
   Future<void> enterTextWithoutReplace(String text) => TFinderCommand.auto(this).enterTextWithoutReplace(text);
 
-  Future<void> tap({bool warnIfMissed = true}) => TFinderCommand.auto(this).tap(warnIfMissed: warnIfMissed);
+  Future<void> tap({bool warnIfMissed = true, bool? settle}) =>
+      TFinderCommand.auto(this).tap(warnIfMissed: warnIfMissed, settle: settle);
 
-  Future<void> longPress({bool warnIfMissed = true}) => TFinderCommand.auto(this).longPress(warnIfMissed: warnIfMissed);
+  Future<void> longPress({bool warnIfMissed = true, bool? settle}) =>
+      TFinderCommand.auto(this).longPress(warnIfMissed: warnIfMissed, settle: settle);
 
-  Future<void> drag(Offset offset, {bool warnIfMissed = true}) =>
-      TFinderCommand.auto(this).drag(offset, warnIfMissed: warnIfMissed);
+  Future<void> drag(Offset offset, {bool warnIfMissed = true, bool? settle}) =>
+      TFinderCommand.auto(this).drag(offset, warnIfMissed: warnIfMissed, settle: settle);
 
   Future<void> multiDrag({
     required Offset firstDownOffset,
@@ -137,7 +139,7 @@ class TFinderCommand extends TCommand {
 
   Future<void> replaceText(
     String text, {
-    bool settle = true,
+    bool? settle,
   }) =>
       act(
         act: (log) => t.tester.enterText(finder, text),
@@ -149,7 +151,7 @@ class TFinderCommand extends TCommand {
 
   Future<void> enterTextWithoutReplace(
     String text, {
-    bool settle = true,
+    bool? settle,
   }) {
     const logTitle = 'TYPE';
     final basicLogMessage = '"$text" to ${finder.description}';
@@ -171,7 +173,7 @@ class TFinderCommand extends TCommand {
 
   Future<void> tap({
     bool warnIfMissed = true,
-    bool settle = true,
+    bool? settle,
   }) =>
       act(
         act: (log) => t.tester.tap(finder, warnIfMissed: warnIfMissed),
@@ -184,7 +186,7 @@ class TFinderCommand extends TCommand {
   Future<void> tapAtAlignment(
     Alignment alignment, {
     bool warnIfMissed = true,
-    bool settle = true,
+    bool? settle,
   }) =>
       act(
         act: (log) => t.tester.tapAt(alignment.withinRect(t.tester.getRect(finder))),
@@ -196,7 +198,7 @@ class TFinderCommand extends TCommand {
 
   Future<void> longPress({
     bool warnIfMissed = true,
-    bool settle = true,
+    bool? settle,
   }) =>
       act(
         act: (log) => t.tester.longPress(finder, warnIfMissed: warnIfMissed),
@@ -209,7 +211,7 @@ class TFinderCommand extends TCommand {
   Future<void> drag(
     Offset offset, {
     bool warnIfMissed = true,
-    bool settle = true,
+    bool? settle,
   }) =>
       act(
         act: (log) => t.tester.drag(finder, offset, warnIfMissed: warnIfMissed),
@@ -225,7 +227,7 @@ class TFinderCommand extends TCommand {
     required List<Offset> firstFingerOffsets,
     required List<Offset> secondFingerOffsets,
     bool? logMove,
-    bool settle = true,
+    bool? settle,
   }) =>
       act(
         act: (log) => t.tester.multiDrag(
@@ -247,7 +249,7 @@ class TFinderCommand extends TCommand {
     required Matcher? preCondition,
     required String logTitle,
     required String logMessage,
-    bool settle = true,
+    bool? settle,
   }) async {
     final log = t.log(logTitle, logMessage);
 
@@ -263,13 +265,14 @@ class TFinderCommand extends TCommand {
       logSnapshot: log.snapshot,
       // do not take snapshot if success - since we will do it later
       snapshotWhenSuccess: false,
+      settle: settle,
     );
     // update log, since [should] will change logs
     unawaited(log.update(logTitle, logMessage, type: LogSubEntryType.GENERAL_MESSAGE));
 
     await act(log);
 
-    settle ? await t.pumpAndSettleWithRunAsync() : await t.pump();
+    (settle ?? false) ? await t.tester.pumpAndSettleWithRunAsync() : await t.tester.pumpWithRunAsync();
 
     await log.snapshot(name: 'after');
   }
