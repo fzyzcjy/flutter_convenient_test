@@ -142,6 +142,10 @@ extension ExtWidgetTester on WidgetTester {
     await binding.pump(pumpDuration);
     await runAsyncEnhanced(() => Future<void>.delayed(realDelayDuration));
   }
+
+  Future<void> pumpAndMaybeSettleWithRunAsync({required bool? settle}) async {
+    (settle ?? true) ? await pumpAndSettleWithRunAsync() : await pumpWithRunAsync();
+  }
 }
 
 Future<void> debugWidgetTestSaveScreenshot([Finder? finder, String stem = 'debug_screenshot']) async {

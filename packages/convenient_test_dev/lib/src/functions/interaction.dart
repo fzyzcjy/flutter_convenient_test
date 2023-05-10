@@ -17,7 +17,7 @@ extension ConvenientTestInteraction on ConvenientTest {
     unawaited(
         Navigator.pushNamed(myGetIt.get<ConvenientTestSlot>().getNavContext(this)!, routeName, arguments: arguments));
 
-    (settle ?? true) ? await tester.pumpAndSettleWithRunAsync() : await tester.pumpWithRunAsync();
+    await tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
     await log.snapshot(name: 'after');
   }
 
@@ -29,7 +29,7 @@ extension ConvenientTestInteraction on ConvenientTest {
 
     await tester.pageBack();
 
-    (settle ?? true) ? await tester.pumpAndSettleWithRunAsync() : await tester.pumpWithRunAsync();
+    await tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
     await log.snapshot(name: 'after');
   }
 
@@ -42,7 +42,7 @@ extension ConvenientTestInteraction on ConvenientTest {
     // ref https://github.com/peng8350/flutter_pulltorefresh/blob/master/test/refresh_test.dart
     await tester.drag(find.byType(MaterialApp), const Offset(0, 100));
 
-    (settle ?? true) ? await tester.pumpAndSettleWithRunAsync() : await tester.pumpWithRunAsync();
+    await tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
     await log.snapshot(name: 'after');
   }
 

@@ -272,7 +272,7 @@ class TFinderCommand extends TCommand {
 
     await act(log);
 
-    (settle ?? true) ? await t.tester.pumpAndSettleWithRunAsync() : await t.tester.pumpWithRunAsync();
+    await t.tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
 
     await log.snapshot(name: 'after');
   }

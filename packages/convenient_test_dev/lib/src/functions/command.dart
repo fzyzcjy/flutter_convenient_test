@@ -123,7 +123,7 @@ Future<void> _expectWithRetry(
         rethrow;
       }
 
-      (settle ?? true) ? await t.tester.pumpAndSettleWithRunAsync() : await t.tester.pumpWithRunAsync();
+      await t.tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
     }
   }
 }
