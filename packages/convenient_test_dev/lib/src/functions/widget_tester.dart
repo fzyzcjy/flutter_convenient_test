@@ -13,9 +13,7 @@ import 'package:path/path.dart' as p;
 
 typedef EnterTextWithoutReplaceLogCallback = void Function(TextEditingValue oldValue, TextEditingValue newValue);
 
-extension ExtWidgetTester on WidgetTester {
-  static const _kTag = 'ExtWidgetTester';
-
+extension ExtWidgetTesterEnterText on WidgetTester {
   Future<void> enterTextWithoutReplace(Finder finder, String text,
       {EnterTextWithoutReplaceLogCallback? logCallback}) async {
     // reference: [enterText]
@@ -45,6 +43,10 @@ extension ExtWidgetTester on WidgetTester {
           'Have tried all infos in convenientTestGeneralizedTextFieldInfos=$convenientTestGeneralizedEditableTextInfos, but none works.');
     });
   }
+}
+
+extension ExtWidgetTesterPump on WidgetTester {
+  static const _kTag = 'ExtWidgetTester';
 
   // useful in widget-test environment
   // *not* useful integration-test environment, which is what *this* package does
@@ -62,49 +64,39 @@ extension ExtWidgetTester on WidgetTester {
   }
 
   // useful for widget tests (not for integration tests)
+  @Deprecated('Please use `pumpWithRunAsyncUntil`')
   Future<void> runAsyncAndPumpUntil(
     FutureOr<bool> Function() canStop, {
     Duration runAsyncDelay = Duration.zero,
     Duration? pumpDuration,
   }) async {
-    while (true) {
-      // print('runAsyncAndPumpUntil loop');
-      if (await canStop()) break;
-
-      // Use delay 0ms instead of 200ms will make it much faster, so make `0ms` the default
-      // https://github.com/fzyzcjy/yplusplus/issues/4208
-      await runAsync(() => Future<void>.delayed(runAsyncDelay));
-
-      await pump(pumpDuration);
-    }
+    await pumpWithRunAsyncUntil(canStop, realDelayDuration: runAsyncDelay, pumpDuration: pumpDuration);
   }
 
-  Future<T> runAsyncEnhanced<T>(Future<T> Function() callback) async {
-    if (binding.runningAsyncTasks) {
-      // when already have runAsync, should not call it again, otherwise error "Reentrant call to runAsyncEnhanced() denied."
-      Log.d(_kTag, 'runAsyncEnhanced skip executing real runAsync since already has pending tasks');
-      return callback();
-    } else {
-      final result = await runAsync(callback);
-      // runAsync will eat error https://github.com/fzyzcjy/yplusplus/issues/8054#issuecomment-1503370451
-      expect(takeException(), null);
-      return result as T;
-    }
+  Future<void> pumpAndMaybeSettleWithRunAsync({required bool? settle}) async {
+    (settle ?? true) ? await pumpAndSettleWithRunAsync() : await pumpWithRunAsync();
   }
+
+  /// Like [pumpAndSettle], but allows real async tasks to be executed
+  Future<void> pumpAndSettleWithRunAsync() async => await pumpWithRunAsyncUntil(() => !binding.hasScheduledFrame);
 
   // need `runAsync` between pumps, because when running in widget test, the time in pump is fake.
   // If we do not `runAsync` and *really* sleep, things like real network requests may not be able to be finished.
   // https://github.com/fzyzcjy/yplusplus/issues/8477#issuecomment-1528799681
   //
   // implementation ref: `pumpAndSettle`
-  Future<void> pumpAndSettleWithRunAsync({
+  /// Like [pumpWithRunAsync], but do it repeatedly until [canStop]
+  Future<void> pumpWithRunAsyncUntil(
+    FutureOr<bool> Function() canStop, {
+    Duration? pumpDuration,
+    Duration? realDelayDuration,
+    Duration? fakeClockTimeout,
+    Duration? wallClockTimeout,
+  }) async {
     // #8516
     // p.s. The `pumpAndSettle` timeouts at 10 minutes
-    Duration fakeClockTimeout = const Duration(minutes: 1),
-    Duration wallClockTimeout = const Duration(minutes: 1),
-  }) {
-    final DateTime fakeClockEndTime = binding.clock.fromNowBy(fakeClockTimeout);
-    final DateTime wallClockEndTime = DateTime.now().add(wallClockTimeout);
+    final DateTime fakeClockEndTime = binding.clock.fromNowBy(fakeClockTimeout ?? const Duration(minutes: 1));
+    final DateTime wallClockEndTime = DateTime.now().add(wallClockTimeout ?? const Duration(minutes: 1));
 
     return TestAsyncUtils.guard(() async {
       var count = 0;
@@ -127,24 +119,40 @@ extension ExtWidgetTester on WidgetTester {
           Log.d('ConvenientTestInteraction', 'pumpAndSettleWithRunAsync has been running for $count cycles');
         }
 
-        await pumpWithRunAsync();
+        await pumpWithRunAsync(
+          pumpDuration: pumpDuration,
+          realDelayDuration: realDelayDuration,
+        );
         count++;
-      } while (binding.hasScheduledFrame);
+      } while (!await canStop());
     });
   }
 
+  /// Like [pump], but allows real async tasks to be executed
   Future<void> pumpWithRunAsync({
-    // pumpAndSettle's default value
-    Duration pumpDuration = const Duration(milliseconds: 100),
-    // https://github.com/fzyzcjy/yplusplus/issues/8481#issuecomment-1529038831
-    Duration realDelayDuration = const Duration(milliseconds: 10),
+    Duration? pumpDuration,
+    Duration? realDelayDuration,
   }) async {
-    await binding.pump(pumpDuration);
-    await runAsyncEnhanced(() => Future<void>.delayed(realDelayDuration));
+    // 100ms is pumpAndSettle's default value
+    await binding.pump(pumpDuration ?? const Duration(milliseconds: 100));
+    // https://github.com/fzyzcjy/yplusplus/issues/8481#issuecomment-1529038831
+    await runAsyncEnhanced(() => Future<void>.delayed(realDelayDuration ?? const Duration(milliseconds: 10)));
   }
 
-  Future<void> pumpAndMaybeSettleWithRunAsync({required bool? settle}) async {
-    (settle ?? true) ? await pumpAndSettleWithRunAsync() : await pumpWithRunAsync();
+  /// Like [runAsync], but:
+  /// 1. Allows re-entrance
+  /// 2. Asserts no error is thrown inside the callback
+  Future<T> runAsyncEnhanced<T>(Future<T> Function() callback) async {
+    if (binding.runningAsyncTasks) {
+      // when already have runAsync, should not call it again, otherwise error "Reentrant call to runAsyncEnhanced() denied."
+      Log.d(_kTag, 'runAsyncEnhanced skip executing real runAsync since already has pending tasks');
+      return callback();
+    } else {
+      final result = await runAsync(callback);
+      // runAsync will eat error https://github.com/fzyzcjy/yplusplus/issues/8054#issuecomment-1503370451
+      expect(takeException(), null);
+      return result as T;
+    }
   }
 }
 
