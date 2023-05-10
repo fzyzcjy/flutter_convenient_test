@@ -93,10 +93,13 @@ extension ExtWidgetTesterPump on WidgetTester {
     Duration? fakeClockTimeout,
     Duration? wallClockTimeout,
   }) async {
+    final startTime = _WallAndFakeClock.now(binding);
     // #8516
     // p.s. The `pumpAndSettle` timeouts at 10 minutes
-    final DateTime fakeClockEndTime = binding.clock.fromNowBy(fakeClockTimeout ?? const Duration(minutes: 1));
-    final DateTime wallClockEndTime = DateTime.now().add(wallClockTimeout ?? const Duration(minutes: 1));
+    final endTime = startTime.add(
+      fakeClock: fakeClockTimeout ?? const Duration(minutes: 1),
+      wallClock: wallClockTimeout ?? const Duration(minutes: 1),
+    );
 
     return TestAsyncUtils.guard(() async {
       var count = 0;
@@ -107,12 +110,10 @@ extension ExtWidgetTesterPump on WidgetTester {
           break;
         }
 
-        final fakeClockNow = binding.clock.now();
-        final wallClockNow = DateTime.now();
-        if (fakeClockNow.isAfter(fakeClockEndTime) || wallClockNow.isAfter(wallClockEndTime)) {
+        final now = _WallAndFakeClock.now(binding);
+        if (now.fakeClock.isAfter(endTime.fakeClock) || now.wallClock.isAfter(endTime.wallClock)) {
           throw FlutterError('pumpAndSettleWithRunAsync timed out '
-              '(fakeClockEndTime=$fakeClockEndTime, wallClockEndTime=$wallClockEndTime, '
-              'fakeClockNow=$fakeClockNow, wallClockNow=$wallClockNow)');
+              '(startTime=$startTime, endTime=$endTime, now=$now, pumpCount=$count)');
         }
 
         if (count > 0 && count % 10 == 0) {
@@ -165,6 +166,30 @@ Future<void> debugWidgetTestSaveScreenshot([Finder? finder, String stem = 'debug
         'debugWidgetTestSaveScreenshot save to path=$path image.size=${image.width}x${image.height} byte.length=${bytes.length}');
     File(path).writeAsBytesSync(bytes);
   });
+}
+
+class _WallAndFakeClock {
+  final DateTime wallClock;
+  final DateTime fakeClock;
+
+  const _WallAndFakeClock({required this.wallClock, required this.fakeClock});
+
+  factory _WallAndFakeClock.now(TestWidgetsFlutterBinding binding) => _WallAndFakeClock(
+        fakeClock: binding.clock.now(),
+        wallClock: DateTime.now(),
+      );
+
+  _WallAndFakeClock add({
+    required Duration wallClock,
+    required Duration fakeClock,
+  }) =>
+      _WallAndFakeClock(
+        wallClock: this.wallClock.add(wallClock),
+        fakeClock: this.fakeClock.add(fakeClock),
+      );
+
+  @override
+  String toString() => 'WallAndFakeClock(wallClock: $wallClock, fakeClock: $fakeClock)';
 }
 
 const kDefaultConvenientTestGeneralizedEditableTextInfos = <GeneralizedEditableTextInfo>[EditableTextInfo()];
