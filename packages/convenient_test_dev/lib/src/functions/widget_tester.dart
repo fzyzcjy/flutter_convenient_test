@@ -141,7 +141,7 @@ extension ExtWidgetTesterPump on WidgetTester {
   }
 
   /// Like [runAsync], but:
-  /// 1. Allows re-entrance
+  /// 1. Allows re-entrance (if following #337 to patch the code)
   /// 2. Asserts no error is thrown inside the callback
   Future<T> runAsyncEnhanced<T>(Future<T> Function() callback) async {
     if (binding._safeRunningAsyncTasks ?? false) {
