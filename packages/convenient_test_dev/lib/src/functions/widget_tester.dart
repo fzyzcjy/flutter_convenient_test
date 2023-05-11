@@ -144,7 +144,7 @@ extension ExtWidgetTesterPump on WidgetTester {
   /// 1. Allows re-entrance
   /// 2. Asserts no error is thrown inside the callback
   Future<T> runAsyncEnhanced<T>(Future<T> Function() callback) async {
-    if (binding.runningAsyncTasks) {
+    if (binding._safeRunningAsyncTasks ?? false) {
       // when already have runAsync, should not call it again, otherwise error "Reentrant call to runAsyncEnhanced() denied."
       Log.d(_kTag, 'runAsyncEnhanced skip executing real runAsync since already has pending tasks');
       return callback();
@@ -153,6 +153,21 @@ extension ExtWidgetTesterPump on WidgetTester {
       // runAsync will eat error https://github.com/fzyzcjy/yplusplus/issues/8054#issuecomment-1503370451
       expect(takeException(), null);
       return result as T;
+    }
+  }
+}
+
+extension on TestWidgetsFlutterBinding {
+  // Use this to allow code be run on both patched and original Flutter framework code #337
+  bool? get _safeRunningAsyncTasks {
+    try {
+      // ignore: avoid_dynamic_calls
+      return (this as dynamic).runningAsyncTasks as bool;
+      // ignore: avoid_catching_errors
+    } on NoSuchMethodError {
+      Log.d('ExtTestWidgetsFlutterBinding',
+          '`binding.runningAsyncTasks` does not exist. Follow #337 to patch the code to get it.');
+      return null;
     }
   }
 }
