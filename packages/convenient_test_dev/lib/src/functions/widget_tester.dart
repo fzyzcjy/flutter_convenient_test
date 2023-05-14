@@ -112,7 +112,7 @@ extension ExtWidgetTesterPump on WidgetTester {
 
         final now = _WallAndFakeClock.now(binding);
         if (now.fakeClock.isAfter(endTime.fakeClock) || now.wallClock.isAfter(endTime.wallClock)) {
-          throw FlutterError('pumpAndSettleWithRunAsync timed out '
+          throw FlutterError('pumpWithRunAsyncUntil timed out '
               '(startTime=$startTime, endTime=$endTime, now=$now, pumpCount=$count)');
         }
 
