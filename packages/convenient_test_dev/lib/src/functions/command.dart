@@ -106,24 +106,33 @@ Future<void> _expectWithRetry(
       logUpdate('ASSERT', logMessage, type: LogSubEntryType.ASSERT, printing: true); // #8484
       return;
     } on TestFailure catch (e, s) {
-      failedCount++;
-
-      final duration = DateTime.now().difference(startTime);
-      if (duration >= timeout) {
+      Future<void> _logFailure(String message, {String? extraError}) async {
         logUpdate(
           'ASSERT',
-          'after $failedCount retries with ${duration.inMilliseconds} milliseconds, when $logMessage',
+          message,
           type: LogSubEntryType.ASSERT_FAIL,
-          error: '$e\n${_getTestFailureErrorExtraInfo(actual)}',
+          error: '$extraError$e\n${_getTestFailureErrorExtraInfo(actual)}',
           stackTrace: '$s',
           printing: true,
         );
         await logSnapshot(name: 'failed');
         await EnhancedLocalFileComparator.instance.lastFailure?.dumpToLogSnapshot(logSnapshot);
+      }
+
+      failedCount++;
+
+      final duration = DateTime.now().difference(startTime);
+      if (duration >= timeout) {
+        await _logFailure('after $failedCount retries with ${duration.inMilliseconds} milliseconds, when $logMessage');
         rethrow;
       }
 
-      await t.tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
+      try {
+        await t.tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
+      } catch (e) {
+        await _logFailure('doing pump, when $logMessage', extraError: '$e\n');
+        rethrow;
+      }
     }
   }
 }
