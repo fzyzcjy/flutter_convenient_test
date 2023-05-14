@@ -101,32 +101,33 @@ extension ExtWidgetTesterPump on WidgetTester {
       wallClock: wallClockTimeout ?? const Duration(minutes: 1),
     );
 
-    return TestAsyncUtils.guard(() async {
-      var count = 0;
-      do {
-        // https://github.com/fzyzcjy/yplusplus/issues/8545#issuecomment-1530741884
-        if (!binding.inTest) {
-          Log.w('ConvenientTestInteraction', 'pumpAndSettleWithRunAsync see !inTest thus break');
-          break;
-        }
+    // do not use guard (while `pumpAndSettle` does use it), since it ruins the call stack
+    // return TestAsyncUtils.guard(() async {
+    var count = 0;
+    do {
+      // https://github.com/fzyzcjy/yplusplus/issues/8545#issuecomment-1530741884
+      if (!binding.inTest) {
+        Log.w('ConvenientTestInteraction', 'pumpAndSettleWithRunAsync see !inTest thus break');
+        break;
+      }
 
-        final now = _WallAndFakeClock.now(binding);
-        if (now.fakeClock.isAfter(endTime.fakeClock) || now.wallClock.isAfter(endTime.wallClock)) {
-          throw FlutterError('pumpWithRunAsyncUntil timed out '
-              '(startTime=$startTime, endTime=$endTime, now=$now, pumpCount=$count)');
-        }
+      final now = _WallAndFakeClock.now(binding);
+      if (now.fakeClock.isAfter(endTime.fakeClock) || now.wallClock.isAfter(endTime.wallClock)) {
+        throw FlutterError('pumpWithRunAsyncUntil timed out '
+            '(startTime=$startTime, endTime=$endTime, now=$now, pumpCount=$count)');
+      }
 
-        if (count > 0 && count % 10 == 0) {
-          Log.d('ConvenientTestInteraction', 'pumpAndSettleWithRunAsync has been running for $count cycles');
-        }
+      if (count > 0 && count % 10 == 0) {
+        Log.d('ConvenientTestInteraction', 'pumpAndSettleWithRunAsync has been running for $count cycles');
+      }
 
-        await pumpWithRunAsync(
-          pumpDuration: pumpDuration,
-          realDelayDuration: realDelayDuration,
-        );
-        count++;
-      } while (!await canStop());
-    });
+      await pumpWithRunAsync(
+        pumpDuration: pumpDuration,
+        realDelayDuration: realDelayDuration,
+      );
+      count++;
+    } while (!await canStop());
+    // });
   }
 
   /// Like [pump], but allows real async tasks to be executed
