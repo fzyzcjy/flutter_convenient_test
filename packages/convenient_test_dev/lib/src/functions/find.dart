@@ -272,7 +272,14 @@ class TFinderCommand extends TCommand {
 
     await act(log);
 
-    await t.tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
+    try {
+      await t.tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
+    } catch (e, s) {
+      await log.update(logTitle, 'doing pump, when $logMessage',
+          type: LogSubEntryType.ASSERT_FAIL, error: '$e', stackTrace: '$s', printing: true);
+      await log.snapshot(name: 'failed');
+      rethrow;
+    }
 
     await log.snapshot(name: 'after');
   }
