@@ -310,6 +310,9 @@ class _HomePageLogEntryScreenshotPreview extends StatelessWidget {
   }
 
   Widget _buildPortalFollower(BuildContext context, {required double width}) {
+    final highlightStore = GetIt.I.get<HighlightStore>();
+    final highlight = highlightStore.highlightLogEntryId == logEntryId;
+
     final snapshot = _calcInterestSnapshot();
     if (snapshot == null) return const SizedBox();
 
@@ -317,7 +320,9 @@ class _HomePageLogEntryScreenshotPreview extends StatelessWidget {
       width: width,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
+          border: highlight //
+              ? Border.all(color: Theme.of(context).primaryColor, width: 2)
+              : Border.all(color: Colors.grey),
         ),
         child: Image.memory(snapshot.value),
       ),
