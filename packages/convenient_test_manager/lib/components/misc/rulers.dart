@@ -6,7 +6,7 @@ class RulerDecoration extends StatelessWidget {
 
   const RulerDecoration({super.key, required this.rulerSize, required this.child});
 
-  static const _kRulerThickness = 24.0;
+  static const _kRulerThickness = 20.0;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class RulerDecoration extends StatelessWidget {
         if (rulerSize != null) ...[
           Positioned(
             left: 0,
-            top: 0,
+            top: _kRulerThickness,
             bottom: 0,
             width: _kRulerThickness,
             child: RotatedBox(
@@ -31,7 +31,7 @@ class RulerDecoration extends StatelessWidget {
           ),
           Positioned(
             top: 0,
-            left: 0,
+            left: _kRulerThickness,
             right: 0,
             height: _kRulerThickness,
             child: _buildRuler(rulerLength: rulerSize.width),
@@ -48,19 +48,31 @@ class RulerDecoration extends StatelessWidget {
       return Stack(
         children: [
           for (var rulerValue = 0; rulerValue < rulerLength; rulerValue += 100)
-            _buildTick(rulerValue: rulerValue, rulerToWidgetSizeMultiplier: rulerToWidgetSizeMultiplier),
-          _buildTick(rulerValue: rulerLength.round(), rulerToWidgetSizeMultiplier: rulerToWidgetSizeMultiplier),
+            ..._buildTick(rulerValue: rulerValue, rulerToWidgetSizeMultiplier: rulerToWidgetSizeMultiplier),
+          ..._buildTick(rulerValue: rulerLength.round(), rulerToWidgetSizeMultiplier: rulerToWidgetSizeMultiplier),
         ],
       );
     });
   }
 
-  Widget _buildTick({required int rulerValue, required double rulerToWidgetSizeMultiplier}) {
-    return Positioned(
-      top: 0,
-      bottom: 0,
-      left: rulerToWidgetSizeMultiplier * rulerValue,
-      child: Text('$rulerValue'),
-    );
+  List<Widget> _buildTick({required int rulerValue, required double rulerToWidgetSizeMultiplier}) {
+    final left = rulerToWidgetSizeMultiplier * rulerValue;
+    return [
+      Positioned(
+        top: 0,
+        bottom: 0,
+        left: left + 2,
+        child: Text('$rulerValue'),
+      ),
+      Positioned(
+        top: 0,
+        bottom: 0,
+        left: left,
+        child: Container(
+          width: 1,
+          color: Colors.grey,
+        ),
+      ),
+    ];
   }
 }
