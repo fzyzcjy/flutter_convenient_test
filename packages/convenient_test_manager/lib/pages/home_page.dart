@@ -89,20 +89,39 @@ class _Body extends StatelessWidget {
       );
     }
 
-    return Row(
+    return Stack(
       children: [
-        const Expanded(
-          flex: 1,
-          child: HomePageCommandInfoPanel(),
+        Row(
+          children: [
+            const Expanded(
+              flex: 1,
+              child: HomePageCommandInfoPanel(),
+            ),
+            if (homePageStore.expandSecondaryPanel) ...[
+              Container(width: 8),
+              Container(width: 1, color: Theme.of(context).colorScheme.outline),
+              const Expanded(
+                flex: 1,
+                child: HomePageSecondaryPanel(),
+              ),
+            ],
+          ],
         ),
-        if (homePageStore.expandSecondaryPanel) ...[
-          Container(width: 8),
-          Container(width: 1, color: Theme.of(context).colorScheme.outline),
-          const Expanded(
-            flex: 1,
-            child: HomePageSecondaryPanel(),
+        if (!homePageStore.expandSecondaryPanel)
+          Positioned(
+            right: 4,
+            top: 4,
+            child: SizedBox(
+              height: 32,
+              child: Material(
+                color: Theme.of(context).colorScheme.background,
+                child: OutlinedButton(
+                  onPressed: () => homePageStore.expandSecondaryPanel = true,
+                  child: const Text('Expand secondary panel'),
+                ),
+              ),
+            ),
           ),
-        ],
       ],
     );
   }
