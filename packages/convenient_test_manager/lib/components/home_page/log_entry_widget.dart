@@ -8,6 +8,7 @@ import 'package:convenient_test_manager/stores/video_player_store.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 import 'package:get_it/get_it.dart';
 
 class HomePageLogEntryWidget extends StatelessWidget {
@@ -28,7 +29,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final homePageStore = GetIt.I.get<HomePageStore>();
 
-    const kScreenshotPeriod = 4;
+    const kScreenshotPeriod = 5;
     final screenshotIndexModPeriod = order % kScreenshotPeriod;
 
     return Observer(builder: (context) {
@@ -293,6 +294,17 @@ class _HomePageLogEntryScreenshotPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return PortalTarget(
+      anchor: const Aligned(
+        follower: Alignment.topCenter,
+        target: Alignment.topCenter,
+      ),
+      portalFollower: _buildPortalFollower(context),
+      child: const SizedBox(),
+    );
+  }
+
+  Widget _buildPortalFollower(BuildContext context) {
+    return Text('TODO');
   }
 }

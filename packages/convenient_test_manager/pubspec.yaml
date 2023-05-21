@@ -38,6 +38,7 @@ dependencies:
       url: https://github.com/fzyzcjy/mobx.dart
       ref: 2e447ae595fa61d5b7a9beec6bee6c1a1155b0f5
       path: flutter_mobx
+  flutter_portal: ^1.1.3
   flutter_test:
     sdk: flutter
   get_it: ^7.0.0
