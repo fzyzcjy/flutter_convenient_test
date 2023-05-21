@@ -13,6 +13,9 @@ abstract class _HomePageStore with Store {
   @observable
   var activeSecondaryPanelTab = HomePageSecondaryPanelTab.screenshot;
 
+  @observable
+  var expandSecondaryPanel = true;
+
   final itemScrollController = ItemScrollController();
   final itemPositionsListener = ItemPositionsListener.create();
 

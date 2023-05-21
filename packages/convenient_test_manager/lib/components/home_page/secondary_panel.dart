@@ -63,10 +63,25 @@ class _SecondaryPanelTabBar extends StatelessWidget {
       if (tab == homePageStore.activeSecondaryPanelTab) selected[i] = true;
     }
 
-    return ToggleButtons(
-      isSelected: selected,
-      children: tabWidgets,
-      onPressed: (idx) => homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.values[idx],
+    return SizedBox(
+      height: 32,
+      child: Row(
+        children: [
+          ToggleButtons(
+            isSelected: selected,
+            children: tabWidgets,
+            onPressed: (idx) => homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.values[idx],
+          ),
+          const SizedBox(width: 12),
+          SizedBox(
+            height: 32,
+            child: OutlinedButton(
+              onPressed: () => homePageStore.expandSecondaryPanel = false,
+              child: const Text('Collapse'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/misc/enhanced_selectable_text.dart';
 import 'package:convenient_test_manager/components/misc/rotate_animation.dart';
@@ -8,6 +11,7 @@ import 'package:convenient_test_manager/stores/video_player_store.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 import 'package:get_it/get_it.dart';
 
 class HomePageLogEntryWidget extends StatelessWidget {
@@ -26,99 +30,121 @@ class HomePageLogEntryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final logStore = GetIt.I.get<LogStore>();
-    final highlightStore = GetIt.I.get<HighlightStore>();
+    final homePageStore = GetIt.I.get<HomePageStore>();
 
-    // const kSkipTypes = [
-    //   LogEntryType.TEST_START,
-    //   LogEntryType.TEST_BODY,
-    //   LogEntryType.TEST_END,
-    // ];
+    const kScreenshotPeriod = 8;
+    final screenshotIndexModPeriod = order % kScreenshotPeriod;
 
-    return Observer(builder: (_) {
-      final logSubEntryIds = logStore.logSubEntryInEntry[logEntryId];
-      if (logSubEntryIds == null) return const SizedBox.shrink();
-      final interestLogSubEntry = logStore.logSubEntryMap[logSubEntryIds.last];
-      if (interestLogSubEntry == null) return const SizedBox.shrink();
-
-      final isSection = interestLogSubEntry.type == LogSubEntryType.SECTION;
-
-      // if (kSkipTypes.contains(logEntry.type)) {
-      //   return Container();
-      // }
-
-      final active = highlightStore.highlightLogEntryId == logEntryId;
-
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Observer(builder: (context) {
+      return Row(
         children: [
-          InkWell(
-            onHover: (hovering) {
-              if (highlightStore.enableHoverMode && hovering) {
-                _handleTapOrHover(interestLogSubEntry, targetState: true);
-              }
-            },
-            onTap: () => _handleTapOrHover(interestLogSubEntry, targetState: !active),
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              margin: isSection //
-                  ? const EdgeInsets.only(left: 32, top: 16)
-                  : const EdgeInsets.only(left: 32),
-              decoration: BoxDecoration(
-                color: _calcDecorationColor(context, isSection: isSection, active: active),
-                border: Border(
-                  left: running ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 2) : BorderSide.none,
-                  // top: isSection ? BorderSide(color: Theme.of(context).primaryColor, width: 2) : BorderSide.none,
-                ),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 24,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: running //
-                          ? const RotateAnimation(
-                              duration: Duration(seconds: 2),
-                              child: Icon(
-                                Icons.autorenew,
-                                size: 16,
-                                color: Colors.indigo,
-                              ),
-                            )
-                          : Center(
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 4, left: 8),
-                                child: Text(
-                                  '$order',
-                                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 9),
-                                ),
-                              ),
-                            ),
-                    ),
-                  ),
-                  Container(width: 12),
-                  _buildTitle(interestLogSubEntry, context),
-                  Container(width: 12),
-                  Expanded(
-                    child: EnhancedSelectableText(
-                      interestLogSubEntry.message,
-                      enableCopyAllButton: false,
-                    ),
-                  ),
-                  Container(width: 4),
-                  _buildTime(logSubEntryIds: logSubEntryIds, context: context),
-                  Container(width: 4),
-                  Container(width: 4),
-                ],
+          Expanded(
+            flex: kScreenshotPeriod,
+            child: _buildCore(context),
+          ),
+          if (!homePageStore.expandSecondaryPanel) ...[
+            _buildSpacer(flex: screenshotIndexModPeriod),
+            Expanded(
+              flex: 1,
+              child: _HomePageLogEntryScreenshotPreview(
+                logEntryId: logEntryId,
               ),
             ),
-          ),
-          if (interestLogSubEntry.error.isNotEmpty) _buildError(context, interestLogSubEntry)
+            _buildSpacer(flex: kScreenshotPeriod - 1 - screenshotIndexModPeriod),
+          ]
         ],
       );
     });
+  }
+
+  Widget _buildSpacer({required int flex}) => flex <= 0 ? const SizedBox.shrink() : Spacer(flex: flex);
+
+  Widget _buildCore(BuildContext context) {
+    final logStore = GetIt.I.get<LogStore>();
+    final highlightStore = GetIt.I.get<HighlightStore>();
+
+    final logSubEntryIds = logStore.logSubEntryInEntry[logEntryId];
+    if (logSubEntryIds == null) return const SizedBox.shrink();
+    final interestLogSubEntry = logStore.logSubEntryMap[logSubEntryIds.last];
+    if (interestLogSubEntry == null) return const SizedBox.shrink();
+
+    final isSection = interestLogSubEntry.type == LogSubEntryType.SECTION;
+
+    // if (kSkipTypes.contains(logEntry.type)) {
+    //   return Container();
+    // }
+
+    final active = highlightStore.highlightLogEntryId == logEntryId;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InkWell(
+          onHover: (hovering) {
+            if (highlightStore.enableHoverMode && hovering) {
+              _handleTapOrHover(interestLogSubEntry, targetState: true);
+            }
+          },
+          onTap: () => _handleTapOrHover(interestLogSubEntry, targetState: !active),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            margin: isSection //
+                ? const EdgeInsets.only(left: 32, top: 16)
+                : const EdgeInsets.only(left: 32),
+            decoration: BoxDecoration(
+              color: _calcDecorationColor(context, isSection: isSection, active: active),
+              border: Border(
+                left: running ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 2) : BorderSide.none,
+                // top: isSection ? BorderSide(color: Theme.of(context).primaryColor, width: 2) : BorderSide.none,
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 24,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: running //
+                        ? const RotateAnimation(
+                            duration: Duration(seconds: 2),
+                            child: Icon(
+                              Icons.autorenew,
+                              size: 16,
+                              color: Colors.indigo,
+                            ),
+                          )
+                        : Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 4, left: 8),
+                              child: Text(
+                                '$order',
+                                style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 9),
+                              ),
+                            ),
+                          ),
+                  ),
+                ),
+                Container(width: 12),
+                _buildTitle(interestLogSubEntry, context),
+                Container(width: 12),
+                Expanded(
+                  child: EnhancedSelectableText(
+                    interestLogSubEntry.message,
+                    enableCopyAllButton: false,
+                  ),
+                ),
+                Container(width: 4),
+                _buildTime(logSubEntryIds: logSubEntryIds, context: context),
+                Container(width: 4),
+                Container(width: 4),
+              ],
+            ),
+          ),
+        ),
+        if (interestLogSubEntry.error.isNotEmpty) _buildError(context, interestLogSubEntry)
+      ],
+    );
   }
 
   Color _calcDecorationColor(BuildContext context, {required bool isSection, required bool active}) {
@@ -262,4 +288,54 @@ class HomePageLogEntryWidget extends StatelessWidget {
   }
 
   String _formatDuration(Duration d) => (d.inMilliseconds / 1000).toStringAsFixed(1);
+}
+
+class _HomePageLogEntryScreenshotPreview extends StatelessWidget {
+  final int logEntryId;
+
+  const _HomePageLogEntryScreenshotPreview({required this.logEntryId});
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (_, constraints) => PortalTarget(
+        anchor: const Aligned(
+          follower: Alignment.topCenter,
+          target: Alignment.topCenter,
+        ),
+        portalFollower: _buildPortalFollower(context, width: constraints.maxWidth),
+        child: const SizedBox(),
+      ),
+    );
+  }
+
+  Widget _buildPortalFollower(BuildContext context, {required double width}) {
+    final highlightStore = GetIt.I.get<HighlightStore>();
+    final highlight = highlightStore.highlightLogEntryId == logEntryId;
+
+    final snapshot = _calcInterestSnapshot();
+    if (snapshot == null) return const SizedBox();
+
+    return SizedBox(
+      width: width,
+      child: Container(
+        decoration: BoxDecoration(
+          border: highlight //
+              ? Border.all(color: Theme.of(context).primaryColor, width: 2)
+              : Border.all(color: Colors.grey),
+        ),
+        child: Image.memory(snapshot.value),
+      ),
+    );
+  }
+
+  MapEntry<String, Uint8List>? _calcInterestSnapshot() {
+    final logStore = GetIt.I.get<LogStore>();
+    final snapshots = logStore.snapshotInLog[logEntryId] ?? const <String, Uint8List>{};
+
+    for (final key in const ['after', 'before']) {
+      if (snapshots.containsKey(key)) return MapEntry(key, snapshots[key]!);
+    }
+    return snapshots.entries.firstOrNull;
+  }
 }
