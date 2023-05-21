@@ -26,10 +26,34 @@ class HomePageLogEntryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homePageStore = GetIt.I.get<HomePageStore>();
+
+    const kScreenshotPeriod = 4;
+    final screenshotIndexModPeriod = order % kScreenshotPeriod;
+
     return Observer(builder: (context) {
-      return _buildCore(context);
+      return Row(
+        children: [
+          Expanded(
+            flex: kScreenshotPeriod,
+            child: _buildCore(context),
+          ),
+          if (!homePageStore.expandSecondaryPanel) ...[
+            _buildSpacer(flex: screenshotIndexModPeriod),
+            Expanded(
+              flex: 1,
+              child: _HomePageLogEntryScreenshotPreview(
+                logEntryId: logEntryId,
+              ),
+            ),
+            _buildSpacer(flex: kScreenshotPeriod - 1 - screenshotIndexModPeriod),
+          ]
+        ],
+      );
     });
   }
+
+  Widget _buildSpacer({required int flex}) => flex <= 0 ? const SizedBox.shrink() : Spacer(flex: flex);
 
   Widget _buildCore(BuildContext context) {
     final logStore = GetIt.I.get<LogStore>();
@@ -260,4 +284,15 @@ class HomePageLogEntryWidget extends StatelessWidget {
   }
 
   String _formatDuration(Duration d) => (d.inMilliseconds / 1000).toStringAsFixed(1);
+}
+
+class _HomePageLogEntryScreenshotPreview extends StatelessWidget {
+  final int logEntryId;
+
+  const _HomePageLogEntryScreenshotPreview({required this.logEntryId});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }
