@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:convenient_test_manager/components/misc/rulers.dart';
 import 'package:convenient_test_manager/stores/highlight_store.dart';
 import 'package:convenient_test_manager_dart/stores/log_store.dart';
 import 'package:flutter/material.dart';
@@ -91,12 +92,15 @@ class HomePageScreenshotPanel extends StatelessWidget {
             const SizedBox(height: 4),
             Expanded(
               child: Center(
-                // ignore: use_decorated_box
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
+                child: RulerDecoration(
+                  rulerSize: TODO,
+                  // ignore: use_decorated_box
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
+                    ),
+                    child: Image.memory(bytes),
                   ),
-                  child: Image.memory(bytes),
                 ),
               ),
             ),
