@@ -32,7 +32,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final homePageStore = GetIt.I.get<HomePageStore>();
 
-    const kScreenshotPeriod = 5;
+    const kScreenshotPeriod = 8;
     final screenshotIndexModPeriod = order % kScreenshotPeriod;
 
     return Observer(builder: (context) {
