@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:collection/collection.dart';
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_manager/components/misc/enhanced_selectable_text.dart';
 import 'package:convenient_test_manager/components/misc/rotate_animation.dart';
@@ -294,17 +297,40 @@ class _HomePageLogEntryScreenshotPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PortalTarget(
-      anchor: const Aligned(
-        follower: Alignment.topCenter,
-        target: Alignment.topCenter,
+    return LayoutBuilder(
+      builder: (_, constraints) => PortalTarget(
+        anchor: const Aligned(
+          follower: Alignment.topCenter,
+          target: Alignment.topCenter,
+        ),
+        portalFollower: _buildPortalFollower(context, width: constraints.maxWidth),
+        child: const SizedBox(),
       ),
-      portalFollower: _buildPortalFollower(context),
-      child: const SizedBox(),
     );
   }
 
-  Widget _buildPortalFollower(BuildContext context) {
-    return Text('TODO');
+  Widget _buildPortalFollower(BuildContext context, {required double width}) {
+    final snapshot = _calcInterestSnapshot();
+    if (snapshot == null) return const SizedBox();
+
+    return SizedBox(
+      width: width,
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+        ),
+        child: Image.memory(snapshot.value),
+      ),
+    );
+  }
+
+  MapEntry<String, Uint8List>? _calcInterestSnapshot() {
+    final logStore = GetIt.I.get<LogStore>();
+    final snapshots = logStore.snapshotInLog[logEntryId] ?? const <String, Uint8List>{};
+
+    for (final key in const ['after', 'before']) {
+      if (snapshots.containsKey(key)) return MapEntry(key, snapshots[key]!);
+    }
+    return snapshots.entries.firstOrNull;
   }
 }
