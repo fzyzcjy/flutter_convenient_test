@@ -95,12 +95,14 @@ class _Body extends StatelessWidget {
           flex: 1,
           child: HomePageCommandInfoPanel(),
         ),
-        Container(width: 8),
-        Container(width: 1, color: Theme.of(context).colorScheme.outline),
-        const Expanded(
-          flex: 1,
-          child: HomePageSecondaryPanel(),
-        ),
+        if (homePageStore.expandSecondaryPanel) ...[
+          Container(width: 8),
+          Container(width: 1, color: Theme.of(context).colorScheme.outline),
+          const Expanded(
+            flex: 1,
+            child: HomePageSecondaryPanel(),
+          ),
+        ],
       ],
     );
   }
