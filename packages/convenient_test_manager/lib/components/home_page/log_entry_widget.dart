@@ -26,99 +26,97 @@ class HomePageLogEntryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Observer(builder: (context) {
+      return _buildCore(context);
+    });
+  }
+
+  Widget _buildCore(BuildContext context) {
     final logStore = GetIt.I.get<LogStore>();
     final highlightStore = GetIt.I.get<HighlightStore>();
 
-    // const kSkipTypes = [
-    //   LogEntryType.TEST_START,
-    //   LogEntryType.TEST_BODY,
-    //   LogEntryType.TEST_END,
-    // ];
+    final logSubEntryIds = logStore.logSubEntryInEntry[logEntryId];
+    if (logSubEntryIds == null) return const SizedBox.shrink();
+    final interestLogSubEntry = logStore.logSubEntryMap[logSubEntryIds.last];
+    if (interestLogSubEntry == null) return const SizedBox.shrink();
 
-    return Observer(builder: (_) {
-      final logSubEntryIds = logStore.logSubEntryInEntry[logEntryId];
-      if (logSubEntryIds == null) return const SizedBox.shrink();
-      final interestLogSubEntry = logStore.logSubEntryMap[logSubEntryIds.last];
-      if (interestLogSubEntry == null) return const SizedBox.shrink();
+    final isSection = interestLogSubEntry.type == LogSubEntryType.SECTION;
 
-      final isSection = interestLogSubEntry.type == LogSubEntryType.SECTION;
+    // if (kSkipTypes.contains(logEntry.type)) {
+    //   return Container();
+    // }
 
-      // if (kSkipTypes.contains(logEntry.type)) {
-      //   return Container();
-      // }
+    final active = highlightStore.highlightLogEntryId == logEntryId;
 
-      final active = highlightStore.highlightLogEntryId == logEntryId;
-
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            onHover: (hovering) {
-              if (highlightStore.enableHoverMode && hovering) {
-                _handleTapOrHover(interestLogSubEntry, targetState: true);
-              }
-            },
-            onTap: () => _handleTapOrHover(interestLogSubEntry, targetState: !active),
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              margin: isSection //
-                  ? const EdgeInsets.only(left: 32, top: 16)
-                  : const EdgeInsets.only(left: 32),
-              decoration: BoxDecoration(
-                color: _calcDecorationColor(context, isSection: isSection, active: active),
-                border: Border(
-                  left: running ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 2) : BorderSide.none,
-                  // top: isSection ? BorderSide(color: Theme.of(context).primaryColor, width: 2) : BorderSide.none,
-                ),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 24,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: running //
-                          ? const RotateAnimation(
-                              duration: Duration(seconds: 2),
-                              child: Icon(
-                                Icons.autorenew,
-                                size: 16,
-                                color: Colors.indigo,
-                              ),
-                            )
-                          : Center(
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 4, left: 8),
-                                child: Text(
-                                  '$order',
-                                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 9),
-                                ),
-                              ),
-                            ),
-                    ),
-                  ),
-                  Container(width: 12),
-                  _buildTitle(interestLogSubEntry, context),
-                  Container(width: 12),
-                  Expanded(
-                    child: EnhancedSelectableText(
-                      interestLogSubEntry.message,
-                      enableCopyAllButton: false,
-                    ),
-                  ),
-                  Container(width: 4),
-                  _buildTime(logSubEntryIds: logSubEntryIds, context: context),
-                  Container(width: 4),
-                  Container(width: 4),
-                ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InkWell(
+          onHover: (hovering) {
+            if (highlightStore.enableHoverMode && hovering) {
+              _handleTapOrHover(interestLogSubEntry, targetState: true);
+            }
+          },
+          onTap: () => _handleTapOrHover(interestLogSubEntry, targetState: !active),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            margin: isSection //
+                ? const EdgeInsets.only(left: 32, top: 16)
+                : const EdgeInsets.only(left: 32),
+            decoration: BoxDecoration(
+              color: _calcDecorationColor(context, isSection: isSection, active: active),
+              border: Border(
+                left: running ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 2) : BorderSide.none,
+                // top: isSection ? BorderSide(color: Theme.of(context).primaryColor, width: 2) : BorderSide.none,
               ),
             ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 24,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: running //
+                        ? const RotateAnimation(
+                            duration: Duration(seconds: 2),
+                            child: Icon(
+                              Icons.autorenew,
+                              size: 16,
+                              color: Colors.indigo,
+                            ),
+                          )
+                        : Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 4, left: 8),
+                              child: Text(
+                                '$order',
+                                style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 9),
+                              ),
+                            ),
+                          ),
+                  ),
+                ),
+                Container(width: 12),
+                _buildTitle(interestLogSubEntry, context),
+                Container(width: 12),
+                Expanded(
+                  child: EnhancedSelectableText(
+                    interestLogSubEntry.message,
+                    enableCopyAllButton: false,
+                  ),
+                ),
+                Container(width: 4),
+                _buildTime(logSubEntryIds: logSubEntryIds, context: context),
+                Container(width: 4),
+                Container(width: 4),
+              ],
+            ),
           ),
-          if (interestLogSubEntry.error.isNotEmpty) _buildError(context, interestLogSubEntry)
-        ],
-      );
-    });
+        ),
+        if (interestLogSubEntry.error.isNotEmpty) _buildError(context, interestLogSubEntry)
+      ],
+    );
   }
 
   Color _calcDecorationColor(BuildContext context, {required bool isSection, required bool active}) {
