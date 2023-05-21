@@ -42,15 +42,25 @@ class RulerDecoration extends StatelessWidget {
   }
 
   Widget _buildRuler({required double rulerLength}) {
-    return Row(
-      children: [
-        for (var rulerValue = 0; rulerValue < rulerLength; rulerValue += 100) _buildTick(rulerValue: rulerValue),
-        _buildTick(rulerValue: rulerLength.round()),
-      ],
-    );
+    return LayoutBuilder(builder: (_, constraints) {
+      final rulerToWidgetSizeMultiplier = constraints.maxWidth / rulerLength;
+
+      return Stack(
+        children: [
+          for (var rulerValue = 0; rulerValue < rulerLength; rulerValue += 100)
+            _buildTick(rulerValue: rulerValue, rulerToWidgetSizeMultiplier: rulerToWidgetSizeMultiplier),
+          _buildTick(rulerValue: rulerLength.round(), rulerToWidgetSizeMultiplier: rulerToWidgetSizeMultiplier),
+        ],
+      );
+    });
   }
 
-  Widget _buildTick({required int rulerValue}) {
-    return Text('$rulerValue');
+  Widget _buildTick({required int rulerValue, required double rulerToWidgetSizeMultiplier}) {
+    return Positioned(
+      top: 0,
+      bottom: 0,
+      left: rulerToWidgetSizeMultiplier * rulerValue,
+      child: Text('$rulerValue'),
+    );
   }
 }
