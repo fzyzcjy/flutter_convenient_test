@@ -7,4 +7,11 @@ void main() {
     await tester.pumpWidget(Container());
     await debugWidgetTestSaveScreenshot(find.byType(Container)); // should not have error
   });
+
+  testWidgets('runAsync when error', (tester) async {
+    await tester.runAsync(() async => throw Exception('hello'));
+    final Object? exception = tester.binding.safeTakeExceptionOrDetails();
+    debugPrint('exception=$exception');
+    expect(exception, isNotNull);
+  });
 }
