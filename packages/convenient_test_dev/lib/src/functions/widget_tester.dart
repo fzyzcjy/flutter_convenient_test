@@ -150,14 +150,18 @@ extension ExtWidgetTesterPump on WidgetTester {
       return callback();
     } else {
       final result = await runAsync(callback);
+
       // runAsync will eat error https://github.com/fzyzcjy/yplusplus/issues/8054#issuecomment-1503370451
-      expect(binding._safeTakeExceptionOrDetails(), null);
+      final Object? error = binding.safeTakeExceptionOrDetails();
+      if (error != null) debugPrint('runAsyncEnhanced see error:\n$error');
+      expect(error, isNull);
+
       return result as T;
     }
   }
 }
 
-extension on TestWidgetsFlutterBinding {
+extension ExtTestWidgetsFlutterBinding on TestWidgetsFlutterBinding {
   // Use this to allow code be run on both patched and original Flutter framework code #337
   bool? get _safeRunningAsyncTasks {
     try {
@@ -171,7 +175,8 @@ extension on TestWidgetsFlutterBinding {
     }
   }
 
-  dynamic _safeTakeExceptionOrDetails() {
+  @visibleForTesting
+  dynamic safeTakeExceptionOrDetails() {
     try {
       // ignore: avoid_dynamic_calls
       return (this as dynamic).takeExceptionDetails();
