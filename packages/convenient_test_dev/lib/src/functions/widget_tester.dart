@@ -153,7 +153,11 @@ extension ExtWidgetTesterPump on WidgetTester {
 
       // runAsync will eat error https://github.com/fzyzcjy/yplusplus/issues/8054#issuecomment-1503370451
       final Object? error = binding.safeTakeExceptionOrDetails();
-      if (error != null) debugPrint('runAsyncEnhanced see error:\n$error');
+      if (error != null) {
+        // https://github.com/fzyzcjy/yplusplus/issues/9072#issuecomment-1559562515
+        final errorMessage = error is FlutterErrorDetails ? 'e=${error.exception} s=${error.stack}' : '$error';
+        debugPrint('runAsyncEnhanced see error:\n$errorMessage');
+      }
       expect(error, isNull);
 
       return result as T;
