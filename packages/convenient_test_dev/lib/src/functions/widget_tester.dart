@@ -151,7 +151,7 @@ extension ExtWidgetTesterPump on WidgetTester {
     } else {
       final result = await runAsync(callback);
       // runAsync will eat error https://github.com/fzyzcjy/yplusplus/issues/8054#issuecomment-1503370451
-      expect(takeException(), null);
+      expect(binding._safeTakeExceptionOrDetails(), null);
       return result as T;
     }
   }
@@ -168,6 +168,16 @@ extension on TestWidgetsFlutterBinding {
       Log.d('ExtTestWidgetsFlutterBinding',
           '`binding.runningAsyncTasks` does not exist. Follow #337 to patch the code to get it.');
       return null;
+    }
+  }
+
+  dynamic _safeTakeExceptionOrDetails() {
+    try {
+      // ignore: avoid_dynamic_calls
+      return (this as dynamic).takeExceptionDetails();
+      // ignore: avoid_catching_errors
+    } on NoSuchMethodError {
+      return takeException();
     }
   }
 }
