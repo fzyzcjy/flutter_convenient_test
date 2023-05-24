@@ -66,6 +66,7 @@ extension ExtFinder on Finder {
 
 typedef ConvenientTestGetFinder = Finder Function(Object arg);
 
+// ignore: avoid-global-state
 ConvenientTestGetFinder convenientTestGetFinder = _defaultGetFinder;
 
 Finder _defaultGetFinder(Object arg) {
