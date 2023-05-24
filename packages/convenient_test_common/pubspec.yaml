@@ -24,3 +24,7 @@ dev_dependencies:
 # dependency_overrides:
 #   convenient_test_common_dart:
 #     path: ../convenient_test_common_dart
+
+dependency_overrides:
+  convenient_test_common_dart:
+    path: ../convenient_test_common_dart
