@@ -13,12 +13,10 @@ mixin _$VideoPlayerStore on _VideoPlayerStore, Store {
 
   @override
   VideoInfo? get activeVideo =>
-      (_$activeVideoComputed ??= Computed<VideoInfo?>(() => super.activeVideo,
-              name: '_VideoPlayerStore.activeVideo'))
+      (_$activeVideoComputed ??= Computed<VideoInfo?>(() => super.activeVideo, name: '_VideoPlayerStore.activeVideo'))
           .value;
 
-  late final _$activeVideoIdAtom =
-      Atom(name: '_VideoPlayerStore.activeVideoId', context: context);
+  late final _$activeVideoIdAtom = Atom(name: '_VideoPlayerStore.activeVideoId', context: context);
 
   @override
   int? get activeVideoId {
@@ -33,8 +31,7 @@ mixin _$VideoPlayerStore on _VideoPlayerStore, Store {
     });
   }
 
-  late final _$displayRangeAtom =
-      Atom(name: '_VideoPlayerStore.displayRange', context: context);
+  late final _$displayRangeAtom = Atom(name: '_VideoPlayerStore.displayRange', context: context);
 
   @override
   Tuple2<Duration, Duration> get displayRange {
@@ -49,9 +46,8 @@ mixin _$VideoPlayerStore on _VideoPlayerStore, Store {
     });
   }
 
-  late final _$playerPositionCorrespondingLogEntryIdAtom = Atom(
-      name: '_VideoPlayerStore.playerPositionCorrespondingLogEntryId',
-      context: context);
+  late final _$playerPositionCorrespondingLogEntryIdAtom =
+      Atom(name: '_VideoPlayerStore.playerPositionCorrespondingLogEntryId', context: context);
 
   @override
   int? get playerPositionCorrespondingLogEntryId {
@@ -61,8 +57,7 @@ mixin _$VideoPlayerStore on _VideoPlayerStore, Store {
 
   @override
   set playerPositionCorrespondingLogEntryId(int? value) {
-    _$playerPositionCorrespondingLogEntryIdAtom
-        .reportWrite(value, super.playerPositionCorrespondingLogEntryId, () {
+    _$playerPositionCorrespondingLogEntryIdAtom.reportWrite(value, super.playerPositionCorrespondingLogEntryId, () {
       super.playerPositionCorrespondingLogEntryId = value;
     });
   }

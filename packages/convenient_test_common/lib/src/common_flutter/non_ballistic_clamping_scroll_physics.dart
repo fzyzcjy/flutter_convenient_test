@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 // ignore: unnecessary_import
 import 'package:flutter/physics.dart';
 
@@ -51,6 +52,8 @@ class NonBallisticClampingScrollPhysics extends ScrollPhysics {
   @override
   Simulation? createBallisticSimulation(ScrollMetrics position, double velocity) {
     // Log.i(_kTag, 'createBallisticSimulation position=$position outOfRange=${position.outOfRange} velocity=$velocity');
+
+    final tolerance = toleranceFor(position);
 
     if (position.outOfRange) {
       double? end;

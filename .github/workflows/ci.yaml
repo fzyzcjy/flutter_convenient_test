@@ -8,20 +8,21 @@ on:
 
 jobs:
   flutter:
-    name: ${{ matrix.package_name }} on Flutter ${{ matrix.channel_version.channel }}
-    runs-on: ubuntu-latest
+    name: ${{ matrix.package_name_and_runs_on.package_name }} on Flutter ${{ matrix.channel_version.channel }}
+    runs-on: ${{ matrix.package_name_and_runs_on.runs_on }}
 
     strategy:
       fail-fast: false
       matrix:
-        package_name:
-          - convenient_test
-          - convenient_test/example
-          - convenient_test_common
-          - convenient_test_common_dart
-          - convenient_test_dev
-          - convenient_test_manager
-          - convenient_test_manager_dart
+        package_name_and_runs_on:
+          - {package_name: convenient_test, runs_on: ubuntu-latest}
+          - {package_name: convenient_test/example, runs_on: ubuntu-latest}
+          - {package_name: convenient_test_common, runs_on: ubuntu-latest}
+          - {package_name: convenient_test_common_dart, runs_on: ubuntu-latest}
+          - {package_name: convenient_test_dev, runs_on: ubuntu-latest}
+          # NOTE run `convenient_test_manager` on macos for its goldens
+          - {package_name: convenient_test_manager, runs_on: macos-latest}
+          - {package_name: convenient_test_manager_dart, runs_on: ubuntu-latest}
         channel_version:
           - { channel: stable }
           # - { channel: beta }
@@ -38,23 +39,23 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-        working-directory: packages/${{ matrix.package_name }}
+        working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
       - name: Analyze
         run: flutter analyze
-        working-directory: packages/${{ matrix.package_name }}
+        working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
       - name: Dart code metrics
         run: flutter pub run dart_code_metrics:metrics analyze lib --fatal-style --fatal-performance --fatal-warnings --set-exit-on-violation-level noted
-        working-directory: packages/${{ matrix.package_name }}
+        working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
       - name: Run tests
         run: flutter test
-        working-directory: packages/${{ matrix.package_name }}
+        working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
       - name: Check format
-        run: flutter format --set-exit-if-changed --line-length 120 .
-        working-directory: packages/${{ matrix.package_name }}
+        run: dart format --set-exit-if-changed --line-length 120 .
+        working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
   build_manager_macos:
     runs-on: macos-11
@@ -75,7 +76,7 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.1.2"
+          ruby-version: "2.7.0"
           bundler-cache: true
 
       - name: setup-cocoapods
