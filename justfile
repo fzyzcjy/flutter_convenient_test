@@ -12,7 +12,7 @@ build-runner:
     cd packages/convenient_test_manager && flutter pub run build_runner build --delete-conflicting-outputs
 
 format:
-    flutter format . --line-length 120
+    dart format . --line-length 120
 
 analyze:
     flutter analyze

@@ -53,7 +53,7 @@ jobs:
         working-directory: packages/${{ matrix.package_name }}
 
       - name: Check format
-        run: flutter format --set-exit-if-changed --line-length 120 .
+        run: dart format --set-exit-if-changed --line-length 120 .
         working-directory: packages/${{ matrix.package_name }}
 
   build_manager_macos:
