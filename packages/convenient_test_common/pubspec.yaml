@@ -14,7 +14,7 @@ dependencies:
   grpc: ^3.0.0
   mobx: ^2.0.7
   protobuf: ^2.0.0
-  quiver: ^3.0.1+1
+  quiver: ^3.2.1
   tuple: ^2.0.0
 dev_dependencies:
   dart_code_metrics: ">=4.15.0 <6.0.0"
