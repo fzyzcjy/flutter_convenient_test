@@ -216,6 +216,10 @@ For all options that are configurable and all environment variable names, please
 
 If you are trying to use this package with Android Virtual Emulator (AVD), you may need to set `kConvenientTestManagerHost` to `10.0.2.2` because of its [network topology](https://stackoverflow.com/questions/9808560/why-do-we-use-10-0-2-2-to-connect-to-local-web-server-instead-of-using-computer). Please see issue #253 for more details.
 
+### Limitations
+
+1. `Video replaying` feature is not yet implemented in Android (but feel free to PR!).
+
 ## Contributors
 
 For detailed PRs (excluding myself), please see [this link](https://github.com/fzyzcjy/flutter_convenient_test/pulls?q=is%3Apr+-author%3Afzyzcjy+).
