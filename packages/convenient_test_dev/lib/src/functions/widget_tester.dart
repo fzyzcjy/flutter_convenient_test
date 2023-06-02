@@ -45,6 +45,11 @@ extension ExtWidgetTesterEnterText on WidgetTester {
   }
 }
 
+/// When running `runAsyncEnhanced` and see exception, will call this checker.
+/// For example, you may want to ignore certain kinds of exceptions, such as network timeout
+// ignore: avoid-global-state
+void Function(Object?) convenientTestRunAsyncEnhancedExceptionChecker = (e) => expect(e, isNull);
+
 extension ExtWidgetTesterPump on WidgetTester {
   static const _kTag = 'ExtWidgetTester';
 
@@ -158,7 +163,8 @@ extension ExtWidgetTesterPump on WidgetTester {
         final errorMessage = error is FlutterErrorDetails ? 'e=${error.exception} s=${error.stack}' : '$error';
         debugPrint('runAsyncEnhanced see error:\n$errorMessage');
       }
-      expect(error, isNull);
+
+      convenientTestRunAsyncEnhancedExceptionChecker(error);
 
       return result as T;
     }
