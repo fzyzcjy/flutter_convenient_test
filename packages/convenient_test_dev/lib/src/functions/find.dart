@@ -295,12 +295,13 @@ class TRouteNameCommand extends TCommand {
     if (context == null) return null;
 
     // https://stackoverflow.com/questions/50817086/how-to-check-which-the-current-route-is?rq=1
-    late final Route<dynamic> currentRoute;
+    // it can be null, e.g. https://github.com/fzyzcjy/yplusplus/issues/9037#issuecomment-1573561445
+    Route<dynamic>? currentRoute;
     Navigator.popUntil(context, (route) {
       currentRoute = route;
       return true;
     });
-    return currentRoute.settings.name;
+    return currentRoute?.settings.name;
   }
 
   @override
