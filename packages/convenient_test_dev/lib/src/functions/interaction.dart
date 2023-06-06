@@ -7,15 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 extension ConvenientTestInteraction on ConvenientTest {
-  Future<void> visit(String routeName, {Object? arguments, bool? settle}) async {
-    final log = this.log('VISIT', routeName + (arguments != null ? ' arg=${jsonEncode(arguments)}' : ''));
+  Future<void> visit(String routeName, {Object? arguments, bool? settle, bool replace = false}) async {
+    final log = this.log('VISIT',
+        routeName + (arguments != null ? ' arg=${jsonEncode(arguments)}' : '') + (replace ? ' , replace' : ''));
 
     await pump();
     await log.snapshot(name: 'before');
 
     // If await, will wait forever until the page is popped - surely we do not want that
-    unawaited(
-        Navigator.pushNamed(myGetIt.get<ConvenientTestSlot>().getNavContext(this)!, routeName, arguments: arguments));
+    final context = myGetIt.get<ConvenientTestSlot>().getNavContext(this)!;
+    if (replace) {
+      // ignore: use_build_context_synchronously
+      unawaited(Navigator.pushReplacementNamed(context, routeName, arguments: arguments));
+    } else {
+      // ignore: use_build_context_synchronously
+      unawaited(Navigator.pushNamed(context, routeName, arguments: arguments));
+    }
 
     await tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
     await log.snapshot(name: 'after');
