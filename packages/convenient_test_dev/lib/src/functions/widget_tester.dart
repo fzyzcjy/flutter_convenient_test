@@ -83,7 +83,19 @@ extension ExtWidgetTesterPump on WidgetTester {
   }
 
   /// Like [pumpAndSettle], but allows real async tasks to be executed
-  Future<void> pumpAndSettleWithRunAsync() async => await pumpWithRunAsyncUntil(() => !binding.hasScheduledFrame);
+  Future<void> pumpAndSettleWithRunAsync({
+    Duration? pumpDuration,
+    Duration? realDelayDuration,
+    Duration? fakeClockTimeout,
+    Duration? wallClockTimeout,
+  }) async =>
+      await pumpWithRunAsyncUntil(
+        () => !binding.hasScheduledFrame,
+        pumpDuration: pumpDuration,
+        realDelayDuration: realDelayDuration,
+        fakeClockTimeout: fakeClockTimeout,
+        wallClockTimeout: wallClockTimeout,
+      );
 
   // need `runAsync` between pumps, because when running in widget test, the time in pump is fake.
   // If we do not `runAsync` and *really* sleep, things like real network requests may not be able to be finished.
