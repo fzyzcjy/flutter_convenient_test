@@ -1,3 +1,10 @@
+## 1.3.0
+
+* Enjoy 5x speedup: Able to execute your tests not only on simulator/device, but also on host computer (much faster), without changing any code.
+* Abundant information for errors: When something is not working, it tries to print out as much information as possible to help you quickly debug.
+* Enhanced golden: GUI to check golden changes, allow a few pixels to be different, screenshot widgets above your widget, etc (Standalone feature, does not require full convenient_test)
+* Utilities: Enter text without replacing, pump with run async, etc. (Standalone feature, does not require full convenient_test)
+
 ## 1.2.1
 
 * Fix CI #287 (thanks @AlexV525)
