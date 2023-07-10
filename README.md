@@ -18,7 +18,7 @@ Write and debug tests easily, with full action history, time travel, screenshots
 * **Being interactive**: Play with the app interactively, again within seconds.
 * **Isolated**: One test will no longer destroy environment of other tests - run each with full isolation (optional feature).
 * **Abundant information for errors**: When something is not working, it tries to print out as much information as possible to help you quickly debug.
-* **Enhanced golden**: Allow a few pixels to be different, screenshot widgets above your widget, etc (Standalone feature, does not require full convenient_test)
+* **Enhanced golden**: GUI to check golden changes, allow a few pixels to be different, screenshot widgets above your widget, etc (Standalone feature, does not require full convenient_test)
 * **Utilities**: Enter text without replacing, pump with run async, etc. (Standalone feature, does not require full convenient_test)
 
 And also...
