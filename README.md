@@ -17,7 +17,9 @@ Write and debug tests easily, with full action history, time travel, screenshots
 * **Retryability**: No manual `pump`, wait or retry anymore. Just write down what you want, and the framework will retry and wait.
 * **Being interactive**: Play with the app interactively, again within seconds.
 * **Isolated**: One test will no longer destroy environment of other tests - run each with full isolation (optional feature).
-* **Enhanced golden**: Allow a few pixels to be different, screenshot widgets above your widget, etc (Standalone feature)
+* **Abundant information for errors**: When something is not working, it tries to print out as much information as possible to help you quickly debug.
+* **Enhanced golden**: Allow a few pixels to be different, screenshot widgets above your widget, etc (Standalone feature, does not require full convenient_test)
+* **Utilities**: Enter text without replacing, pump with run async, etc. (Standalone feature, does not require full convenient_test)
 
 And also...
 
@@ -131,6 +133,14 @@ This is especially helpful in big projects (such as mine), when an end-to-end se
 
 Technical details: If this mode is enabled, a hot restart will be performed after each attempt of each test.
 
+### Abundant information for errors
+
+When something is not working, it tries to print out as much information as possible to help you quickly debug.
+
+For example, suppose you provide a `finder` that accidentally matches two widgets. Then, convenient_test will tell you the location of each widget, as well as a chain of render objects. Together with the screenshots/videos it provides, the finder problem can be fixed easily.
+
+<sup><sub>Remark: The GIFs are outdated and does not show this feature.</sub></sup>
+
 ### Enhanced golden
 
 This is a standalone feature, i.e. you can use it without using convenient_test.
@@ -150,6 +160,11 @@ goldenFileComparator = EnhancedLocalFileComparator.configFromCurrent(); // setup
 final config = GoldenConfig(...);
 await expectLater(whatever, matchesGoldenFile(EnhancedLocalFileComparator.createUri('something.png', config)));
 ```
+
+### Utilities
+
+* Enter text without replacing (`enterTextWithoutReplace`): The standard `enterText` replaces the old content, making it inconvenient if we want to append some text - which is the normal behavior of humans.
+* Pump with run async (`runAsyncAndPumpUntil`, `pumpAndSettleWithRunAsync`, etc): If your code does something that needs "real" async, a simple `pumpAndSettle` will not work, so this function is created.
 
 ### `integration_test` is still there
 
