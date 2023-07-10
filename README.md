@@ -16,6 +16,7 @@ Write and debug tests easily, with full action history, time travel, screenshots
 * **Retryability**: No manual `pump`, wait or retry anymore. Just write down what you want, and the framework will retry and wait.
 * **Being interactive**: Play with the app interactively, again within seconds.
 * **Isolated**: One test will no longer destroy environment of other tests - run each with full isolation (optional feature).
+* TODO: explain new features
 
 And also...
 
@@ -25,6 +26,10 @@ And also...
 * **Miscellaneous**: Visually see target regions, run single test/group within seconds, raw logs...
 
 ## 📷 Quick demo
+
+**NOTE**: The video only contains features up to 2022.05. For new features, please refer to text and screenshots in the following sections.
+
+TODO: add link
 
 <!--README_VIDEO_REPLACEMENT_PLACEHOLDER_ONE-->
 
@@ -39,6 +44,14 @@ It has been used extensively in my own 200kloc Flutter app in production environ
 P.S. Surely, this package - especially the doc - is not yet perfect. If having problems, just [create an issue](https://github.com/fzyzcjy/flutter_convenient_test/issues) and I usually reply quite quickly.
 
 ## 📚 Features
+
+### 5x speedup & remove mobile devices
+
+In addition to the standard way of integration tests, i.e. run them on a real mobile device / a simulator, this package supports running the exact same testing code on your host computer (Windows/MacOS/Linux) with similar experience.
+
+This leads to a big speedup and reduction of needed resources. As we all know, running code on simulators / real devices are slow, and hard to parallelize as well. Running on host computer, on the other hand, does not have this problem.
+
+<small>Remark: In my own app in production, it is >10x faster, but without creating public and reproducible tests, I do not want to claim such a big improvement - so test by youself and see how fast it provides :)</small>
 
 ### Full action history
 
