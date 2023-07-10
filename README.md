@@ -39,7 +39,7 @@ https://user-images.githubusercontent.com/5236035/167066810-d0aa36ba-0113-4140-9
 
 ## Stability
 
-It has been used extensively in my own 200kloc Flutter app in production environment.
+It has been used extensively in my own 200kloc Flutter app in production environment, and I integrate it with my CI infra so it is run everyday.
 
 P.S. Surely, this package - especially the doc - is not yet perfect. If having problems, just [create an issue](https://github.com/fzyzcjy/flutter_convenient_test/issues) and I usually reply quite quickly.
 
