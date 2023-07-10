@@ -145,13 +145,20 @@ For example, suppose you provide a `finder` that accidentally matches two widget
 
 This is a standalone feature, i.e. you can use it without using convenient_test.
 
-Features are:
+#### Golden overview GUI
+
+It is a simple GUI to list and check all golden differences, with interactivity like pan and zoom. I personally use it daily as follows: After changing a feature, I run all regression tests. Then, if some tests report a golden change, I look at this page to check whether the change is intended or a bug.
+
+To enter this page, tap the "golden" button at the top of homepage.
+
+#### Golden utilities
 
 * **Allow a few pixels to be different**: Flutter's builtin golden test requires every pixel to be exactly the same. I often see cases when the golden screenshot is the "same" from human eyes, but is marked as failed because of non-perceptable differences. This feature allows you to configure amount of toleration to avoid that. (`GoldenConfig.maxToleration`, `GoldenConfig.greaterThanToleration`)
 * **Crop a part of widget** / **Screenshot widgets above your widget**: For example, suppose you have a button with a hint bubble, implemented by [flutter_portal](https://github.com/fzyzcjy/flutter_portal) or `Overlay`. Then, if you golden by `find.byKey(yourButton)`, you will not screen the hint bubble as well. By using this `cropBbox` feature, you can take a screenshot of the *whole* screen, and crop the parts (the button) you want. (`GoldenConfig.cropBbox`)
 * **Forbid updating local files**: Useful when your file is generated from elsewhere (e.g. another line of code), and you never want to update it even with `--update-goldens`. (`GoldenConfig.allowUpdate`)
+* When a golden assertion fails, its image details will be also shown in the manager panel.
 
-Quickstart example:
+#### Quickstart example
 
 ```dart
 goldenFileComparator = EnhancedLocalFileComparator.configFromCurrent(); // setup
@@ -160,6 +167,8 @@ goldenFileComparator = EnhancedLocalFileComparator.configFromCurrent(); // setup
 final config = GoldenConfig(...);
 await expectLater(whatever, matchesGoldenFile(EnhancedLocalFileComparator.createUri('something.png', config)));
 ```
+
+<!--[TODO screenshot]-->
 
 ### Utilities
 
@@ -177,17 +186,6 @@ If you want to migrate to this package from raw `integration_test`, have a look 
 Flaky is flaky, and we are aware of it. It is neither failed nor success, so you will not be alarmed by false positives, and not completely ignore it.
 
 <!--[TODO screenshot: Several tests, one failed, one flaky, one success]-->
-
-### Golden utility
-
-* Customizable tolerations - allow a portion of pixels to mismatch golden image
-* Golden overview page - List and check all golden differences within one page with pan and zoom 
-* When a golden assertion fails, its image details will be also shown in the manager panel
-* Crop golden images - when you only want a portion of the widget to be captured
-
-(To be documented more thoroughly later [#187](https://github.com/fzyzcjy/flutter_convenient_test/issues/187))
-
-<!--[TODO screenshot]-->
 
 ### CI / headless mode
 
