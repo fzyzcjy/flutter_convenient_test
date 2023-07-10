@@ -9,14 +9,14 @@ Write and debug tests easily, with full action history, time travel, screenshots
 
 ## 🚀 Advantages
 
+* **Enjoy 5x speedup**: Able to execute your tests not only on simulator/device, but also on host computer (much faster), without changing any code.
 * **Full action history**: Gain insight on what has happened to the tests - View all actions/assertions taken in the tests, with friendly descriptions.
-* **Time travel, with screenshots**: What did the UI look like when that button was tapped 50 steps ago? Now you know everything.
+* **Time travel, with screenshots**: What did the UI look like when that button was tapped 50 steps ago? Now you know everything
 * **Rapid re-execution**: Edit code, save, run - done within seconds, not minutes.
 * **Videos recorded**: Watch what has happened, in full detail.
 * **Retryability**: No manual `pump`, wait or retry anymore. Just write down what you want, and the framework will retry and wait.
 * **Being interactive**: Play with the app interactively, again within seconds.
 * **Isolated**: One test will no longer destroy environment of other tests - run each with full isolation (optional feature).
-* TODO: explain new features
 
 And also...
 
@@ -27,9 +27,7 @@ And also...
 
 ## 📷 Quick demo
 
-**NOTE**: The video only contains features up to 2022.05. For new features, please refer to text and screenshots in the following sections.
-
-TODO: add link
+**NOTE**: The video only contains features up to 2022.05. New features not included in the video: The 5x speedup, the enhanced golden, etc.
 
 <!--README_VIDEO_REPLACEMENT_PLACEHOLDER_ONE-->
 
