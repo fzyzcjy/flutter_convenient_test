@@ -43,7 +43,7 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
   EnhancedLocalFileComparator(super.testFile, {required this.captureFailure});
 
   // ref https://github.com/flutter/flutter/pull/77014#issuecomment-1048896776
-  factory EnhancedLocalFileComparator.configFromCurrent({required bool captureFailure}) => EnhancedLocalFileComparator(
+  factory EnhancedLocalFileComparator.configFromCurrent({bool captureFailure = false}) => EnhancedLocalFileComparator(
         Uri.file(path.join(path.fromUri((goldenFileComparator as LocalFileComparator).basedir), 'something.dart')),
         captureFailure: captureFailure,
       );

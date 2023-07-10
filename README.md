@@ -17,6 +17,7 @@ Write and debug tests easily, with full action history, time travel, screenshots
 * **Retryability**: No manual `pump`, wait or retry anymore. Just write down what you want, and the framework will retry and wait.
 * **Being interactive**: Play with the app interactively, again within seconds.
 * **Isolated**: One test will no longer destroy environment of other tests - run each with full isolation (optional feature).
+* **Enhanced golden**: Allow a few pixels to be different, screenshot widgets above your widget, etc (Standalone feature)
 
 And also...
 
@@ -129,6 +130,26 @@ One test will no longer destroy environment of other tests - now you can run run
 This is especially helpful in big projects (such as mine), when an end-to-end setup is not easy to tear down, and one failed test can cause all subsequent tests to have damaged execution environment and thus fail.
 
 Technical details: If this mode is enabled, a hot restart will be performed after each attempt of each test.
+
+### Enhanced golden
+
+This is a standalone feature, i.e. you can use it without using convenient_test.
+
+Features are:
+
+* **Allow a few pixels to be different**: Flutter's builtin golden test requires every pixel to be exactly the same. I often see cases when the golden screenshot is the "same" from human eyes, but is marked as failed because of non-perceptable differences. This feature allows you to configure amount of toleration to avoid that. (`GoldenConfig.maxToleration`, `GoldenConfig.greaterThanToleration`)
+* **Crop a part of widget** / **Screenshot widgets above your widget**: For example, suppose you have a button with a hint bubble, implemented by [flutter_portal](https://github.com/fzyzcjy/flutter_portal) or `Overlay`. Then, if you golden by `find.byKey(yourButton)`, you will not screen the hint bubble as well. By using this `cropBbox` feature, you can take a screenshot of the *whole* screen, and crop the parts (the button) you want. (`GoldenConfig.cropBbox`)
+* **Forbid updating local files**: Useful when your file is generated from elsewhere (e.g. another line of code), and you never want to update it even with `--update-goldens`. (`GoldenConfig.allowUpdate`)
+
+Quickstart example:
+
+```dart
+goldenFileComparator = EnhancedLocalFileComparator.configFromCurrent(); // setup
+
+// just like the old way, except that we call `EnhancedLocalFileComparator.createUri` with extra configurations
+final config = GoldenConfig(...);
+await expectLater(whatever, matchesGoldenFile(EnhancedLocalFileComparator.createUri('something.png', config)));
+```
 
 ### `integration_test` is still there
 
