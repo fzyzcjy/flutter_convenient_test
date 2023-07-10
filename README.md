@@ -43,6 +43,13 @@ It has been used extensively in my own 200kloc Flutter app in production environ
 
 P.S. Surely, this package - especially the doc - is not yet perfect. If having problems, just [create an issue](https://github.com/fzyzcjy/flutter_convenient_test/issues) and I usually reply quite quickly.
 
+## Unreleased features
+
+I have been using these components internally for a long time, but have not found time to make cleanup (e.g. remove internal dependencies) in order to open-source it. If you like it, feel free to tell me and I will prioritize it!
+
+* Monkey tester: Randomly interact with tappable/draggable/... regions of your app, trying to find crashes. I even find [a bug](https://github.com/flutter/flutter/pull/128114) of Flutter *itself* using this simple monkey!
+* Benchmark helper: Using one command to automatically benchmark on all devices, upload to storage, and generate reports. (I run it in pseudo-CI and read the reports to see performance regressions.)
+
 ## 📚 Features
 
 ### 5x speedup & remove mobile devices
@@ -51,7 +58,11 @@ In addition to the standard way of integration tests, i.e. run them on a real mo
 
 This leads to a big speedup and reduction of needed resources. As we all know, running code on simulators / real devices are slow, and hard to parallelize as well. Running on host computer, on the other hand, does not have this problem.
 
-<small>Remark: In my own app in production, it is >10x faster, but without creating public and reproducible tests, I do not want to claim such a big improvement - so test by youself and see how fast it provides :)</small>
+<sup><sub>Remark: In my own app in production, it is >10x faster, but without creating public and reproducible tests, I do not want to claim such a big improvement - so test by youself and see how fast it provides :)</sub></sup>
+
+How to use it: Just write code normally, and execute your code *as if* it is a widget test. If you see weird fonts, you may want [loadAppFonts](https://pub.dev/packages/golden_toolkit#loading-fonts).
+
+<br>
 
 ### Full action history
 
@@ -68,6 +79,8 @@ This leads to a big speedup and reduction of needed resources. As we all know, r
 ![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/gif/b_time_travel_screenshot.gif)
 
 P.S. Use mouse wheels and dragging to zoom and pan the screenshots.
+
+P.S. The gif is outdated - new version has (1) an overview of all screenshots (2) a ruler for each screenshot.
 
 <br>
 
