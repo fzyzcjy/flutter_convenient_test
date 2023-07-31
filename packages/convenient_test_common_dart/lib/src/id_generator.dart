@@ -27,7 +27,9 @@ class IdGenerator {
   int nextId() {
     var timestamp = currentTimeSupplier();
 
-    if (timestamp < lastTimestamp) throw Exception('Clock moved backwards.');
+    if (timestamp < lastTimestamp) {
+      throw Exception('Clock moved backwards (timestamp=$timestamp lastTimestamp=$lastTimestamp)');
+    }
 
     if (lastTimestamp == timestamp) {
       sequence = (sequence + 1) & config.sequenceMask;
