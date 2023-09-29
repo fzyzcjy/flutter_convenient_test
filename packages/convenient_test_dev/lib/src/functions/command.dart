@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // ignore: implementation_imports
-import 'package:test_api/src/expect/async_matcher.dart';
+import 'package:matcher/src/expect/async_matcher.dart';
 
 abstract class TCommand {
   @protected

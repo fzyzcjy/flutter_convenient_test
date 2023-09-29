@@ -9,7 +9,7 @@ import 'package:flutter_test/src/_matchers_io.dart' if (dart.library.html) 'pack
     show captureImage;
 
 // ignore: implementation_imports
-import 'package:test_api/src/expect/async_matcher.dart';
+import 'package:matcher/src/expect/async_matcher.dart';
 
 AsyncMatcher matchesEnhancedReferenceImage(
   ui.Image image,
