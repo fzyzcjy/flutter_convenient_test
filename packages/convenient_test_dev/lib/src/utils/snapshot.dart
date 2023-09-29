@@ -30,7 +30,7 @@ Future<ui.Image> _captureImageFromElement(Element element, {Future<void> Functio
   assert(element.renderObject != null);
   var renderObject = element.renderObject!;
   while (!renderObject.isRepaintBoundary) {
-    renderObject = renderObject.parent! as RenderObject;
+    renderObject = renderObject.parent!;
   }
 
   // NOTE MODIFIED add to fix
