@@ -1,47 +1,22 @@
 PODS:
-  - dart_vlc (0.0.1):
-    - FlutterMacOS
-    - VLCKit (~> 3.3)
   - FlutterMacOS (1.0.0)
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - screen_retriever (0.0.1):
-    - FlutterMacOS
-  - VLCKit (3.4.0)
-  - window_manager (0.2.0):
-    - FlutterMacOS
 
 DEPENDENCIES:
-  - dart_vlc (from `Flutter/ephemeral/.symlinks/plugins/dart_vlc/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
-  - screen_retriever (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos`)
-  - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
-
-SPEC REPOS:
-  trunk:
-    - VLCKit
 
 EXTERNAL SOURCES:
-  dart_vlc:
-    :path: Flutter/ephemeral/.symlinks/plugins/dart_vlc/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   path_provider_foundation:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
-  screen_retriever:
-    :path: Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos
-  window_manager:
-    :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
 
 SPEC CHECKSUMS:
-  dart_vlc: 3067a969f0abee3d2df3d8b0ca0a855cd78c2042
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
-  screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
-  VLCKit: 961554c1befd749326a5b44e39db83a12276c2fc
-  window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
 
 PODFILE CHECKSUM: 2bc59d2ceff8b456bb4b287b5632d1210ecaee75
 
