@@ -13,11 +13,9 @@ class ConvenientTestManagerService extends ConvenientTestManagerServiceBase {
   static const _kTag = 'ConvenientTestManagerService';
 
   void serve() {
-    final server = grpc.Server(
-      [this],
-      const [],
-      null,
-      _responseErrorHandler,
+    final server = grpc.Server.create(
+      services: [this],
+      errorHandler: _responseErrorHandler,
     );
     server.serve(
       address: '0.0.0.0',
