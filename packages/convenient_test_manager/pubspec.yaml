@@ -48,7 +48,7 @@ dependencies:
   mobx: ^2.0.7
   path: ^1.8.0
   path_provider: ^2.0.9
-  protobuf: ^2.0.0
+  protobuf: ^3.0.0
   scrollable_positioned_list: ^0.3.2
   test_api: ^0.6.0
   tuple: ^2.0.0 
