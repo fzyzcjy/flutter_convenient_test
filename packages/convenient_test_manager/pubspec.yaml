@@ -43,7 +43,7 @@ dependencies:
     sdk: flutter
   get_it: ^7.0.0
   git: ^2.0.0
-  grpc: ^3.0.0
+  grpc: ^3.2.0
   intl: ^0.18.0
   mobx: ^2.0.7
   path: ^1.8.0
@@ -64,9 +64,6 @@ dependency_overrides:
     path: ../convenient_test_dev
   convenient_test_manager_dart:
     path: ../convenient_test_manager_dart
-  grpc:
-    git:
-      url: https://github.com/fzyzcjy/grpc-dart # #3761
 
 dev_dependencies:
   analyzer: ^5.4.0
