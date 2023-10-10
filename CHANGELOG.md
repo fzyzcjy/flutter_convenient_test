@@ -1,3 +1,7 @@
+## 1.3.1
+
+* Upgrade to Flutter 3.13
+
 ## 1.3.0
 
 * Enjoy 5x speedup: Able to execute your tests not only on simulator/device, but also on host computer (much faster), without changing any code.
