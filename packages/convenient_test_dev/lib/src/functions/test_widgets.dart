@@ -31,12 +31,18 @@ void tTestWidgets(
       addTearDown(() => convenientTestLog('END', '', type: LogSubEntryType.TEST_END));
       // t.log('START APP', '');
 
+      // store original onError -> required for proper failure & exception handling (see https://github.com/flutter/flutter/issues/34499)
+      final FlutterExceptionHandler? originalOnError = FlutterError.onError;
+
       await tester.runAsync(() async {
         await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.integrationTest);
       });
       settle ? await t.tester.pumpAndSettleWithRunAsync() : await t.tester.pumpWithRunAsync();
       // https://github.com/fzyzcjy/yplusplus/issues/8470#issuecomment-1528784564
       // await log.snapshot(name: 'after');
+
+      // reset onError after calling pumpAndSettle() -> required for proper failure & exception handling (see https://github.com/flutter/flutter/issues/34499)
+      FlutterError.onError = originalOnError;
 
       await callback(t);
 
