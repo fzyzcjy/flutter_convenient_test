@@ -283,7 +283,7 @@ If you are trying to use this package with Android Virtual Emulator (AVD), you m
 For detailed PRs (excluding myself), please see [this link](https://github.com/fzyzcjy/flutter_convenient_test/pulls?q=is%3Apr+-author%3Afzyzcjy+).
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
@@ -304,6 +304,7 @@ For detailed PRs (excluding myself), please see [this link](https://github.com/f
       <td align="center" valign="top" width="14.28%"><a href="https://blog.alexv525.com"><img src="https://avatars.githubusercontent.com/u/15884415?v=4?s=100" width="100px;" alt="Alex Li"/><br /><sub><b>Alex Li</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=AlexV525" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/getBoolean"><img src="https://avatars.githubusercontent.com/u/19920697?v=4?s=100" width="100px;" alt="getBoolean"/><br /><sub><b>getBoolean</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=getBoolean" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/gilice"><img src="https://avatars.githubusercontent.com/u/104317939?v=4?s=100" width="100px;" alt="gilice"/><br /><sub><b>gilice</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=gilice" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/madmini"><img src="https://avatars.githubusercontent.com/u/26089559?v=4?s=100" width="100px;" alt="Max Jakobitsch"/><br /><sub><b>Max Jakobitsch</b></sub></a><br /><a href="https://github.com/fzyzcjy/flutter_convenient_test/commits?author=madmini" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
