@@ -15,8 +15,11 @@ class MyApp extends StatelessWidget {
 
   const MyApp({super.key, this.themeMode = ThemeMode.system, this.builder});
 
-  ThemeData _getTheme({required Brightness brightness}) =>
-      ThemeData(brightness: brightness, colorSchemeSeed: Colors.blue);
+  ThemeData _getTheme({required Brightness brightness}) => ThemeData(
+        brightness: brightness,
+        colorSchemeSeed: Colors.blue,
+        useMaterial3: false,
+      );
 
   @override
   Widget build(BuildContext context) {
