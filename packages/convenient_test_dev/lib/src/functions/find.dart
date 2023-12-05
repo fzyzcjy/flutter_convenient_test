@@ -12,7 +12,6 @@ import 'package:convenient_test_dev/src/support/element_hit_testable_matcher.dar
 import 'package:convenient_test_dev/src/support/get_it.dart';
 import 'package:convenient_test_dev/src/support/slot.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
@@ -88,10 +87,11 @@ extension ExtCommonFinders on CommonFinders {
   Finder bySel(Object name, {bool skipOffstage = true, bool Function(Object? markData)? predicate}) {
     var description = '$name';
     // hacky beautify things like [LoginMark.username]; only useful when code is not obfuscated
-    if (_isEnum(name) && name.runtimeType.toString().endsWith('Mark')) {
+    if (name is Enum && name.runtimeType.toString().endsWith('Mark')) {
       final cls = name.toString().split('.')[0];
-      final modifiedCls = ReCase(cls.substring(0, cls.length - 'Mark'.length)).camelCase;
-      description = '$modifiedCls#${describeEnum(name)}';
+      final modifiedCls =
+          ReCase(cls.substring(0, cls.length - 'Mark'.length)).camelCase;
+      description = '$modifiedCls#${name.name}';
     }
 
     return byWidgetPredicate(
@@ -105,13 +105,15 @@ extension ExtCommonFinders on CommonFinders {
   Finder byArray(List<Finder> finders) {
     assert(finders.isNotEmpty);
 
-    final description = finders.map((f) => f.description).join(' -> ');
-
     var ans = finders[0];
     for (var i = 1; i < finders.length; i++) {
       ans = find.descendant(of: ans, matching: finders[i]);
     }
-    ans = DelegatingFinder(ans, overrideDescription: description);
+    ans = DelegatingFinder(
+      ans,
+      overrideDescribeMatch: (plurality) =>
+          finders.map((f) => f.describeMatch(plurality)).join(' -> '),
+    );
 
     return ans;
   }
@@ -146,7 +148,7 @@ class TFinderCommand extends TCommand {
         act: (log) => t.tester.enterText(finder, text),
         preCondition: null,
         logTitle: 'REPLACE TYPE',
-        logMessage: '"$text" to ${finder.description}',
+        logMessage: '"$text" to ${finder.describeMatch(Plurality.one)}',
         settle: settle,
       );
 
@@ -155,14 +157,15 @@ class TFinderCommand extends TCommand {
     bool? settle,
   }) {
     const logTitle = 'TYPE';
-    final basicLogMessage = '"$text" to ${finder.description}';
+    final basicLogMessage = '"$text" to ${finder.describeMatch(Plurality.one)}';
 
     return act(
       act: (log) => t.tester.enterTextWithoutReplace(
         finder,
         text,
         logCallback: (oldValue, newValue) {
-          log.update(logTitle, '$basicLogMessage (old text: "${oldValue.text}")');
+          log.update(
+              logTitle, '$basicLogMessage (old text: "${oldValue.text}")');
         },
       ),
       preCondition: null,
@@ -180,7 +183,7 @@ class TFinderCommand extends TCommand {
         act: (log) => t.tester.tap(finder, warnIfMissed: warnIfMissed),
         preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
         logTitle: 'TAP',
-        logMessage: finder.description,
+        logMessage: finder.describeMatch(Plurality.one),
         settle: settle,
       );
 
@@ -190,10 +193,11 @@ class TFinderCommand extends TCommand {
     bool? settle,
   }) =>
       act(
-        act: (log) => t.tester.tapAt(alignment.withinRect(t.tester.getRect(finder))),
+        act: (log) =>
+            t.tester.tapAt(alignment.withinRect(t.tester.getRect(finder))),
         preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
         logTitle: 'TAP',
-        logMessage: finder.description,
+        logMessage: finder.describeMatch(Plurality.one),
         settle: settle,
       );
 
@@ -205,7 +209,7 @@ class TFinderCommand extends TCommand {
         act: (log) => t.tester.longPress(finder, warnIfMissed: warnIfMissed),
         preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
         logTitle: 'LONG PRESS',
-        logMessage: finder.description,
+        logMessage: finder.describeMatch(Plurality.one),
         settle: settle,
       );
 
@@ -218,7 +222,7 @@ class TFinderCommand extends TCommand {
         act: (log) => t.tester.drag(finder, offset, warnIfMissed: warnIfMissed),
         preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
         logTitle: 'DRAG',
-        logMessage: finder.description,
+        logMessage: finder.describeMatch(Plurality.one),
         settle: settle,
       );
 
@@ -237,11 +241,13 @@ class TFinderCommand extends TCommand {
           secondDownOffset: secondDownOffset,
           firstFingerOffsets: firstFingerOffsets,
           secondFingerOffsets: secondFingerOffsets,
-          afterMove: (logMove ?? false) ? (i) async => log.snapshot(name: 'move #$i') : null,
+          afterMove: (logMove ?? false)
+              ? (i) async => log.snapshot(name: 'move #$i')
+              : null,
         ),
         preCondition: null,
         logTitle: 'MULTI DRAG',
-        logMessage: finder.description,
+        logMessage: finder.describeMatch(Plurality.one),
         settle: settle,
       );
 
@@ -333,12 +339,6 @@ class TValueAsyncGetterCommand extends TCommand {
 
   @override
   Future<Object?> getCurrentActual() => getter();
-}
-
-// https://stackoverflow.com/questions/53924131/how-to-check-if-value-is-enum
-bool _isEnum(dynamic data) {
-  final split = data.toString().split('.');
-  return split.length > 1 && split[0] == data.runtimeType.toString();
 }
 
 class _RootFinder extends Finder {
