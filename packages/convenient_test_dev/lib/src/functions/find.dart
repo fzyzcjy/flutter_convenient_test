@@ -89,8 +89,7 @@ extension ExtCommonFinders on CommonFinders {
     // hacky beautify things like [LoginMark.username]; only useful when code is not obfuscated
     if (name is Enum && name.runtimeType.toString().endsWith('Mark')) {
       final cls = name.toString().split('.')[0];
-      final modifiedCls =
-          ReCase(cls.substring(0, cls.length - 'Mark'.length)).camelCase;
+      final modifiedCls = ReCase(cls.substring(0, cls.length - 'Mark'.length)).camelCase;
       description = '$modifiedCls#${name.name}';
     }
 
@@ -111,8 +110,7 @@ extension ExtCommonFinders on CommonFinders {
     }
     ans = DelegatingFinder(
       ans,
-      overrideDescribeMatch: (plurality) =>
-          finders.map((f) => f.describeMatch(plurality)).join(' -> '),
+      overrideDescribeMatch: (plurality) => finders.map((f) => f.describeMatch(plurality)).join(' -> '),
     );
 
     return ans;
@@ -164,8 +162,7 @@ class TFinderCommand extends TCommand {
         finder,
         text,
         logCallback: (oldValue, newValue) {
-          log.update(
-              logTitle, '$basicLogMessage (old text: "${oldValue.text}")');
+          log.update(logTitle, '$basicLogMessage (old text: "${oldValue.text}")');
         },
       ),
       preCondition: null,
@@ -193,8 +190,7 @@ class TFinderCommand extends TCommand {
     bool? settle,
   }) =>
       act(
-        act: (log) =>
-            t.tester.tapAt(alignment.withinRect(t.tester.getRect(finder))),
+        act: (log) => t.tester.tapAt(alignment.withinRect(t.tester.getRect(finder))),
         preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
         logTitle: 'TAP',
         logMessage: finder.describeMatch(Plurality.one),
@@ -241,9 +237,7 @@ class TFinderCommand extends TCommand {
           secondDownOffset: secondDownOffset,
           firstFingerOffsets: firstFingerOffsets,
           secondFingerOffsets: secondFingerOffsets,
-          afterMove: (logMove ?? false)
-              ? (i) async => log.snapshot(name: 'move #$i')
-              : null,
+          afterMove: (logMove ?? false) ? (i) async => log.snapshot(name: 'move #$i') : null,
         ),
         preCondition: null,
         logTitle: 'MULTI DRAG',
