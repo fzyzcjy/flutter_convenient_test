@@ -1,3 +1,7 @@
+## 1.3.2
+
+* Upgrade to Flutter 3.16
+
 ## 1.3.1
 
 * Upgrade to Flutter 3.13
