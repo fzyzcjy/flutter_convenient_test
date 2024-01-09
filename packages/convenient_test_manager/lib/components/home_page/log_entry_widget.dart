@@ -226,7 +226,9 @@ class HomePageLogEntryWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         margin: const EdgeInsets.only(left: 32),
         decoration: BoxDecoration(
-          color: Colors.red[50],
+          color: Theme.of(context).brightness == Brightness.light //
+              ? Colors.red.shade50
+              : const Color(0xFF6C2827),
           border: Border(left: BorderSide(color: Colors.red[200]!, width: 2)),
         ),
         child: Column(
