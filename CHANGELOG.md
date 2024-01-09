@@ -1,3 +1,7 @@
+## Unreleased
+
+* Using darker background for error text in dark mode #361 (thanks @jmatth)
+
 ## 1.3.2
 
 * Upgrade to Flutter 3.16
