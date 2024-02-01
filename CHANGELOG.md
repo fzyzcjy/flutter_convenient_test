@@ -1,4 +1,4 @@
-## Unreleased
+## 1.3.3
 
 * Using darker background for error text in dark mode #361 (thanks @jmatth)
 
