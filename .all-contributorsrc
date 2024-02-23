@@ -114,6 +114,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "gnunicorn",
+      "name": "Benjamin Kampmann",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40496?v=4",
+      "profile": "http://www.gnunicorn.org",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
