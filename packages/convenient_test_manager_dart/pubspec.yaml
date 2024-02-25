@@ -20,7 +20,7 @@ dependencies:
   recase: ^4.0.0
   synchronized: ^3.0.0
   test_api: ^0.6.0
-  vm_service: ^13.0.0
+  vm_service: '>=11.3.0 <14.0.0'
 
 dependency_overrides:
   convenient_test_common_dart:
