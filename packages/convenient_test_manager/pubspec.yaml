@@ -68,7 +68,6 @@ dependency_overrides:
 dev_dependencies:
   analyzer: ^5.4.0
   build_runner: ^2.3.0
-  dart_code_metrics: ^5.5.1
   lint: ">=1.8.2 <3.0.0"
   mobx_codegen: ^2.0.6
 

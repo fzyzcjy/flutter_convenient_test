@@ -37,7 +37,6 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.1.2
-  dart_code_metrics: ">=4.15.0 <6.0.0"
   freezed: ^2.0.0
   json_serializable: ^6.1.5
 # dependency_overrides:
