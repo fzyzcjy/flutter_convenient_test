@@ -1,3 +1,7 @@
+## 1.3.4
+
+* Allow reading of Reports of up to 1GB in size #370 (thanks @gnunicorn)
+
 ## 1.3.3
 
 * Using darker background for error text in dark mode #361 (thanks @jmatth)
