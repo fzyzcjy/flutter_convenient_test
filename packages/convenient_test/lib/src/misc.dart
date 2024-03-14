@@ -140,10 +140,7 @@ class Mark extends StatelessWidget {
   }
 
   String _onlyUpperOrFirstLetter(String s) {
-    return s
-        .split('')
-        .whereIndexed((i, ch) => i == 0 || ch.toUpperCase() == ch)
-        .join('');
+    return s.split('').whereIndexed((i, ch) => i == 0 || ch.toUpperCase() == ch).join('');
   }
 }
 

@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 /// These are the parameters for the visualization of the recorded taps.
-final _kTapRadius = 15.0,
-    _kTapColor = Colors.grey[300]!,
-    _kShadowColor = Colors.black,
-    _kShadowElevation = 3.0;
+final _kTapRadius = 15.0, _kTapColor = Colors.grey[300]!, _kShadowColor = Colors.black, _kShadowElevation = 3.0;
 const _kRemainAfterPointerUp = Duration(milliseconds: 100);
 
 /// NOTE: refer to this answer for why use hitTest/handleEvent/etc https://stackoverflow.com/a/65067655
@@ -60,8 +57,7 @@ class _RenderGestureVisualizer extends RenderProxyBox {
         markNeedsPaint();
       });
     } else {
-      _recordedPointerInfoMap[event.pointer] =
-          _RecordedPointerInfo(event.localPosition);
+      _recordedPointerInfoMap[event.pointer] = _RecordedPointerInfo(event.localPosition);
       markNeedsPaint();
     }
   }
@@ -72,9 +68,7 @@ class _RenderGestureVisualizer extends RenderProxyBox {
 
     final canvas = context.canvas;
     for (final info in _recordedPointerInfoMap.values) {
-      final path = Path()
-        ..addOval(
-            Rect.fromCircle(center: info.localPosition, radius: _kTapRadius));
+      final path = Path()..addOval(Rect.fromCircle(center: info.localPosition, radius: _kTapRadius));
 
       canvas.drawShadow(path, _kShadowColor, _kShadowElevation, true);
       canvas.drawPath(path, Paint()..color = _kTapColor);

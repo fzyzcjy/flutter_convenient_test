@@ -48,8 +48,7 @@ class _ZoomPageState extends State<ZoomPage> {
                                 child: Container(
                                   width: 50,
                                   height: 50,
-                                  color: _getColor(Point(x, y),
-                                      invert: _chosenPoint == Point(x, y)),
+                                  color: _getColor(Point(x, y), invert: _chosenPoint == Point(x, y)),
                                   child: Center(
                                     child: Text('$x#$y'),
                                   ),
