@@ -68,7 +68,8 @@ abstract class _WorkerSuperRunStore with Store {
 
   void _sanityCheckWorkerCurrentRunConfig(WorkerCurrentRunConfig config) {
     if (config.hasIntegrationTest()) {
-      if (config.integrationTest.autoUpdateGoldenFiles != autoUpdateGoldenFiles) {
+      if (config.integrationTest.autoUpdateGoldenFiles !=
+          autoUpdateGoldenFiles) {
         throw AssertionError;
       }
     }
