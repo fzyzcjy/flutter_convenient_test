@@ -19,7 +19,8 @@ class MiscFlutterService extends MiscDartService {
     GetIt.I.get<VideoPlayerStore>().clear();
   }
 
-  Future<void> pickFileAndReadReport({String? pathOverride, bool readSync = false, bool clear = true}) async {
+  Future<void> pickFileAndReadReport(
+      {String? pathOverride, bool readSync = false, bool clear = true}) async {
     String path;
     if (pathOverride == null) {
       final result = await FilePicker.platform.pickFiles(allowMultiple: false);

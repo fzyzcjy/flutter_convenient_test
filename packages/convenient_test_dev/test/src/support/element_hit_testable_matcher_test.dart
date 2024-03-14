@@ -6,8 +6,9 @@ void main() {
   WidgetController.hitTestWarningShouldBeFatal = true;
 
   testWidgets('when hit testable, should pass matching', (tester) async {
-    await tester
-        .pumpWidget(MaterialApp(home: Scaffold(body: IconButton(onPressed: () {}, icon: const Icon(Icons.star)))));
+    await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+            body: IconButton(onPressed: () {}, icon: const Icon(Icons.star)))));
     expect(find.byIcon(Icons.star), ElementHitTestableMatcher(tester));
   });
 
@@ -16,7 +17,9 @@ void main() {
       home: Scaffold(
         body: Stack(
           children: [
-            Positioned.fill(child: IconButton(onPressed: () {}, icon: const Icon(Icons.star))),
+            Positioned.fill(
+                child:
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.star))),
             Positioned.fill(child: Container(color: Colors.green)),
           ],
         ),
@@ -30,7 +33,8 @@ void main() {
 
     expect(
       () => expect(find.byIcon(Icons.star), ElementHitTestableMatcher(tester)),
-      throwsA(isA<TestFailure>().having((e) => e.toString(), 'toString', contains('is not hit-testable'))),
+      throwsA(isA<TestFailure>().having(
+          (e) => e.toString(), 'toString', contains('is not hit-testable'))),
     );
   });
 }

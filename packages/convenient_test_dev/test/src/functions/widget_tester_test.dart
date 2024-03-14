@@ -5,7 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('debugWidgetTestSaveScreenshot simple', (tester) async {
     await tester.pumpWidget(Container());
-    await debugWidgetTestSaveScreenshot(find.byType(Container)); // should not have error
+    await debugWidgetTestSaveScreenshot(
+        find.byType(Container)); // should not have error
   });
 
   testWidgets('runAsync when error', (tester) async {

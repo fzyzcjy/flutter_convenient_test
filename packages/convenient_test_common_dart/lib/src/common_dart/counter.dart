@@ -45,5 +45,6 @@ abstract class _ObservableCounter extends _BaseCounter with Store {
 
   @override
   @action
-  Future<void> withPlusOneAsync(Future<void> Function() f) => super.withPlusOneAsync(f);
+  Future<void> withPlusOneAsync(Future<void> Function() f) =>
+      super.withPlusOneAsync(f);
 }

@@ -24,7 +24,8 @@ class HomePageVideoPanel extends StatelessWidget {
       }
 
       // #303
-      return const Text('Video is temporarily disabled before dart_vlc or other video library is supported on desktop');
+      return const Text(
+          'Video is temporarily disabled before dart_vlc or other video library is supported on desktop');
       // return VideoPlayer(
       //   videoPath: displayVideoPath,
       //   startTime: videoPlayerStore.displayRange.item1,

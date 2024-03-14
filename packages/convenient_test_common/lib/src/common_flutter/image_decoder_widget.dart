@@ -3,7 +3,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-typedef ImageDecoderBuilder<Tag> = Widget Function(BuildContext context, TaggedImageInfo<Tag>? info);
+typedef ImageDecoderBuilder<Tag> = Widget Function(
+    BuildContext context, TaggedImageInfo<Tag>? info);
 
 class ImageDecoderWidget<Tag> extends StatefulWidget {
   const ImageDecoderWidget({
@@ -42,7 +43,8 @@ class ImageDecoderWidget<Tag> extends StatefulWidget {
   final void Function(ui.Image? image)? onUiImage;
 
   @override
-  State<ImageDecoderWidget<Tag>> createState() => _ImageDecoderWidgetState<Tag>();
+  State<ImageDecoderWidget<Tag>> createState() =>
+      _ImageDecoderWidgetState<Tag>();
 }
 
 class _ImageDecoderWidgetState<Tag> extends State<ImageDecoderWidget<Tag>> {
@@ -70,19 +72,22 @@ class _ImageDecoderWidgetState<Tag> extends State<ImageDecoderWidget<Tag>> {
     final interestImageProvider = widget.imageProvider;
     final oldImageStreamWithListener = _imageStreamWithListener;
     _imageStreamWithListener = _ImageStreamWithListener(
-      interestImageProvider.inner.resolve(createLocalImageConfiguration(context)),
+      interestImageProvider.inner
+          .resolve(createLocalImageConfiguration(context)),
       ImageStreamListener(
-        (imageInfo, synchronousCall) =>
-            _updateImage(imageInfo, synchronousCall, imageProviderTag: interestImageProvider.tag),
+        (imageInfo, synchronousCall) => _updateImage(imageInfo, synchronousCall,
+            imageProviderTag: interestImageProvider.tag),
         // NOTE XXX add
         onError: widget.onError,
       ),
     );
 
     if (oldImageStreamWithListener != null) {
-      oldImageStreamWithListener.inner.removeListener(oldImageStreamWithListener.listener);
+      oldImageStreamWithListener.inner
+          .removeListener(oldImageStreamWithListener.listener);
     }
-    _imageStreamWithListener!.inner.addListener(_imageStreamWithListener!.listener);
+    _imageStreamWithListener!.inner
+        .addListener(_imageStreamWithListener!.listener);
 
     // NOTE XXX edit
     // if (_imageStream!.key != oldImageStream?.key) {
@@ -95,15 +100,18 @@ class _ImageDecoderWidgetState<Tag> extends State<ImageDecoderWidget<Tag>> {
     // }
   }
 
-  void _updateImage(ImageInfo imageInfo, bool synchronousCall, {required Tag imageProviderTag}) {
+  void _updateImage(ImageInfo imageInfo, bool synchronousCall,
+      {required Tag imageProviderTag}) {
     // print('hi _updateImage imageInfo=$imageInfo');
     setState(() {
       // Trigger a build whenever the image changes.
       // NOTE MODIFIED 推迟dispose #5256
       // _imageInfo?.inner.dispose();
       final oldImageInfo = _imageInfo;
-      SchedulerBinding.instance.addPostFrameCallback((_) => oldImageInfo?.inner.dispose());
-      _imageInfo = TaggedImageInfo(imageInfo, imageProviderTag: imageProviderTag);
+      SchedulerBinding.instance
+          .addPostFrameCallback((_) => oldImageInfo?.inner.dispose());
+      _imageInfo =
+          TaggedImageInfo(imageInfo, imageProviderTag: imageProviderTag);
       widget.onUiImage?.call(_imageInfo?.inner.image); // NOTE XXX add
     });
   }
@@ -112,7 +120,8 @@ class _ImageDecoderWidgetState<Tag> extends State<ImageDecoderWidget<Tag>> {
   void dispose() {
     // _imageStream?.removeListener(ImageStreamListener(_updateImage)); // NOTE XXX
     if (_imageStreamWithListener != null) {
-      _imageStreamWithListener!.inner.removeListener(_imageStreamWithListener!.listener);
+      _imageStreamWithListener!.inner
+          .removeListener(_imageStreamWithListener!.listener);
     }
     _imageInfo?.inner.dispose();
     _imageInfo = null;
@@ -134,7 +143,8 @@ class TaggedImageInfo<Tag> {
   const TaggedImageInfo(this.inner, {required this.imageProviderTag});
 
   @override
-  String toString() => 'TaggedImageInfo(inner: $inner, imageProviderTag: $imageProviderTag)';
+  String toString() =>
+      'TaggedImageInfo(inner: $inner, imageProviderTag: $imageProviderTag)';
 }
 
 @immutable
@@ -144,10 +154,12 @@ class TaggedImageProvider<Tag> {
 
   const TaggedImageProvider(this.inner, {required this.tag});
 
-  static TaggedImageProvider<Tag>? maybe<Tag>(ImageProvider? inner, {required Tag tag}) =>
+  static TaggedImageProvider<Tag>? maybe<Tag>(ImageProvider? inner,
+          {required Tag tag}) =>
       inner == null ? null : TaggedImageProvider(inner, tag: tag);
 
-  static TaggedImageProvider<Object?> noTag(ImageProvider inner) => TaggedImageProvider(inner, tag: null);
+  static TaggedImageProvider<Object?> noTag(ImageProvider inner) =>
+      TaggedImageProvider(inner, tag: null);
 }
 
 @immutable

@@ -13,10 +13,12 @@ abstract class _SuiteInfoStore with Store {
   SuiteInfo? suiteInfo;
 
   final testEntryStateMap = ObservableDefaultMap<int, TestEntryState>(
-      createDefaultValue: (_) => TestEntryState(status: 'pending', result: 'success'));
+      createDefaultValue: (_) =>
+          TestEntryState(status: 'pending', result: 'success'));
 
   SimplifiedStateEnum getSimplifiedState(int testInfoId) =>
-      testEntryStateMap[testInfoId].toSimplifiedStateEnum(isFlaky: GetIt.I.get<LogStore>().isTestFlaky(testInfoId));
+      testEntryStateMap[testInfoId].toSimplifiedStateEnum(
+          isFlaky: GetIt.I.get<LogStore>().isTestFlaky(testInfoId));
 
   void clear() {
     suiteInfo = null;
@@ -51,7 +53,9 @@ extension ExtState on State {
       case Status.complete:
         switch (result) {
           case Result.success:
-            return isFlaky ? SimplifiedStateEnum.completeSuccessButFlaky : SimplifiedStateEnum.completeSuccess;
+            return isFlaky
+                ? SimplifiedStateEnum.completeSuccessButFlaky
+                : SimplifiedStateEnum.completeSuccess;
           case Result.skipped:
             return SimplifiedStateEnum.completeSkipped;
           case Result.failure:

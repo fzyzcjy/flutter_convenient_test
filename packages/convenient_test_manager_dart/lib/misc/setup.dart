@@ -40,17 +40,25 @@ Future<void> setup({
   getIt.registerSingleton<RawLogStore>(RawLogStore());
   getIt.registerSingleton<WorkerSuperRunStore>(WorkerSuperRunStore());
   getIt.registerSingleton<VideoRecorderStore>(VideoRecorderStore());
-  getIt.registerSingleton<ConvenientTestManagerService>(ConvenientTestManagerService());
+  getIt.registerSingleton<ConvenientTestManagerService>(
+      ConvenientTestManagerService());
 
   getIt.registerSingleton<ReportHandlerService>(ReportHandlerService());
-  getIt.registerSingleton<ManagerReportSaverService>(ManagerReportSaverService());
-  getIt.registerSingleton<ScreenVideoRecorderService>(ScreenVideoRecorderService.create());
+  getIt.registerSingleton<ManagerReportSaverService>(
+      ManagerReportSaverService());
+  getIt.registerSingleton<ScreenVideoRecorderService>(
+      ScreenVideoRecorderService.create());
 
-  if (registerMiscDartService) getIt.registerSingleton<MiscDartService>(MiscDartService());
+  if (registerMiscDartService)
+    getIt.registerSingleton<MiscDartService>(MiscDartService());
   if (registerFsService) getIt.registerSingleton<FsService>(FsServiceDart());
-  if (registerHighlightStoreBase) getIt.registerSingleton<HighlightStoreBase>(HighlightStoreDummy());
-  if (registerVideoPlayerStoreBase) getIt.registerSingleton<VideoPlayerStoreBase>(VideoPlayerStoreDummy());
-  if (registerVmServiceWrapper) getIt.registerSingleton<VmServiceWrapperService>(RealVmServiceWrapperService());
+  if (registerHighlightStoreBase)
+    getIt.registerSingleton<HighlightStoreBase>(HighlightStoreDummy());
+  if (registerVideoPlayerStoreBase)
+    getIt.registerSingleton<VideoPlayerStoreBase>(VideoPlayerStoreDummy());
+  if (registerVmServiceWrapper)
+    getIt.registerSingleton<VmServiceWrapperService>(
+        RealVmServiceWrapperService());
 
   GetIt.I.get<ConvenientTestManagerService>().serve();
 

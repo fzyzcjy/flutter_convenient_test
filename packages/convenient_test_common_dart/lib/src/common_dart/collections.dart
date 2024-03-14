@@ -11,7 +11,8 @@ mixin _ExhaustiveMapMixin<K, V> {
 
   Iterable<V> get values => _map.values;
 
-  void addEntries(Iterable<MapEntry<K, V>> newEntries) => _map.addEntries(newEntries);
+  void addEntries(Iterable<MapEntry<K, V>> newEntries) =>
+      _map.addEntries(newEntries);
 }
 
 class ExhaustiveMap<K, V> with _ExhaustiveMapMixin<K, V> {

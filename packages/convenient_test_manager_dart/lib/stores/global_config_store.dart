@@ -43,7 +43,8 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
     String? goldenDiffGitRepo,
   }) = _GlobalConfigNullable;
 
-  factory GlobalConfigNullable.fromJson(Map<String, dynamic> json) => _$GlobalConfigNullableFromJson(json);
+  factory GlobalConfigNullable.fromJson(Map<String, dynamic> json) =>
+      _$GlobalConfigNullableFromJson(json);
 
   static Future<GlobalConfig> parse({
     required List<String>? args,
@@ -81,7 +82,8 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
       if (!await File(configFilePath).exists()) return GlobalConfigNullable();
 
       final configText = await File(configFilePath).readAsString();
-      return GlobalConfigNullable.fromJson(jsonDecode(configText) as Map<String, Object?>);
+      return GlobalConfigNullable.fromJson(
+          jsonDecode(configText) as Map<String, Object?>);
     } catch (e, s) {
       Log.w(_kTag, 'parseConfigFile error e=$e s=$s');
       return GlobalConfigNullable();
@@ -91,9 +93,12 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
   // ignore: prefer_constructors_over_static_methods
   static GlobalConfigNullable parseEnvironment() {
     return GlobalConfigNullable(
-      isolationMode: _stringToNullableBool(const String.fromEnvironment('CONVENIENT_TEST_ISOLATION_MODE')),
-      enableReportSaver: _stringToNullableBool(const String.fromEnvironment('CONVENIENT_TEST_ENABLE_REPORT_SAVER')),
-      goldenDiffGitRepo: _emptyToNull(const String.fromEnvironment('CONVENIENT_TEST_GOLDEN_DIFF_GIT_REPO')),
+      isolationMode: _stringToNullableBool(
+          const String.fromEnvironment('CONVENIENT_TEST_ISOLATION_MODE')),
+      enableReportSaver: _stringToNullableBool(
+          const String.fromEnvironment('CONVENIENT_TEST_ENABLE_REPORT_SAVER')),
+      goldenDiffGitRepo: _emptyToNull(
+          const String.fromEnvironment('CONVENIENT_TEST_GOLDEN_DIFF_GIT_REPO')),
     );
   }
 
@@ -123,7 +128,8 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
 }
 
 extension ExtGlobalConfigNullable on GlobalConfigNullable {
-  GlobalConfigNullable merge(GlobalConfigNullable other) => GlobalConfigNullable(
+  GlobalConfigNullable merge(GlobalConfigNullable other) =>
+      GlobalConfigNullable(
         isolationMode: other.isolationMode ?? isolationMode,
         enableReportSaver: other.enableReportSaver ?? enableReportSaver,
         goldenDiffGitRepo: other.goldenDiffGitRepo ?? goldenDiffGitRepo,

@@ -30,7 +30,8 @@ class DelegatingFinder implements Finder {
   @Deprecated('Override FinderBase.findInCandidates instead. '
       'Using the FinderBase API allows for more consistent caching behavior and cleaner options for interacting with the widget tree. '
       'This feature was deprecated after v3.13.0-0.2.pre.')
-  Iterable<Element> apply(Iterable<Element> candidates) => target.apply(candidates);
+  Iterable<Element> apply(Iterable<Element> candidates) =>
+      target.apply(candidates);
 
   @override
   bool get skipOffstage => target.skipOffstage;
@@ -57,17 +58,20 @@ class DelegatingFinder implements Finder {
   Finder at(int index) => target.at(index);
 
   @override
-  Finder hitTestable({Alignment at = Alignment.center}) => target.hitTestable(at: at);
+  Finder hitTestable({Alignment at = Alignment.center}) =>
+      target.hitTestable(at: at);
 
   @override
-  String toString({bool describeSelf = false}) => target.toString(describeSelf: describeSelf);
+  String toString({bool describeSelf = false}) =>
+      target.toString(describeSelf: describeSelf);
 
   @override
   String describeMatch(Plurality plurality) =>
       overrideDescribeMatch?.call(plurality) ?? target.describeMatch(plurality);
 
   @override
-  Iterable<Element> findInCandidates(Iterable<Element> candidates) => target.findInCandidates(candidates);
+  Iterable<Element> findInCandidates(Iterable<Element> candidates) =>
+      target.findInCandidates(candidates);
 
   @override
   FinderResult<Element> get found => target.found;

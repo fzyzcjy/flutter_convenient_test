@@ -21,8 +21,10 @@ enum ExecutionEnv {
 
   factory ExecutionEnv.detect() {
     final binding = TestWidgetsFlutterBinding.instance;
-    if (binding is LiveTestWidgetsFlutterBinding) return ExecutionEnv.deviceTest;
-    if (binding is AutomatedTestWidgetsFlutterBinding) return ExecutionEnv.widgetTest;
+    if (binding is LiveTestWidgetsFlutterBinding)
+      return ExecutionEnv.deviceTest;
+    if (binding is AutomatedTestWidgetsFlutterBinding)
+      return ExecutionEnv.widgetTest;
     throw Exception('unknown binding=${binding.runtimeType}');
   }
 }

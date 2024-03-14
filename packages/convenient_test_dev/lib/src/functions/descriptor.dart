@@ -20,7 +20,8 @@ class Descriptor {
 
   String _preFormat(Object? object, Plurality plurality) {
     if (object is Finder) return object.describeMatch(plurality);
-    if (object is Matcher) return object.describe(StringDescription()).toString();
+    if (object is Matcher)
+      return object.describe(StringDescription()).toString();
     return object.toString();
   }
 
@@ -50,7 +51,9 @@ class Descriptor {
 
     final iconValueString = match.group(1)!;
     final iconValue = int.parse(iconValueString, radix: 16);
-    final iconName = kIconNameInfo.entries.firstWhereOrNull((e) => e.value == iconValue)?.key;
+    final iconName = kIconNameInfo.entries
+        .firstWhereOrNull((e) => e.value == iconValue)
+        ?.key;
 
     return 'icon "$iconName"';
   }

@@ -11,7 +11,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_test/src/_matchers_io.dart';
 import 'package:path/path.dart' as p;
 
-typedef EnterTextWithoutReplaceLogCallback = void Function(TextEditingValue oldValue, TextEditingValue newValue);
+typedef EnterTextWithoutReplaceLogCallback = void Function(
+    TextEditingValue oldValue, TextEditingValue newValue);
 
 extension ExtWidgetTesterEnterText on WidgetTester {
   Future<void> enterTextWithoutReplace(Finder finder, String text,
@@ -48,7 +49,8 @@ extension ExtWidgetTesterEnterText on WidgetTester {
 /// When running `runAsyncEnhanced` and see exception, will call this checker.
 /// For example, you may want to ignore certain kinds of exceptions, such as network timeout
 // ignore: avoid-global-state
-void Function(Object?) convenientTestRunAsyncEnhancedExceptionChecker = (e) => expect(e, isNull);
+void Function(Object?) convenientTestRunAsyncEnhancedExceptionChecker =
+    (e) => expect(e, isNull);
 
 extension ExtWidgetTesterPump on WidgetTester {
   static const _kTag = 'ExtWidgetTester';
@@ -75,11 +77,14 @@ extension ExtWidgetTesterPump on WidgetTester {
     Duration runAsyncDelay = Duration.zero,
     Duration? pumpDuration,
   }) async {
-    await pumpWithRunAsyncUntil(canStop, realDelayDuration: runAsyncDelay, pumpDuration: pumpDuration);
+    await pumpWithRunAsyncUntil(canStop,
+        realDelayDuration: runAsyncDelay, pumpDuration: pumpDuration);
   }
 
   Future<void> pumpAndMaybeSettleWithRunAsync({required bool? settle}) async {
-    (settle ?? true) ? await pumpAndSettleWithRunAsync() : await pumpWithRunAsync();
+    (settle ?? true)
+        ? await pumpAndSettleWithRunAsync()
+        : await pumpWithRunAsync();
   }
 
   /// Like [pumpAndSettle], but allows real async tasks to be executed
@@ -123,18 +128,21 @@ extension ExtWidgetTesterPump on WidgetTester {
       do {
         // https://github.com/fzyzcjy/yplusplus/issues/8545#issuecomment-1530741884
         if (!binding.inTest) {
-          Log.w('ConvenientTestInteraction', 'pumpAndSettleWithRunAsync see !inTest thus break');
+          Log.w('ConvenientTestInteraction',
+              'pumpAndSettleWithRunAsync see !inTest thus break');
           break;
         }
 
         final now = _WallAndFakeClock.now(binding);
-        if (now.fakeClock.isAfter(endTime.fakeClock) || now.wallClock.isAfter(endTime.wallClock)) {
+        if (now.fakeClock.isAfter(endTime.fakeClock) ||
+            now.wallClock.isAfter(endTime.wallClock)) {
           throw FlutterError('pumpWithRunAsyncUntil timed out '
               '(startTime=$startTime, endTime=$endTime, now=$now, pumpCount=$count)');
         }
 
         if (count > 0 && count % 10 == 0) {
-          Log.d('ConvenientTestInteraction', 'pumpAndSettleWithRunAsync has been running for $count cycles');
+          Log.d('ConvenientTestInteraction',
+              'pumpAndSettleWithRunAsync has been running for $count cycles');
         }
 
         await pumpWithRunAsync(
@@ -154,7 +162,8 @@ extension ExtWidgetTesterPump on WidgetTester {
     // 100ms is pumpAndSettle's default value
     await binding.pump(pumpDuration ?? const Duration(milliseconds: 100));
     // https://github.com/fzyzcjy/yplusplus/issues/8481#issuecomment-1529038831
-    await runAsyncEnhanced(() => Future<void>.delayed(realDelayDuration ?? const Duration(milliseconds: 10)));
+    await runAsyncEnhanced(() => Future<void>.delayed(
+        realDelayDuration ?? const Duration(milliseconds: 10)));
   }
 
   /// Like [runAsync], but:
@@ -163,7 +172,8 @@ extension ExtWidgetTesterPump on WidgetTester {
   Future<T> runAsyncEnhanced<T>(Future<T> Function() callback) async {
     if (binding._safeRunningAsyncTasks ?? false) {
       // when already have runAsync, should not call it again, otherwise error "Reentrant call to runAsyncEnhanced() denied."
-      Log.d(_kTag, 'runAsyncEnhanced skip executing real runAsync since already has pending tasks');
+      Log.d(_kTag,
+          'runAsyncEnhanced skip executing real runAsync since already has pending tasks');
       return callback();
     } else {
       final result = await runAsync(callback);
@@ -172,7 +182,9 @@ extension ExtWidgetTesterPump on WidgetTester {
       final Object? error = binding.safeTakeExceptionOrDetails();
       if (error != null) {
         // https://github.com/fzyzcjy/yplusplus/issues/9072#issuecomment-1559562515
-        final errorMessage = error is FlutterErrorDetails ? 'e=${error.exception} s=${error.stack}' : '$error';
+        final errorMessage = error is FlutterErrorDetails
+            ? 'e=${error.exception} s=${error.stack}'
+            : '$error';
         debugPrint('runAsyncEnhanced see error:\n$errorMessage');
       }
 
@@ -209,11 +221,17 @@ extension ExtTestWidgetsFlutterBinding on TestWidgetsFlutterBinding {
   }
 }
 
-Future<void> debugWidgetTestSaveScreenshot([Finder? finder, String stem = 'debug_screenshot']) async {
+Future<void> debugWidgetTestSaveScreenshot(
+    [Finder? finder, String stem = 'debug_screenshot']) async {
   await TestWidgetsFlutterBinding.instance.runAsync(() async {
-    final image = await captureImage((finder ?? find.byType(MaterialApp)).evaluate().single);
-    final bytes = (await image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
-    final path = p.join((goldenFileComparator as LocalFileComparator).basedir.path, '$stem.png');
+    final image = await captureImage(
+        (finder ?? find.byType(MaterialApp)).evaluate().single);
+    final bytes = (await image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+    final path = p.join(
+        (goldenFileComparator as LocalFileComparator).basedir.path,
+        '$stem.png');
     debugPrint(
         'debugWidgetTestSaveScreenshot save to path=$path image.size=${image.width}x${image.height} byte.length=${bytes.length}');
     File(path).writeAsBytesSync(bytes);
@@ -226,7 +244,8 @@ class _WallAndFakeClock {
 
   const _WallAndFakeClock({required this.wallClock, required this.fakeClock});
 
-  factory _WallAndFakeClock.now(TestWidgetsFlutterBinding binding) => _WallAndFakeClock(
+  factory _WallAndFakeClock.now(TestWidgetsFlutterBinding binding) =>
+      _WallAndFakeClock(
         fakeClock: binding.clock.now(),
         wallClock: DateTime.now(),
       );
@@ -241,14 +260,17 @@ class _WallAndFakeClock {
       );
 
   @override
-  String toString() => 'WallAndFakeClock(wallClock: $wallClock, fakeClock: $fakeClock)';
+  String toString() =>
+      'WallAndFakeClock(wallClock: $wallClock, fakeClock: $fakeClock)';
 }
 
-const kDefaultConvenientTestGeneralizedEditableTextInfos = <GeneralizedEditableTextInfo>[EditableTextInfo()];
+const kDefaultConvenientTestGeneralizedEditableTextInfos =
+    <GeneralizedEditableTextInfo>[EditableTextInfo()];
 
 // users can customize this, for example, if they have a custom MyTextField which is similar to TextField
 // ignore: avoid-global-state
-var convenientTestGeneralizedEditableTextInfos = kDefaultConvenientTestGeneralizedEditableTextInfos;
+var convenientTestGeneralizedEditableTextInfos =
+    kDefaultConvenientTestGeneralizedEditableTextInfos;
 
 abstract class GeneralizedEditableTextInfo<T extends Widget> {
   const GeneralizedEditableTextInfo();
@@ -256,12 +278,14 @@ abstract class GeneralizedEditableTextInfo<T extends Widget> {
   Type get widgetType => T;
 
   T? findWidget(WidgetTester tester, Finder finder) => tester
-      .widgetList<T>(find.descendant(of: finder, matching: find.byType(widgetType), matchRoot: true))
+      .widgetList<T>(find.descendant(
+          of: finder, matching: find.byType(widgetType), matchRoot: true))
       .singleOrNull;
 
   TextEditingValue extractTextEditingValue(T widget);
 
-  Future<void> showKeyboard(WidgetTester tester, Finder finder) => tester.showKeyboard(finder);
+  Future<void> showKeyboard(WidgetTester tester, Finder finder) =>
+      tester.showKeyboard(finder);
 }
 
 /// Used for [TextField] and [EditableText]
@@ -269,14 +293,16 @@ class EditableTextInfo extends GeneralizedEditableTextInfo<EditableText> {
   const EditableTextInfo();
 
   @override
-  TextEditingValue extractTextEditingValue(EditableText widget) => widget.controller.value;
+  TextEditingValue extractTextEditingValue(EditableText widget) =>
+      widget.controller.value;
 
   @override
   String toString() => 'EditableTextInfo{}';
 }
 
 // TODO ok?
-TextEditingValue _enterTextWithoutReplaceActOnValue(TextEditingValue oldValue, String text) {
+TextEditingValue _enterTextWithoutReplaceActOnValue(
+    TextEditingValue oldValue, String text) {
   if (!oldValue.selection.isValid) {
     final newText = oldValue.text + text;
     return TextEditingValue(

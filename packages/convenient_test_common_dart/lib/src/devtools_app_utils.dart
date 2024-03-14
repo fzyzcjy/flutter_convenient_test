@@ -94,7 +94,8 @@ Future<T> whenValueNonNull<T>(ValueListenable<T> listenable) {
 /// This class also exposes methods to interact with the data. By default,
 /// listeners are notified whenever the data is modified, but notifying can be
 /// optionally disabled.
-class ListValueNotifier<T> extends ChangeNotifier implements ValueListenable<List<T>> {
+class ListValueNotifier<T> extends ChangeNotifier
+    implements ValueListenable<List<T>> {
   /// Creates a [ListValueNotifier] that wraps this value [_rawList].
   ListValueNotifier(List<T> rawList) : _rawList = List<T>.from(rawList) {
     _currentList = ImmutableList(_rawList);

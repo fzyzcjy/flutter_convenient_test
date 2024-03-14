@@ -59,7 +59,8 @@ extension ExtTCommand on TCommand {
       );
 
   // syntax sugar
-  Future<void> shouldEquals(dynamic expected, {String? reason}) => should(equals(expected), reason: reason);
+  Future<void> shouldEquals(dynamic expected, {String? reason}) =>
+      should(equals(expected), reason: reason);
 }
 
 // NOTE "retry-ability" methodology, please see https://docs.cypress.io/guides/core-concepts/retry-ability
@@ -80,8 +81,9 @@ Future<void> _expectWithRetry(
   var failedCount = 0;
   while (true) {
     // Why need log "update": Because `actualGetter` can change
-    final logMessage = Descriptor()
-        .formatLogOfExpect(await actualGetter(), matcher, overrideActualDescription: overrideActualDescription);
+    final logMessage = Descriptor().formatLogOfExpect(
+        await actualGetter(), matcher,
+        overrideActualDescription: overrideActualDescription);
     logUpdate('ASSERT', logMessage, type: LogSubEntryType.ASSERT);
 
     final actual = await actualGetter();
@@ -103,7 +105,8 @@ Future<void> _expectWithRetry(
       }
 
       if (snapshotWhenSuccess) await logSnapshot(name: 'after');
-      logUpdate('ASSERT', logMessage, type: LogSubEntryType.ASSERT, printing: true); // #8484
+      logUpdate('ASSERT', logMessage,
+          type: LogSubEntryType.ASSERT, printing: true); // #8484
       return;
     } on TestFailure catch (e, s) {
       Future<void> _logFailure(String message, {String? extraError}) async {
@@ -116,14 +119,16 @@ Future<void> _expectWithRetry(
           printing: true,
         );
         await logSnapshot(name: 'failed');
-        await EnhancedLocalFileComparator.instance.lastFailure?.dumpToLogSnapshot(logSnapshot);
+        await EnhancedLocalFileComparator.instance.lastFailure
+            ?.dumpToLogSnapshot(logSnapshot);
       }
 
       failedCount++;
 
       final duration = DateTime.now().difference(startTime);
       if (duration >= timeout) {
-        await _logFailure('after $failedCount retries with ${duration.inMilliseconds} milliseconds, when $logMessage');
+        await _logFailure(
+            'after $failedCount retries with ${duration.inMilliseconds} milliseconds, when $logMessage');
         rethrow;
       }
 
@@ -149,7 +154,8 @@ String _getTestFailureErrorExtraInfo(dynamic actual) {
           if (renderBox is! RenderBox || !renderBox.hasSize) return null;
           return renderBox.localToGlobal(Offset.zero) & renderBox.size;
         })
-        .mapIndexed((index, bbox) => '📦 Bounding box of element #$index: $bbox')
+        .mapIndexed(
+            (index, bbox) => '📦 Bounding box of element #$index: $bbox')
         .join('\n\n');
 
     final ancestorInfos = elements.mapIndexed((index, element) {
