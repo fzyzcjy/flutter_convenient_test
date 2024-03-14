@@ -27,8 +27,12 @@ class SecondPage extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextButton(onPressed: () => Navigator.pushNamed(context, '/timer'), child: const Text('GoTimerPage')),
-                TextButton(onPressed: () => Navigator.pushNamed(context, '/zoom'), child: const Text('GoZoomPage')),
+                TextButton(
+                    onPressed: () => Navigator.pushNamed(context, '/timer'),
+                    child: const Text('GoTimerPage')),
+                TextButton(
+                    onPressed: () => Navigator.pushNamed(context, '/zoom'),
+                    child: const Text('GoZoomPage')),
               ],
             ),
           ],
