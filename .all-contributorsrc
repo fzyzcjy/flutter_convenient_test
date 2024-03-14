@@ -123,6 +123,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "meltzow",
+      "name": "Mario Meltzow",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1238001?v=4",
+      "profile": "https://github.com/meltzow",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
