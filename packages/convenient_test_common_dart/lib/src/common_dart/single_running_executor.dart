@@ -31,8 +31,9 @@ class SingleRunningExecutor<Arg> {
           await _runner(pack.arg);
         } finally {
           _running = false;
-          if (_runAgainAfterCurrentRunFinish)
+          if (_runAgainAfterCurrentRunFinish) {
             _trigger(_runAgainAfterCurrentRunFinishPack!);
+          }
         }
       }();
     }

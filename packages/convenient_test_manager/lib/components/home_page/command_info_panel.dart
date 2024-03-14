@@ -47,8 +47,9 @@ class HomePageCommandInfoPanel extends StatelessWidget {
     var currCount = 0;
     for (final section in adapter.sections) {
       final metadata = section.metadata;
-      if (metadata is TestInfoLogEntrySectionMetadata)
+      if (metadata is TestInfoLogEntrySectionMetadata) {
         yield MapEntry(metadata.testInfoId, currCount);
+      }
 
       currCount += section.count;
     }

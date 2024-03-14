@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+// ignore: deprecated_member_use
 import 'package:test_api/test_api.dart'
-    as test_package; // ignore: deprecated_member_use
+    as test_package;
+
 
 void setUpConvenientTestExceptionReporter() {
   // NOTE By reading comments of [reportTestException], we see its purpose is just what we want - customize error catching

@@ -68,8 +68,9 @@ abstract class _WorkerSuperRunStore with Store {
 
   void _sanityCheckWorkerCurrentRunConfig(WorkerCurrentRunConfig config) {
     if (config.hasIntegrationTest()) {
-      if (config.integrationTest.autoUpdateGoldenFiles != autoUpdateGoldenFiles)
+      if (config.integrationTest.autoUpdateGoldenFiles != autoUpdateGoldenFiles) {
         throw AssertionError;
+      }
     }
   }
 
@@ -330,8 +331,9 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
     required String? executedTestName,
     required bool? executedTestSucceeded,
   }) {
-    if (oldState is _ITIMStateFinished && executedTestName != null)
+    if (oldState is _ITIMStateFinished && executedTestName != null) {
       throw AssertionError();
+    }
 
     if (executedTestName == null) {
       return const _ITIMState.finished();

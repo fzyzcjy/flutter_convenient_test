@@ -13,8 +13,9 @@ class GoldenDiffPageFileInfoPanel extends StatelessWidget {
     return LayoutBuilder(builder: (_, constraints) {
       return Observer(builder: (_) {
         final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
-        if (gitFolderInfo == null)
+        if (gitFolderInfo == null) {
           return const Center(child: Text('Please choose a folder first'));
+        }
 
         return SingleChildScrollView(
           child: SingleChildScrollView(

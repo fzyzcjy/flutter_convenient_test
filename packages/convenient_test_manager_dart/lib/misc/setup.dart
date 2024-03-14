@@ -49,16 +49,20 @@ Future<void> setup({
   getIt.registerSingleton<ScreenVideoRecorderService>(
       ScreenVideoRecorderService.create());
 
-  if (registerMiscDartService)
+  if (registerMiscDartService) {
     getIt.registerSingleton<MiscDartService>(MiscDartService());
+  }
   if (registerFsService) getIt.registerSingleton<FsService>(FsServiceDart());
-  if (registerHighlightStoreBase)
+  if (registerHighlightStoreBase) {
     getIt.registerSingleton<HighlightStoreBase>(HighlightStoreDummy());
-  if (registerVideoPlayerStoreBase)
+  }
+  if (registerVideoPlayerStoreBase) {
     getIt.registerSingleton<VideoPlayerStoreBase>(VideoPlayerStoreDummy());
-  if (registerVmServiceWrapper)
+  }
+  if (registerVmServiceWrapper) {
     getIt.registerSingleton<VmServiceWrapperService>(
         RealVmServiceWrapperService());
+  }
 
   GetIt.I.get<ConvenientTestManagerService>().serve();
 

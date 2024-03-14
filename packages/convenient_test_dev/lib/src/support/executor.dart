@@ -60,8 +60,9 @@ class ResolvedExecutionFilter {
   const ResolvedExecutionFilter({required this.allowExecuteTestNames});
 
   bool allowExecute(GroupEntry entry) {
-    if (entry is! Test)
+    if (entry is! Test) {
       throw Exception('allowExecute only supports Test, but entry=$entry');
+    }
     return allowExecuteTestNames.contains(entry.name);
   }
 

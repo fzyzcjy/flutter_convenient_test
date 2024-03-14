@@ -87,8 +87,9 @@ class _ScreenVideoRecorderServiceIosSimulator
     final exitCode = await process.exitCode;
 
     Log.i(_kTag, 'stopRecord exitCode=$exitCode');
-    if (exitCode != 0)
+    if (exitCode != 0) {
       throw Exception('Process execution failed! exitCode=$exitCode');
+    }
   }
 }
 

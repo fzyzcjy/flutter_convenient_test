@@ -4,8 +4,9 @@ class StaticConfig {
   static final kAppCodeDir = () {
     const key = 'CONVENIENT_TEST_APP_CODE_DIR';
     const value = String.fromEnvironment(key);
-    if (value.isEmpty)
+    if (value.isEmpty) {
       throw Exception('Please provide `$key` via --dart-define');
+    }
     return value;
   }();
 
@@ -22,8 +23,9 @@ class StaticConfig {
 
   static final String? kWidgetTestReportSaverDirectory = () {
     const key = kWidgetTestReportSaverDirectoryKey;
-    if (const bool.hasEnvironment(key))
+    if (const bool.hasEnvironment(key)) {
       return const String.fromEnvironment(key);
+    }
     return Platform.environment[key];
   }();
 }

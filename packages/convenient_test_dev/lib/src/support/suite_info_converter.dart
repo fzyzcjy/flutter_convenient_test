@@ -39,8 +39,9 @@ class SuiteInfoConverter {
 
   int _convertGroupEntry(
       SpyDeclarerGroupEntry entry, SuiteInfoProto target, int parentId) {
-    if (entry is SpyDeclarerGroup)
+    if (entry is SpyDeclarerGroup) {
       return _convertGroup(entry, target, parentId);
+    }
     if (entry is SpyDeclarerTest) return _convertTest(entry, target, parentId);
     throw Exception('Unknown entry=$entry');
   }
@@ -51,8 +52,9 @@ class _GroupEntryIdStableGenerator {
   final _seenIds = <int>{};
 
   int generate(String name) {
-    if (_seenNames.contains(name))
+    if (_seenNames.contains(name)) {
       throw AssertionError('test name should be unique (name=$name)');
+    }
 
     final id = _generateWithoutSave(name);
     if (_seenIds.contains(id)) throw AssertionError;

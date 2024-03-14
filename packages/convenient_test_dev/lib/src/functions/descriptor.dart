@@ -20,8 +20,9 @@ class Descriptor {
 
   String _preFormat(Object? object, Plurality plurality) {
     if (object is Finder) return object.describeMatch(plurality);
-    if (object is Matcher)
+    if (object is Matcher) {
       return object.describe(StringDescription()).toString();
+    }
     return object.toString();
   }
 

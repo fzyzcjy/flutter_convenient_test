@@ -57,8 +57,9 @@ abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
     final logEntryId = GetIt.I.get<LogStore>().calcLogEntryAtTime(absoluteTime);
 
     // this "if" will avoid unnecessary mobx updates
-    if (logEntryId != playerPositionCorrespondingLogEntryId)
+    if (logEntryId != playerPositionCorrespondingLogEntryId) {
       playerPositionCorrespondingLogEntryId = logEntryId;
+    }
   }
 }
 
