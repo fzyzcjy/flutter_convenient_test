@@ -1,3 +1,8 @@
+## 1.3.5
+
+* Migrate to gradle 7.4.2 #377 (thanks @meltzow)
+* Change code format to improve pub scores #379 (thanks @meltzow)
+
 ## 1.3.4
 
 * Allow reading of Reports of up to 1GB in size #370 (thanks @gnunicorn)
