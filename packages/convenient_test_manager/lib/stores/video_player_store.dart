@@ -52,17 +52,22 @@ abstract class _VideoPlayerStore extends VideoPlayerStoreBase with Store {
   }
 
   void _handlePositionStreamEvent(Duration position) {
-    final absoluteTime = activeVideo?.videoToAbsoluteTime(position) ?? DateTime.fromMicrosecondsSinceEpoch(0);
+    final absoluteTime = activeVideo?.videoToAbsoluteTime(position) ??
+        DateTime.fromMicrosecondsSinceEpoch(0);
     final logEntryId = GetIt.I.get<LogStore>().calcLogEntryAtTime(absoluteTime);
 
     // this "if" will avoid unnecessary mobx updates
-    if (logEntryId != playerPositionCorrespondingLogEntryId) playerPositionCorrespondingLogEntryId = logEntryId;
+    if (logEntryId != playerPositionCorrespondingLogEntryId) {
+      playerPositionCorrespondingLogEntryId = logEntryId;
+    }
   }
 }
 
 extension ExtObservableMapVideoInfo on ObservableMap<int, VideoInfo> {
   List<int> findVideosAtTimeRange(DateTime start, DateTime end) => entries
-      .where((videoEntry) => videoEntry.value.startTime.isBefore(end) && videoEntry.value.endTime.isAfter(start))
+      .where((videoEntry) =>
+          videoEntry.value.startTime.isBefore(end) &&
+          videoEntry.value.endTime.isAfter(start))
       .map((videoEntry) => videoEntry.key)
       .toList();
 }

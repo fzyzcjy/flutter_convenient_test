@@ -6,10 +6,12 @@ import 'package:convenient_test_dev/src/support/spy_declarer.dart';
 import 'package:meta/meta.dart';
 
 @internal
-Future<void> convenientTestEntrypointWhenEnvWidget(FutureOr<void> Function() testBody) async {
+Future<void> convenientTestEntrypointWhenEnvWidget(
+    FutureOr<void> Function() testBody) async {
   final workerReportSaverService = WorkerReportSaverServiceSaveToLocal.create();
   if (workerReportSaverService != null) {
-    myGetIt.registerSingleton<WorkerReportSaverService>(workerReportSaverService);
+    myGetIt
+        .registerSingleton<WorkerReportSaverService>(workerReportSaverService);
   }
 
   // https://github.com/fzyzcjy/yplusplus/issues/8554#issuecomment-1530977507

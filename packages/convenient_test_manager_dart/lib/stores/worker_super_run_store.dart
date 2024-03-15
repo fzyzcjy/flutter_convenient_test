@@ -39,19 +39,26 @@ abstract class _WorkerSuperRunStore with Store {
 
   @observable
   WorkerSuperRunController currSuperRunController =
-      _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: RegexUtils.kMatchNothing);
+      _WorkerSuperRunControllerIntegrationTestClassicalMode(
+          filterNameRegex: RegexUtils.kMatchNothing);
 
-  void setControllerInteractiveApp() => currSuperRunController = _WorkerSuperRunControllerInteractiveApp();
+  void setControllerInteractiveApp() =>
+      currSuperRunController = _WorkerSuperRunControllerInteractiveApp();
 
   void setControllerIntegrationTest({required String filterNameRegex}) {
     if (isolationMode) {
-      currSuperRunController = _WorkerSuperRunControllerIntegrationTestIsolationMode(filterNameRegex: filterNameRegex);
+      currSuperRunController =
+          _WorkerSuperRunControllerIntegrationTestIsolationMode(
+              filterNameRegex: filterNameRegex);
     } else {
-      currSuperRunController = _WorkerSuperRunControllerIntegrationTestClassicalMode(filterNameRegex: filterNameRegex);
+      currSuperRunController =
+          _WorkerSuperRunControllerIntegrationTestClassicalMode(
+              filterNameRegex: filterNameRegex);
     }
   }
 
-  void setControllerHalt() => currSuperRunController = _WorkerSuperRunControllerHalt();
+  void setControllerHalt() =>
+      currSuperRunController = _WorkerSuperRunControllerHalt();
 
   WorkerCurrentRunConfig calcCurrentRunConfig() {
     final config = currSuperRunController._calcCurrentRunConfig();
@@ -61,7 +68,10 @@ abstract class _WorkerSuperRunStore with Store {
 
   void _sanityCheckWorkerCurrentRunConfig(WorkerCurrentRunConfig config) {
     if (config.hasIntegrationTest()) {
-      if (config.integrationTest.autoUpdateGoldenFiles != autoUpdateGoldenFiles) throw AssertionError;
+      if (config.integrationTest.autoUpdateGoldenFiles !=
+          autoUpdateGoldenFiles) {
+        throw AssertionError;
+      }
     }
   }
 
@@ -70,11 +80,14 @@ abstract class _WorkerSuperRunStore with Store {
   }
 
   void _handleIsolationModeChange(bool isolationMode) {
-    Log.d(_kTag, 'see isolationMode($isolationMode) changed, thus reloadInfo to make currSuperRunController updated');
+    Log.d(_kTag,
+        'see isolationMode($isolationMode) changed, thus reloadInfo to make currSuperRunController updated');
     GetIt.I.get<MiscDartService>().reloadInfo();
     assert(isolationMode
-        ? currSuperRunController is _WorkerSuperRunControllerIntegrationTestIsolationMode
-        : currSuperRunController is _WorkerSuperRunControllerIntegrationTestClassicalMode);
+        ? currSuperRunController
+            is _WorkerSuperRunControllerIntegrationTestIsolationMode
+        : currSuperRunController
+            is _WorkerSuperRunControllerIntegrationTestClassicalMode);
   }
 }
 
@@ -118,12 +131,14 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
               allMatch: ExecutionFilter_Strategy_AllMatch(),
             ),
           ),
-          autoUpdateGoldenFiles: GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
+          autoUpdateGoldenFiles:
+              GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
         ),
       );
 
   @override
-  void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
+  void handleTearDownAll(
+      ResolvedExecutionFilterProto resolvedExecutionFilter) {}
 
   @override
   WorkerSuperRunStatus get superRunStatus => WorkerSuperRunStatus.na;
@@ -137,11 +152,13 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
-    return WorkerCurrentRunConfig(interactiveApp: WorkerCurrentRunConfig_InteractiveApp());
+    return WorkerCurrentRunConfig(
+        interactiveApp: WorkerCurrentRunConfig_InteractiveApp());
   }
 
   @override
-  void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {}
+  void handleTearDownAll(
+      ResolvedExecutionFilterProto resolvedExecutionFilter) {}
 
   @override
   WorkerSuperRunStatus get superRunStatus => WorkerSuperRunStatus.na;
@@ -154,10 +171,13 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
 class _WorkerSuperRunControllerIntegrationTestClassicalMode = __WorkerSuperRunControllerIntegrationTestClassicalMode
     with _$_WorkerSuperRunControllerIntegrationTestClassicalMode;
 
-abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode extends WorkerSuperRunController with Store {
+abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode
+    extends WorkerSuperRunController with Store {
   final String filterNameRegex;
 
-  __WorkerSuperRunControllerIntegrationTestClassicalMode({required this.filterNameRegex}) : super._();
+  __WorkerSuperRunControllerIntegrationTestClassicalMode(
+      {required this.filterNameRegex})
+      : super._();
 
   @observable
   bool seenTearDownAll = false;
@@ -169,12 +189,15 @@ abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode extends Wo
         reportSuiteInfo: true,
         // this is for flaky test detection. set to non-zero,
         // such that the flaky tests are retried at the worker automatically
-        defaultRetryCount: GetIt.I.get<WorkerSuperRunStore>().flakyTestTotalAttemptCount - 1,
+        defaultRetryCount:
+            GetIt.I.get<WorkerSuperRunStore>().flakyTestTotalAttemptCount - 1,
         executionFilter: ExecutionFilter(
           filterNameRegex: filterNameRegex,
-          strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
+          strategy: ExecutionFilter_Strategy(
+              allMatch: ExecutionFilter_Strategy_AllMatch()),
         ),
-        autoUpdateGoldenFiles: GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
+        autoUpdateGoldenFiles:
+            GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
       ),
     );
   }
@@ -185,8 +208,9 @@ abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode extends Wo
   }
 
   @override
-  WorkerSuperRunStatus get superRunStatus =>
-      seenTearDownAll ? WorkerSuperRunStatus.testAllDone : WorkerSuperRunStatus.runningTest;
+  WorkerSuperRunStatus get superRunStatus => seenTearDownAll
+      ? WorkerSuperRunStatus.testAllDone
+      : WorkerSuperRunStatus.runningTest;
 
   @override
   String toString() => 'WorkerSuperRunControllerIntegrationTestClassicalMode{'
@@ -199,7 +223,8 @@ abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode extends Wo
 class _WorkerSuperRunControllerIntegrationTestIsolationMode = __WorkerSuperRunControllerIntegrationTestIsolationMode
     with _$_WorkerSuperRunControllerIntegrationTestIsolationMode;
 
-abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends WorkerSuperRunController with Store {
+abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
+    extends WorkerSuperRunController with Store {
   static const _kTag = '_WorkerSuperRunControllerIntegrationTestIsolationMode';
 
   final String filterNameRegex;
@@ -207,7 +232,9 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
   @observable
   var state = const _ITIMState.initial();
 
-  __WorkerSuperRunControllerIntegrationTestIsolationMode({required this.filterNameRegex}) : super._();
+  __WorkerSuperRunControllerIntegrationTestIsolationMode(
+      {required this.filterNameRegex})
+      : super._();
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
@@ -217,7 +244,8 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
         // do *not* handle flaky tests at worker level; instead, handle it at manager level
         defaultRetryCount: 0,
         executionFilter: _calcExecutionFilter(),
-        autoUpdateGoldenFiles: GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
+        autoUpdateGoldenFiles:
+            GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
       ),
     );
   }
@@ -225,7 +253,8 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
   ExecutionFilter _calcExecutionFilter() => state.map(
         initial: (_) => ExecutionFilter(
           filterNameRegex: filterNameRegex,
-          strategy: ExecutionFilter_Strategy(firstMatch: ExecutionFilter_Strategy_FirstMatch()),
+          strategy: ExecutionFilter_Strategy(
+              firstMatch: ExecutionFilter_Strategy_FirstMatch()),
         ),
         goOn: (s) => ExecutionFilter(
           filterNameRegex: filterNameRegex,
@@ -238,12 +267,14 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
         retryLast: (s) => ExecutionFilter(
           // retry this test again (flaky test handling)
           filterNameRegex: RegexUtils.matchFull(s.lastExecutedTestName),
-          strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
+          strategy: ExecutionFilter_Strategy(
+              allMatch: ExecutionFilter_Strategy_AllMatch()),
         ),
         finished: (_) => ExecutionFilter(
           // NOTE use "regex match nothing"
           filterNameRegex: RegexUtils.kMatchNothing,
-          strategy: ExecutionFilter_Strategy(allMatch: ExecutionFilter_Strategy_AllMatch()),
+          strategy: ExecutionFilter_Strategy(
+              allMatch: ExecutionFilter_Strategy_AllMatch()),
         ),
       );
 
@@ -255,7 +286,8 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
     final oldState = state;
 
     if (allowExecuteTestNames.length > 1) {
-      throw Exception('$_kTag expect allowExecuteTestNames to have 0 or 1 entries, '
+      throw Exception(
+          '$_kTag expect allowExecuteTestNames to have 0 or 1 entries, '
           'since in this mode, a worker run only executes 0 or 1 tests. '
           'However, currently it is allowExecuteTestNames=$allowExecuteTestNames.');
     }
@@ -264,8 +296,10 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
     final executedTestSucceeded = () {
       if (executedTestName == null) return null;
 
-      final executedTestId = suiteInfoStore.suiteInfo!.getEntryIdFromName(executedTestName)!;
-      final executedTestState = suiteInfoStore.testEntryStateMap[executedTestId].toState();
+      final executedTestId =
+          suiteInfoStore.suiteInfo!.getEntryIdFromName(executedTestName)!;
+      final executedTestState =
+          suiteInfoStore.testEntryStateMap[executedTestId].toState();
       if (executedTestState.status != Status.complete) throw AssertionError;
 
       return executedTestState.result == Result.success;
@@ -289,23 +323,29 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode extends Wo
   }
 
   @override
-  WorkerSuperRunStatus get superRunStatus =>
-      state is _ITIMStateFinished ? WorkerSuperRunStatus.testAllDone : WorkerSuperRunStatus.runningTest;
+  WorkerSuperRunStatus get superRunStatus => state is _ITIMStateFinished
+      ? WorkerSuperRunStatus.testAllDone
+      : WorkerSuperRunStatus.runningTest;
 
   static _ITIMState _calcNextState({
     required _ITIMState oldState,
     required String? executedTestName,
     required bool? executedTestSucceeded,
   }) {
-    if (oldState is _ITIMStateFinished && executedTestName != null) throw AssertionError();
+    if (oldState is _ITIMStateFinished && executedTestName != null) {
+      throw AssertionError();
+    }
 
     if (executedTestName == null) {
       return const _ITIMState.finished();
     }
 
     if (!executedTestSucceeded!) {
-      final lastExecutedTestFailCount = oldState is _ITIMStateRetryLast ? (oldState.lastExecutedTestFailCount + 1) : 1;
-      final shouldRetry = lastExecutedTestFailCount < GetIt.I.get<WorkerSuperRunStore>().flakyTestTotalAttemptCount;
+      final lastExecutedTestFailCount = oldState is _ITIMStateRetryLast
+          ? (oldState.lastExecutedTestFailCount + 1)
+          : 1;
+      final shouldRetry = lastExecutedTestFailCount <
+          GetIt.I.get<WorkerSuperRunStore>().flakyTestTotalAttemptCount;
 
       if (shouldRetry) {
         return _ITIMState.retryLast(

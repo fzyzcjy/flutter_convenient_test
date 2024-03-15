@@ -70,7 +70,8 @@ class _SecondaryPanelTabBar extends StatelessWidget {
           ToggleButtons(
             isSelected: selected,
             children: tabWidgets,
-            onPressed: (idx) => homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.values[idx],
+            onPressed: (idx) => homePageStore.activeSecondaryPanelTab =
+                HomePageSecondaryPanelTab.values[idx],
           ),
           const SizedBox(width: 12),
           SizedBox(

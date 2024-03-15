@@ -13,7 +13,9 @@ import 'package:intl/intl.dart';
 abstract class WorkerReportSaverService {
   /// Nullable - e.g. null when in widget test mode since there is no manager
   static WorkerReportSaverService? get I =>
-      myGetIt.isRegistered<WorkerReportSaverService>() ? myGetIt.get<WorkerReportSaverService>() : null;
+      myGetIt.isRegistered<WorkerReportSaverService>()
+          ? myGetIt.get<WorkerReportSaverService>()
+          : null;
 
   Future<void> report(ReportItem item);
 }
@@ -23,9 +25,11 @@ extension ExtWorkerReportSaverService on WorkerReportSaverService {
       report(ReportItem(suiteInfoProto: SuiteInfoConverter.convert(group)));
 }
 
-class WorkerReportSaverServiceSendToManager implements WorkerReportSaverService {
+class WorkerReportSaverServiceSendToManager
+    implements WorkerReportSaverService {
   @override
-  Future<void> report(ReportItem item) => myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(item);
+  Future<void> report(ReportItem item) =>
+      myGetIt.get<ConvenientTestManagerRpcService>().reportSingle(item);
 }
 
 class WorkerReportSaverServiceSaveToLocal implements WorkerReportSaverService {

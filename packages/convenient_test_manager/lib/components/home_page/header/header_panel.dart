@@ -33,7 +33,8 @@ class HomePageHeaderPanel extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: IconButton(
-                    onPressed: () => homePageStore.displayLoadedReportMode = false,
+                    onPressed: () =>
+                        homePageStore.displayLoadedReportMode = false,
                     icon: const Icon(Icons.arrow_back),
                   ),
                 ),
@@ -62,7 +63,8 @@ class HomePageHeaderPanel extends StatelessWidget {
               _HeaderButton(
                 onPressed: () {
                   highlightStore.enableAutoExpand = true;
-                  miscFlutterService.hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
+                  miscFlutterService.hotRestartAndRunTests(
+                      filterNameRegex: RegexUtils.kMatchEverything);
                 },
                 text: 'Run All',
               ),
@@ -87,12 +89,14 @@ class HomePageHeaderPanel extends StatelessWidget {
                 text: 'Load Report',
               ),
               _HeaderButton(
-                onPressed: () => Navigator.pushNamed(context, GoldenDiffPage.kRouteName),
+                onPressed: () =>
+                    Navigator.pushNamed(context, GoldenDiffPage.kRouteName),
                 text: 'Golden Diff Page',
               ),
               Observer(builder: (context) {
                 final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
-                final status = workerSuperRunStore.currSuperRunController.superRunStatus;
+                final status =
+                    workerSuperRunStore.currSuperRunController.superRunStatus;
 
                 return HeaderStatusHint(status: status);
               }),

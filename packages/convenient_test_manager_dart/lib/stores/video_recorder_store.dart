@@ -24,7 +24,8 @@ abstract class _VideoRecorderStore with Store {
   @action
   Future<void> startRecord() async {
     final path = await _createVideoPath();
-    recordingVideoInfo = VideoInfo(path: path, startTime: DateTime.now(), endTime: _kInvalidTime);
+    recordingVideoInfo = VideoInfo(
+        path: path, startTime: DateTime.now(), endTime: _kInvalidTime);
 
     Log.d(_kTag, 'startRecord call ScreenVideoRecorderService begin');
     await GetIt.I.get<ScreenVideoRecorderService>().startRecord(path);
@@ -56,7 +57,10 @@ abstract class _VideoRecorderStore with Store {
     final stem = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
     return
         // ignore: prefer_interpolation_to_compose_strings
-        await GetIt.I.get<FsService>().getActiveSuperRunDataSubDirectory(category: 'Video') + '$stem.mov';
+        await GetIt.I
+                .get<FsService>()
+                .getActiveSuperRunDataSubDirectory(category: 'Video') +
+            '$stem.mov';
   }
 }
 
@@ -75,9 +79,11 @@ class VideoInfo {
   });
 
   @override
-  String toString() => 'VideoInfo{path: $path, startTime: $startTime, endTime: $endTime}';
+  String toString() =>
+      'VideoInfo{path: $path, startTime: $startTime, endTime: $endTime}';
 
-  Duration absoluteToVideoTime(DateTime absoluteTime) => absoluteTime.difference(startTime);
+  Duration absoluteToVideoTime(DateTime absoluteTime) =>
+      absoluteTime.difference(startTime);
 
   DateTime videoToAbsoluteTime(Duration videoTime) => startTime.add(videoTime);
 }

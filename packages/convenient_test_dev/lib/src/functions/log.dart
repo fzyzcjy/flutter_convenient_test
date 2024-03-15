@@ -16,10 +16,12 @@ import 'package:test_api/src/backend/invoker.dart';
 import 'package:test_api/src/backend/live_test.dart';
 
 extension ConvenientTestLog on ConvenientTest {
-  void section(String description) => log('SECTION', description, type: LogSubEntryType.SECTION);
+  void section(String description) =>
+      log('SECTION', description, type: LogSubEntryType.SECTION);
 
   // p.s. can search emoji here - https://emojipedia.org
-  LogHandle log(String title, String message, {LogSubEntryType? type}) => convenientTestLog(title, message, type: type);
+  LogHandle log(String title, String message, {LogSubEntryType? type}) =>
+      convenientTestLog(title, message, type: type);
 }
 
 LogHandle convenientTestLog(
@@ -113,7 +115,9 @@ class LogHandle {
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
     Future<List<int>> computeImage() async {
       final tester = ConvenientTest.maybeActiveInstance?.tester;
-      return image ?? await _maybeRunAsync(tester, () => takeSnapshot(pumper: tester?.pump));
+      return image ??
+          await _maybeRunAsync(
+              tester, () => takeSnapshot(pumper: tester?.pump));
     }
 
     final reporterService = WorkerReportSaverService.I;
@@ -126,19 +130,26 @@ class LogHandle {
       )));
     } else {
       if (StaticConfig.kVerbose) {
-        final briefTime = DateTime.now().toLocal().toIso8601String().replaceAll(':', '').replaceAll('.', '-');
-        final filename = 'convenient_test_debug_screenshots/debug_screenshot_${briefTime}_$name.png';
+        final briefTime = DateTime.now()
+            .toLocal()
+            .toIso8601String()
+            .replaceAll(':', '')
+            .replaceAll('.', '-');
+        final filename =
+            'convenient_test_debug_screenshots/debug_screenshot_${briefTime}_$name.png';
         File(filename).parent.createSync(recursive: true);
         File(filename).writeAsBytesSync(await computeImage());
         Log.i(_kTag, 'snapshot() saved file to disk at: $filename');
       } else {
-        Log.i(_kTag, 'snapshot() is no-op; specify `${StaticConfig.kVerboseKey}` to save screenshots to disk.');
+        Log.i(_kTag,
+            'snapshot() is no-op; specify `${StaticConfig.kVerboseKey}` to save screenshots to disk.');
       }
     }
   }
 }
 
-Future<T> _maybeRunAsync<T extends Object>(WidgetTester? tester, Future<T> Function() f) async {
+Future<T> _maybeRunAsync<T extends Object>(
+    WidgetTester? tester, Future<T> Function() f) async {
   if (tester == null) return await f();
   return (await tester.runAsync(f))!;
 }

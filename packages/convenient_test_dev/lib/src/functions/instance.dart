@@ -22,7 +22,8 @@ class ConvenientTest {
   }
 
   @internal
-  static Future<void> withActiveInstance(WidgetTester tester, Future<void> Function(ConvenientTest) body) async {
+  static Future<void> withActiveInstance(
+      WidgetTester tester, Future<void> Function(ConvenientTest) body) async {
     final t = ConvenientTest._(tester);
     activeInstance = t;
     try {

@@ -23,9 +23,11 @@ extension ConvenientTestFind on ConvenientTest {
 
   TRawCommand raw(Object value) => TRawCommand(this, value);
 
-  TValueGetterCommand value(ValueGetter<Object?> valueGetter) => TValueGetterCommand(this, valueGetter);
+  TValueGetterCommand value(ValueGetter<Object?> valueGetter) =>
+      TValueGetterCommand(this, valueGetter);
 
-  TValueAsyncGetterCommand valueAsync(Future<Object?> Function() getter) => TValueAsyncGetterCommand(this, getter);
+  TValueAsyncGetterCommand valueAsync(Future<Object?> Function() getter) =>
+      TValueAsyncGetterCommand(this, getter);
 }
 
 extension ExtFinder on Finder {
@@ -34,18 +36,22 @@ extension ExtFinder on Finder {
   Future<void> should(Matcher matcher, {String? reason, bool? settle}) async =>
       TFinderCommand.auto(this).should(matcher, reason: reason, settle: settle);
 
-  Future<void> replaceText(String text) => TFinderCommand.auto(this).replaceText(text);
+  Future<void> replaceText(String text) =>
+      TFinderCommand.auto(this).replaceText(text);
 
-  Future<void> enterTextWithoutReplace(String text) => TFinderCommand.auto(this).enterTextWithoutReplace(text);
+  Future<void> enterTextWithoutReplace(String text) =>
+      TFinderCommand.auto(this).enterTextWithoutReplace(text);
 
   Future<void> tap({bool warnIfMissed = true, bool? settle}) =>
       TFinderCommand.auto(this).tap(warnIfMissed: warnIfMissed, settle: settle);
 
   Future<void> longPress({bool warnIfMissed = true, bool? settle}) =>
-      TFinderCommand.auto(this).longPress(warnIfMissed: warnIfMissed, settle: settle);
+      TFinderCommand.auto(this)
+          .longPress(warnIfMissed: warnIfMissed, settle: settle);
 
   Future<void> drag(Offset offset, {bool warnIfMissed = true, bool? settle}) =>
-      TFinderCommand.auto(this).drag(offset, warnIfMissed: warnIfMissed, settle: settle);
+      TFinderCommand.auto(this)
+          .drag(offset, warnIfMissed: warnIfMissed, settle: settle);
 
   Future<void> multiDrag({
     required Offset firstDownOffset,
@@ -71,7 +77,9 @@ ConvenientTestGetFinder convenientTestGetFinder = _defaultGetFinder;
 Finder _defaultGetFinder(Object arg) {
   if (arg is Finder) return arg;
   if (arg is Type) return find.byType(arg);
-  if (arg is List) return find.byArray(arg.map((Object? e) => find.get(e!)).toList());
+  if (arg is List) {
+    return find.byArray(arg.map((Object? e) => find.get(e!)).toList());
+  }
   return find.bySel(arg);
 }
 
@@ -84,19 +92,25 @@ extension ExtCommonFinders on CommonFinders {
   // ref
   // 1. cypress-realworld-app command: getBySel
   // 2. [CommonFinders.byTooltip]
-  Finder bySel(Object name, {bool skipOffstage = true, bool Function(Object? markData)? predicate}) {
+  Finder bySel(Object name,
+      {bool skipOffstage = true, bool Function(Object? markData)? predicate}) {
     var description = '$name';
     // hacky beautify things like [LoginMark.username]; only useful when code is not obfuscated
     if (name is Enum && name.runtimeType.toString().endsWith('Mark')) {
       final cls = name.toString().split('.')[0];
-      final modifiedCls = ReCase(cls.substring(0, cls.length - 'Mark'.length)).camelCase;
+      final modifiedCls =
+          ReCase(cls.substring(0, cls.length - 'Mark'.length)).camelCase;
       description = '$modifiedCls#${name.name}';
     }
 
     return byWidgetPredicate(
       // NOTE MarkCore, not Mark
-      (widget) => widget is MarkCore && widget.name == name && (predicate?.call(widget.data) ?? true),
-      description: description + (predicate == null ? '' : ' with extra predicate'),
+      (widget) =>
+          widget is MarkCore &&
+          widget.name == name &&
+          (predicate?.call(widget.data) ?? true),
+      description:
+          description + (predicate == null ? '' : ' with extra predicate'),
       skipOffstage: skipOffstage,
     );
   }
@@ -110,7 +124,8 @@ extension ExtCommonFinders on CommonFinders {
     }
     ans = DelegatingFinder(
       ans,
-      overrideDescribeMatch: (plurality) => finders.map((f) => f.describeMatch(plurality)).join(' -> '),
+      overrideDescribeMatch: (plurality) =>
+          finders.map((f) => f.describeMatch(plurality)).join(' -> '),
     );
 
     return ans;
@@ -162,7 +177,8 @@ class TFinderCommand extends TCommand {
         finder,
         text,
         logCallback: (oldValue, newValue) {
-          log.update(logTitle, '$basicLogMessage (old text: "${oldValue.text}")');
+          log.update(
+              logTitle, '$basicLogMessage (old text: "${oldValue.text}")');
         },
       ),
       preCondition: null,
@@ -190,7 +206,8 @@ class TFinderCommand extends TCommand {
     bool? settle,
   }) =>
       act(
-        act: (log) => t.tester.tapAt(alignment.withinRect(t.tester.getRect(finder))),
+        act: (log) =>
+            t.tester.tapAt(alignment.withinRect(t.tester.getRect(finder))),
         preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
         logTitle: 'TAP',
         logMessage: finder.describeMatch(Plurality.one),
@@ -237,7 +254,9 @@ class TFinderCommand extends TCommand {
           secondDownOffset: secondDownOffset,
           firstFingerOffsets: firstFingerOffsets,
           secondFingerOffsets: secondFingerOffsets,
-          afterMove: (logMove ?? false) ? (i) async => log.snapshot(name: 'move #$i') : null,
+          afterMove: (logMove ?? false)
+              ? (i) async => log.snapshot(name: 'move #$i')
+              : null,
         ),
         preCondition: null,
         logTitle: 'MULTI DRAG',
@@ -261,15 +280,21 @@ class TFinderCommand extends TCommand {
     // ref https://docs.cypress.io/guides/core-concepts/retry-ability#Built-in-assertions
     await shouldRaw(
       allOf(findsOneWidget, preCondition),
-      logUpdate: (title, message, {error, stackTrace, required type, printing = false}) =>
-          log.update('$logTitle ASSERT', message, type: type, error: error, stackTrace: stackTrace, printing: printing),
+      logUpdate: (title, message,
+              {error, stackTrace, required type, printing = false}) =>
+          log.update('$logTitle ASSERT', message,
+              type: type,
+              error: error,
+              stackTrace: stackTrace,
+              printing: printing),
       logSnapshot: log.snapshot,
       // do not take snapshot if success - since we will do it later
       snapshotWhenSuccess: false,
       settle: settle,
     );
     // update log, since [should] will change logs
-    unawaited(log.update(logTitle, logMessage, type: LogSubEntryType.GENERAL_MESSAGE));
+    unawaited(log.update(logTitle, logMessage,
+        type: LogSubEntryType.GENERAL_MESSAGE));
 
     await act(log);
 
@@ -277,7 +302,10 @@ class TFinderCommand extends TCommand {
       await t.tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
     } catch (e, s) {
       await log.update(logTitle, 'doing pump, when $logMessage',
-          type: LogSubEntryType.ASSERT_FAIL, error: '$e', stackTrace: '$s', printing: true);
+          type: LogSubEntryType.ASSERT_FAIL,
+          error: '$e',
+          stackTrace: '$s',
+          printing: true);
       await log.snapshot(name: 'failed');
       rethrow;
     }

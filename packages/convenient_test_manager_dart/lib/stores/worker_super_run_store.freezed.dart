@@ -20,7 +20,9 @@ mixin _$_ITIMState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String lastExecutedTestName) goOn,
-    required TResult Function(String lastExecutedTestName, int lastExecutedTestFailCount) retryLast,
+    required TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)
+        retryLast,
     required TResult Function() finished,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +30,9 @@ mixin _$_ITIMState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String lastExecutedTestName)? goOn,
-    TResult? Function(String lastExecutedTestName, int lastExecutedTestFailCount)? retryLast,
+    TResult? Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult? Function()? finished,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +40,9 @@ mixin _$_ITIMState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String lastExecutedTestName)? goOn,
-    TResult Function(String lastExecutedTestName, int lastExecutedTestFailCount)? retryLast,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
     required TResult orElse(),
   }) =>
@@ -70,12 +76,14 @@ mixin _$_ITIMState {
 
 /// @nodoc
 abstract class _$ITIMStateCopyWith<$Res> {
-  factory _$ITIMStateCopyWith(_ITIMState value, $Res Function(_ITIMState) then) =
+  factory _$ITIMStateCopyWith(
+          _ITIMState value, $Res Function(_ITIMState) then) =
       __$ITIMStateCopyWithImpl<$Res, _ITIMState>;
 }
 
 /// @nodoc
-class __$ITIMStateCopyWithImpl<$Res, $Val extends _ITIMState> implements _$ITIMStateCopyWith<$Res> {
+class __$ITIMStateCopyWithImpl<$Res, $Val extends _ITIMState>
+    implements _$ITIMStateCopyWith<$Res> {
   __$ITIMStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -86,14 +94,17 @@ class __$ITIMStateCopyWithImpl<$Res, $Val extends _ITIMState> implements _$ITIMS
 
 /// @nodoc
 abstract class _$$_ITIMStateInitialCopyWith<$Res> {
-  factory _$$_ITIMStateInitialCopyWith(_$_ITIMStateInitial value, $Res Function(_$_ITIMStateInitial) then) =
+  factory _$$_ITIMStateInitialCopyWith(
+          _$_ITIMStateInitial value, $Res Function(_$_ITIMStateInitial) then) =
       __$$_ITIMStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ITIMStateInitialCopyWithImpl<$Res> extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateInitial>
+class __$$_ITIMStateInitialCopyWithImpl<$Res>
+    extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateInitial>
     implements _$$_ITIMStateInitialCopyWith<$Res> {
-  __$$_ITIMStateInitialCopyWithImpl(_$_ITIMStateInitial _value, $Res Function(_$_ITIMStateInitial) _then)
+  __$$_ITIMStateInitialCopyWithImpl(
+      _$_ITIMStateInitial _value, $Res Function(_$_ITIMStateInitial) _then)
       : super(_value, _then);
 }
 
@@ -109,7 +120,8 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$_ITIMStateInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_ITIMStateInitial);
   }
 
   @override
@@ -120,7 +132,9 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String lastExecutedTestName) goOn,
-    required TResult Function(String lastExecutedTestName, int lastExecutedTestFailCount) retryLast,
+    required TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)
+        retryLast,
     required TResult Function() finished,
   }) {
     return initial();
@@ -131,7 +145,9 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String lastExecutedTestName)? goOn,
-    TResult? Function(String lastExecutedTestName, int lastExecutedTestFailCount)? retryLast,
+    TResult? Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult? Function()? finished,
   }) {
     return initial?.call();
@@ -142,7 +158,9 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String lastExecutedTestName)? goOn,
-    TResult Function(String lastExecutedTestName, int lastExecutedTestFailCount)? retryLast,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
     required TResult orElse(),
   }) {
@@ -196,16 +214,20 @@ abstract class _ITIMStateInitial implements _ITIMState {
 
 /// @nodoc
 abstract class _$$_ITIMStateGoOnCopyWith<$Res> {
-  factory _$$_ITIMStateGoOnCopyWith(_$_ITIMStateGoOn value, $Res Function(_$_ITIMStateGoOn) then) =
+  factory _$$_ITIMStateGoOnCopyWith(
+          _$_ITIMStateGoOn value, $Res Function(_$_ITIMStateGoOn) then) =
       __$$_ITIMStateGoOnCopyWithImpl<$Res>;
   @useResult
   $Res call({String lastExecutedTestName});
 }
 
 /// @nodoc
-class __$$_ITIMStateGoOnCopyWithImpl<$Res> extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateGoOn>
+class __$$_ITIMStateGoOnCopyWithImpl<$Res>
+    extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateGoOn>
     implements _$$_ITIMStateGoOnCopyWith<$Res> {
-  __$$_ITIMStateGoOnCopyWithImpl(_$_ITIMStateGoOn _value, $Res Function(_$_ITIMStateGoOn) _then) : super(_value, _then);
+  __$$_ITIMStateGoOnCopyWithImpl(
+      _$_ITIMStateGoOn _value, $Res Function(_$_ITIMStateGoOn) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -257,7 +279,9 @@ class _$_ITIMStateGoOn implements _ITIMStateGoOn {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String lastExecutedTestName) goOn,
-    required TResult Function(String lastExecutedTestName, int lastExecutedTestFailCount) retryLast,
+    required TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)
+        retryLast,
     required TResult Function() finished,
   }) {
     return goOn(lastExecutedTestName);
@@ -268,7 +292,9 @@ class _$_ITIMStateGoOn implements _ITIMStateGoOn {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String lastExecutedTestName)? goOn,
-    TResult? Function(String lastExecutedTestName, int lastExecutedTestFailCount)? retryLast,
+    TResult? Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult? Function()? finished,
   }) {
     return goOn?.call(lastExecutedTestName);
@@ -279,7 +305,9 @@ class _$_ITIMStateGoOn implements _ITIMStateGoOn {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String lastExecutedTestName)? goOn,
-    TResult Function(String lastExecutedTestName, int lastExecutedTestFailCount)? retryLast,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
     required TResult orElse(),
   }) {
@@ -328,25 +356,30 @@ class _$_ITIMStateGoOn implements _ITIMStateGoOn {
 }
 
 abstract class _ITIMStateGoOn implements _ITIMState {
-  const factory _ITIMStateGoOn({required final String lastExecutedTestName}) = _$_ITIMStateGoOn;
+  const factory _ITIMStateGoOn({required final String lastExecutedTestName}) =
+      _$_ITIMStateGoOn;
 
   String get lastExecutedTestName;
   @JsonKey(ignore: true)
-  _$$_ITIMStateGoOnCopyWith<_$_ITIMStateGoOn> get copyWith => throw _privateConstructorUsedError;
+  _$$_ITIMStateGoOnCopyWith<_$_ITIMStateGoOn> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$_ITIMStateRetryLastCopyWith<$Res> {
-  factory _$$_ITIMStateRetryLastCopyWith(_$_ITIMStateRetryLast value, $Res Function(_$_ITIMStateRetryLast) then) =
+  factory _$$_ITIMStateRetryLastCopyWith(_$_ITIMStateRetryLast value,
+          $Res Function(_$_ITIMStateRetryLast) then) =
       __$$_ITIMStateRetryLastCopyWithImpl<$Res>;
   @useResult
   $Res call({String lastExecutedTestName, int lastExecutedTestFailCount});
 }
 
 /// @nodoc
-class __$$_ITIMStateRetryLastCopyWithImpl<$Res> extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateRetryLast>
+class __$$_ITIMStateRetryLastCopyWithImpl<$Res>
+    extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateRetryLast>
     implements _$$_ITIMStateRetryLastCopyWith<$Res> {
-  __$$_ITIMStateRetryLastCopyWithImpl(_$_ITIMStateRetryLast _value, $Res Function(_$_ITIMStateRetryLast) _then)
+  __$$_ITIMStateRetryLastCopyWithImpl(
+      _$_ITIMStateRetryLast _value, $Res Function(_$_ITIMStateRetryLast) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -371,7 +404,9 @@ class __$$_ITIMStateRetryLastCopyWithImpl<$Res> extends __$ITIMStateCopyWithImpl
 /// @nodoc
 
 class _$_ITIMStateRetryLast implements _ITIMStateRetryLast {
-  const _$_ITIMStateRetryLast({required this.lastExecutedTestName, required this.lastExecutedTestFailCount});
+  const _$_ITIMStateRetryLast(
+      {required this.lastExecutedTestName,
+      required this.lastExecutedTestFailCount});
 
   @override
   final String lastExecutedTestName;
@@ -390,25 +425,30 @@ class _$_ITIMStateRetryLast implements _ITIMStateRetryLast {
             other is _$_ITIMStateRetryLast &&
             (identical(other.lastExecutedTestName, lastExecutedTestName) ||
                 other.lastExecutedTestName == lastExecutedTestName) &&
-            (identical(other.lastExecutedTestFailCount, lastExecutedTestFailCount) ||
+            (identical(other.lastExecutedTestFailCount,
+                    lastExecutedTestFailCount) ||
                 other.lastExecutedTestFailCount == lastExecutedTestFailCount));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, lastExecutedTestName, lastExecutedTestFailCount);
+  int get hashCode =>
+      Object.hash(runtimeType, lastExecutedTestName, lastExecutedTestFailCount);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_ITIMStateRetryLastCopyWith<_$_ITIMStateRetryLast> get copyWith =>
-      __$$_ITIMStateRetryLastCopyWithImpl<_$_ITIMStateRetryLast>(this, _$identity);
+      __$$_ITIMStateRetryLastCopyWithImpl<_$_ITIMStateRetryLast>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String lastExecutedTestName) goOn,
-    required TResult Function(String lastExecutedTestName, int lastExecutedTestFailCount) retryLast,
+    required TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)
+        retryLast,
     required TResult Function() finished,
   }) {
     return retryLast(lastExecutedTestName, lastExecutedTestFailCount);
@@ -419,7 +459,9 @@ class _$_ITIMStateRetryLast implements _ITIMStateRetryLast {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String lastExecutedTestName)? goOn,
-    TResult? Function(String lastExecutedTestName, int lastExecutedTestFailCount)? retryLast,
+    TResult? Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult? Function()? finished,
   }) {
     return retryLast?.call(lastExecutedTestName, lastExecutedTestFailCount);
@@ -430,7 +472,9 @@ class _$_ITIMStateRetryLast implements _ITIMStateRetryLast {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String lastExecutedTestName)? goOn,
-    TResult Function(String lastExecutedTestName, int lastExecutedTestFailCount)? retryLast,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
     required TResult orElse(),
   }) {
@@ -486,19 +530,23 @@ abstract class _ITIMStateRetryLast implements _ITIMState {
   String get lastExecutedTestName;
   int get lastExecutedTestFailCount;
   @JsonKey(ignore: true)
-  _$$_ITIMStateRetryLastCopyWith<_$_ITIMStateRetryLast> get copyWith => throw _privateConstructorUsedError;
+  _$$_ITIMStateRetryLastCopyWith<_$_ITIMStateRetryLast> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$_ITIMStateFinishedCopyWith<$Res> {
-  factory _$$_ITIMStateFinishedCopyWith(_$_ITIMStateFinished value, $Res Function(_$_ITIMStateFinished) then) =
+  factory _$$_ITIMStateFinishedCopyWith(_$_ITIMStateFinished value,
+          $Res Function(_$_ITIMStateFinished) then) =
       __$$_ITIMStateFinishedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ITIMStateFinishedCopyWithImpl<$Res> extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateFinished>
+class __$$_ITIMStateFinishedCopyWithImpl<$Res>
+    extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateFinished>
     implements _$$_ITIMStateFinishedCopyWith<$Res> {
-  __$$_ITIMStateFinishedCopyWithImpl(_$_ITIMStateFinished _value, $Res Function(_$_ITIMStateFinished) _then)
+  __$$_ITIMStateFinishedCopyWithImpl(
+      _$_ITIMStateFinished _value, $Res Function(_$_ITIMStateFinished) _then)
       : super(_value, _then);
 }
 
@@ -514,7 +562,8 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$_ITIMStateFinished);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_ITIMStateFinished);
   }
 
   @override
@@ -525,7 +574,9 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String lastExecutedTestName) goOn,
-    required TResult Function(String lastExecutedTestName, int lastExecutedTestFailCount) retryLast,
+    required TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)
+        retryLast,
     required TResult Function() finished,
   }) {
     return finished();
@@ -536,7 +587,9 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String lastExecutedTestName)? goOn,
-    TResult? Function(String lastExecutedTestName, int lastExecutedTestFailCount)? retryLast,
+    TResult? Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult? Function()? finished,
   }) {
     return finished?.call();
@@ -547,7 +600,9 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String lastExecutedTestName)? goOn,
-    TResult Function(String lastExecutedTestName, int lastExecutedTestFailCount)? retryLast,
+    TResult Function(
+            String lastExecutedTestName, int lastExecutedTestFailCount)?
+        retryLast,
     TResult Function()? finished,
     required TResult orElse(),
   }) {

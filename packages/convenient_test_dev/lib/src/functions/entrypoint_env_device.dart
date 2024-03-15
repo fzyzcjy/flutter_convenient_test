@@ -17,23 +17,32 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 
 @internal
-Future<void> convenientTestEntrypointWhenEnvDevice(FutureOr<void> Function() testBody) async {
-  myGetIt.registerSingleton<ConvenientTestManagerRpcService>(ConvenientTestManagerRpcService());
-  myGetIt.registerSingleton<WorkerReportSaverService>(WorkerReportSaverServiceSendToManager());
+Future<void> convenientTestEntrypointWhenEnvDevice(
+    FutureOr<void> Function() testBody) async {
+  myGetIt.registerSingleton<ConvenientTestManagerRpcService>(
+      ConvenientTestManagerRpcService());
+  myGetIt.registerSingleton<WorkerReportSaverService>(
+      WorkerReportSaverServiceSendToManager());
 
-  final currentRunConfig = await myGetIt.get<ConvenientTestManagerRpcService>().getWorkerCurrentRunConfig();
+  final currentRunConfig = await myGetIt
+      .get<ConvenientTestManagerRpcService>()
+      .getWorkerCurrentRunConfig();
   switch (currentRunConfig.whichSubType()) {
     case WorkerCurrentRunConfig_SubType.interactiveApp:
       return _runModeInteractiveApp();
     case WorkerCurrentRunConfig_SubType.integrationTest:
-      return _runModeIntegrationTest(testBody, currentRunConfig.integrationTest);
+      return _runModeIntegrationTest(
+          testBody, currentRunConfig.integrationTest);
     case WorkerCurrentRunConfig_SubType.notSet:
-      throw Exception('Unknown WorkerCurrentRunConfig_SubType: $currentRunConfig');
+      throw Exception(
+          'Unknown WorkerCurrentRunConfig_SubType: $currentRunConfig');
   }
 }
 
 Future<void> _runModeInteractiveApp() async {
-  await myGetIt.get<ConvenientTestSlot>().appMain(AppMainExecuteMode.interactiveApp);
+  await myGetIt
+      .get<ConvenientTestSlot>()
+      .appMain(AppMainExecuteMode.interactiveApp);
 }
 
 Future<void> _runModeIntegrationTest(
@@ -64,11 +73,13 @@ Future<void> _runModeIntegrationTest(
             // (2) [IntegrationTestWidgetsFlutterBinding] must be called *inside* `collectIntoDeclarer`,
             //     because it calls some logic inside it.
             // ignore: avoid_print
-            print('Please do *not* initialize `WidgetsBinding.instance` outside `convenientTestMain`.');
+            print(
+                'Please do *not* initialize `WidgetsBinding.instance` outside `convenientTestMain`.');
             rethrow;
           }
 
-          unawaited(WorkerReportSaverService.I?.report(ReportItem(setUpAll: SetUpAll())));
+          unawaited(WorkerReportSaverService.I
+              ?.report(ReportItem(setUpAll: SetUpAll())));
 
           setup();
 
@@ -96,11 +107,13 @@ Future<void> _runModeIntegrationTest(
   });
 }
 
-void _configureGoldens(WorkerCurrentRunConfig_IntegrationTest currentRunConfig) {
+void _configureGoldens(
+    WorkerCurrentRunConfig_IntegrationTest currentRunConfig) {
   const _kTag = 'ConfigureGoldens';
 
   goldenFileComparator = EnhancedLocalFileComparator(
-      Uri.file(path.join(StaticConfig.kAppCodeDir, 'integration_test/dummy.dart')),
+      Uri.file(
+          path.join(StaticConfig.kAppCodeDir, 'integration_test/dummy.dart')),
       captureFailure: true);
   autoUpdateGoldenFiles = currentRunConfig.autoUpdateGoldenFiles;
 
@@ -119,7 +132,10 @@ Future<void> _lastTearDownAll() async {
     // need to `await` to ensure it is sent
     await reporterService.report(ReportItem(
       tearDownAll: TearDownAll(
-        resolvedExecutionFilter: myGetIt.get<ConvenientTestExecutor>().resolvedExecutionFilter.toProto(),
+        resolvedExecutionFilter: myGetIt
+            .get<ConvenientTestExecutor>()
+            .resolvedExecutionFilter
+            .toProto(),
       ),
     ));
   }

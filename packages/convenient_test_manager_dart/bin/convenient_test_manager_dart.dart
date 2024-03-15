@@ -35,7 +35,9 @@ Future<void> main(List<String> args) async {
   await _awaitSuiteInfoNonEmpty();
 
   Log.i(_kTag, 'step hotRestartAndRunTests');
-  GetIt.I.get<MiscDartService>().hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
+  GetIt.I
+      .get<MiscDartService>()
+      .hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
 
   StatusPeriodicLogger.run();
 
@@ -91,7 +93,8 @@ Future<void> _awaitSuiteInfoNonEmpty() async {
   while (true) {
     final suiteInfo = suiteInfoStore.suiteInfo;
     final numGroupEntries = suiteInfo?.entryMap.length ?? 0;
-    Log.i(_kTag, 'awaitSuiteInfoNonEmpty check numGroupEntries=$numGroupEntries');
+    Log.i(
+        _kTag, 'awaitSuiteInfoNonEmpty check numGroupEntries=$numGroupEntries');
 
     if (numGroupEntries > 0) return;
 
@@ -102,17 +105,21 @@ Future<void> _awaitSuiteInfoNonEmpty() async {
 Future<void> _awaitSuperRunStatusTestAllDone() async {
   final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
 
-  if (workerSuperRunStore.currSuperRunController.superRunStatus == WorkerSuperRunStatus.testAllDone) {
+  if (workerSuperRunStore.currSuperRunController.superRunStatus ==
+      WorkerSuperRunStatus.testAllDone) {
     throw AssertionError;
   }
 
-  await asyncWhen((_) => workerSuperRunStore.currSuperRunController.superRunStatus == WorkerSuperRunStatus.testAllDone);
+  await asyncWhen((_) =>
+      workerSuperRunStore.currSuperRunController.superRunStatus ==
+      WorkerSuperRunStatus.testAllDone);
 }
 
 int _calcExitCode() {
   final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
-  final stateCountMap = suiteInfoStore.calcStateCountMap(suiteInfoStore.suiteInfo!.rootGroup);
+  final stateCountMap =
+      suiteInfoStore.calcStateCountMap(suiteInfoStore.suiteInfo!.rootGroup);
 
   if (stateCountMap[SimplifiedStateEnum.pending] > 0) throw AssertionError;
 
@@ -120,7 +127,8 @@ int _calcExitCode() {
     Log.w(_kTag, 'See flaky tests.');
   }
 
-  final hasFailure = stateCountMap[SimplifiedStateEnum.completeFailureOrError] > 0;
+  final hasFailure =
+      stateCountMap[SimplifiedStateEnum.completeFailureOrError] > 0;
   if (hasFailure) {
     Log.w(_kTag, 'See failed tests.');
   }

@@ -13,12 +13,14 @@ class FakeVmServiceWrapper extends VmServiceWrapperService {
 
   @override
   Future<void> hotRestartRaw() async {
-    Log.d('FakeVMServiceWrapper', 'user requested hotRestartRaw but doing nothing');
+    Log.d('FakeVMServiceWrapper',
+        'user requested hotRestartRaw but doing nothing');
   }
 
   @override
   void hotRestartThrottled() {
-    Log.d('FakeVMServiceWrapper', 'user requested hotRestartThrottled but doing nothing');
+    Log.d('FakeVMServiceWrapper',
+        'user requested hotRestartThrottled but doing nothing');
   }
 
   @override

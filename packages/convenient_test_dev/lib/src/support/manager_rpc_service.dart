@@ -10,13 +10,16 @@ class ConvenientTestManagerRpcService {
       port: kConvenientTestManagerPort,
       options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
-    final client = ConvenientTestManagerClient(channel, options: CallOptions(timeout: null));
+    final client = ConvenientTestManagerClient(channel,
+        options: CallOptions(timeout: null));
     return ConvenientTestManagerRpcService._(client);
   }
 
   ConvenientTestManagerRpcService._(this._client);
 
-  Future<void> reportSingle(ReportItem item) => _client.report(ReportCollection(items: [item]));
+  Future<void> reportSingle(ReportItem item) =>
+      _client.report(ReportCollection(items: [item]));
 
-  Future<WorkerCurrentRunConfig> getWorkerCurrentRunConfig() => _client.getWorkerCurrentRunConfig(Empty());
+  Future<WorkerCurrentRunConfig> getWorkerCurrentRunConfig() =>
+      _client.getWorkerCurrentRunConfig(Empty());
 }

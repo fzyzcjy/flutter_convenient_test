@@ -6,19 +6,22 @@ class RotateAnimation extends StatefulWidget {
   final Widget child;
   final Duration duration;
 
-  const RotateAnimation({super.key, required this.child, required this.duration});
+  const RotateAnimation(
+      {super.key, required this.child, required this.duration});
 
   @override
   _RotateAnimationState createState() => _RotateAnimationState();
 }
 
-class _RotateAnimationState extends State<RotateAnimation> with SingleTickerProviderStateMixin {
+class _RotateAnimationState extends State<RotateAnimation>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: widget.duration)..repeat();
+    _controller = AnimationController(vsync: this, duration: widget.duration)
+      ..repeat();
   }
 
   @override

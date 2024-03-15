@@ -15,15 +15,19 @@ class SpyDeclarer implements Declarer {
 
   SpyDeclarer(this.inner, this.info);
 
-  static Tuple2<T, SpyDeclarerGroup> withSpy<T>(T Function() body, {SpyDeclarerGroup? info}) {
+  static Tuple2<T, SpyDeclarerGroup> withSpy<T>(T Function() body,
+      {SpyDeclarerGroup? info}) {
     final originalDeclarer = Declarer.current!;
-    final spyDeclarer = SpyDeclarer(originalDeclarer, info ?? SpyDeclarerGroup(name: null));
-    final bodyResult = runZoned(body, zoneValues: {#test.declarer: spyDeclarer});
+    final spyDeclarer =
+        SpyDeclarer(originalDeclarer, info ?? SpyDeclarerGroup(name: null));
+    final bodyResult =
+        runZoned(body, zoneValues: {#test.declarer: spyDeclarer});
     return Tuple2(bodyResult, spyDeclarer.info);
   }
 
   @override
-  void addTearDownAll(dynamic Function() callback) => inner.addTearDownAll(callback);
+  void addTearDownAll(dynamic Function() callback) =>
+      inner.addTearDownAll(callback);
 
   @override
   Group build() => inner.build();
@@ -99,7 +103,8 @@ class SpyDeclarer implements Declarer {
 
   // ref: [Declarer._prefix]
   /// Returns [name] prefixed with this declarer's group name.
-  String _prefix(String name) => info.name == null ? name : '${info.name} $name';
+  String _prefix(String name) =>
+      info.name == null ? name : '${info.name} $name';
 }
 
 /// 类比[GroupEntry]

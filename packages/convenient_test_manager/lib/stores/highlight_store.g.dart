@@ -9,7 +9,8 @@ part of 'highlight_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$HighlightStore on _HighlightStore, Store {
-  late final _$enableAutoExpandAtom = Atom(name: '_HighlightStore.enableAutoExpand', context: context);
+  late final _$enableAutoExpandAtom =
+      Atom(name: '_HighlightStore.enableAutoExpand', context: context);
 
   @override
   bool get enableAutoExpand {
@@ -24,7 +25,8 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
-  late final _$enableAutoJumpAtom = Atom(name: '_HighlightStore.enableAutoJump', context: context);
+  late final _$enableAutoJumpAtom =
+      Atom(name: '_HighlightStore.enableAutoJump', context: context);
 
   @override
   bool get enableAutoJump {
@@ -39,7 +41,8 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
-  late final _$enableHoverModeAtom = Atom(name: '_HighlightStore.enableHoverMode', context: context);
+  late final _$enableHoverModeAtom =
+      Atom(name: '_HighlightStore.enableHoverMode', context: context);
 
   @override
   bool get enableHoverMode {
@@ -54,7 +57,8 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
-  late final _$highlightTestEntryIdAtom = Atom(name: '_HighlightStore.highlightTestEntryId', context: context);
+  late final _$highlightTestEntryIdAtom =
+      Atom(name: '_HighlightStore.highlightTestEntryId', context: context);
 
   @override
   int? get highlightTestEntryId {
@@ -64,12 +68,14 @@ mixin _$HighlightStore on _HighlightStore, Store {
 
   @override
   set highlightTestEntryId(int? value) {
-    _$highlightTestEntryIdAtom.reportWrite(value, super.highlightTestEntryId, () {
+    _$highlightTestEntryIdAtom.reportWrite(value, super.highlightTestEntryId,
+        () {
       super.highlightTestEntryId = value;
     });
   }
 
-  late final _$highlightLogEntryIdAtom = Atom(name: '_HighlightStore.highlightLogEntryId', context: context);
+  late final _$highlightLogEntryIdAtom =
+      Atom(name: '_HighlightStore.highlightLogEntryId', context: context);
 
   @override
   int? get highlightLogEntryId {
@@ -84,7 +90,8 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
-  late final _$highlightSnapshotAtom = Atom(name: '_HighlightStore.highlightSnapshot', context: context);
+  late final _$highlightSnapshotAtom =
+      Atom(name: '_HighlightStore.highlightSnapshot', context: context);
 
   @override
   LogEntryAndSnapshot? get highlightSnapshot {
@@ -99,11 +106,13 @@ mixin _$HighlightStore on _HighlightStore, Store {
     });
   }
 
-  late final _$_HighlightStoreActionController = ActionController(name: '_HighlightStore', context: context);
+  late final _$_HighlightStoreActionController =
+      ActionController(name: '_HighlightStore', context: context);
 
   @override
   void expandSeriesForTest({required int testInfoId}) {
-    final _$actionInfo = _$_HighlightStoreActionController.startAction(name: '_HighlightStore.expandSeriesForTest');
+    final _$actionInfo = _$_HighlightStoreActionController.startAction(
+        name: '_HighlightStore.expandSeriesForTest');
     try {
       return super.expandSeriesForTest(testInfoId: testInfoId);
     } finally {

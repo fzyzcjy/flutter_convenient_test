@@ -13,7 +13,8 @@ class ConvenientTestExecutor {
   set input(ConvenientTestExecutorInput val) => _input = val;
   late final ConvenientTestExecutorInput _input;
 
-  ResolvedExecutionFilter get resolvedExecutionFilter => _resolvedExecutionFilter;
+  ResolvedExecutionFilter get resolvedExecutionFilter =>
+      _resolvedExecutionFilter;
   late final ResolvedExecutionFilter _resolvedExecutionFilter;
 
   void execute() {
@@ -59,7 +60,9 @@ class ResolvedExecutionFilter {
   const ResolvedExecutionFilter({required this.allowExecuteTestNames});
 
   bool allowExecute(GroupEntry entry) {
-    if (entry is! Test) throw Exception('allowExecute only supports Test, but entry=$entry');
+    if (entry is! Test) {
+      throw Exception('allowExecute only supports Test, but entry=$entry');
+    }
     return allowExecuteTestNames.contains(entry.name);
   }
 
@@ -89,12 +92,15 @@ class _ExecutionFilterResolver {
       case ExecutionFilter_Strategy_SubType.nextMatch:
         final info = strategy.nextMatch;
 
-        final prevTestIndex = flattenedTestsMatchingFilter.indexWhere((e) => e.name == info.prevTestName);
+        final prevTestIndex = flattenedTestsMatchingFilter
+            .indexWhere((e) => e.name == info.prevTestName);
         if (prevTestIndex == -1) throw Exception;
 
         final nextTestIndex = prevTestIndex + 1;
         return _createOutput(
-            nextTestIndex == flattenedTestsMatchingFilter.length ? [] : [flattenedTestsMatchingFilter[nextTestIndex]]);
+            nextTestIndex == flattenedTestsMatchingFilter.length
+                ? []
+                : [flattenedTestsMatchingFilter[nextTestIndex]]);
       case ExecutionFilter_Strategy_SubType.allMatch:
         return _createOutput(flattenedTestsMatchingFilter);
       case ExecutionFilter_Strategy_SubType.notSet:
@@ -112,7 +118,8 @@ class _ExecutionFilterResolver {
   }
 
   static ResolvedExecutionFilter _createOutput(List<Test> allowExecuteTests) =>
-      ResolvedExecutionFilter(allowExecuteTestNames: allowExecuteTests.map((e) => e.name).toList());
+      ResolvedExecutionFilter(
+          allowExecuteTestNames: allowExecuteTests.map((e) => e.name).toList());
 }
 
 extension ExtGroupEntry on GroupEntry {

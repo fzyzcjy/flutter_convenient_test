@@ -18,10 +18,13 @@ class SuiteInfo {
 
   factory SuiteInfo.fromProto(SuiteInfoProto proto) {
     final entryMap = Map.fromEntries([
-      ...proto.groups.map((group) => MapEntry(group.id.toInt(), GroupInfo.fromProto(group))),
-      ...proto.tests.map((test) => MapEntry(test.id.toInt(), TestInfo.fromProto(test))),
+      ...proto.groups.map(
+          (group) => MapEntry(group.id.toInt(), GroupInfo.fromProto(group))),
+      ...proto.tests
+          .map((test) => MapEntry(test.id.toInt(), TestInfo.fromProto(test))),
     ]);
-    final entryIdOfName = Map.fromEntries(entryMap.entries.map((e) => MapEntry(e.value.name, e.key)));
+    final entryIdOfName = Map.fromEntries(
+        entryMap.entries.map((e) => MapEntry(e.value.name, e.key)));
 
     if (entryIdOfName.length != entryMap.length) {
       Log.d(
@@ -29,7 +32,8 @@ class SuiteInfo {
           '#groups=${proto.groups.length} #tests=${proto.tests.length} '
           'entryIdOfName.keys.length=${entryIdOfName.keys.length} entryIdOfName.keys=${entryIdOfName.keys.toList()} '
           'groups.name=${proto.groups.map((e) => e.name).toList()} tests.name=${proto.tests.map((e) => e.name).toList()} ');
-      throw Exception('Sanity check failed: Suite tests should have no duplicate names');
+      throw Exception(
+          'Sanity check failed: Suite tests should have no duplicate names');
     }
 
     return SuiteInfo._(
@@ -43,7 +47,8 @@ class SuiteInfo {
 
   GroupInfo get rootGroup => entryMap[rootGroupId]! as GroupInfo;
 
-  void traverse(GroupEntryInfoTraverseCallback callback) => rootGroup.traverse(this, callback);
+  void traverse(GroupEntryInfoTraverseCallback callback) =>
+      rootGroup.traverse(this, callback);
 
   Iterable<int> ancestors(int entryId) sync* {
     var currEntryId = entryId;
@@ -58,7 +63,8 @@ class SuiteInfo {
   bool isIdValid(int id) => id > 0;
 }
 
-typedef GroupEntryInfoTraverseCallback = void Function(GroupEntryInfo groupEntryInfo);
+typedef GroupEntryInfoTraverseCallback = void Function(
+    GroupEntryInfo groupEntryInfo);
 
 @immutable
 abstract class GroupEntryInfo {

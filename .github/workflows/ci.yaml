@@ -50,7 +50,7 @@ jobs:
         working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
       - name: Check format
-        run: dart format --set-exit-if-changed --line-length 120 .
+        run: dart format --set-exit-if-changed .
         working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
 # TODO fix it (seems GitHub Actions upgraded, making Fastlane confused)
