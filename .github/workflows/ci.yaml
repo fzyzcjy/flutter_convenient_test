@@ -54,7 +54,7 @@ jobs:
         working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
   build_manager_macos:
-    runs-on: macos-11
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v3
