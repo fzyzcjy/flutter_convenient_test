@@ -53,49 +53,48 @@ jobs:
         run: dart format --set-exit-if-changed .
         working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
-# TODO fix it (seems GitHub Actions upgraded, making Fastlane confused)
-#  build_manager_macos:
-#    runs-on: macos-11
-#
-#    steps:
-#      - uses: actions/checkout@v3
-#
-#      - uses: subosito/flutter-action@v2
-#        with:
-#          channel: stable
-#
-#      - name: Enable Macos
-#        run: flutter config --enable-macos-desktop
-#
-#      - name: Install dependencies
-#        run: flutter pub get
-#        working-directory: packages/convenient_test_manager
-#
-#      - uses: ruby/setup-ruby@v1
-#        with:
-#          ruby-version: "2.7.0"
-#          bundler-cache: true
-#
-#      - name: setup-cocoapods
-#        uses: maxim-lobanov/setup-cocoapods@v1
-#        with:
-#          version: latest
-#
-#      - name: flutter build
-#        run: flutter build macos
-#        working-directory: packages/convenient_test_manager/macos
-#
-#      - name: build_mac_app
-#        run: bundle install && bundle exec fastlane run build_mac_app export_method:mac-application scheme:Runner output_directory:./build
-#        working-directory: packages/convenient_test_manager/macos
-#
-#      - name: Tar outputs
-#        run: cd packages/convenient_test_manager/macos/build && tar cvf convenient_test_manager.app.tar convenient_test_manager.app
-#
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: manager_macos
-#          path: packages/convenient_test_manager/macos/build/convenient_test_manager.app.tar
+  build_manager_macos:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+        with:
+         channel: stable
+
+      - name: Enable Macos
+        run: flutter config --enable-macos-desktop
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: packages/convenient_test_manager
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7.0"
+          bundler-cache: true
+
+      - name: setup-cocoapods
+        uses: maxim-lobanov/setup-cocoapods@v1
+        with:
+          version: latest
+
+      - name: flutter build
+        run: flutter build macos
+        working-directory: packages/convenient_test_manager/macos
+
+      - name: build_mac_app
+        run: bundle install && bundle exec fastlane run build_mac_app export_method:mac-application scheme:Runner output_directory:./build
+        working-directory: packages/convenient_test_manager/macos
+
+      - name: Tar outputs
+        run: cd packages/convenient_test_manager/macos/build && tar cvf convenient_test_manager.app.tar convenient_test_manager.app
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: manager_macos
+          path: packages/convenient_test_manager/macos/build/convenient_test_manager.app.tar
 
   build_manager_linux:
     runs-on: ubuntu-latest
