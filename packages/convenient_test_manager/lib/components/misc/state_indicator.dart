@@ -22,7 +22,7 @@ class StateIndicatorWidget extends StatelessWidget {
     switch (state) {
       case SimplifiedStateEnum.pending:
         return Icon(Icons.hourglass_empty,
-            color: Theme.of(context).colorScheme.onBackground, size: 14);
+            color: Theme.of(context).colorScheme.onSurface, size: 14);
       // return Center(
       //   child: SizedBox(
       //     width: 12,

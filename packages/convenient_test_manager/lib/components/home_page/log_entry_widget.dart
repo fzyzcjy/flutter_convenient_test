@@ -204,7 +204,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
         break;
       default:
         backgroundColor = null;
-        textColor = Theme.of(context).colorScheme.onBackground;
+        textColor = Theme.of(context).colorScheme.onSurface;
         break;
     }
 
@@ -278,7 +278,7 @@ class HomePageLogEntryWidget extends StatelessWidget {
                   '[${expand ? "Collapse" : "Expand"}]',
                   style: TextStyle(
                       fontSize: 12,
-                      color: Theme.of(context).colorScheme.onBackground),
+                      color: Theme.of(context).colorScheme.onSurface),
                 ),
               ),
             ),
