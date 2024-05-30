@@ -119,7 +119,7 @@ class _Body extends StatelessWidget {
             child: SizedBox(
               height: 32,
               child: Material(
-                color: Theme.of(context).colorScheme.background,
+                color: Theme.of(context).colorScheme.surface,
                 child: OutlinedButton(
                   onPressed: () => homePageStore.expandSecondaryPanel = true,
                   child: const Text('Expand secondary panel'),
@@ -149,7 +149,7 @@ class _Body extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 15,
                     height: 1.8,
-                    color: Theme.of(context).colorScheme.onBackground),
+                    color: Theme.of(context).colorScheme.onSurface),
                 child: child,
               ),
               const SizedBox(height: 20),
