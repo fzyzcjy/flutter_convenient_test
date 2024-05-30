@@ -1,3 +1,7 @@
+## 1.3.6
+
+* Migrate to latest Flutter #387
+
 ## 1.3.5
 
 * Migrate to gradle 7.4.2 #377 (thanks @meltzow)
