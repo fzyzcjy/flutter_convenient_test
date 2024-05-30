@@ -20,7 +20,7 @@ dependencies:
   protobuf: ^3.0.0
   recase: ^4.0.0
   synchronized: ^3.0.0
-  test_api: ^0.6.0
+  test_api: '>=0.5.1 <0.8.0'
   vm_service: '>=11.3.0 <15.0.0'
 
 dependency_overrides:
