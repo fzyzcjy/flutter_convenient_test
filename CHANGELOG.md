@@ -1,3 +1,7 @@
+## 1.3.7
+
+* Bump dependency intl #389
+
 ## 1.3.6
 
 * Migrate to latest Flutter #387
