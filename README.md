@@ -242,6 +242,7 @@ Following are about the toggles:
 1. In `pubspec.yaml`, add `convenient_test: ^1.0.0` to the `dependencies` section, and `convenient_test_dev: ^1.0.0` to the `dev_dependencies` section. As normal, we need to `flutter pub get`.
 2. Create `integration_test/main_test.dart` file in your app. Fill it like `void main() => convenientTestMain(MyConvenientTestSlot(), () { ... the normal test code you write });`. See [the example package](https://github.com/fzyzcjy/flutter_convenient_test/blob/master/packages/convenient_test/example/integration_test/main_test.dart) for demonstration.
 3. Run your app (e.g. using iOS simulator) via `flutter run /path/to/your/app/integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define CONVENIENT_TEST_APP_CODE_DIR=/path/to/this/app`. Can also be run via VSCode or Android Studio with similar commands.
+   - for use with the Android emulator, add `--dart-define CONVENIENT_TEST_MANAGER_HOST=10.0.2.2`
 4. Run the GUI located in `packages/convenient_test_manager`. (See details in section below)
 5. Enjoy the GUI!
 
@@ -270,9 +271,9 @@ There are a few ways to configure the manager:
 3. From command line arguments (when run via `convenient_test_manager_dart` command line)
 4. Change configurations via GUI (e.g. switches at right-top)
 
-For all options that are configurable and all environment variable names, please see `consts.dart`. (By doing so you can always see the up-to-date information and there is no possiblility to see outdated doc.)
+For all options that are configurable and all environment variable names, please see [`consts.dart`](packages/convenient_test_common_dart/lib/src/consts.dart). (By doing so you can always see the up-to-date information and there is no possiblility to see outdated doc.)
 
-If you are trying to use this package with Android Virtual Emulator (AVD), you may need to set `kConvenientTestManagerHost` to `10.0.2.2` because of its [network topology](https://stackoverflow.com/questions/9808560/why-do-we-use-10-0-2-2-to-connect-to-local-web-server-instead-of-using-computer). Please see issue #253 for more details.
+If you are trying to use this package with Android Virtual Emulator (AVD), you may need to set `kConvenientTestManagerHost` to `10.0.2.2` (add `--dart-define CONVENIENT_TEST_MANAGER_HOST=10.0.2.2`) because of its [network topology](https://stackoverflow.com/questions/9808560/why-do-we-use-10-0-2-2-to-connect-to-local-web-server-instead-of-using-computer). Please see [issue #253](https://github.com/fzyzcjy/flutter_convenient_test/issues/253) for more details.
 
 ### Limitations
 
