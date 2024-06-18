@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  // Avoid forever animation (blinking), which makes pumping never ends
+  EditableText.debugDeterministicCursor = true;
+
   convenientTestMain(MyConvenientTestSlot(), () {
     group('simple test group', () {
       tTestWidgets('choose some fruits', (t) async {

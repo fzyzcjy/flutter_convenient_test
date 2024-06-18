@@ -279,6 +279,12 @@ If you are trying to use this package with Android Virtual Emulator (AVD), you m
 
 1. `Video replaying` feature is not yet implemented in Android (but feel free to PR!).
 
+## Q&A
+
+### `pumpWithRunAsyncUntil` timed out
+
+One thing to check is whether there are infinite animations. For example, setting `EditableText.debugDeterministicCursor = true` can avoid cursor blinking forever.
+
 ## Contributors
 
 For detailed PRs (excluding myself), please see [this link](https://github.com/fzyzcjy/flutter_convenient_test/pulls?q=is%3Apr+-author%3Afzyzcjy+).
