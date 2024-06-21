@@ -6,6 +6,7 @@ import 'package:convenient_test_manager_dart/misc/setup.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:convenient_test_manager_dart/services/status_periodic_logger.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
+import 'package:convenient_test_manager_dart/stores/global_config_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:convenient_test_manager_dart/stores/worker_super_run_store.dart';
 import 'package:get_it/get_it.dart';
@@ -35,9 +36,10 @@ Future<void> main(List<String> args) async {
   await _awaitSuiteInfoNonEmpty();
 
   Log.i(_kTag, 'step hotRestartAndRunTests');
-  GetIt.I
-      .get<MiscDartService>()
-      .hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
+  final regExp = GlobalConfigStore.config.runOnly != null
+      ? RegexUtils.matchPrefix(GlobalConfigStore.config.runOnly!)
+      : RegexUtils.kMatchEverything;
+  GetIt.I.get<MiscDartService>().hotRestartAndRunTests(filterNameRegex: regExp);
 
   StatusPeriodicLogger.run();
 
@@ -93,8 +95,7 @@ Future<void> _awaitSuiteInfoNonEmpty() async {
   while (true) {
     final suiteInfo = suiteInfoStore.suiteInfo;
     final numGroupEntries = suiteInfo?.entryMap.length ?? 0;
-    Log.i(
-        _kTag, 'awaitSuiteInfoNonEmpty check numGroupEntries=$numGroupEntries');
+    Log.i(_kTag, 'awaitSuiteInfoNonEmpty check numGroupEntries=$numGroupEntries');
 
     if (numGroupEntries > 0) return;
 
@@ -105,21 +106,17 @@ Future<void> _awaitSuiteInfoNonEmpty() async {
 Future<void> _awaitSuperRunStatusTestAllDone() async {
   final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
 
-  if (workerSuperRunStore.currSuperRunController.superRunStatus ==
-      WorkerSuperRunStatus.testAllDone) {
+  if (workerSuperRunStore.currSuperRunController.superRunStatus == WorkerSuperRunStatus.testAllDone) {
     throw AssertionError;
   }
 
-  await asyncWhen((_) =>
-      workerSuperRunStore.currSuperRunController.superRunStatus ==
-      WorkerSuperRunStatus.testAllDone);
+  await asyncWhen((_) => workerSuperRunStore.currSuperRunController.superRunStatus == WorkerSuperRunStatus.testAllDone);
 }
 
 int _calcExitCode() {
   final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
-  final stateCountMap =
-      suiteInfoStore.calcStateCountMap(suiteInfoStore.suiteInfo!.rootGroup);
+  final stateCountMap = suiteInfoStore.calcStateCountMap(suiteInfoStore.suiteInfo!.rootGroup);
 
   if (stateCountMap[SimplifiedStateEnum.pending] > 0) throw AssertionError;
 
@@ -127,8 +124,7 @@ int _calcExitCode() {
     Log.w(_kTag, 'See flaky tests.');
   }
 
-  final hasFailure =
-      stateCountMap[SimplifiedStateEnum.completeFailureOrError] > 0;
+  final hasFailure = stateCountMap[SimplifiedStateEnum.completeFailureOrError] > 0;
   if (hasFailure) {
     Log.w(_kTag, 'See failed tests.');
   }
