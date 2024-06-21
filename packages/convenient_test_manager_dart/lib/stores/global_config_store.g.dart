@@ -6,20 +6,22 @@ part of 'global_config_store.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_GlobalConfigNullable _$$_GlobalConfigNullableFromJson(
+_$GlobalConfigNullableImpl _$$GlobalConfigNullableImplFromJson(
         Map<String, dynamic> json) =>
-    _$_GlobalConfigNullable(
+    _$GlobalConfigNullableImpl(
       isolationMode: json['isolationMode'] as bool?,
       enableReportSaver: json['enableReportSaver'] as bool?,
       goldenDiffGitRepo: json['goldenDiffGitRepo'] as String?,
+      runOnly: json['runOnly'] as String?,
     );
 
-Map<String, dynamic> _$$_GlobalConfigNullableToJson(
-        _$_GlobalConfigNullable instance) =>
+Map<String, dynamic> _$$GlobalConfigNullableImplToJson(
+        _$GlobalConfigNullableImpl instance) =>
     <String, dynamic>{
       'isolationMode': instance.isolationMode,
       'enableReportSaver': instance.enableReportSaver,
       'goldenDiffGitRepo': instance.goldenDiffGitRepo,
+      'runOnly': instance.runOnly,
     };
 
 // **************************************************************************
@@ -77,12 +79,29 @@ mixin _$GlobalConfig on _GlobalConfig, Store {
     });
   }
 
+  late final _$runOnlyAtom =
+      Atom(name: '_GlobalConfig.runOnly', context: context);
+
+  @override
+  String? get runOnly {
+    _$runOnlyAtom.reportRead();
+    return super.runOnly;
+  }
+
+  @override
+  set runOnly(String? value) {
+    _$runOnlyAtom.reportWrite(value, super.runOnly, () {
+      super.runOnly = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 isolationMode: ${isolationMode},
 enableReportSaver: ${enableReportSaver},
-goldenDiffGitRepo: ${goldenDiffGitRepo}
+goldenDiffGitRepo: ${goldenDiffGitRepo},
+runOnly: ${runOnly}
     ''';
   }
 }

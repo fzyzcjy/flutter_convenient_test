@@ -26,10 +26,14 @@ abstract class _GlobalConfig with Store {
   @observable
   String? goldenDiffGitRepo;
 
+  @observable
+  String? runOnly;
+
   _GlobalConfig({
     required this.isolationMode,
     required this.enableReportSaver,
     required this.goldenDiffGitRepo,
+    required this.runOnly,
   });
 }
 
@@ -41,6 +45,7 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
     bool? isolationMode,
     bool? enableReportSaver,
     String? goldenDiffGitRepo,
+    String? runOnly,
   }) = _GlobalConfigNullable;
 
   factory GlobalConfigNullable.fromJson(Map<String, dynamic> json) =>
@@ -99,6 +104,8 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
           const String.fromEnvironment('CONVENIENT_TEST_ENABLE_REPORT_SAVER')),
       goldenDiffGitRepo: _emptyToNull(
           const String.fromEnvironment('CONVENIENT_TEST_GOLDEN_DIFF_GIT_REPO')),
+      runOnly: _emptyToNull(
+          const String.fromEnvironment('CONVENIENT_TEST_RUN_ONLY')),
     );
   }
 
@@ -107,6 +114,7 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
     final results = (ArgParser()
           ..addFlag('isolation-mode', defaultsTo: null)
           ..addFlag('enable-report-saver', defaultsTo: null)
+          ..addOption('run-only', defaultsTo: null)
           ..addOption('golden-diff-git-repo', defaultsTo: null))
         .parse(args);
 
@@ -114,6 +122,7 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
       isolationMode: results['isolation-mode'] as bool?,
       enableReportSaver: results['enable-report-saver'] as bool?,
       goldenDiffGitRepo: results['golden-diff-git-repo'] as String?,
+      runOnly: results['run-only'] as String?,
     );
   }
 
@@ -133,12 +142,14 @@ extension ExtGlobalConfigNullable on GlobalConfigNullable {
         isolationMode: other.isolationMode ?? isolationMode,
         enableReportSaver: other.enableReportSaver ?? enableReportSaver,
         goldenDiffGitRepo: other.goldenDiffGitRepo ?? goldenDiffGitRepo,
+        runOnly: other.runOnly ?? runOnly,
       );
 
   GlobalConfig toConfig() => GlobalConfig(
         isolationMode: isolationMode ?? false,
         enableReportSaver: enableReportSaver ?? false,
         goldenDiffGitRepo: goldenDiffGitRepo,
+        runOnly: runOnly,
       );
 }
 

@@ -6,6 +6,7 @@ import 'package:convenient_test_manager_dart/misc/setup.dart';
 import 'package:convenient_test_manager_dart/services/misc_dart_service.dart';
 import 'package:convenient_test_manager_dart/services/status_periodic_logger.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
+import 'package:convenient_test_manager_dart/stores/global_config_store.dart';
 import 'package:convenient_test_manager_dart/stores/suite_info_store.dart';
 import 'package:convenient_test_manager_dart/stores/worker_super_run_store.dart';
 import 'package:get_it/get_it.dart';
@@ -35,9 +36,10 @@ Future<void> main(List<String> args) async {
   await _awaitSuiteInfoNonEmpty();
 
   Log.i(_kTag, 'step hotRestartAndRunTests');
-  GetIt.I
-      .get<MiscDartService>()
-      .hotRestartAndRunTests(filterNameRegex: RegexUtils.kMatchEverything);
+  final regExp = GlobalConfigStore.config.runOnly != null
+      ? RegexUtils.matchPrefix(GlobalConfigStore.config.runOnly!)
+      : RegexUtils.kMatchEverything;
+  GetIt.I.get<MiscDartService>().hotRestartAndRunTests(filterNameRegex: regExp);
 
   StatusPeriodicLogger.run();
 
