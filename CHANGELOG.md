@@ -1,3 +1,7 @@
+## 1.4.0
+
+* New CLI param --run-only allowing you to limit the tests this runs #395 (thanks @gnunicorn)
+
 ## 1.3.7
 
 * Bump dependency intl #389
