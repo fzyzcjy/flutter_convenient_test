@@ -29,7 +29,7 @@ jobs:
           # see https://github.com/fzyzcjy/flutter_convenient_test/pull/319#issuecomment-1445048397
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2
@@ -57,7 +57,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
@@ -92,7 +92,7 @@ jobs:
         run: tar cvf manager_gui_macos.zip convenient_test_manager.app
         working-directory: packages/convenient_test_manager/macos/build
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: manager_gui_macos.zip
           path: packages/convenient_test_manager/macos/build/manager_gui_macos.zip
@@ -109,7 +109,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
@@ -134,7 +134,7 @@ jobs:
         run: tar -czvf manager_gui_linux.tar.gz bundle
         working-directory: packages/convenient_test_manager/build/linux/x64/release
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: manager_gui_linux.tar.gz
           path: packages/convenient_test_manager/build/linux/x64/release/manager_gui_linux.tar.gz
@@ -151,7 +151,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
@@ -165,7 +165,7 @@ jobs:
         run: dart compile exe bin/convenient_test_manager_dart.dart -o manager_cli_linux
         working-directory: packages/convenient_test_manager_dart
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: manager_cli_linux
           path: packages/convenient_test_manager_dart/manager_cli_linux
