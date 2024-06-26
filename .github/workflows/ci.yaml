@@ -89,12 +89,21 @@ jobs:
         working-directory: packages/convenient_test_manager/macos
 
       - name: Tar outputs
-        run: cd packages/convenient_test_manager/macos/build && tar cvf convenient_test_manager.app.tar convenient_test_manager.app
+        run: tar cvf manager_gui_macos.zip convenient_test_manager.app
+        working-directory: packages/convenient_test_manager/macos/build
 
       - uses: actions/upload-artifact@v4
         with:
-          name: manager_macos
-          path: packages/convenient_test_manager/macos/build/convenient_test_manager.app.tar
+          name: manager_gui_macos.zip
+          path: packages/convenient_test_manager/macos/build/manager_gui_macos.zip
+
+      - name: Add to release if tagged
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/convenient_test_manager/macos/build/manager_gui_macos.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_manager_linux:
     runs-on: ubuntu-latest
@@ -122,12 +131,21 @@ jobs:
         working-directory: packages/convenient_test_manager
 
       - name: Tar outputs
-        run: tar -czvf convenient_test_manager.tar.gz -C packages/convenient_test_manager/build/linux/x64/release/ bundle
+        run: tar -czvf manager_gui_linux.tar.gz bundle
+        working-directory: packages/convenient_test_manager/build/linux/x64/release
 
       - uses: actions/upload-artifact@v4
         with:
-          name: manager_linux
-          path: convenient_test_manager.tar.gz
+          name: manager_gui_linux.tar.gz
+          path: packages/convenient_test_manager/build/linux/x64/release/manager_gui_linux.tar.gz
+
+      - name: Add to release if tagged
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/convenient_test_manager/build/linux/x64/release/manager_gui_linux.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_manager_dart_linux:
     runs-on: ubuntu-latest
@@ -144,10 +162,60 @@ jobs:
         working-directory: packages/convenient_test_manager_dart
 
       - name: Build
-        run: dart compile exe bin/convenient_test_manager_dart.dart -o convenient_test_manager_dart
+        run: dart compile exe bin/convenient_test_manager_dart.dart -o manager_cli_linux
         working-directory: packages/convenient_test_manager_dart
 
       - uses: actions/upload-artifact@v4
         with:
-          name: manager_dart_linux
-          path: packages/convenient_test_manager_dart/convenient_test_manager_dart
+          name: manager_cli_linux
+          path: packages/convenient_test_manager_dart/manager_cli_linux
+
+      - name: Add to release if tagged
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/convenient_test_manager_dart/manager_cli_linux
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build_manager_windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Enable windows build
+        run: flutter config --enable-windows-desktop
+        working-directory: packages/convenient_test_manager
+
+      - name: Install project dependencies
+        run: flutter pub get
+        working-directory: packages/convenient_test_manager
+
+      - name: Build artifacts
+        run: flutter build windows --release
+        working-directory: packages/convenient_test_manager
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: zip
+          filename: manager_gui_windows.zip
+          directory: packages/convenient_test_manager/build/windows/x64/runner/Release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: manager_gui_windows.zip
+          path: packages/convenient_test_manager/build/windows/x64/runner/Release/manager_gui_windows.zip
+
+      - name: Add to release if tagged
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/convenient_test_manager/build/windows/x64/runner/Release/manager_gui_windows.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
