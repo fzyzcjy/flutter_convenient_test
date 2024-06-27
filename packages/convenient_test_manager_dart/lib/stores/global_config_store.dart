@@ -7,7 +7,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 part 'global_config_store.freezed.dart';
-
 part 'global_config_store.g.dart';
 
 class GlobalConfigStore {
@@ -29,11 +28,15 @@ abstract class _GlobalConfig with Store {
   @observable
   String? runOnly;
 
+  @observable
+  String? reportSavePath;
+
   _GlobalConfig({
     required this.isolationMode,
     required this.enableReportSaver,
     required this.goldenDiffGitRepo,
     required this.runOnly,
+    required this.reportSavePath,
   });
 }
 
@@ -46,6 +49,7 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
     bool? enableReportSaver,
     String? goldenDiffGitRepo,
     String? runOnly,
+    String? reportSavePath,
   }) = _GlobalConfigNullable;
 
   factory GlobalConfigNullable.fromJson(Map<String, dynamic> json) =>
@@ -106,6 +110,8 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
           const String.fromEnvironment('CONVENIENT_TEST_GOLDEN_DIFF_GIT_REPO')),
       runOnly: _emptyToNull(
           const String.fromEnvironment('CONVENIENT_TEST_RUN_ONLY')),
+      reportSavePath: _emptyToNull(
+          const String.fromEnvironment('CONVENIENT_TEST_REPORT_SAVE_PATH')),
     );
   }
 
@@ -115,7 +121,8 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
           ..addFlag('isolation-mode', defaultsTo: null)
           ..addFlag('enable-report-saver', defaultsTo: null)
           ..addOption('run-only', defaultsTo: null)
-          ..addOption('golden-diff-git-repo', defaultsTo: null))
+          ..addOption('golden-diff-git-repo', defaultsTo: null)
+          ..addOption('report-save-path', defaultsTo: null))
         .parse(args);
 
     return GlobalConfigNullable(
@@ -123,6 +130,7 @@ class GlobalConfigNullable with _$GlobalConfigNullable {
       enableReportSaver: results['enable-report-saver'] as bool?,
       goldenDiffGitRepo: results['golden-diff-git-repo'] as String?,
       runOnly: results['run-only'] as String?,
+      reportSavePath: results['report-save-path'] as String?,
     );
   }
 
@@ -143,6 +151,7 @@ extension ExtGlobalConfigNullable on GlobalConfigNullable {
         enableReportSaver: other.enableReportSaver ?? enableReportSaver,
         goldenDiffGitRepo: other.goldenDiffGitRepo ?? goldenDiffGitRepo,
         runOnly: other.runOnly ?? runOnly,
+        reportSavePath: other.reportSavePath ?? reportSavePath,
       );
 
   GlobalConfig toConfig() => GlobalConfig(
@@ -150,6 +159,7 @@ extension ExtGlobalConfigNullable on GlobalConfigNullable {
         enableReportSaver: enableReportSaver ?? false,
         goldenDiffGitRepo: goldenDiffGitRepo,
         runOnly: runOnly,
+        reportSavePath: reportSavePath,
       );
 }
 
