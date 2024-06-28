@@ -13,7 +13,6 @@ import 'package:mobx/mobx.dart';
 import 'package:test_api/src/backend/state.dart'; // ignore: implementation_imports
 
 part 'worker_super_run_store.freezed.dart';
-
 part 'worker_super_run_store.g.dart';
 
 /// A "worker run" is the code execution from worker hot-restart to the next hot-restart
@@ -367,7 +366,7 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
 
 // ITIM := IntegrationTestIsolationMode
 @freezed
-class _ITIMState with _$_ITIMState {
+class _ITIMState with _$ITIMState {
   /// Before first test finished
   const factory _ITIMState.initial() = _ITIMStateInitial;
 

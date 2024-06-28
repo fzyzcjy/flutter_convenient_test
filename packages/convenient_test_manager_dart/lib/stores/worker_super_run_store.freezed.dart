@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, non_nullable_equals_parameter
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'worker_super_run_store.dart';
 
@@ -12,10 +12,10 @@ part of 'worker_super_run_store.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$_ITIMState {
+mixin _$ITIMState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -93,25 +93,25 @@ class __$ITIMStateCopyWithImpl<$Res, $Val extends _ITIMState>
 }
 
 /// @nodoc
-abstract class _$$_ITIMStateInitialCopyWith<$Res> {
-  factory _$$_ITIMStateInitialCopyWith(
-          _$_ITIMStateInitial value, $Res Function(_$_ITIMStateInitial) then) =
-      __$$_ITIMStateInitialCopyWithImpl<$Res>;
+abstract class _$$ITIMStateInitialImplCopyWith<$Res> {
+  factory _$$ITIMStateInitialImplCopyWith(_$ITIMStateInitialImpl value,
+          $Res Function(_$ITIMStateInitialImpl) then) =
+      __$$ITIMStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ITIMStateInitialCopyWithImpl<$Res>
-    extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateInitial>
-    implements _$$_ITIMStateInitialCopyWith<$Res> {
-  __$$_ITIMStateInitialCopyWithImpl(
-      _$_ITIMStateInitial _value, $Res Function(_$_ITIMStateInitial) _then)
+class __$$ITIMStateInitialImplCopyWithImpl<$Res>
+    extends __$ITIMStateCopyWithImpl<$Res, _$ITIMStateInitialImpl>
+    implements _$$ITIMStateInitialImplCopyWith<$Res> {
+  __$$ITIMStateInitialImplCopyWithImpl(_$ITIMStateInitialImpl _value,
+      $Res Function(_$ITIMStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_ITIMStateInitial implements _ITIMStateInitial {
-  const _$_ITIMStateInitial();
+class _$ITIMStateInitialImpl implements _ITIMStateInitial {
+  const _$ITIMStateInitialImpl();
 
   @override
   String toString() {
@@ -119,9 +119,9 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_ITIMStateInitial);
+        (other.runtimeType == runtimeType && other is _$ITIMStateInitialImpl);
   }
 
   @override
@@ -209,24 +209,24 @@ class _$_ITIMStateInitial implements _ITIMStateInitial {
 }
 
 abstract class _ITIMStateInitial implements _ITIMState {
-  const factory _ITIMStateInitial() = _$_ITIMStateInitial;
+  const factory _ITIMStateInitial() = _$ITIMStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$_ITIMStateGoOnCopyWith<$Res> {
-  factory _$$_ITIMStateGoOnCopyWith(
-          _$_ITIMStateGoOn value, $Res Function(_$_ITIMStateGoOn) then) =
-      __$$_ITIMStateGoOnCopyWithImpl<$Res>;
+abstract class _$$ITIMStateGoOnImplCopyWith<$Res> {
+  factory _$$ITIMStateGoOnImplCopyWith(
+          _$ITIMStateGoOnImpl value, $Res Function(_$ITIMStateGoOnImpl) then) =
+      __$$ITIMStateGoOnImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String lastExecutedTestName});
 }
 
 /// @nodoc
-class __$$_ITIMStateGoOnCopyWithImpl<$Res>
-    extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateGoOn>
-    implements _$$_ITIMStateGoOnCopyWith<$Res> {
-  __$$_ITIMStateGoOnCopyWithImpl(
-      _$_ITIMStateGoOn _value, $Res Function(_$_ITIMStateGoOn) _then)
+class __$$ITIMStateGoOnImplCopyWithImpl<$Res>
+    extends __$ITIMStateCopyWithImpl<$Res, _$ITIMStateGoOnImpl>
+    implements _$$ITIMStateGoOnImplCopyWith<$Res> {
+  __$$ITIMStateGoOnImplCopyWithImpl(
+      _$ITIMStateGoOnImpl _value, $Res Function(_$ITIMStateGoOnImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -234,7 +234,7 @@ class __$$_ITIMStateGoOnCopyWithImpl<$Res>
   $Res call({
     Object? lastExecutedTestName = null,
   }) {
-    return _then(_$_ITIMStateGoOn(
+    return _then(_$ITIMStateGoOnImpl(
       lastExecutedTestName: null == lastExecutedTestName
           ? _value.lastExecutedTestName
           : lastExecutedTestName // ignore: cast_nullable_to_non_nullable
@@ -245,8 +245,8 @@ class __$$_ITIMStateGoOnCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ITIMStateGoOn implements _ITIMStateGoOn {
-  const _$_ITIMStateGoOn({required this.lastExecutedTestName});
+class _$ITIMStateGoOnImpl implements _ITIMStateGoOn {
+  const _$ITIMStateGoOnImpl({required this.lastExecutedTestName});
 
   @override
   final String lastExecutedTestName;
@@ -257,10 +257,10 @@ class _$_ITIMStateGoOn implements _ITIMStateGoOn {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ITIMStateGoOn &&
+            other is _$ITIMStateGoOnImpl &&
             (identical(other.lastExecutedTestName, lastExecutedTestName) ||
                 other.lastExecutedTestName == lastExecutedTestName));
   }
@@ -271,8 +271,8 @@ class _$_ITIMStateGoOn implements _ITIMStateGoOn {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ITIMStateGoOnCopyWith<_$_ITIMStateGoOn> get copyWith =>
-      __$$_ITIMStateGoOnCopyWithImpl<_$_ITIMStateGoOn>(this, _$identity);
+  _$$ITIMStateGoOnImplCopyWith<_$ITIMStateGoOnImpl> get copyWith =>
+      __$$ITIMStateGoOnImplCopyWithImpl<_$ITIMStateGoOnImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -357,29 +357,29 @@ class _$_ITIMStateGoOn implements _ITIMStateGoOn {
 
 abstract class _ITIMStateGoOn implements _ITIMState {
   const factory _ITIMStateGoOn({required final String lastExecutedTestName}) =
-      _$_ITIMStateGoOn;
+      _$ITIMStateGoOnImpl;
 
   String get lastExecutedTestName;
   @JsonKey(ignore: true)
-  _$$_ITIMStateGoOnCopyWith<_$_ITIMStateGoOn> get copyWith =>
+  _$$ITIMStateGoOnImplCopyWith<_$ITIMStateGoOnImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ITIMStateRetryLastCopyWith<$Res> {
-  factory _$$_ITIMStateRetryLastCopyWith(_$_ITIMStateRetryLast value,
-          $Res Function(_$_ITIMStateRetryLast) then) =
-      __$$_ITIMStateRetryLastCopyWithImpl<$Res>;
+abstract class _$$ITIMStateRetryLastImplCopyWith<$Res> {
+  factory _$$ITIMStateRetryLastImplCopyWith(_$ITIMStateRetryLastImpl value,
+          $Res Function(_$ITIMStateRetryLastImpl) then) =
+      __$$ITIMStateRetryLastImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String lastExecutedTestName, int lastExecutedTestFailCount});
 }
 
 /// @nodoc
-class __$$_ITIMStateRetryLastCopyWithImpl<$Res>
-    extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateRetryLast>
-    implements _$$_ITIMStateRetryLastCopyWith<$Res> {
-  __$$_ITIMStateRetryLastCopyWithImpl(
-      _$_ITIMStateRetryLast _value, $Res Function(_$_ITIMStateRetryLast) _then)
+class __$$ITIMStateRetryLastImplCopyWithImpl<$Res>
+    extends __$ITIMStateCopyWithImpl<$Res, _$ITIMStateRetryLastImpl>
+    implements _$$ITIMStateRetryLastImplCopyWith<$Res> {
+  __$$ITIMStateRetryLastImplCopyWithImpl(_$ITIMStateRetryLastImpl _value,
+      $Res Function(_$ITIMStateRetryLastImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -388,7 +388,7 @@ class __$$_ITIMStateRetryLastCopyWithImpl<$Res>
     Object? lastExecutedTestName = null,
     Object? lastExecutedTestFailCount = null,
   }) {
-    return _then(_$_ITIMStateRetryLast(
+    return _then(_$ITIMStateRetryLastImpl(
       lastExecutedTestName: null == lastExecutedTestName
           ? _value.lastExecutedTestName
           : lastExecutedTestName // ignore: cast_nullable_to_non_nullable
@@ -403,8 +403,8 @@ class __$$_ITIMStateRetryLastCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ITIMStateRetryLast implements _ITIMStateRetryLast {
-  const _$_ITIMStateRetryLast(
+class _$ITIMStateRetryLastImpl implements _ITIMStateRetryLast {
+  const _$ITIMStateRetryLastImpl(
       {required this.lastExecutedTestName,
       required this.lastExecutedTestFailCount});
 
@@ -419,10 +419,10 @@ class _$_ITIMStateRetryLast implements _ITIMStateRetryLast {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ITIMStateRetryLast &&
+            other is _$ITIMStateRetryLastImpl &&
             (identical(other.lastExecutedTestName, lastExecutedTestName) ||
                 other.lastExecutedTestName == lastExecutedTestName) &&
             (identical(other.lastExecutedTestFailCount,
@@ -437,8 +437,8 @@ class _$_ITIMStateRetryLast implements _ITIMStateRetryLast {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ITIMStateRetryLastCopyWith<_$_ITIMStateRetryLast> get copyWith =>
-      __$$_ITIMStateRetryLastCopyWithImpl<_$_ITIMStateRetryLast>(
+  _$$ITIMStateRetryLastImplCopyWith<_$ITIMStateRetryLastImpl> get copyWith =>
+      __$$ITIMStateRetryLastImplCopyWithImpl<_$ITIMStateRetryLastImpl>(
           this, _$identity);
 
   @override
@@ -525,35 +525,35 @@ class _$_ITIMStateRetryLast implements _ITIMStateRetryLast {
 abstract class _ITIMStateRetryLast implements _ITIMState {
   const factory _ITIMStateRetryLast(
       {required final String lastExecutedTestName,
-      required final int lastExecutedTestFailCount}) = _$_ITIMStateRetryLast;
+      required final int lastExecutedTestFailCount}) = _$ITIMStateRetryLastImpl;
 
   String get lastExecutedTestName;
   int get lastExecutedTestFailCount;
   @JsonKey(ignore: true)
-  _$$_ITIMStateRetryLastCopyWith<_$_ITIMStateRetryLast> get copyWith =>
+  _$$ITIMStateRetryLastImplCopyWith<_$ITIMStateRetryLastImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ITIMStateFinishedCopyWith<$Res> {
-  factory _$$_ITIMStateFinishedCopyWith(_$_ITIMStateFinished value,
-          $Res Function(_$_ITIMStateFinished) then) =
-      __$$_ITIMStateFinishedCopyWithImpl<$Res>;
+abstract class _$$ITIMStateFinishedImplCopyWith<$Res> {
+  factory _$$ITIMStateFinishedImplCopyWith(_$ITIMStateFinishedImpl value,
+          $Res Function(_$ITIMStateFinishedImpl) then) =
+      __$$ITIMStateFinishedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ITIMStateFinishedCopyWithImpl<$Res>
-    extends __$ITIMStateCopyWithImpl<$Res, _$_ITIMStateFinished>
-    implements _$$_ITIMStateFinishedCopyWith<$Res> {
-  __$$_ITIMStateFinishedCopyWithImpl(
-      _$_ITIMStateFinished _value, $Res Function(_$_ITIMStateFinished) _then)
+class __$$ITIMStateFinishedImplCopyWithImpl<$Res>
+    extends __$ITIMStateCopyWithImpl<$Res, _$ITIMStateFinishedImpl>
+    implements _$$ITIMStateFinishedImplCopyWith<$Res> {
+  __$$ITIMStateFinishedImplCopyWithImpl(_$ITIMStateFinishedImpl _value,
+      $Res Function(_$ITIMStateFinishedImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_ITIMStateFinished implements _ITIMStateFinished {
-  const _$_ITIMStateFinished();
+class _$ITIMStateFinishedImpl implements _ITIMStateFinished {
+  const _$ITIMStateFinishedImpl();
 
   @override
   String toString() {
@@ -561,9 +561,9 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_ITIMStateFinished);
+        (other.runtimeType == runtimeType && other is _$ITIMStateFinishedImpl);
   }
 
   @override
@@ -651,5 +651,5 @@ class _$_ITIMStateFinished implements _ITIMStateFinished {
 }
 
 abstract class _ITIMStateFinished implements _ITIMState {
-  const factory _ITIMStateFinished() = _$_ITIMStateFinished;
+  const factory _ITIMStateFinished() = _$ITIMStateFinishedImpl;
 }

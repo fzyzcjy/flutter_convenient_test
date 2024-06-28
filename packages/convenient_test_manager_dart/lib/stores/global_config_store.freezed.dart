@@ -24,6 +24,7 @@ mixin _$GlobalConfigNullable {
   bool? get enableReportSaver => throw _privateConstructorUsedError;
   String? get goldenDiffGitRepo => throw _privateConstructorUsedError;
   String? get runOnly => throw _privateConstructorUsedError;
+  String? get reportSavePath => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +42,8 @@ abstract class $GlobalConfigNullableCopyWith<$Res> {
       {bool? isolationMode,
       bool? enableReportSaver,
       String? goldenDiffGitRepo,
-      String? runOnly});
+      String? runOnly,
+      String? reportSavePath});
 }
 
 /// @nodoc
@@ -62,6 +64,7 @@ class _$GlobalConfigNullableCopyWithImpl<$Res,
     Object? enableReportSaver = freezed,
     Object? goldenDiffGitRepo = freezed,
     Object? runOnly = freezed,
+    Object? reportSavePath = freezed,
   }) {
     return _then(_value.copyWith(
       isolationMode: freezed == isolationMode
@@ -80,6 +83,10 @@ class _$GlobalConfigNullableCopyWithImpl<$Res,
           ? _value.runOnly
           : runOnly // ignore: cast_nullable_to_non_nullable
               as String?,
+      reportSavePath: freezed == reportSavePath
+          ? _value.reportSavePath
+          : reportSavePath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -96,7 +103,8 @@ abstract class _$$GlobalConfigNullableImplCopyWith<$Res>
       {bool? isolationMode,
       bool? enableReportSaver,
       String? goldenDiffGitRepo,
-      String? runOnly});
+      String? runOnly,
+      String? reportSavePath});
 }
 
 /// @nodoc
@@ -114,6 +122,7 @@ class __$$GlobalConfigNullableImplCopyWithImpl<$Res>
     Object? enableReportSaver = freezed,
     Object? goldenDiffGitRepo = freezed,
     Object? runOnly = freezed,
+    Object? reportSavePath = freezed,
   }) {
     return _then(_$GlobalConfigNullableImpl(
       isolationMode: freezed == isolationMode
@@ -132,6 +141,10 @@ class __$$GlobalConfigNullableImplCopyWithImpl<$Res>
           ? _value.runOnly
           : runOnly // ignore: cast_nullable_to_non_nullable
               as String?,
+      reportSavePath: freezed == reportSavePath
+          ? _value.reportSavePath
+          : reportSavePath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -143,7 +156,8 @@ class _$GlobalConfigNullableImpl implements _GlobalConfigNullable {
       {this.isolationMode,
       this.enableReportSaver,
       this.goldenDiffGitRepo,
-      this.runOnly});
+      this.runOnly,
+      this.reportSavePath});
 
   factory _$GlobalConfigNullableImpl.fromJson(Map<String, dynamic> json) =>
       _$$GlobalConfigNullableImplFromJson(json);
@@ -156,10 +170,12 @@ class _$GlobalConfigNullableImpl implements _GlobalConfigNullable {
   final String? goldenDiffGitRepo;
   @override
   final String? runOnly;
+  @override
+  final String? reportSavePath;
 
   @override
   String toString() {
-    return 'GlobalConfigNullable(isolationMode: $isolationMode, enableReportSaver: $enableReportSaver, goldenDiffGitRepo: $goldenDiffGitRepo, runOnly: $runOnly)';
+    return 'GlobalConfigNullable(isolationMode: $isolationMode, enableReportSaver: $enableReportSaver, goldenDiffGitRepo: $goldenDiffGitRepo, runOnly: $runOnly, reportSavePath: $reportSavePath)';
   }
 
   @override
@@ -173,13 +189,15 @@ class _$GlobalConfigNullableImpl implements _GlobalConfigNullable {
                 other.enableReportSaver == enableReportSaver) &&
             (identical(other.goldenDiffGitRepo, goldenDiffGitRepo) ||
                 other.goldenDiffGitRepo == goldenDiffGitRepo) &&
-            (identical(other.runOnly, runOnly) || other.runOnly == runOnly));
+            (identical(other.runOnly, runOnly) || other.runOnly == runOnly) &&
+            (identical(other.reportSavePath, reportSavePath) ||
+                other.reportSavePath == reportSavePath));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, isolationMode, enableReportSaver,
-      goldenDiffGitRepo, runOnly);
+      goldenDiffGitRepo, runOnly, reportSavePath);
 
   @JsonKey(ignore: true)
   @override
@@ -202,7 +220,8 @@ abstract class _GlobalConfigNullable implements GlobalConfigNullable {
       {final bool? isolationMode,
       final bool? enableReportSaver,
       final String? goldenDiffGitRepo,
-      final String? runOnly}) = _$GlobalConfigNullableImpl;
+      final String? runOnly,
+      final String? reportSavePath}) = _$GlobalConfigNullableImpl;
 
   factory _GlobalConfigNullable.fromJson(Map<String, dynamic> json) =
       _$GlobalConfigNullableImpl.fromJson;
@@ -215,6 +234,8 @@ abstract class _GlobalConfigNullable implements GlobalConfigNullable {
   String? get goldenDiffGitRepo;
   @override
   String? get runOnly;
+  @override
+  String? get reportSavePath;
   @override
   @JsonKey(ignore: true)
   _$$GlobalConfigNullableImplCopyWith<_$GlobalConfigNullableImpl>

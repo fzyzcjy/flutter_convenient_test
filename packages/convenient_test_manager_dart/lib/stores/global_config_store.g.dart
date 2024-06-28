@@ -13,6 +13,7 @@ _$GlobalConfigNullableImpl _$$GlobalConfigNullableImplFromJson(
       enableReportSaver: json['enableReportSaver'] as bool?,
       goldenDiffGitRepo: json['goldenDiffGitRepo'] as String?,
       runOnly: json['runOnly'] as String?,
+      reportSavePath: json['reportSavePath'] as String?,
     );
 
 Map<String, dynamic> _$$GlobalConfigNullableImplToJson(
@@ -22,6 +23,7 @@ Map<String, dynamic> _$$GlobalConfigNullableImplToJson(
       'enableReportSaver': instance.enableReportSaver,
       'goldenDiffGitRepo': instance.goldenDiffGitRepo,
       'runOnly': instance.runOnly,
+      'reportSavePath': instance.reportSavePath,
     };
 
 // **************************************************************************
@@ -95,13 +97,30 @@ mixin _$GlobalConfig on _GlobalConfig, Store {
     });
   }
 
+  late final _$reportSavePathAtom =
+      Atom(name: '_GlobalConfig.reportSavePath', context: context);
+
+  @override
+  String? get reportSavePath {
+    _$reportSavePathAtom.reportRead();
+    return super.reportSavePath;
+  }
+
+  @override
+  set reportSavePath(String? value) {
+    _$reportSavePathAtom.reportWrite(value, super.reportSavePath, () {
+      super.reportSavePath = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 isolationMode: ${isolationMode},
 enableReportSaver: ${enableReportSaver},
 goldenDiffGitRepo: ${goldenDiffGitRepo},
-runOnly: ${runOnly}
+runOnly: ${runOnly},
+reportSavePath: ${reportSavePath}
     ''';
   }
 }
