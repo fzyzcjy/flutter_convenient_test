@@ -211,9 +211,12 @@ By default the manager will save reports to a temporary directory. Typically:
 - Linux: `/tmp/ConvenientTest`
 - Windows: `%LocalAppData%\Temp\ConvenientTest`
 
-Use `--report-save-path` (or `--dart-define "CONVENIENT_MANAGER_REPORT_SAVE_PATH"`) to change this.
+Use `--report-save-path /some/path` (or `--dart-define "CONVENIENT_MANAGER_REPORT_SAVE_PATH=/some/path"`) to change this.
 
-TODO note on report format
+#### Format
+
+The reports are exported using [protobuf](https://protobuf.dev/).
+See the schema at [`convenient_test.proto`](packages/convenient_test_common_dart/proto/convenient_test.proto).
 
 ### Run single test/group
 
@@ -265,6 +268,8 @@ Following are about the toggles:
 
 ## Getting started
 
+TODO comment on #337
+
 1. Run `flutter pub add convenient_test dev:convenient_test_dev`,
    - or manually update your `pubspec.yaml` to include `convenient_test: ^1.0.0` in the `dependencies` section, and `convenient_test_dev: ^1.0.0` in the `dev_dependencies` section. As normal, we need to `flutter pub get`.
 2. Create `integration_test/main_test.dart` file in your app. Fill it like `void main() => convenientTestMain(MyConvenientTestSlot(), () { ... the normal test code you write });`. See [the example package](https://github.com/fzyzcjy/flutter_convenient_test/blob/master/packages/convenient_test/example/integration_test/main_test.dart) for demonstration.
@@ -288,6 +293,11 @@ Additionally, there are precompiled binaries for each commit, at the "artifacts"
 For example, go to the most recent _CI_ run, download `manager_gui_macos` artifact, unzip it, and open it.
 
 #### Method 2: `flutter run` / `flutter build`
+
+Check the requirements for developing flutter desktop apps for
+[macOS](https://docs.flutter.dev/platform-integration/macos/install-macos/install-macos-from-ios),
+[Linux](https://docs.flutter.dev/platform-integration/linux/install-linux/install-linux-from-android),
+and [Windows](https://docs.flutter.dev/platform-integration/windows/install-windows/install-windows-from-android).
 
 ```sh
 git clone https://github.com/fzyzcjy/flutter_convenient_test.git
@@ -317,7 +327,7 @@ Set up once (re-run to update):
 dart pub global activate --source git https://github.com/fzyzcjy/flutter_convenient_test.git --git-path packages/convenient_test_manager_dart
 ```
 
-> [!INFO]
+> [!TIP]
 > Add `--git-ref v1.x.x` to `dart pub global activate` to check out a specific [release](https://github.com/fzyzcjy/flutter_convenient_test/releases).
 
 Run using:
