@@ -196,9 +196,9 @@ See [Run the `manager`](#run-the-manager) and [Getting started](#getting-started
 
 ```sh
 # in one shell
-dart run convenient_test_manager_dart
+convenient_test_manager_dart
 # in another shell, run your worker app
-flutter run integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define "CONVENIENT_TEST_APP_CODE_DIR="sth
+flutter run integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define "CONVENIENT_TEST_APP_CODE_DIR=$PWD"
 ```
 
 ### Reports
@@ -257,7 +257,7 @@ Following are about the toggles:
 1. Clone this repository and enter the `packages/convenient_test/example` folder.
 2. Run the example app (e.g. using iOS simulator) via: 
    ```sh
-   flutter run integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define CONVENIENT_TEST_APP_CODE_DIR=$PWD
+   flutter run integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define "CONVENIENT_TEST_APP_CODE_DIR=$PWD"
    ```
    Can also be run via VSCode or Android Studio with similar commands.
 3. Run the GUI located in `packages/convenient_test_manager`. (See details in section below)
@@ -317,7 +317,8 @@ Set up once (re-run to update):
 dart pub global activate --source git https://github.com/fzyzcjy/flutter_convenient_test.git --git-path packages/convenient_test_manager_dart
 ```
 
-Add `--git-ref v1.x.x` to `dart pub global activate` to check out a specific [release](https://github.com/fzyzcjy/flutter_convenient_test/releases).
+> [!INFO]
+> Add `--git-ref v1.x.x` to `dart pub global activate` to check out a specific [release](https://github.com/fzyzcjy/flutter_convenient_test/releases).
 
 Run using:
 
