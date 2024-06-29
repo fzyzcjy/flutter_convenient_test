@@ -192,11 +192,28 @@ Flaky is flaky, and we are aware of it. It is neither failed nor success, so you
 [`packages/convenient_test_manager_dart`](packages/convenient_test_manager_dart) runs without GUI 
 and only produce log data and exit code, making it suitable to be run in a CI.
 Simply use `convenient_test_manager_dart` instead of `convenient_test_manager`.
-See [Run the `manager`](#run-the-manager).
+See [Run the `manager`](#run-the-manager) and [Getting started](#getting-started).
+
+```sh
+# in one shell
+dart run convenient_test_manager_dart
+# in another shell, run your worker app
+flutter run integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define "CONVENIENT_TEST_APP_CODE_DIR="sth
+```
+
+### Reports
 
 If you want to examine the details with GUI, just open the generated artifact in the GUI using `Load Report` button.
 
-// TODO: Add more doc about how to use it (informal doc here: https://github.com/fzyzcjy/flutter_convenient_test/issues/240)
+By default the manager will save reports to a temporary directory. Typically:
+
+- macOS: `$HOME/Library/Caches/ConvenientTest`
+- Linux: `/tmp/ConvenientTest`
+- Windows: `%LocalAppData%\Temp\ConvenientTest`
+
+Use `--report-save-path` (or `--dart-define "CONVENIENT_MANAGER_REPORT_SAVE_PATH"`) to change this.
+
+TODO note on report format
 
 ### Run single test/group
 
@@ -319,9 +336,13 @@ There are a few ways to configure the manager:
 3. From command line arguments (when run via `convenient_test_manager_dart` command line)
 4. Change configurations via GUI (e.g. switches at right-top)
 
-For all options that are configurable and all environment variable names, 
-please see [`consts.dart`](packages/convenient_test_common_dart/lib/src/consts.dart)
-and [`static_config.dart`](packages/convenient_test_dev/lib/src/support/static_config.dart). 
+For all options that are configurable and all environment variable names, please see 
+
+- [`consts.dart`](packages/convenient_test_common_dart/lib/src/consts.dart)
+- [`static_config.dart`](packages/convenient_test_dev/lib/src/support/static_config.dart)
+- [`global_config_store.dart`](packages/convenient_test_manager_dart/lib/stores/global_config_store.dart) only manager related options
+- TODO any others i missed?
+
 (By doing so you can always see the up-to-date information and there is no possibility to see outdated doc.)
 
 If you are trying to use this package with Android Virtual Emulator (AVD), you may need to set `kConvenientTestManagerHost` to `10.0.2.2` (add `--dart-define CONVENIENT_TEST_MANAGER_HOST=10.0.2.2`) because of its [network topology](https://stackoverflow.com/questions/9808560/why-do-we-use-10-0-2-2-to-connect-to-local-web-server-instead-of-using-computer). Please see [issue #253](https://github.com/fzyzcjy/flutter_convenient_test/issues/253) for more details.
