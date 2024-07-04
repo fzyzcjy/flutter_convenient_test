@@ -1,0 +1,38 @@
+Enable re-entrance for `WidgetTester.runAsyncEnhanced`
+(`ExtWidgetTesterPump` in `flutter_convenient_test/packages/convenient_test_dev/lib/src/functions/widget_tester.dart`)
+
+see also https://github.com/fzyzcjy/flutter_convenient_test/issues/337
+
+this diff is based on flutter v3.22.2
+
+diff --git a/packages/flutter_test/lib/src/binding.dart b/packages/flutter_test/lib/src/binding.dart
+index 95a80d2..be8ba34 100644
+--- a/packages/flutter_test/lib/src/binding.dart
++++ b/packages/flutter_test/lib/src/binding.dart
+@@ -414,6 +414,8 @@ abstract class TestWidgetsFlutterBinding extends BindingBase
+   /// [LiveTestWidgetsFlutterBinding] (tests running using `flutter run`).
+   test_package.Timeout get defaultTestTimeout;
+ 
++  bool get runningAsyncTasks; // NOTE MODIFIED add
++
+   /// The current time.
+   ///
+   /// In the automated test environment (`flutter test`), this is a fake clock
+@@ -1230,6 +1232,8 @@ class AutomatedTestWidgetsFlutterBinding extends TestWidgetsFlutterBinding {
+   FakeAsync? _currentFakeAsync; // set in runTest; cleared in postTest
+   Completer<void>? _pendingAsyncTasks;
+ 
++  bool get runningAsyncTasks => _pendingAsyncTasks != null; // NOTE MODIFIED add
++
+   @override
+   Clock get clock {
+     assert(inTest);
+@@ -1722,6 +1726,8 @@ class LiveTestWidgetsFlutterBinding extends TestWidgetsFlutterBinding {
+   bool _viewNeedsPaint = false;
+   bool _runningAsyncTasks = false;
+ 
++  bool get runningAsyncTasks => _runningAsyncTasks; // NOTE MODIFIED add
++
+   /// The strategy for [pump]ing and requesting new frames.
+   ///
+   /// The policy decides whether [pump] (with a duration) pumps a single frame

@@ -189,9 +189,34 @@ Flaky is flaky, and we are aware of it. It is neither failed nor success, so you
 
 ### CI / headless mode
 
-This tool can be run without GUI and only produce log data and exit code, making it suitable to be run in a CI. If you want to examine the details with GUI, just open the generated artifact in the GUI using `Load Report` button.
+[`packages/convenient_test_manager_dart`](packages/convenient_test_manager_dart) runs without GUI 
+and only produce log data and exit code, making it suitable to be run in a CI.
+Simply use `convenient_test_manager_dart` instead of `convenient_test_manager`.
+See [Run the `manager`](#run-the-manager) and [Getting started](#getting-started).
 
-// TODO: Add more doc about how to use it (informal doc here: https://github.com/fzyzcjy/flutter_convenient_test/issues/240)
+```sh
+# in one shell
+convenient_test_manager_dart
+# in another shell, run your worker app
+flutter run integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define "CONVENIENT_TEST_APP_CODE_DIR=$PWD"
+```
+
+### Reports
+
+If you want to examine the details with GUI, just open the generated artifact in the GUI using `Load Report` button.
+
+By default the manager will save reports to a temporary directory. Typically:
+
+- macOS: `$HOME/Library/Caches/ConvenientTest`
+- Linux: `/tmp/ConvenientTest`
+- Windows: `%LocalAppData%\Temp\ConvenientTest`
+
+Use `--report-save-path /some/path` (or `--dart-define "CONVENIENT_MANAGER_REPORT_SAVE_PATH=/some/path"`) to change this.
+
+#### Format
+
+The reports are exported using [protobuf](https://protobuf.dev/).
+See the schema at [`convenient_test.proto`](packages/convenient_test_common_dart/proto/convenient_test.proto).
 
 ### Run single test/group
 
@@ -233,32 +258,84 @@ Following are about the toggles:
 ## Tutorial: Run examples
 
 1. Clone this repository and enter the `packages/convenient_test/example` folder.
-2. Run the example app (e.g. using iOS simulator) via `flutter run /path/to/flutter_convenient_test/packages/convenient_test/example/integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define CONVENIENT_TEST_APP_CODE_DIR=/path/to/this/app`. Can also be run via VSCode or Android Studio with similar commands.
+2. Run the example app (e.g. using iOS simulator) via: 
+   ```sh
+   flutter run integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define "CONVENIENT_TEST_APP_CODE_DIR=$PWD"
+   ```
+   Can also be run via VSCode or Android Studio with similar commands.
 3. Run the GUI located in `packages/convenient_test_manager`. (See details in section below)
 4. Enjoy the GUI!
 
 ## Getting started
 
-1. In `pubspec.yaml`, add `convenient_test: ^1.0.0` to the `dependencies` section, and `convenient_test_dev: ^1.0.0` to the `dev_dependencies` section. As normal, we need to `flutter pub get`.
-2. Create `integration_test/main_test.dart` file in your app. Fill it like `void main() => convenientTestMain(MyConvenientTestSlot(), () { ... the normal test code you write });`. See [the example package](https://github.com/fzyzcjy/flutter_convenient_test/blob/master/packages/convenient_test/example/integration_test/main_test.dart) for demonstration.
-3. Run your app (e.g. using iOS simulator) via `flutter run /path/to/your/app/integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define CONVENIENT_TEST_APP_CODE_DIR=/path/to/this/app`. Can also be run via VSCode or Android Studio with similar commands.
+1. Navigate to the flutter home directory and apply [this patch](doc/patches/flutter/get-running-async-tasks.diff):
+   `cd $FLUTTER_HOME && curl https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/patches/flutter/get-running-async-tasks.diff | git apply`
+   - while this is not strictly necessary, it is recommended to improve reliability when running multiple async tasks. see [#337](https://github.com/fzyzcjy/flutter_convenient_test/issues/337) for more information
+2. Navigate to your project dir and run `flutter pub add convenient_test dev:convenient_test_dev`
+   - or manually update your `pubspec.yaml` to include `convenient_test: ^1.0.0` in the `dependencies` section, and `convenient_test_dev: ^1.0.0` in the `dev_dependencies` section. As normal, we need to `flutter pub get`.
+3. Create `integration_test/main_test.dart` file in your app. Fill it like `void main() => convenientTestMain(MyConvenientTestSlot(), () { ... the normal test code you write });`. See the example [`main_test.dart`](packages/convenient_test/example/integration_test/main_test.dart) for demonstration.
+4. Run your app (e.g. using iOS simulator) via `flutter run integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define "CONVENIENT_TEST_APP_CODE_DIR=$PWD"`. Can also be run via VSCode or Android Studio with similar commands.
    - for use with the Android emulator, add `--dart-define CONVENIENT_TEST_MANAGER_HOST=10.0.2.2`
-4. Run the GUI located in `packages/convenient_test_manager`. (See details in section below)
-5. Enjoy the GUI!
+5. Run the Convenient Test Manager (See details in section below)
 
 ### Run the `manager`
 
+- [`packages/convenient_test_manager`](packages/convenient_test_manager) is a flutter GUI app that allows running and inspecting individual tests.
+  Use this for development and debugging.
+- [`packages/convenient_test_manager_dart`](packages/convenient_test_manager_dart) is a dart CLI app that runs all tests and terminates with a corresponding exit code.
+  Use this for CI and automated testing. See [CI / headless mode](#ci--headless-mode)
+
 #### Method 1: Download precompiled binary
 
-There are precompiled binaries for each commit, at the "artifacts" section in [the CI page](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/ci.yaml). For example, download `manager_macos` artifact, unzip it, and open it.
+See [Releases](https://github.com/fzyzcjy/flutter_convenient_test/releases) for binaries.
 
-Currently only MacOS and Linux has CI for this, and I am willing to accept a PR for Windows.
+Additionally, there are precompiled binaries for each commit, at the "artifacts" section in [the CI page](https://github.com/fzyzcjy/flutter_convenient_test/actions/workflows/ci.yaml)
+(download only available for logged in GitHub users).
+For example, go to the most recent _CI_ run, download `manager_gui_macos` artifact, unzip it, and open it.
 
-#### Method 2: `flutter run` / `flutter profile` / `flutter build`
+#### Method 2: `flutter run` / `flutter build`
 
-`packages/convenient_test_manager` is nothing but a *normal* Flutter Windows/MacOS/Linux app, so run it following the Flutter official doc.
+Check the requirements for developing flutter desktop apps for
+[macOS](https://docs.flutter.dev/platform-integration/macos/install-macos/install-macos-from-ios),
+[Linux](https://docs.flutter.dev/platform-integration/linux/install-linux/install-linux-from-android),
+and [Windows](https://docs.flutter.dev/platform-integration/windows/install-windows/install-windows-from-android).
 
-Surely, it can also be run via `flutter profile` mode to speed up. Or use `flutter build` and the standard approaches to generate a release version binary and use it.
+```sh
+git clone https://github.com/fzyzcjy/flutter_convenient_test.git
+cd flutter_convenient_test/packages/convenient_test_manager
+
+# compile executable. platform = linux | macos | windows
+flutter build <platform>
+# or just run directly
+flutter run -d <platform>
+```
+
+##### For CLI manager:
+
+```sh
+cd flutter_convenient_test/packages/convenient_test_manager
+
+dart compile exe bin/convenient_test_manager_dart.dart
+# or just run directly
+dart run
+```
+
+#### Method 3: `dart pub global` (only CLI manager)
+
+Set up once (re-run to update):
+
+```sh
+dart pub global activate --source git https://github.com/fzyzcjy/flutter_convenient_test.git --git-path packages/convenient_test_manager_dart
+```
+
+> [!TIP]
+> Add `--git-ref v1.x.x` to `dart pub global activate` to check out a specific [release](https://github.com/fzyzcjy/flutter_convenient_test/releases).
+
+Run using:
+
+```sh
+dart pub global run convenient_test_manager_dart
+```
 
 ## Miscellaneous
 
@@ -271,7 +348,13 @@ There are a few ways to configure the manager:
 3. From command line arguments (when run via `convenient_test_manager_dart` command line)
 4. Change configurations via GUI (e.g. switches at right-top)
 
-For all options that are configurable and all environment variable names, please see [`consts.dart`](packages/convenient_test_common_dart/lib/src/consts.dart). (By doing so you can always see the up-to-date information and there is no possiblility to see outdated doc.)
+For all options that are configurable and all environment variable names, please see 
+
+- [`consts.dart`](packages/convenient_test_common_dart/lib/src/consts.dart)
+- [`static_config.dart`](packages/convenient_test_dev/lib/src/support/static_config.dart)
+- [`global_config_store.dart`](packages/convenient_test_manager_dart/lib/stores/global_config_store.dart) only manager related options
+
+(By doing so you can always see the up-to-date information and there is no possibility to see outdated doc.)
 
 If you are trying to use this package with Android Virtual Emulator (AVD), you may need to set `kConvenientTestManagerHost` to `10.0.2.2` (add `--dart-define CONVENIENT_TEST_MANAGER_HOST=10.0.2.2`) because of its [network topology](https://stackoverflow.com/questions/9808560/why-do-we-use-10-0-2-2-to-connect-to-local-web-server-instead-of-using-computer). Please see [issue #253](https://github.com/fzyzcjy/flutter_convenient_test/issues/253) for more details.
 
