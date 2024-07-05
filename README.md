@@ -268,7 +268,7 @@ Following are about the toggles:
 
 ## Getting started
 
-1. Navigate to the flutter home directory and apply [this patch](doc/patches/flutter/get-running-async-tasks.diff):
+1. (Optional but recommended) Navigate to the flutter home directory and apply [this patch](doc/patches/flutter/get-running-async-tasks.diff):
    `cd $FLUTTER_HOME && curl https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/patches/flutter/get-running-async-tasks.diff | git apply`
    - while this is not strictly necessary, it is recommended to improve reliability when running multiple async tasks. see [#337](https://github.com/fzyzcjy/flutter_convenient_test/issues/337) for more information
 2. Navigate to your project dir and run `flutter pub add convenient_test dev:convenient_test_dev`
