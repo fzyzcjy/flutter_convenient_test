@@ -6,6 +6,9 @@ on:
   schedule:
     - cron: "0 10 * * *"
 
+permissions:
+  contents: write
+  
 jobs:
   flutter:
     name: ${{ matrix.package_name_and_runs_on.package_name }} on Flutter ${{ matrix.channel_version.channel }}

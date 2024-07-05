@@ -1,3 +1,7 @@
+## 1.5.0
+
+* Add reportSavePath argument #398 (thanks @madmini)
+
 ## 1.4.0
 
 * New CLI param --run-only allowing you to limit the tests this runs #395 (thanks @gnunicorn)
