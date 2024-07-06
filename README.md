@@ -295,10 +295,13 @@ For example, go to the most recent _CI_ run, download `manager_gui_macos` artifa
 
 #### Method 2: `flutter run` / `flutter build`
 
+The GUI and CLI managers are just flutter and dart projects as well, respectively.
+So they can be run and built in the same way one would with any other flutter or dart project:
+
 Check the requirements for developing flutter desktop apps for
 [macOS](https://docs.flutter.dev/platform-integration/macos/install-macos/install-macos-from-ios),
 [Linux](https://docs.flutter.dev/platform-integration/linux/install-linux/install-linux-from-android),
-and [Windows](https://docs.flutter.dev/platform-integration/windows/install-windows/install-windows-from-android).
+and [Windows](https://docs.flutter.dev/platform-integration/windows/install-windows/install-windows-from-android). Then:
 
 ```sh
 git clone https://github.com/fzyzcjy/flutter_convenient_test.git
@@ -310,7 +313,7 @@ flutter build <platform>
 flutter run -d <platform>
 ```
 
-##### For CLI manager:
+For CLI manager:
 
 ```sh
 cd flutter_convenient_test/packages/convenient_test_manager
