@@ -1,3 +1,7 @@
+## 1.5.1
+
+* Bump version dependencies #407 (thanks @lehmannk)
+
 ## 1.5.0
 
 * Add reportSavePath argument #398 (thanks @madmini)
