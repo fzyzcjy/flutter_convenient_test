@@ -1,6 +1,6 @@
 name: convenient_test_dev
 description: Write and debug tests easily, with full action history, time travel, screenshots, rapid re-execution, video records, interactivity, isolation and more
-version: 1.5.1
+version: 1.5.2
 repository: https://github.com/fzyzcjy/flutter_convenient_test
 
 environment:
