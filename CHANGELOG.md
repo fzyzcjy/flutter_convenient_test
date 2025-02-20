@@ -1,3 +1,7 @@
+## 1.5.2
+
+* Update intl and file_picker packages #410 (thanks @lehmannk)
+
 ## 1.5.1
 
 * Bump version dependencies #407 (thanks @lehmannk)
