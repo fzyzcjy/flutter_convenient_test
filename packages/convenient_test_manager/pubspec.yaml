@@ -18,8 +18,8 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.2.1
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
-  flutter: ">=3.0.0"
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.27.0"
 
 dependencies:
   collection: ^1.15.0
@@ -28,8 +28,8 @@ dependencies:
   convenient_test_dev: ^1.0.0
   convenient_test_manager_dart: ^1.0.0
   cupertino_icons: ^1.0.2
-  dart_vlc: ^0.2.0
-  file_picker: ^4.5.1
+  dart_vlc: ^0.4.0
+  file_picker: ^8.0.0
   fixnum: ^1.0.0
   flutter:
     sdk: flutter
@@ -49,7 +49,7 @@ dependencies:
   path_provider: ^2.0.9
   protobuf: ^2.0.0
   scrollable_positioned_list: ^0.3.2
-  test_api: ^0.4.2
+  test_api: ^0.7.3
   tuple: ^2.0.0 
 
 dependency_overrides:
@@ -63,13 +63,14 @@ dependency_overrides:
     path: ../convenient_test_dev
   convenient_test_manager_dart:
     path: ../convenient_test_manager_dart
+  file: 7.0.1
   grpc:
     git:
       url: https://github.com/fzyzcjy/grpc-dart # #3761
 
 dev_dependencies:
-  analyzer: ^2.3.0
-  build_runner: ^2.1.2
+  analyzer: ^4.4.0
+  build_runner: ^2.3.0
   dart_code_metrics: ^4.15.0
   lint: ">=1.8.2 <3.0.0"
   mobx_codegen: ^2.0.6

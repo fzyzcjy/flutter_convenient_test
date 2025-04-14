@@ -7,7 +7,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 part 'global_config_store.freezed.dart';
-
 part 'global_config_store.g.dart';
 
 class GlobalConfigStore {
@@ -34,14 +33,24 @@ abstract class _GlobalConfig with Store {
 }
 
 @freezed
+@JsonSerializable()
 class GlobalConfigNullable with _$GlobalConfigNullable {
   static const _kTag = 'GlobalConfigNullable';
 
-  factory GlobalConfigNullable({
-    bool? isolationMode,
-    bool? enableReportSaver,
-    String? goldenDiffGitRepo,
-  }) = _GlobalConfigNullable;
+  @override
+  final bool? isolationMode;
+
+  @override
+  final bool? enableReportSaver;
+
+  @override
+  final String? goldenDiffGitRepo;
+
+  GlobalConfigNullable({
+    this.isolationMode,
+    this.enableReportSaver,
+    this.goldenDiffGitRepo,
+  });
 
   factory GlobalConfigNullable.fromJson(Map<String, dynamic> json) => _$GlobalConfigNullableFromJson(json);
 

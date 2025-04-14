@@ -22,7 +22,7 @@ class DelegatingFinder implements Finder {
   Iterable<Element> get allCandidates => target.allCandidates;
 
   @override
-  Iterable<Element> evaluate() => target.evaluate();
+  FinderResult<Element> evaluate() => target.evaluate();
 
   @override
   bool precache() => target.precache();
@@ -40,7 +40,30 @@ class DelegatingFinder implements Finder {
   Finder hitTestable({Alignment at = Alignment.center}) => target.hitTestable(at: at);
 
   @override
-  String toString() => target.toString();
+  String toString({bool describeSelf = false}) => target.toString(describeSelf: describeSelf);
+
+  @override
+  String describeMatch(Plurality plurality) => target.describeMatch(plurality);
+
+  @override
+  Iterable<Element> findInCandidates(Iterable<Element> candidates) => target.findInCandidates(candidates);
+
+  @override
+  FinderResult<Element> get found => target.found;
+
+  @override
+  bool get hasFound => target.hasFound;
+
+  @override
+  Future<void> reset() async {
+    target.reset();
+  }
+
+  @override
+  void runCached(VoidCallback run) => target.runCached(run);
+
+  @override
+  bool tryEvaluate() => target.tryEvaluate();
 }
 
 extension ExtState on State {
