@@ -254,9 +254,8 @@ class TFinderCommand extends TCommand {
           secondDownOffset: secondDownOffset,
           firstFingerOffsets: firstFingerOffsets,
           secondFingerOffsets: secondFingerOffsets,
-          afterMove: (logMove ?? false)
-              ? (i) => log.snapshot(name: 'move #$i')
-              : null,
+          afterMove:
+              (logMove ?? false) ? (i) => log.snapshot(name: 'move #$i') : null,
         ),
         preCondition: null,
         logTitle: 'MULTI DRAG',

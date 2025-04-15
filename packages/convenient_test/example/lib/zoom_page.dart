@@ -75,7 +75,7 @@ class _ZoomPageState extends State<ZoomPage> {
 }
 
 extension on Color {
-  Color invert() => Color.from(alpha: a, red: 1 - r, green: 1 - g, blue: 1 - b);
+  Color invert() => Color.fromARGB(alpha, 255 - red, 255 - green, 255 - blue);
 }
 
 enum ZoomPageMark {

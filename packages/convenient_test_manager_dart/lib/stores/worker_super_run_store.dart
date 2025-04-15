@@ -250,34 +250,34 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
   }
 
   ExecutionFilter _calcExecutionFilter() => switch (state) {
-      ITIMStateInitial _ => ExecutionFilter(
-        filterNameRegex: filterNameRegex,
-        strategy: ExecutionFilter_Strategy(
-          firstMatch: ExecutionFilter_Strategy_FirstMatch(),
-        ),
-      ),
-      final ITIMStateGoOn s => ExecutionFilter(
-        filterNameRegex: filterNameRegex,
-        strategy: ExecutionFilter_Strategy(
-          nextMatch: ExecutionFilter_Strategy_NextMatch(
-            prevTestName: s.lastExecutedTestName,
+        ITIMStateInitial _ => ExecutionFilter(
+            filterNameRegex: filterNameRegex,
+            strategy: ExecutionFilter_Strategy(
+              firstMatch: ExecutionFilter_Strategy_FirstMatch(),
+            ),
           ),
-        ),
-      ),
-      final ITIMStateRetryLast s => ExecutionFilter(
-        filterNameRegex: RegexUtils.matchFull(s.lastExecutedTestName),
-        strategy: ExecutionFilter_Strategy(
-          allMatch: ExecutionFilter_Strategy_AllMatch(),
-        ),
-      ),
-      ITIMStateFinished _ => ExecutionFilter(
-        filterNameRegex: RegexUtils.kMatchNothing,
-        strategy: ExecutionFilter_Strategy(
-          allMatch: ExecutionFilter_Strategy_AllMatch(),
-        ),
-      ),
-    _ITIMState() => throw UnimplementedError(),
-    };
+        final ITIMStateGoOn s => ExecutionFilter(
+            filterNameRegex: filterNameRegex,
+            strategy: ExecutionFilter_Strategy(
+              nextMatch: ExecutionFilter_Strategy_NextMatch(
+                prevTestName: s.lastExecutedTestName,
+              ),
+            ),
+          ),
+        final ITIMStateRetryLast s => ExecutionFilter(
+            filterNameRegex: RegexUtils.matchFull(s.lastExecutedTestName),
+            strategy: ExecutionFilter_Strategy(
+              allMatch: ExecutionFilter_Strategy_AllMatch(),
+            ),
+          ),
+        ITIMStateFinished _ => ExecutionFilter(
+            filterNameRegex: RegexUtils.kMatchNothing,
+            strategy: ExecutionFilter_Strategy(
+              allMatch: ExecutionFilter_Strategy_AllMatch(),
+            ),
+          ),
+        _ITIMState() => throw UnimplementedError(),
+      };
 
   @override
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {
