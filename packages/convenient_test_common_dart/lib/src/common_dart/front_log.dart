@@ -18,12 +18,14 @@ class Log {
   BaseLogWriter writer = StdoutLogWriter();
   void Function(int level, String tag, String msg)? onLog;
 
-  void log(int level, String tag, String msg, [List<String> directContext = const []]) {
+  void log(int level, String tag, String msg,
+      [List<String> directContext = const []]) {
     final completeContext = directContext;
 
     if (level >= minLevel) {
       final time = DateTime.now();
-      final formatted = formatter.format(time, level, tag, msg, completeContext);
+      final formatted =
+          formatter.format(time, level, tag, msg, completeContext);
       writer.write(formatted);
     }
 
@@ -39,19 +41,24 @@ class Log {
 }
 
 abstract class BaseLogFormatter {
-  String format(DateTime time, int level, String tag, String msg, List<String>? context);
+  String format(
+      DateTime time, int level, String tag, String msg, List<String>? context);
 }
 
 class StandardLogFormatter extends BaseLogFormatter {
   @override
-  String format(DateTime time, int level, String tag, String msg, List<String>? context) {
+  String format(
+      DateTime time, int level, String tag, String msg, List<String>? context) {
     final timeStr = time.toUtc().toIso8601String();
 
     final levelStr = _getLevelStr(level);
 
-    final contextStr = context != null && context.isNotEmpty ? ' (${context.join(" ")})' : '';
+    final contextStr =
+        context != null && context.isNotEmpty ? ' (${context.join(" ")})' : '';
 
-    final msgAndContextTransformed = (msg + contextStr).replaceAll('\n', '[NL]');
+    // NOTE do not use `NL` for better stdout printing
+    // final msgAndContextTransformed = (msg + contextStr).replaceAll('\n', '[NL]');
+    final msgAndContextTransformed = msg + contextStr;
 
     return '$timeStr|$levelStr|$tag|$msgAndContextTransformed';
   }

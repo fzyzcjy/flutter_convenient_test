@@ -6,29 +6,33 @@ on:
   schedule:
     - cron: "0 10 * * *"
 
+permissions:
+  contents: write
+  
 jobs:
   flutter:
-    name: ${{ matrix.package_name }} on Flutter ${{ matrix.channel_version.channel }}
-    runs-on: ubuntu-latest
+    name: ${{ matrix.package_name_and_runs_on.package_name }} on Flutter ${{ matrix.channel_version.channel }}
+    runs-on: ${{ matrix.package_name_and_runs_on.runs_on }}
 
     strategy:
       fail-fast: false
       matrix:
-        package_name:
-          - convenient_test
-          - convenient_test/example
-          - convenient_test_common
-          - convenient_test_common_dart
-          - convenient_test_dev
-          - convenient_test_manager
-          - convenient_test_manager_dart
+        package_name_and_runs_on:
+          - {package_name: convenient_test, runs_on: ubuntu-latest}
+          - {package_name: convenient_test/example, runs_on: ubuntu-latest}
+          - {package_name: convenient_test_common, runs_on: ubuntu-latest}
+          - {package_name: convenient_test_common_dart, runs_on: ubuntu-latest}
+          - {package_name: convenient_test_dev, runs_on: ubuntu-latest}
+          # NOTE run `convenient_test_manager` on macos for its goldens
+          - {package_name: convenient_test_manager, runs_on: macos-latest}
+          - {package_name: convenient_test_manager_dart, runs_on: ubuntu-latest}
         channel_version:
           - { channel: stable }
           # - { channel: beta }
           # see https://github.com/fzyzcjy/flutter_convenient_test/pull/319#issuecomment-1445048397
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2
@@ -38,33 +42,29 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-        working-directory: packages/${{ matrix.package_name }}
+        working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
       - name: Analyze
         run: flutter analyze
-        working-directory: packages/${{ matrix.package_name }}
-
-      - name: Dart code metrics
-        run: flutter pub run dart_code_metrics:metrics analyze lib --fatal-style --fatal-performance --fatal-warnings --set-exit-on-violation-level noted
-        working-directory: packages/${{ matrix.package_name }}
+        working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
       - name: Run tests
         run: flutter test
-        working-directory: packages/${{ matrix.package_name }}
+        working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
       - name: Check format
-        run: flutter format --set-exit-if-changed --line-length 120 .
-        working-directory: packages/${{ matrix.package_name }}
+        run: dart format --set-exit-if-changed .
+        working-directory: packages/${{ matrix.package_name_and_runs_on.package_name }}
 
   build_manager_macos:
-    runs-on: macos-11
+    runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
-          channel: stable
+         channel: stable
 
       - name: Enable Macos
         run: flutter config --enable-macos-desktop
@@ -75,7 +75,7 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.1.2"
+          ruby-version: "3.1.0"
           bundler-cache: true
 
       - name: setup-cocoapods
@@ -92,18 +92,27 @@ jobs:
         working-directory: packages/convenient_test_manager/macos
 
       - name: Tar outputs
-        run: cd packages/convenient_test_manager/macos/build && tar cvf convenient_test_manager.app.tar convenient_test_manager.app
+        run: tar cvf manager_gui_macos.zip convenient_test_manager.app
+        working-directory: packages/convenient_test_manager/macos/build
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: manager_macos
-          path: packages/convenient_test_manager/macos/build/convenient_test_manager.app.tar
+          name: manager_gui_macos.zip
+          path: packages/convenient_test_manager/macos/build/manager_gui_macos.zip
+
+      - name: Add to release if tagged
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/convenient_test_manager/macos/build/manager_gui_macos.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_manager_linux:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
@@ -125,18 +134,27 @@ jobs:
         working-directory: packages/convenient_test_manager
 
       - name: Tar outputs
-        run: tar -czvf convenient_test_manager.tar.gz -C packages/convenient_test_manager/build/linux/x64/release/ bundle
+        run: tar -czvf manager_gui_linux.tar.gz bundle
+        working-directory: packages/convenient_test_manager/build/linux/x64/release
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: manager_linux
-          path: convenient_test_manager.tar.gz
+          name: manager_gui_linux.tar.gz
+          path: packages/convenient_test_manager/build/linux/x64/release/manager_gui_linux.tar.gz
+
+      - name: Add to release if tagged
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/convenient_test_manager/build/linux/x64/release/manager_gui_linux.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_manager_dart_linux:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
@@ -147,10 +165,60 @@ jobs:
         working-directory: packages/convenient_test_manager_dart
 
       - name: Build
-        run: dart compile exe bin/convenient_test_manager_dart.dart -o convenient_test_manager_dart
+        run: dart compile exe bin/convenient_test_manager_dart.dart -o manager_cli_linux
         working-directory: packages/convenient_test_manager_dart
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: manager_dart_linux
-          path: packages/convenient_test_manager_dart/convenient_test_manager_dart
+          name: manager_cli_linux
+          path: packages/convenient_test_manager_dart/manager_cli_linux
+
+      - name: Add to release if tagged
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/convenient_test_manager_dart/manager_cli_linux
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build_manager_windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Enable windows build
+        run: flutter config --enable-windows-desktop
+        working-directory: packages/convenient_test_manager
+
+      - name: Install project dependencies
+        run: flutter pub get
+        working-directory: packages/convenient_test_manager
+
+      - name: Build artifacts
+        run: flutter build windows --release
+        working-directory: packages/convenient_test_manager
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: zip
+          filename: manager_gui_windows.zip
+          directory: packages/convenient_test_manager/build/windows/x64/runner/Release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: manager_gui_windows.zip
+          path: packages/convenient_test_manager/build/windows/x64/runner/Release/manager_gui_windows.zip
+
+      - name: Add to release if tagged
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/convenient_test_manager/build/windows/x64/runner/Release/manager_gui_windows.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

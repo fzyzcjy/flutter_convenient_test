@@ -13,7 +13,9 @@ class GoldenDiffPageFileInfoPanel extends StatelessWidget {
     return LayoutBuilder(builder: (_, constraints) {
       return Observer(builder: (_) {
         final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
-        if (gitFolderInfo == null) return const Center(child: Text('Please choose a folder first'));
+        if (gitFolderInfo == null) {
+          return const Center(child: Text('Please choose a folder first'));
+        }
 
         return SingleChildScrollView(
           child: SingleChildScrollView(
@@ -26,7 +28,8 @@ class GoldenDiffPageFileInfoPanel extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 8),
-                  for (final info in gitFolderInfo.diffFileInfos) _buildItem(context, gitFolderInfo, info),
+                  for (final info in gitFolderInfo.diffFileInfos)
+                    _buildItem(context, gitFolderInfo, info),
                 ],
               ),
             ),
@@ -36,7 +39,8 @@ class GoldenDiffPageFileInfoPanel extends StatelessWidget {
     });
   }
 
-  Widget _buildItem(BuildContext context, GitFolderInfo gitFolderInfo, GitDiffFileInfo diffFileInfo) {
+  Widget _buildItem(BuildContext context, GitFolderInfo gitFolderInfo,
+      GitDiffFileInfo diffFileInfo) {
     return Observer(builder: (_) {
       final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
@@ -47,8 +51,11 @@ class GoldenDiffPageFileInfoPanel extends StatelessWidget {
           ..highlightPath = active ? null : diffFileInfo.path;
       }
 
-      assert(gitFolderInfo.commonPathPrefix == diffFileInfo.path.substring(0, gitFolderInfo.commonPathPrefix.length));
-      final displayPath = diffFileInfo.path.substring(gitFolderInfo.commonPathPrefix.length);
+      assert(gitFolderInfo.commonPathPrefix ==
+          diffFileInfo.path
+              .substring(0, gitFolderInfo.commonPathPrefix.length));
+      final displayPath =
+          diffFileInfo.path.substring(gitFolderInfo.commonPathPrefix.length);
 
       return Material(
         color: active ? Colors.blue.shade100 : Colors.white,
@@ -61,7 +68,8 @@ class GoldenDiffPageFileInfoPanel extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
             child: Row(
               children: [
-                _buildDiffPercentHint(diffFileInfo.comparisonResult.diffPercent),
+                _buildDiffPercentHint(
+                    diffFileInfo.comparisonResult.diffPercent),
                 Text(
                   displayPath,
                   style: const TextStyle(

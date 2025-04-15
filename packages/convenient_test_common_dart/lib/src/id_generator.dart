@@ -27,7 +27,10 @@ class IdGenerator {
   int nextId() {
     var timestamp = currentTimeSupplier();
 
-    if (timestamp < lastTimestamp) throw Exception('Clock moved backwards.');
+    if (timestamp < lastTimestamp) {
+      throw Exception(
+          'Clock moved backwards (timestamp=$timestamp lastTimestamp=$lastTimestamp)');
+    }
 
     if (lastTimestamp == timestamp) {
       sequence = (sequence + 1) & config.sequenceMask;
@@ -64,7 +67,8 @@ class IdGenerator {
     required int sequence,
   }) {
     if (timestamp < config.twEpoch) {
-      throw Exception('timestamp=$timestamp smaller than twEpoch=${config.twEpoch}');
+      throw Exception(
+          'timestamp=$timestamp smaller than twEpoch=${config.twEpoch}');
     }
 
     assert(workerId >= 0);

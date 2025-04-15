@@ -18,12 +18,17 @@ Future<List<int>> takeSnapshot({Future<void> Function()? pumper}) async {
 Element _findElement() {
   final finder = find.byType(ConvenientTestImageCaptureWrapper);
   final element = finder.evaluate().singleOrNull;
-  if (element == null) throw Exception('Please put `ConvenientTestWrapperWidget` in the widget tree near root');
+  if (element == null) {
+    throw Exception(
+        'Please put `ConvenientTestWrapperWidget` in the widget tree near root, '
+        'or ensure ConvenientTestWrapperWidget.convenientTestActive=true');
+  }
   return element;
 }
 
 /// NOTE ref [flutter_test :: _matchers_io.dart :: captureImage]
-Future<ui.Image> _captureImageFromElement(Element element, {Future<void> Function()? pumper}) async {
+Future<ui.Image> _captureImageFromElement(Element element,
+    {Future<void> Function()? pumper}) async {
   assert(element.renderObject != null);
   var renderObject = element.renderObject!;
   while (!renderObject.isRepaintBoundary) {
@@ -33,12 +38,30 @@ Future<ui.Image> _captureImageFromElement(Element element, {Future<void> Functio
   // NOTE MODIFIED add to fix
   // see #234
   // see https://github.com/fzyzcjy/yplusplus/issues/4286#issuecomment-1170797044
-  while (renderObject.debugNeedsPaint && pumper != null) {
-    Log.i('captureImageFromElement', 'see debugNeedsPaint==true and has pumper, thus pump');
-    await pumper();
+  {
+    var count = 0;
+    while (renderObject.debugNeedsPaint && pumper != null) {
+      if (count >= 20) {
+        Log.i('captureImageFromElement',
+            'see debugNeedsPaint==true, but already pumped too many times, thus skip');
+        break;
+      }
+
+      Log.i('captureImageFromElement',
+          'see debugNeedsPaint==true and has pumper, thus pump');
+      await pumper();
+      // https://github.com/fzyzcjy/yplusplus/issues/8485#issuecomment-1528908471
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      count++;
+    }
   }
 
-  assert(!renderObject.debugNeedsPaint);
+  if (renderObject.debugNeedsPaint) {
+    Log.w('captureImageFromElement',
+        'debugNeedsPaint==true when taking snapshot');
+  }
+  // assert(!renderObject.debugNeedsPaint);
+
   final layer = renderObject.debugLayer! as OffsetLayer;
   return layer.toImage(renderObject.paintBounds);
 }

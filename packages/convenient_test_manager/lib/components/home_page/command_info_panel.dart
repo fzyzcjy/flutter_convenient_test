@@ -20,7 +20,7 @@ class HomePageCommandInfoPanel extends StatelessWidget {
 
       adapter.add(StaticSection.single(child: const SizedBox(height: 8)));
       adapter.addAll(HomePageGroupEntryInfoSectionBuilder(
-        groupEntryId: suiteInfoStore.suiteInfo!.rootGroupId,
+        groupEntryId: suiteInfoStore.suiteInfo?.rootGroupId,
         depth: -1,
         showHeader: false,
       ).build());
@@ -34,7 +34,8 @@ class HomePageCommandInfoPanel extends StatelessWidget {
         itemScrollController: homePageStore.itemScrollController,
         itemPositionsListener: homePageStore.itemPositionsListener,
         // #89
-        physics: const NonBallisticClampingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        physics: const NonBallisticClampingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         itemBuilder: adapter.itemBuilder,
         itemCount: adapter.itemCount,
       );
@@ -46,7 +47,9 @@ class HomePageCommandInfoPanel extends StatelessWidget {
     var currCount = 0;
     for (final section in adapter.sections) {
       final metadata = section.metadata;
-      if (metadata is TestInfoLogEntrySectionMetadata) yield MapEntry(metadata.testInfoId, currCount);
+      if (metadata is TestInfoLogEntrySectionMetadata) {
+        yield MapEntry(metadata.testInfoId, currCount);
+      }
 
       currCount += section.count;
     }

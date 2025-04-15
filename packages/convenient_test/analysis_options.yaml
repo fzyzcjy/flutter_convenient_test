@@ -18,10 +18,6 @@ analyzer:
     unrelated_type_equality_checks: error
     parameter_assignments: warning
 
-  strong-mode:
-    implicit-casts: false
-    implicit-dynamic: false
-
   exclude:
     - lib/generated_plugin_registrant.dart
 

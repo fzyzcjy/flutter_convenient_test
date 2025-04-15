@@ -22,7 +22,8 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: Mark(
         name: HomePageMark.fab,
         child: FloatingActionButton(
-          onPressed: () => Navigator.pushNamed(context, '/second', arguments: chosenFruits),
+          onPressed: () =>
+              Navigator.pushNamed(context, '/second', arguments: chosenFruits),
           child: const Icon(Icons.done),
         ),
       ),
@@ -51,9 +52,12 @@ class _HomePageState extends State<HomePage> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 16, bottom: 4, left: 16, right: 16),
+          padding:
+              const EdgeInsets.only(top: 16, bottom: 4, left: 16, right: 16),
           child: Text(
-            chosenFruits.isEmpty ? 'You chose nothing' : 'You chose: ${chosenFruits.join(', ')}',
+            chosenFruits.isEmpty
+                ? 'You chose nothing'
+                : 'You chose: ${chosenFruits.join(', ')}',
             style: const TextStyle(fontSize: 16),
           ),
         ),
@@ -65,7 +69,9 @@ class _HomePageState extends State<HomePage> {
               return ListTile(
                 onTap: () => setState(() => chosenFruits.toggle(fruit)),
                 title: Text(fruit),
-                trailing: chosenFruits.contains(fruit) ? const Icon(Icons.star, color: Colors.blue) : null,
+                trailing: chosenFruits.contains(fruit)
+                    ? const Icon(Icons.star, color: Colors.blue)
+                    : null,
               );
             },
           ),

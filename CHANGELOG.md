@@ -1,3 +1,55 @@
+## 1.5.2
+
+* Update intl and file_picker packages #410 (thanks @lehmannk)
+
+## 1.5.1
+
+* Bump version dependencies #407 (thanks @lehmannk)
+
+## 1.5.0
+
+* Add reportSavePath argument #398 (thanks @madmini)
+
+## 1.4.0
+
+* New CLI param --run-only allowing you to limit the tests this runs #395 (thanks @gnunicorn)
+
+## 1.3.7
+
+* Bump dependency intl #389
+
+## 1.3.6
+
+* Migrate to latest Flutter #387
+
+## 1.3.5
+
+* Migrate to gradle 7.4.2 #377 (thanks @meltzow)
+* Change code format to improve pub scores #379 (thanks @meltzow)
+
+## 1.3.4
+
+* Allow reading of Reports of up to 1GB in size #370 (thanks @gnunicorn)
+
+## 1.3.3
+
+* Using darker background for error text in dark mode #361 (thanks @jmatth)
+
+## 1.3.2
+
+* Upgrade to Flutter 3.16
+
+## 1.3.1
+
+* Upgrade to Flutter 3.13
+
+## 1.3.0
+
+* Enjoy 5x speedup: Able to execute your tests not only on simulator/device, but also on host computer (much faster), without changing any code.
+* Abundant information for errors: When something is not working, it tries to print out as much information as possible to help you quickly debug.
+* Enhanced golden: GUI to check golden changes, allow a few pixels to be different, screenshot widgets above your widget, etc (Standalone feature, does not require full convenient_test)
+* Utilities: Enter text without replacing, pump with run async, etc. (Standalone feature, does not require full convenient_test)
+
 ## 1.2.1
 
 * Fix CI #287 (thanks @AlexV525)

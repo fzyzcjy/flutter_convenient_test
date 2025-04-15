@@ -7,14 +7,14 @@ class HomePageMiscDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     // final workerTaskStore = GetIt.I.get<WorkerTaskStore>();
 
-    return AlertDialog(
-      title: const Text('Misc Tools'),
+    return const AlertDialog(
+      title: Text('Misc Tools'),
       content: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: EdgeInsets.symmetric(vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text('Nothing yet'),
               // const Text(
               //   'Test filter',

@@ -28,7 +28,8 @@ class EnhancedSelectableText extends StatelessWidget {
             top: 0,
             right: 0,
             child: InkWell(
-              onTap: () async => await Clipboard.setData(ClipboardData(text: data)),
+              onTap: () async =>
+                  await Clipboard.setData(ClipboardData(text: data)),
               child: const Icon(
                 Icons.copy,
                 color: Colors.blue,

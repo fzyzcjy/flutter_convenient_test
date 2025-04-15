@@ -23,7 +23,10 @@ abstract class _LogStore with Store {
   /// `snapshotInLog[logEntryId][name] == snapshot bytes`
   final snapshotInLog = ObservableMap<int, ObservableMap<String, Uint8List>>();
 
-  void addLogEntry({required int testEntryId, required int logEntryId, required List<LogSubEntry> subEntries}) {
+  void addLogEntry(
+      {required int testEntryId,
+      required int logEntryId,
+      required List<LogSubEntry> subEntries}) {
     logSubEntryInEntry[logEntryId] ??= ObservableList();
 
     for (final subEntry in subEntries) {
@@ -41,17 +44,20 @@ abstract class _LogStore with Store {
   }
 
   Iterable<int> logSubEntryInTest(int testInfoId) =>
-      (logEntryInTest[testInfoId] ?? <int>[]).expand((logEntryId) => logSubEntryInEntry[logEntryId] ?? <int>[]);
+      (logEntryInTest[testInfoId] ?? <int>[])
+          .expand((logEntryId) => logSubEntryInEntry[logEntryId] ?? <int>[]);
 
   bool isTestFlaky(int testInfoId) =>
       // If see multiple TEST_START, then this test is flaky
       logSubEntryInTest(testInfoId)
-          .where((logSubEntryId) => logSubEntryMap[logSubEntryId]?.type == LogSubEntryType.TEST_START)
+          .where((logSubEntryId) =>
+              logSubEntryMap[logSubEntryId]?.type == LogSubEntryType.TEST_START)
           .length >
       1;
 
   int? calcLogEntryAtTime(DateTime time) {
-    final interestKey = logSubEntryIdOfTime.lastKeyBefore(time.microsecondsSinceEpoch);
+    final interestKey =
+        logSubEntryIdOfTime.lastKeyBefore(time.microsecondsSinceEpoch);
     if (interestKey == null) return null;
 
     final logSubEntryId = logSubEntryIdOfTime[interestKey];

@@ -35,7 +35,10 @@ class _Body extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const HomePageHeaderPanel(),
-              Divider(height: 1, thickness: 1, color: Theme.of(context).colorScheme.outline),
+              Divider(
+                  height: 1,
+                  thickness: 1,
+                  color: Theme.of(context).colorScheme.outline),
               Expanded(
                 child: _buildBody(context),
               ),
@@ -55,24 +58,26 @@ class _Body extends StatelessWidget {
     final workerSuperRunStore = GetIt.I.get<WorkerSuperRunStore>();
     final homePageStore = GetIt.I.get<HomePageStore>();
 
-    if (!homePageStore.displayLoadedReportMode && !vmServiceWrapperService.connected) {
+    if (!homePageStore.displayLoadedReportMode &&
+        !vmServiceWrapperService.connected) {
       return _buildFullscreenHint(
         context: context,
         onTap: vmServiceWrapperService.connect,
         tapHint: const Text('Tap here to reconnect'),
         child: const Text('VMService not connected. '
-            'This may because the Worker is not running, or network has problem. '),
+            'This may be because the Worker is not running, or network has problem. '),
       );
     }
 
-    if (!homePageStore.displayLoadedReportMode && suiteInfoStore.suiteInfo == null) {
+    if (!homePageStore.displayLoadedReportMode &&
+        suiteInfoStore.suiteInfo == null) {
       return _buildFullscreenHint(
         context: context,
         onTap: () => GetIt.I.get<MiscFlutterService>().reloadInfo(),
         tapHint: const Text('Tap here to reload information'),
         child: const Text(
           'No tests found. '
-          'This may because the information is not loaded.',
+          'This may be because the information is not loaded.',
         ),
       );
     }
@@ -89,18 +94,39 @@ class _Body extends StatelessWidget {
       );
     }
 
-    return Row(
+    return Stack(
       children: [
-        const Expanded(
-          flex: 1,
-          child: HomePageCommandInfoPanel(),
+        Row(
+          children: [
+            const Expanded(
+              flex: 1,
+              child: HomePageCommandInfoPanel(),
+            ),
+            if (homePageStore.expandSecondaryPanel) ...[
+              Container(width: 8),
+              Container(width: 1, color: Theme.of(context).colorScheme.outline),
+              const Expanded(
+                flex: 1,
+                child: HomePageSecondaryPanel(),
+              ),
+            ],
+          ],
         ),
-        Container(width: 8),
-        Container(width: 1, color: Theme.of(context).colorScheme.outline),
-        const Expanded(
-          flex: 1,
-          child: HomePageSecondaryPanel(),
-        ),
+        if (!homePageStore.expandSecondaryPanel)
+          Positioned(
+            right: 4,
+            top: 4,
+            child: SizedBox(
+              height: 32,
+              child: Material(
+                color: Theme.of(context).colorScheme.surface,
+                child: OutlinedButton(
+                  onPressed: () => homePageStore.expandSecondaryPanel = true,
+                  child: const Text('Expand secondary panel'),
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -120,7 +146,10 @@ class _Body extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               DefaultTextStyle(
-                style: TextStyle(fontSize: 15, height: 1.8, color: Theme.of(context).colorScheme.onBackground),
+                style: TextStyle(
+                    fontSize: 15,
+                    height: 1.8,
+                    color: Theme.of(context).colorScheme.onSurface),
                 child: child,
               ),
               const SizedBox(height: 20),
@@ -146,7 +175,8 @@ class _Body extends StatelessWidget {
         child: Observer(
           builder: (_) => vmServiceWrapperService.hotRestartActing
               ? Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(4),

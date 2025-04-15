@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  goldenFileComparator = EnhancedLocalFileComparator.configFromCurrent(captureFailure: false);
+  goldenFileComparator =
+      EnhancedLocalFileComparator.configFromCurrent(captureFailure: false);
 
   group('EnhancedLocalFileComparator', () {
     testWidgets('cropBbox', (tester) async {
@@ -32,7 +33,9 @@ void main() {
       await expectLater(
         find.byKey(goldenKey),
         matchesGoldenFile(EnhancedLocalFileComparator.createUri(
-            'crop_bbox_golden.png', const GoldenConfig.allowUpdate(cropBbox: Rectangle(0, 50, 200, 100)))),
+            'crop_bbox_golden.png',
+            const GoldenConfig.allowUpdate(
+                cropBbox: Rectangle(0, 50, 200, 100)))),
       );
     });
   });

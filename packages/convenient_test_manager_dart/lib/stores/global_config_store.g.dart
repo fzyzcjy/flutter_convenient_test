@@ -6,20 +6,24 @@ part of 'global_config_store.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GlobalConfigNullable _$GlobalConfigNullableFromJson(
+_$GlobalConfigNullableImpl _$$GlobalConfigNullableImplFromJson(
         Map<String, dynamic> json) =>
-    GlobalConfigNullable(
+    _$GlobalConfigNullableImpl(
       isolationMode: json['isolationMode'] as bool?,
       enableReportSaver: json['enableReportSaver'] as bool?,
       goldenDiffGitRepo: json['goldenDiffGitRepo'] as String?,
+      runOnly: json['runOnly'] as String?,
+      reportSavePath: json['reportSavePath'] as String?,
     );
 
-Map<String, dynamic> _$GlobalConfigNullableToJson(
-        GlobalConfigNullable instance) =>
+Map<String, dynamic> _$$GlobalConfigNullableImplToJson(
+        _$GlobalConfigNullableImpl instance) =>
     <String, dynamic>{
       'isolationMode': instance.isolationMode,
       'enableReportSaver': instance.enableReportSaver,
       'goldenDiffGitRepo': instance.goldenDiffGitRepo,
+      'runOnly': instance.runOnly,
+      'reportSavePath': instance.reportSavePath,
     };
 
 // **************************************************************************
@@ -77,12 +81,46 @@ mixin _$GlobalConfig on _GlobalConfig, Store {
     });
   }
 
+  late final _$runOnlyAtom =
+      Atom(name: '_GlobalConfig.runOnly', context: context);
+
+  @override
+  String? get runOnly {
+    _$runOnlyAtom.reportRead();
+    return super.runOnly;
+  }
+
+  @override
+  set runOnly(String? value) {
+    _$runOnlyAtom.reportWrite(value, super.runOnly, () {
+      super.runOnly = value;
+    });
+  }
+
+  late final _$reportSavePathAtom =
+      Atom(name: '_GlobalConfig.reportSavePath', context: context);
+
+  @override
+  String? get reportSavePath {
+    _$reportSavePathAtom.reportRead();
+    return super.reportSavePath;
+  }
+
+  @override
+  set reportSavePath(String? value) {
+    _$reportSavePathAtom.reportWrite(value, super.reportSavePath, () {
+      super.reportSavePath = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 isolationMode: ${isolationMode},
 enableReportSaver: ${enableReportSaver},
-goldenDiffGitRepo: ${goldenDiffGitRepo}
+goldenDiffGitRepo: ${goldenDiffGitRepo},
+runOnly: ${runOnly},
+reportSavePath: ${reportSavePath}
     ''';
   }
 }

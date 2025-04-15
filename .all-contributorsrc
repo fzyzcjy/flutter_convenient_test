@@ -19,7 +19,7 @@
       "login": "MCord",
       "name": "Mehran Kordi",
       "avatar_url": "https://avatars.githubusercontent.com/u/1547111?v=4",
-      "profile": "http://mehrankordi.com",
+      "profile": "https://mehrankordi.com",
       "contributions": [
         "code"
       ]
@@ -38,7 +38,7 @@
       "login": "vHanda",
       "name": "Vishesh Handa",
       "avatar_url": "https://avatars.githubusercontent.com/u/426467?v=4",
-      "profile": "http://vhanda.in",
+      "profile": "https://vhanda.in",
       "contributions": [
         "code"
       ]
@@ -65,7 +65,7 @@
       "login": "bartekpacia",
       "name": "Bartek Pacia",
       "avatar_url": "https://avatars.githubusercontent.com/u/40357511?v=4",
-      "profile": "http://pacia.tech",
+      "profile": "https://pacia.tech",
       "contributions": [
         "code"
       ]
@@ -96,6 +96,61 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "madmini",
+      "name": "Max Jakobitsch",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26089559?v=4",
+      "profile": "https://github.com/madmini",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "jmatth",
+      "name": "Josh Matthews",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1316184?v=4",
+      "profile": "https://keybase.io/jmatth",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "gnunicorn",
+      "name": "Benjamin Kampmann",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40496?v=4",
+      "profile": "https://gnunicorn.org",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "meltzow",
+      "name": "Mario Meltzow",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1238001?v=4",
+      "profile": "https://github.com/meltzow",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "lunakoan",
+      "name": "Luna",
+      "avatar_url": "https://avatars.githubusercontent.com/u/119916943?v=4",
+      "profile": "https://github.com/lunakoan",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "lehmannk",
+      "name": "Kai Lehmann",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36925534?v=4",
+      "profile": "https://github.com/lehmannk",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -103,5 +158,6 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "projectName": "flutter_convenient_test",
-  "projectOwner": "fzyzcjy"
+  "projectOwner": "fzyzcjy",
+  "commitType": "docs"
 }

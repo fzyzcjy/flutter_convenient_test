@@ -13,13 +13,17 @@ abstract class _HomePageStore with Store {
   @observable
   var activeSecondaryPanelTab = HomePageSecondaryPanelTab.screenshot;
 
+  @observable
+  var expandSecondaryPanel = true;
+
   final itemScrollController = ItemScrollController();
   final itemPositionsListener = ItemPositionsListener.create();
 
   /// key: testId; value: ListView index of *first* log entry of that test
   final rdtListViewIndexOfFirstLogEntryOfTestIdMap = ObservableMap<int, int>();
 
-  final logEntryExpandErrorInfoMap = ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
+  final logEntryExpandErrorInfoMap =
+      ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
 }
 
 enum HomePageSecondaryPanelTab {

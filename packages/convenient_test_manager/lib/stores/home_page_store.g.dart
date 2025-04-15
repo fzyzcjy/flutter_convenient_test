@@ -43,11 +43,29 @@ mixin _$HomePageStore on _HomePageStore, Store {
     });
   }
 
+  late final _$expandSecondaryPanelAtom =
+      Atom(name: '_HomePageStore.expandSecondaryPanel', context: context);
+
+  @override
+  bool get expandSecondaryPanel {
+    _$expandSecondaryPanelAtom.reportRead();
+    return super.expandSecondaryPanel;
+  }
+
+  @override
+  set expandSecondaryPanel(bool value) {
+    _$expandSecondaryPanelAtom.reportWrite(value, super.expandSecondaryPanel,
+        () {
+      super.expandSecondaryPanel = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 displayLoadedReportMode: ${displayLoadedReportMode},
-activeSecondaryPanelTab: ${activeSecondaryPanelTab}
+activeSecondaryPanelTab: ${activeSecondaryPanelTab},
+expandSecondaryPanel: ${expandSecondaryPanel}
     ''';
   }
 }

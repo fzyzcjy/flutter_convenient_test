@@ -1,15 +1,25 @@
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:grpc/grpc.dart';
 
-extension ExtConvenientTestManagerClient on ConvenientTestManagerClient {
-  static ConvenientTestManagerClient create() {
+class ConvenientTestManagerRpcService {
+  final ConvenientTestManagerClient _client;
+
+  factory ConvenientTestManagerRpcService() {
     final channel = ClientChannel(
       kConvenientTestManagerHost,
       port: kConvenientTestManagerPort,
       options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
-    return ConvenientTestManagerClient(channel, options: CallOptions(timeout: null));
+    final client = ConvenientTestManagerClient(channel,
+        options: CallOptions(timeout: null));
+    return ConvenientTestManagerRpcService._(client);
   }
 
-  Future<void> reportSingle(ReportItem item) => report(ReportCollection(items: [item]));
+  ConvenientTestManagerRpcService._(this._client);
+
+  Future<void> reportSingle(ReportItem item) =>
+      _client.report(ReportCollection(items: [item]));
+
+  Future<WorkerCurrentRunConfig> getWorkerCurrentRunConfig() =>
+      _client.getWorkerCurrentRunConfig(Empty());
 }

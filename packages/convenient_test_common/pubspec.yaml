@@ -1,6 +1,6 @@
 name: convenient_test_common
 description: Write and debug tests easily, with full action history, time travel, screenshots, rapid re-execution, video records, interactivity, isolation and more
-version: 1.2.1
+version: 1.5.2
 repository: https://github.com/fzyzcjy/flutter_convenient_test
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -11,16 +11,19 @@ dependencies:
   fixnum: ^1.0.0
   flutter:
     sdk: flutter
-  grpc: ^3.0.0
+  grpc: ^4.0.0
   mobx: ^2.0.7
-  protobuf: ^2.0.0
-  quiver: ^3.0.1+1
+  protobuf: ^3.0.0
+  quiver: ^3.2.1
   tuple: ^2.0.0
 dev_dependencies:
-  dart_code_metrics: ">=4.15.0 <6.0.0"
   flutter_test:
     sdk: flutter
   lint: ">=1.8.2 <3.0.0"
 # dependency_overrides:
 #   convenient_test_common_dart:
 #     path: ../convenient_test_common_dart
+
+dependency_overrides:
+  convenient_test_common_dart:
+    path: ../convenient_test_common_dart

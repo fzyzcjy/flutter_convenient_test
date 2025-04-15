@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  // Avoid forever animation (blinking), which makes pumping never ends
+  EditableText.debugDeterministicCursor = true;
+
   convenientTestMain(MyConvenientTestSlot(), () {
     group('simple test group', () {
       tTestWidgets('choose some fruits', (t) async {
@@ -68,14 +71,17 @@ void main() {
       tTestWidgets('golden test', (t) async {
         await find.text('HomePage').should(findsOneWidget);
 
-        await find.byType(MaterialApp).should(matchesGoldenFile('goldens/sample_golden.png'));
+        await find
+            .byType(MaterialApp)
+            .should(matchesGoldenFile('goldens/sample_golden.png'));
       });
 
       tTestWidgets('deliberately failed golden test', (t) async {
         await t.visit('/random');
         await find.text('RandomPage').should(findsOneWidget);
 
-        await find.get(RandomPageMark.randomText).should(matchesGoldenFile('goldens/deliberately_failed_golden.png'));
+        await find.get(RandomPageMark.randomText).should(
+            matchesGoldenFile('goldens/deliberately_failed_golden.png'));
 
         // let's assert something else
         await find.textContaining('Random Height').should(findsOneWidget);
@@ -146,11 +152,15 @@ void main() {
           await t.visit('/zoom');
           await t.pumpAndSettle();
 
-          await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_drag_before.png'));
+          await find
+              .get(ZoomPageMark.palette)
+              .should(matchesGoldenFile('goldens/zoom_page_drag_before.png'));
 
           await find.get(ZoomPageMark.palette).drag(const Offset(0, -50));
 
-          await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_drag_after.png'));
+          await find
+              .get(ZoomPageMark.palette)
+              .should(matchesGoldenFile('goldens/zoom_page_drag_after.png'));
 
           // alternative approach
           // await t.tester.drag(find.get(ZoomPageMark.palette), const Offset(0, -50));
@@ -163,17 +173,29 @@ void main() {
         tTestWidgets('double finger zooming', (t) async {
           await t.visit('/zoom');
 
-          await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_zoom_before.png'));
+          await find
+              .get(ZoomPageMark.palette)
+              .should(matchesGoldenFile('goldens/zoom_page_zoom_before.png'));
 
           await find.get(ZoomPageMark.palette).multiDrag(
                 firstDownOffset: const Offset(0, -30),
                 secondDownOffset: const Offset(0, 30),
-                firstFingerOffsets: const [Offset(0, -20), Offset(0, -20), Offset(0, -10)],
-                secondFingerOffsets: const [Offset(0, 20), Offset(0, 20), Offset(0, 10)],
+                firstFingerOffsets: const [
+                  Offset(0, -20),
+                  Offset(0, -20),
+                  Offset(0, -10)
+                ],
+                secondFingerOffsets: const [
+                  Offset(0, 20),
+                  Offset(0, 20),
+                  Offset(0, 10)
+                ],
                 logMove: true,
               );
 
-          await find.get(ZoomPageMark.palette).should(matchesGoldenFile('goldens/zoom_page_zoom_after.png'));
+          await find
+              .get(ZoomPageMark.palette)
+              .should(matchesGoldenFile('goldens/zoom_page_zoom_after.png'));
         });
       });
     });
@@ -199,7 +221,8 @@ class MyConvenientTestSlot extends ConvenientTestSlot {
   Future<void> appMain(AppMainExecuteMode mode) async => app.main();
 
   @override
-  BuildContext? getNavContext(ConvenientTest t) => MyApp.navigatorKey.currentContext;
+  BuildContext? getNavContext(ConvenientTest t) =>
+      MyApp.navigatorKey.currentContext;
 }
 
 extension on ConvenientTest {

@@ -1,4 +1,4 @@
-import 'package:convenient_test_dev/src/functions/core.dart';
+import 'package:convenient_test_dev/src/functions/instance.dart';
 import 'package:flutter/material.dart';
 
 abstract class ConvenientTestSlot {

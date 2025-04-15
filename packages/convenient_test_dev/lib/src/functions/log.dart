@@ -1,10 +1,12 @@
 // ref: https://docs.cypress.io/api/cypress-api/cypress-log#Arguments
 
 // ignore_for_file: implementation_imports
+import 'dart:io';
+
 import 'package:convenient_test_common/convenient_test_common.dart';
-import 'package:convenient_test_dev/src/functions/core.dart';
-import 'package:convenient_test_dev/src/support/get_it.dart';
-import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
+import 'package:convenient_test_dev/src/functions/instance.dart';
+import 'package:convenient_test_dev/src/support/reporter_service.dart';
+import 'package:convenient_test_dev/src/support/static_config.dart';
 import 'package:convenient_test_dev/src/utils/snapshot.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,10 +16,12 @@ import 'package:test_api/src/backend/invoker.dart';
 import 'package:test_api/src/backend/live_test.dart';
 
 extension ConvenientTestLog on ConvenientTest {
-  void section(String description) => log('SECTION', description, type: LogSubEntryType.SECTION);
+  void section(String description) =>
+      log('SECTION', description, type: LogSubEntryType.SECTION);
 
   // p.s. can search emoji here - https://emojipedia.org
-  LogHandle log(String title, String message, {LogSubEntryType? type}) => convenientTestLog(title, message, type: type);
+  LogHandle log(String title, String message, {LogSubEntryType? type}) =>
+      convenientTestLog(title, message, type: type);
 }
 
 LogHandle convenientTestLog(
@@ -36,6 +40,7 @@ LogHandle convenientTestLog(
     type: type ?? LogSubEntryType.GENERAL_MESSAGE,
     error: error,
     stackTrace: stackTrace,
+    initial: true,
     printing: true, // <--
   );
 
@@ -79,38 +84,74 @@ class LogHandle {
     String? stackTrace,
     LogSubEntryType type = LogSubEntryType.GENERAL_MESSAGE,
     bool printing = false,
+    bool initial = false,
   }) async {
     if (printing) {
-      Log.i(_kTag, '${_typeToLeading(type)} $title $message $error $stackTrace');
+      Log.i(_kTag,
+          '${_typeToLeading(type)} (#$_id, ${initial ? "create" : "update"}) $title $message $error $stackTrace');
     }
 
-    await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
-            logEntry: LogEntry(
-          id: _id.toInt64(),
-          testName: _testName,
-          subEntries: [
-            LogSubEntry(
-              id: IdGenerator.instance.nextId().toInt64(),
-              type: type,
-              time: Int64(DateTime.now().microsecondsSinceEpoch),
-              title: title,
-              message: message,
-              error: error,
-              stackTrace: stackTrace,
-            ),
-          ],
-        )));
+    final reporterService = WorkerReportSaverService.I;
+    if (reporterService != null) {
+      await reporterService.report(ReportItem(
+          logEntry: LogEntry(
+        id: _id.toInt64(),
+        testName: _testName,
+        subEntries: [
+          LogSubEntry(
+            id: IdGenerator.instance.nextId().toInt64(),
+            type: type,
+            time: Int64(DateTime.now().microsecondsSinceEpoch),
+            title: title,
+            message: message,
+            error: error,
+            stackTrace: stackTrace,
+          ),
+        ],
+      )));
+    }
   }
 
   Future<void> snapshot({String name = 'default', List<int>? image}) async {
-    image ??= await takeSnapshot(pumper: ConvenientTest.maybeActiveInstance?.tester.pump);
-    await myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
-            snapshot: Snapshot(
-          logEntryId: _id.toInt64(),
-          name: name,
-          image: image,
-        )));
+    Future<List<int>> computeImage() async {
+      final tester = ConvenientTest.maybeActiveInstance?.tester;
+      return image ??
+          await _maybeRunAsync(
+              tester, () => takeSnapshot(pumper: tester?.pump));
+    }
+
+    final reporterService = WorkerReportSaverService.I;
+    if (reporterService != null) {
+      await reporterService.report(ReportItem(
+          snapshot: Snapshot(
+        logEntryId: _id.toInt64(),
+        name: name,
+        image: await computeImage(),
+      )));
+    } else {
+      if (StaticConfig.kVerbose) {
+        final briefTime = DateTime.now()
+            .toLocal()
+            .toIso8601String()
+            .replaceAll(':', '')
+            .replaceAll('.', '-');
+        final filename =
+            'convenient_test_debug_screenshots/debug_screenshot_${briefTime}_$name.png';
+        File(filename).parent.createSync(recursive: true);
+        File(filename).writeAsBytesSync(await computeImage());
+        Log.i(_kTag, 'snapshot() saved file to disk at: $filename');
+      } else {
+        Log.i(_kTag,
+            'snapshot() is no-op; specify `${StaticConfig.kVerboseKey}` to save screenshots to disk.');
+      }
+    }
   }
+}
+
+Future<T> _maybeRunAsync<T extends Object>(
+    WidgetTester? tester, Future<T> Function() f) async {
+  if (tester == null) return await f();
+  return (await tester.runAsync(f))!;
 }
 
 String _typeToLeading(LogSubEntryType type) {

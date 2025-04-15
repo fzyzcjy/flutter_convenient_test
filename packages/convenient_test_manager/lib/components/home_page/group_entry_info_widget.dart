@@ -14,7 +14,7 @@ import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 
 class HomePageGroupEntryInfoSectionBuilder extends StaticSectionBuilder {
-  final int groupEntryId;
+  final int? groupEntryId;
   final int depth;
   final bool showHeader;
 
@@ -32,7 +32,9 @@ class HomePageGroupEntryInfoSectionBuilder extends StaticSectionBuilder {
     if (info == null) return const [];
 
     if (info is GroupInfo) {
-      return _GroupInfoSectionBuilder(info: info, depth: depth, showHeader: showHeader).build();
+      return _GroupInfoSectionBuilder(
+              info: info, depth: depth, showHeader: showHeader)
+          .build();
     }
     if (info is TestInfo) {
       return _TestInfoSectionBuilder(info: info, depth: depth).build();
@@ -83,7 +85,8 @@ class _GroupInfoSectionBuilder extends StaticSectionBuilder {
           width: double.infinity,
           height: 48,
           child: Padding(
-            padding: const EdgeInsets.only(left: 8) + EdgeInsets.only(left: depth * 12),
+            padding: const EdgeInsets.only(left: 8) +
+                EdgeInsets.only(left: depth * 12),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -102,7 +105,8 @@ class _GroupInfoSectionBuilder extends StaticSectionBuilder {
                   ),
                 ),
                 ..._buildGroupStat(),
-                _RunTestButton(filterNameRegex: RegexUtils.matchPrefix(info.name)),
+                _RunTestButton(
+                    filterNameRegex: RegexUtils.matchPrefix(info.name)),
               ],
             ),
           ),
@@ -128,7 +132,8 @@ class _GroupInfoSectionBuilder extends StaticSectionBuilder {
     }).toList();
   }
 
-  bool get expanding => GetIt.I.get<HighlightStore>().expandGroupEntryMap[info.id];
+  bool get expanding =>
+      GetIt.I.get<HighlightStore>().expandGroupEntryMap[info.id];
 }
 
 class _TestInfoSectionBuilder extends StaticSectionBuilder {
@@ -170,7 +175,8 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
         child: SizedBox(
           width: double.infinity,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4) + EdgeInsets.only(left: 16 + depth * 12),
+            padding: const EdgeInsets.symmetric(vertical: 4) +
+                EdgeInsets.only(left: 16 + depth * 12),
             child: Row(
               children: [
                 StateIndicatorWidget(
@@ -183,7 +189,8 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
                 ),
                 Expanded(child: Container()),
                 _buildPlayVideoButton(context),
-                _RunTestButton(filterNameRegex: RegexUtils.matchFull(info.name)),
+                _RunTestButton(
+                    filterNameRegex: RegexUtils.matchFull(info.name)),
               ],
             ),
           ),
@@ -215,18 +222,22 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     final logSubEntryIds = logStore.logSubEntryInTest(info.id);
     if (logSubEntryIds.isEmpty) return;
 
-    final logSubEntryTimes =
-        logSubEntryIds.map((logSubEntryId) => logStore.logSubEntryMap[logSubEntryId]!.timeTyped).toList();
+    final logSubEntryTimes = logSubEntryIds
+        .map((logSubEntryId) =>
+            logStore.logSubEntryMap[logSubEntryId]!.timeTyped)
+        .toList();
 
     final startTime = logSubEntryTimes.reduce((a, b) => a.isBefore(b) ? a : b);
     final endTime = logSubEntryTimes.reduce((a, b) => a.isAfter(b) ? a : b);
     final duration = endTime.difference(startTime);
-    Log.d(_kTag, 'handleTapPlayVideoButton startTime=$startTime endTime=$endTime');
+    Log.d(_kTag,
+        'handleTapPlayVideoButton startTime=$startTime endTime=$endTime');
 
     // to avoid minor time shifting causing wrong videos be included
     final searchStartTime = startTime.add(duration ~/ 10);
     final searchEndTime = endTime.subtract(duration ~/ 10);
-    final candidateVideoIds = videoPlayerStore.videoMap.findVideosAtTimeRange(searchStartTime, searchEndTime);
+    final candidateVideoIds = videoPlayerStore.videoMap
+        .findVideosAtTimeRange(searchStartTime, searchEndTime);
     if (candidateVideoIds.isEmpty) return;
 
     final interestVideoId = candidateVideoIds.length == 1
@@ -237,11 +248,13 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
               title: const Text('Choose video'),
               children: <Widget>[
                 ...candidateVideoIds.map((candidateVideoId) {
-                  final candidateVideo = videoPlayerStore.videoMap[candidateVideoId]!;
+                  final candidateVideo =
+                      videoPlayerStore.videoMap[candidateVideoId]!;
 
                   return SimpleDialogOption(
                     onPressed: () => Navigator.pop(context, candidateVideoId),
-                    child: Text('Video at ${candidateVideo.startTime} ~ ${candidateVideo.endTime}'),
+                    child: Text(
+                        'Video at ${candidateVideo.startTime} ~ ${candidateVideo.endTime}'),
                   );
                 })
               ],
@@ -249,16 +262,19 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
           );
     if (interestVideoId == null) return;
 
-    Log.d(_kTag, 'handleTapPlayVideoButton interestVideoId=$interestVideoId videoInfos=${videoPlayerStore.videoMap}');
+    Log.d(_kTag,
+        'handleTapPlayVideoButton interestVideoId=$interestVideoId videoInfos=${videoPlayerStore.videoMap}');
     final interestVideo = videoPlayerStore.videoMap[interestVideoId]!;
     videoPlayerStore
       ..activeVideoId = interestVideoId
-      ..displayRange = Tuple2(interestVideo.absoluteToVideoTime(startTime), interestVideo.absoluteToVideoTime(endTime));
+      ..displayRange = Tuple2(interestVideo.absoluteToVideoTime(startTime),
+          interestVideo.absoluteToVideoTime(endTime));
 
     homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.video;
   }
 
-  List<int> get logEntryIds => GetIt.I.get<LogStore>().logEntryInTest[info.id] ?? <int>[];
+  List<int> get logEntryIds =>
+      GetIt.I.get<LogStore>().logEntryInTest[info.id] ?? <int>[];
 
   Iterable<StaticSection> _buildLogEntries(SimplifiedStateEnum state) sync* {
     final logEntryIds = this.logEntryIds;
@@ -270,7 +286,9 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
           child: Builder(
               builder: (context) => Text(
                     'No log entries for this test. This is usually because the test is not executed.',
-                    style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.outline),
+                    style: TextStyle(
+                        fontSize: 11,
+                        color: Theme.of(context).colorScheme.outline),
                   )),
         ),
       );
@@ -284,13 +302,15 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
           order: i,
           testEntryId: info.id,
           logEntryId: logEntryIds[i],
-          running: state == SimplifiedStateEnum.running && i == logEntryIds.length - 1,
+          running: state == SimplifiedStateEnum.running &&
+              i == logEntryIds.length - 1,
         ),
       );
     }
   }
 
-  bool get expanding => GetIt.I.get<HighlightStore>().expandGroupEntryMap[info.id];
+  bool get expanding =>
+      GetIt.I.get<HighlightStore>().expandGroupEntryMap[info.id];
 }
 
 @immutable
@@ -311,7 +331,9 @@ class _RunTestButton extends StatelessWidget {
       visualDensity: VisualDensity.compact,
       onPressed: () {
         GetIt.I.get<HighlightStore>().enableAutoExpand = true;
-        GetIt.I.get<MiscFlutterService>().hotRestartAndRunTests(filterNameRegex: filterNameRegex);
+        GetIt.I
+            .get<MiscFlutterService>()
+            .hotRestartAndRunTests(filterNameRegex: filterNameRegex);
       },
       tooltip: 'Run this test',
       icon: const Icon(

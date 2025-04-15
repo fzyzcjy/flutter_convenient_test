@@ -5,15 +5,33 @@ import 'package:test_api/src/backend/state.dart'; // ignore_for_file: implementa
 
 class DelegatingFinder implements Finder {
   final Finder target;
+  @Deprecated('Use FinderBase.describeMatch instead. '
+      'FinderBase.describeMatch allows for more readable descriptions and removes ambiguity about pluralization. '
+      'This feature was deprecated after v3.13.0-0.2.pre.')
   final String? overrideDescription;
+  final String Function(Plurality)? overrideDescribeMatch;
 
-  DelegatingFinder(this.target, {this.overrideDescription});
+  DelegatingFinder(
+    this.target, {
+    @Deprecated('Use FinderBase.describeMatch instead. '
+        'FinderBase.describeMatch allows for more readable descriptions and removes ambiguity about pluralization. '
+        'This feature was deprecated after v3.13.0-0.2.pre.')
+    this.overrideDescription,
+    this.overrideDescribeMatch,
+  });
 
   @override
+  @Deprecated('Use FinderBase.describeMatch instead. '
+      'FinderBase.describeMatch allows for more readable descriptions and removes ambiguity about pluralization. '
+      'This feature was deprecated after v3.13.0-0.2.pre.')
   String get description => overrideDescription ?? target.description;
 
   @override
-  Iterable<Element> apply(Iterable<Element> candidates) => target.apply(candidates);
+  @Deprecated('Override FinderBase.findInCandidates instead. '
+      'Using the FinderBase API allows for more consistent caching behavior and cleaner options for interacting with the widget tree. '
+      'This feature was deprecated after v3.13.0-0.2.pre.')
+  Iterable<Element> apply(Iterable<Element> candidates) =>
+      target.apply(candidates);
 
   @override
   bool get skipOffstage => target.skipOffstage;
@@ -25,6 +43,9 @@ class DelegatingFinder implements Finder {
   FinderResult<Element> evaluate() => target.evaluate();
 
   @override
+  @Deprecated('Use FinderBase.tryFind or FinderBase.runCached instead. '
+      'Using the FinderBase API allows for more consistent caching behavior and cleaner options for interacting with the widget tree. '
+      'This feature was deprecated after v3.13.0-0.2.pre.')
   bool precache() => target.precache();
 
   @override
@@ -37,7 +58,20 @@ class DelegatingFinder implements Finder {
   Finder at(int index) => target.at(index);
 
   @override
-  Finder hitTestable({Alignment at = Alignment.center}) => target.hitTestable(at: at);
+  Finder hitTestable({Alignment at = Alignment.center}) =>
+      target.hitTestable(at: at);
+
+  @override
+  String toString({bool describeSelf = false}) =>
+      target.toString(describeSelf: describeSelf);
+
+  @override
+  String describeMatch(Plurality plurality) =>
+      overrideDescribeMatch?.call(plurality) ?? target.describeMatch(plurality);
+
+  @override
+  Iterable<Element> findInCandidates(Iterable<Element> candidates) =>
+      target.findInCandidates(candidates);
 
   @override
   String toString({bool describeSelf = false}) => target.toString(describeSelf: describeSelf);

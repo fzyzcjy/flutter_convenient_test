@@ -4,9 +4,8 @@ import 'dart:async';
 
 import 'package:convenient_test_common/convenient_test_common.dart';
 import 'package:convenient_test_dev/src/functions/log.dart';
-import 'package:convenient_test_dev/src/support/declarer.dart';
-import 'package:convenient_test_dev/src/support/get_it.dart';
-import 'package:convenient_test_dev/src/support/manager_rpc_service.dart';
+import 'package:convenient_test_dev/src/support/declarer_with_default.dart';
+import 'package:convenient_test_dev/src/support/reporter_service.dart';
 import 'package:convenient_test_dev/src/utils/util.dart';
 import 'package:test_api/src/backend/declarer.dart';
 import 'package:test_api/src/backend/group.dart';
@@ -20,9 +19,10 @@ import 'package:test_api/src/backend/suite.dart';
 import 'package:test_api/src/backend/suite_platform.dart';
 import 'package:test_api/src/backend/test.dart';
 
-Declarer collectIntoDeclarer({required void Function() body, required int defaultRetry}) {
+Declarer collectIntoDeclarer(
+    {required void Function() body, required int? defaultRetry}) {
   // NOTE use MyDeclarer instead of Declarer
-  return MyDeclarer(defaultRetry: defaultRetry)..declare(body);
+  return DeclarerWithDefault(defaultRetry: defaultRetry)..declare(body);
 }
 
 /// NOTE XXX ref: [flutter_test :: test_compat.dart :: get _declarer ]
@@ -32,7 +32,8 @@ void runTestsInDeclarer(
   required void Function(Group) onGroupBuilt,
 }) {
   Invoker.guard<Future<void>>(() async {
-    final _Reporter reporter = _Reporter(color: false); // disable color when run directly.
+    final _Reporter reporter =
+        _Reporter(color: false); // disable color when run directly.
     final Group group = declarer.build();
     onGroupBuilt(group);
     final Suite suite = Suite(group, SuitePlatform(Runtime.vm));
@@ -42,7 +43,7 @@ void runTestsInDeclarer(
 }
 
 // NOTE MODIFIED added
-typedef ShouldSkipPredicate = Future<bool> Function(GroupEntry entry);
+typedef ShouldSkipPredicate = bool Function(GroupEntry entry);
 
 /// NOTE XXX ref: [flutter_test :: test_compat.dart]
 Future<void> _runGroup(
@@ -57,7 +58,8 @@ Future<void> _runGroup(
     final bool skipGroup = group.metadata.skip;
     bool setUpAllSucceeded = true;
     if (!skipGroup && group.setUpAll != null) {
-      final LiveTest liveTest = group.setUpAll!.load(suiteConfig, groups: parents);
+      final LiveTest liveTest =
+          group.setUpAll!.load(suiteConfig, groups: parents);
       await _runLiveTest(suiteConfig, liveTest, reporter, countSuccess: false);
       setUpAllSucceeded = liveTest.state.result.isPassing;
     }
@@ -65,18 +67,21 @@ Future<void> _runGroup(
       for (final GroupEntry entry in group.entries) {
         if (entry is Group) {
           await _runGroup(suiteConfig, entry, parents, reporter, shouldSkip);
-        } else if (entry.metadata.skip || /* NOTE MODIFIED add "shouldSkip" */ await shouldSkip(entry)) {
+        } else if (entry.metadata.skip || /* NOTE MODIFIED add "shouldSkip" */
+            shouldSkip(entry)) {
           await _runSkippedTest(suiteConfig, entry as Test, parents, reporter);
         } else {
           final Test test = entry as Test;
-          await _runLiveTest(suiteConfig, test.load(suiteConfig, groups: parents), reporter);
+          await _runLiveTest(
+              suiteConfig, test.load(suiteConfig, groups: parents), reporter);
         }
       }
     }
     // Even if we're closed or setUpAll failed, we want to run all the
     // teardowns to ensure that any state is properly cleaned up.
     if (!skipGroup && group.tearDownAll != null) {
-      final LiveTest liveTest = group.tearDownAll!.load(suiteConfig, groups: parents);
+      final LiveTest liveTest =
+          group.tearDownAll!.load(suiteConfig, groups: parents);
       await _runLiveTest(suiteConfig, liveTest, reporter, countSuccess: false);
     }
   } finally {
@@ -85,7 +90,9 @@ Future<void> _runGroup(
 }
 
 /// NOTE XXX ref: [flutter_test :: test_compat.dart]
-Future<void> _runLiveTest(Suite suiteConfig, LiveTest liveTest, _Reporter reporter, {bool countSuccess = true}) async {
+Future<void> _runLiveTest(
+    Suite suiteConfig, LiveTest liveTest, _Reporter reporter,
+    {bool countSuccess = true}) async {
   reporter._onTestStarted(liveTest);
   // Schedule a microtask to ensure that [onTestStarted] fires before the
   // first [LiveTest.onStateChange] event.
@@ -102,8 +109,10 @@ Future<void> _runLiveTest(Suite suiteConfig, LiveTest liveTest, _Reporter report
 }
 
 /// NOTE XXX ref: [flutter_test :: test_compat.dart]
-Future<void> _runSkippedTest(Suite suiteConfig, Test test, List<Group> parents, _Reporter reporter) async {
-  final LocalTest skipped = LocalTest(test.name, test.metadata, () {}, trace: test.trace);
+Future<void> _runSkippedTest(Suite suiteConfig, Test test, List<Group> parents,
+    _Reporter reporter) async {
+  final LocalTest skipped =
+      LocalTest(test.name, test.metadata, () {}, trace: test.trace);
   if (skipped.metadata.skipReason != null) {
     print('Skip: ${skipped.metadata.skipReason}');
   }
@@ -177,7 +186,8 @@ class _Reporter {
   String? _lastProgressSuffix;
 
   /// The set of all subscriptions to various streams.
-  final Set<StreamSubscription<void>> _subscriptions = <StreamSubscription<void>>{};
+  final Set<StreamSubscription<void>> _subscriptions =
+      <StreamSubscription<void>>{};
 
   /// A callback called when the engine begins running [liveTest].
   void _onTestStarted(LiveTest liveTest) {
@@ -186,9 +196,10 @@ class _Reporter {
     }
 
     _progressLine(_description(liveTest));
-    _subscriptions.add(liveTest.onStateChange.listen((State state) => _onStateChange(liveTest, state)));
-    _subscriptions
-        .add(liveTest.onError.listen((AsyncError error) => _onError(liveTest, error.error, error.stackTrace)));
+    _subscriptions.add(liveTest.onStateChange
+        .listen((State state) => _onStateChange(liveTest, state)));
+    _subscriptions.add(liveTest.onError.listen((AsyncError error) =>
+        _onError(liveTest, error.error, error.stackTrace)));
     _subscriptions.add(liveTest.onMessage.listen((Message message) {
       _progressLine(_description(liveTest));
       String text = message.text;
@@ -198,22 +209,22 @@ class _Reporter {
       print(text);
 
       // NOTE XXX add
-      myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
-              runnerMessage: RunnerMessage(
-            testName: liveTest.test.name,
-            message: message.text,
-          )));
+      WorkerReportSaverService.I?.report(ReportItem(
+          runnerMessage: RunnerMessage(
+        testName: liveTest.test.name,
+        message: message.text,
+      )));
     }));
   }
 
   /// A callback called when [liveTest]'s state becomes [state].
   void _onStateChange(LiveTest liveTest, State state) {
     // NOTE XXX add
-    myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
-            runnerStateChange: RunnerStateChange(
-          testName: liveTest.test.name,
-          state: state.toProto(),
-        )));
+    WorkerReportSaverService.I?.report(ReportItem(
+        runnerStateChange: RunnerStateChange(
+      testName: liveTest.test.name,
+      state: state.toProto(),
+    )));
 
     if (state.status != Status.complete) {
       return;
@@ -223,12 +234,12 @@ class _Reporter {
   /// A callback called when [liveTest] throws [error].
   void _onError(LiveTest liveTest, Object error, StackTrace stackTrace) {
     // NOTE XXX add
-    myGetIt.get<ConvenientTestManagerClient>().reportSingle(ReportItem(
-            runnerError: RunnerError(
-          testName: liveTest.test.name,
-          error: error.toString(),
-          stackTrace: '$stackTrace',
-        )));
+    WorkerReportSaverService.I?.report(ReportItem(
+        runnerError: RunnerError(
+      testName: liveTest.test.name,
+      error: error.toString(),
+      stackTrace: '$stackTrace',
+    )));
     // print('hi _onError e.type=${error.runtimeType} error=$error');
     // print('hi _onError errors=${liveTest.errors}');
     convenientTestLog(
@@ -341,7 +352,8 @@ String _indent(String string, {int? size, String? first}) {
   return _prefixLines(string, ' ' * size, first: first);
 }
 
-String _prefixLines(String text, String prefix, {String? first, String? last, String? single}) {
+String _prefixLines(String text, String prefix,
+    {String? first, String? last, String? single}) {
   first ??= prefix;
   last ??= prefix;
   single ??= first;
