@@ -30,7 +30,7 @@ class ReportHandlerService {
   }
 
   Future<void> _handleItem(ReportItem item,
-      {required bool offlineFile, required bool doClear}) async {
+      {required bool offlineFile, required bool doClear}) {
     switch (item.whichSubType()) {
       case ReportItem_SubType.setUpAll:
         return _handleSetUpAll(item.setUpAll, offlineFile: offlineFile);

@@ -114,7 +114,7 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
   @override
   Future<String> generateFailureOutput(
       ComparisonResult result, Uri golden, Uri basedir,
-      {String key = ''}) async {
+      {String key = ''}) {
     return captureFailure
         ? _generateFailureOutputByCapturingFailure(result, golden, basedir,
             key: key)
@@ -124,7 +124,7 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
   // NOTE reference: [super.generateFailureOutput], but this function is (almost) completely rewritten
   Future<String> _generateFailureOutputByCapturingFailure(
       ComparisonResult result, Uri golden, Uri basedir,
-      {String key = ''}) async {
+      {String key = ''}) {
     Log.i(_kTag, 'generateFailureOutput golden=$golden result=$result');
 
     return TestAsyncUtils.guard<String>(() async {
@@ -144,7 +144,7 @@ class EnhancedLocalFileComparator extends LocalFileComparator {
   }
 
   static Future<MyComparisonResult> myCompareLists(
-          List<int> test, List<int> master) async =>
+          List<int> test, List<int> master) =>
       _compareListsAllowSizeDiffer(test, master);
 }
 

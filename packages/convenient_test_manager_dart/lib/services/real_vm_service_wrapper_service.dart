@@ -124,7 +124,7 @@ abstract class _ServiceConnectionManager with Store {
     String name, {
     String? isolateId,
     Map<String, dynamic>? args,
-  }) async {
+  }) {
     final registered = _registeredMethodsForService[name] ?? const [];
     if (registered.isEmpty) {
       throw Exception('There are no registered methods for service "$name"');

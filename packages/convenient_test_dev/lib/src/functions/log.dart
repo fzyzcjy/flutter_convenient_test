@@ -180,10 +180,10 @@ String testGroupsToName(List<Group> testGroups) {
 
 @internal
 void setUpLogTestStartAndEnd() {
-  setUp(() async {
+  setUp(() {
     convenientTestLog('START', '', type: LogSubEntryType.TEST_START);
   });
-  tearDown(() async {
+  tearDown(() {
     convenientTestLog('END', '', type: LogSubEntryType.TEST_END);
   });
 }

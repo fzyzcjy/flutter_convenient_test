@@ -33,7 +33,7 @@ extension ConvenientTestFind on ConvenientTest {
 extension ExtFinder on Finder {
   // forward methods
 
-  Future<void> should(Matcher matcher, {String? reason, bool? settle}) async =>
+  Future<void> should(Matcher matcher, {String? reason, bool? settle}) =>
       TFinderCommand.auto(this).should(matcher, reason: reason, settle: settle);
 
   Future<void> replaceText(String text) =>
@@ -255,7 +255,7 @@ class TFinderCommand extends TCommand {
           firstFingerOffsets: firstFingerOffsets,
           secondFingerOffsets: secondFingerOffsets,
           afterMove: (logMove ?? false)
-              ? (i) async => log.snapshot(name: 'move #$i')
+              ? (i) => log.snapshot(name: 'move #$i')
               : null,
         ),
         preCondition: null,

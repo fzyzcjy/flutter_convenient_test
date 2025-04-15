@@ -114,7 +114,7 @@ extension ExtWidgetTesterPump on WidgetTester {
     Duration? realDelayDuration,
     Duration? fakeClockTimeout,
     Duration? wallClockTimeout,
-  }) async {
+  }) {
     final startTime = _WallAndFakeClock.now(binding);
     // #8516
     // p.s. The `pumpAndSettle` timeouts at 10 minutes
