@@ -265,7 +265,7 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
         ),
       ),
       final ITIMStateRetryLast s => ExecutionFilter(
-        filterNameRegex: RegexUtils.matchFull(s.lastExecutedTestName ?? ''),
+        filterNameRegex: RegexUtils.matchFull(s.lastExecutedTestName),
         strategy: ExecutionFilter_Strategy(
           allMatch: ExecutionFilter_Strategy_AllMatch(),
         ),

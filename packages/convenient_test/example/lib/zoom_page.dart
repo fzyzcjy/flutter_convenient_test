@@ -48,8 +48,7 @@ class _ZoomPageState extends State<ZoomPage> {
                                 child: Container(
                                   width: 50,
                                   height: 50,
-                                  color: _getColor(Point(x, y),
-                                      invert: _chosenPoint == Point(x, y)),
+                                  color: _getColor(Point(x, y), invert: _chosenPoint == Point(x, y)),
                                   child: Center(
                                     child: Text('$x#$y'),
                                   ),
@@ -75,7 +74,7 @@ class _ZoomPageState extends State<ZoomPage> {
 }
 
 extension on Color {
-  Color invert() => Color.fromARGB(alpha, 255 - red, 255 - green, 255 - blue);
+  Color invert() => Color.from(alpha: a, red: 1 - r, green: 1 - g, blue: 1 - b);
 }
 
 enum ZoomPageMark {

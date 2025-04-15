@@ -488,7 +488,6 @@ class IsolateState {
     switch (kind) {
       case EventKind.kResume:
         _isPaused.value = false;
-        break;
       case EventKind.kPauseStart:
       case EventKind.kPauseExit:
       case EventKind.kPauseBreakpoint:
@@ -496,7 +495,6 @@ class IsolateState {
       case EventKind.kPauseException:
       case EventKind.kPausePostRequest:
         _isPaused.value = true;
-        break;
     }
   }
 }

@@ -193,19 +193,15 @@ class HomePageLogEntryWidget extends StatelessWidget {
       case LogSubEntryType.ASSERT:
         backgroundColor = Colors.green;
         textColor = Colors.white;
-        break;
       case LogSubEntryType.ASSERT_FAIL:
         backgroundColor = Theme.of(context).colorScheme.error;
         textColor = Theme.of(context).colorScheme.onError;
-        break;
       case LogSubEntryType.SECTION:
         backgroundColor = Theme.of(context).colorScheme.primary;
         textColor = Theme.of(context).colorScheme.onPrimary;
-        break;
       default:
         backgroundColor = null;
         textColor = Theme.of(context).colorScheme.onSurface;
-        break;
     }
 
     return SizedBox(

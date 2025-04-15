@@ -30,7 +30,6 @@ dev_dependencies:
   convenient_test_dev: ^1.0.0
 
 dependency_overrides:
-  file: 7.0.1
   convenient_test_common:
     path: ../../convenient_test_common
   convenient_test_common_dart:

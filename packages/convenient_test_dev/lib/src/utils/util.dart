@@ -74,15 +74,6 @@ class DelegatingFinder implements Finder {
       target.findInCandidates(candidates);
 
   @override
-  String toString({bool describeSelf = false}) => target.toString(describeSelf: describeSelf);
-
-  @override
-  String describeMatch(Plurality plurality) => target.describeMatch(plurality);
-
-  @override
-  Iterable<Element> findInCandidates(Iterable<Element> candidates) => target.findInCandidates(candidates);
-
-  @override
   FinderResult<Element> get found => target.found;
 
   @override

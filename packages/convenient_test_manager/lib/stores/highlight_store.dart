@@ -122,7 +122,9 @@ abstract class _HighlightStore extends HighlightStoreBase with Store {
     if (itemPositionForHighlight != null) {
       // It is *fully* visible
       if (itemPositionForHighlight.itemLeadingEdge >= 0.0 &&
-          itemPositionForHighlight.itemTrailingEdge <= 1.0) return;
+          itemPositionForHighlight.itemTrailingEdge <= 1.0) {
+        return;
+      }
 
       // There are only few elements there
       if (itemPositions.length <= 3) return;
