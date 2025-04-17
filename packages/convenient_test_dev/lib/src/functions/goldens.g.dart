@@ -46,7 +46,7 @@ Json? _$JsonConverterToJson<Json, Value>(
 GoldenTolerationEntry _$GoldenTolerationEntryFromJson(
         Map<String, dynamic> json) =>
     GoldenTolerationEntry(
-      diffPerPixel: json['diffPerPixel'] as int,
+      diffPerPixel: (json['diffPerPixel'] as num).toInt(),
       countPercent: (json['countPercent'] as num).toDouble(),
     );
 

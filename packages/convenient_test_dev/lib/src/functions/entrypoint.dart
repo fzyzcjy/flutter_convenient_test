@@ -19,9 +19,7 @@ Future<void> convenientTestMain(
   switch (executionEnv) {
     case ExecutionEnv.deviceTest:
       await convenientTestEntrypointWhenEnvDevice(testBody);
-      break;
     case ExecutionEnv.widgetTest:
       await convenientTestEntrypointWhenEnvWidget(testBody);
-      break;
   }
 }

@@ -28,7 +28,7 @@ Future<void> setup({
     parseConfigFile: parseConfigFile,
   );
 
-  // if (initVLC) await DartVLC.initialize(); // #303
+  // if (initVLC) DartVLC.initialize(); // #303
 
   getIt.registerSingleton<VideoPlayerStore>(VideoPlayerStore());
   getIt.registerSingleton<HighlightStore>(HighlightStore());

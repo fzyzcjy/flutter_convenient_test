@@ -80,7 +80,9 @@ class DelegatingFinder implements Finder {
   bool get hasFound => target.hasFound;
 
   @override
-  void reset() => target.reset();
+  Future<void> reset() async {
+    target.reset();
+  }
 
   @override
   void runCached(VoidCallback run) => target.runCached(run);

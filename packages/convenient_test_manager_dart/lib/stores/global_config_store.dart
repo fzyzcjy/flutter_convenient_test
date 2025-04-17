@@ -41,7 +41,7 @@ abstract class _GlobalConfig with Store {
 }
 
 @freezed
-class GlobalConfigNullable with _$GlobalConfigNullable {
+sealed class GlobalConfigNullable with _$GlobalConfigNullable {
   static const _kTag = 'GlobalConfigNullable';
 
   factory GlobalConfigNullable({

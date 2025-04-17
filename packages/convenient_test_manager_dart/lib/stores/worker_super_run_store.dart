@@ -239,7 +239,7 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(
       integrationTest: WorkerCurrentRunConfig_IntegrationTest(
-        reportSuiteInfo: state is _ITIMStateInitial,
+        reportSuiteInfo: state is ITIMStateInitial,
         // do *not* handle flaky tests at worker level; instead, handle it at manager level
         defaultRetryCount: 0,
         executionFilter: _calcExecutionFilter(),
@@ -249,33 +249,35 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
     );
   }
 
-  ExecutionFilter _calcExecutionFilter() => state.map(
-        initial: (_) => ExecutionFilter(
-          filterNameRegex: filterNameRegex,
-          strategy: ExecutionFilter_Strategy(
-              firstMatch: ExecutionFilter_Strategy_FirstMatch()),
-        ),
-        goOn: (s) => ExecutionFilter(
-          filterNameRegex: filterNameRegex,
-          strategy: ExecutionFilter_Strategy(
-            nextMatch: ExecutionFilter_Strategy_NextMatch(
-              prevTestName: s.lastExecutedTestName,
+  ExecutionFilter _calcExecutionFilter() => switch (state) {
+        ITIMStateInitial _ => ExecutionFilter(
+            filterNameRegex: filterNameRegex,
+            strategy: ExecutionFilter_Strategy(
+              firstMatch: ExecutionFilter_Strategy_FirstMatch(),
             ),
           ),
-        ),
-        retryLast: (s) => ExecutionFilter(
-          // retry this test again (flaky test handling)
-          filterNameRegex: RegexUtils.matchFull(s.lastExecutedTestName),
-          strategy: ExecutionFilter_Strategy(
-              allMatch: ExecutionFilter_Strategy_AllMatch()),
-        ),
-        finished: (_) => ExecutionFilter(
-          // NOTE use "regex match nothing"
-          filterNameRegex: RegexUtils.kMatchNothing,
-          strategy: ExecutionFilter_Strategy(
-              allMatch: ExecutionFilter_Strategy_AllMatch()),
-        ),
-      );
+        final ITIMStateGoOn s => ExecutionFilter(
+            filterNameRegex: filterNameRegex,
+            strategy: ExecutionFilter_Strategy(
+              nextMatch: ExecutionFilter_Strategy_NextMatch(
+                prevTestName: s.lastExecutedTestName,
+              ),
+            ),
+          ),
+        final ITIMStateRetryLast s => ExecutionFilter(
+            filterNameRegex: RegexUtils.matchFull(s.lastExecutedTestName),
+            strategy: ExecutionFilter_Strategy(
+              allMatch: ExecutionFilter_Strategy_AllMatch(),
+            ),
+          ),
+        ITIMStateFinished _ => ExecutionFilter(
+            filterNameRegex: RegexUtils.kMatchNothing,
+            strategy: ExecutionFilter_Strategy(
+              allMatch: ExecutionFilter_Strategy_AllMatch(),
+            ),
+          ),
+        _ITIMState() => throw UnimplementedError(),
+      };
 
   @override
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {
@@ -315,14 +317,14 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
         'handleTearDownAll end oldState=$oldState newState=$state '
         'allowExecuteTestNames=$allowExecuteTestNames executedTestSucceeded=$executedTestSucceeded');
 
-    if (state is! _ITIMStateFinished) {
+    if (state is! ITIMStateFinished) {
       Log.d(_kTag, 'call hot restart');
       GetIt.I.get<VmServiceWrapperService>().hotRestartThrottled();
     }
   }
 
   @override
-  WorkerSuperRunStatus get superRunStatus => state is _ITIMStateFinished
+  WorkerSuperRunStatus get superRunStatus => state is ITIMStateFinished
       ? WorkerSuperRunStatus.testAllDone
       : WorkerSuperRunStatus.runningTest;
 
@@ -331,7 +333,7 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
     required String? executedTestName,
     required bool? executedTestSucceeded,
   }) {
-    if (oldState is _ITIMStateFinished && executedTestName != null) {
+    if (oldState is ITIMStateFinished && executedTestName != null) {
       throw AssertionError();
     }
 
@@ -340,7 +342,7 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
     }
 
     if (!executedTestSucceeded!) {
-      final lastExecutedTestFailCount = oldState is _ITIMStateRetryLast
+      final lastExecutedTestFailCount = oldState is ITIMStateRetryLast
           ? (oldState.lastExecutedTestFailCount + 1)
           : 1;
       final shouldRetry = lastExecutedTestFailCount <
@@ -368,16 +370,16 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
 @freezed
 class _ITIMState with _$ITIMState {
   /// Before first test finished
-  const factory _ITIMState.initial() = _ITIMStateInitial;
+  const factory _ITIMState.initial() = ITIMStateInitial;
 
   const factory _ITIMState.goOn({
     required String lastExecutedTestName,
-  }) = _ITIMStateGoOn;
+  }) = ITIMStateGoOn;
 
   const factory _ITIMState.retryLast({
     required String lastExecutedTestName,
     required int lastExecutedTestFailCount,
-  }) = _ITIMStateRetryLast;
+  }) = ITIMStateRetryLast;
 
-  const factory _ITIMState.finished() = _ITIMStateFinished;
+  const factory _ITIMState.finished() = ITIMStateFinished;
 }

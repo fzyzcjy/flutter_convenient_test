@@ -124,7 +124,7 @@ abstract class _ServiceConnectionManager with Store {
     String name, {
     String? isolateId,
     Map<String, dynamic>? args,
-  }) async {
+  }) {
     final registered = _registeredMethodsForService[name] ?? const [];
     if (registered.isEmpty) {
       throw Exception('There are no registered methods for service "$name"');
@@ -488,7 +488,6 @@ class IsolateState {
     switch (kind) {
       case EventKind.kResume:
         _isPaused.value = false;
-        break;
       case EventKind.kPauseStart:
       case EventKind.kPauseExit:
       case EventKind.kPauseBreakpoint:
@@ -496,7 +495,6 @@ class IsolateState {
       case EventKind.kPauseException:
       case EventKind.kPausePostRequest:
         _isPaused.value = true;
-        break;
     }
   }
 }

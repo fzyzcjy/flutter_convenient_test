@@ -21,7 +21,7 @@ class GoldenDiffPageHeaderPanel extends StatelessWidget {
           const SizedBox(width: 24),
           ..._buildGitRepoInfo(),
           TextButton(
-            onPressed: () async {
+            onPressed: () {
               final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
               final gitRepo = goldenDiffPageStore.gitRepo;
               // trigger refresh

@@ -61,11 +61,7 @@ extension ExtState on State {
           case Result.failure:
           case Result.error:
             return SimplifiedStateEnum.completeFailureOrError;
-          default:
-            throw Exception;
         }
-      default:
-        throw Exception;
     }
   }
 }
