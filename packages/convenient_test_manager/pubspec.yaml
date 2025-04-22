@@ -15,21 +15,21 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.5.2
+version: 1.6.0
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
   flutter: ">=3.27.0"
 
 dependencies:
-  collection: ^1.19.0
-  convenient_test_common: ^1.0.0
-  convenient_test_common_dart: ^1.0.0
-  convenient_test_dev: ^1.0.0
-  convenient_test_manager_dart: ^1.0.0
+  collection: '>=1.19.0 <1.20.0'
+  convenient_test_common: '>=1.5.0 <1.6.0'
+  convenient_test_common_dart: '>=1.5.0 <1.6.0'
+  convenient_test_dev: '>=1.5.0 <1.6.0'
+  convenient_test_manager_dart: '>=1.5.0 <1.6.0'
   cupertino_icons: ^1.0.8
   # dart_vlc: ^0.2.0 # #303
-  file_picker: ^9.0.0
+  file_picker: '>=10.0.0 <11.0.0'
   fixnum: ^1.1.1
   flutter:
     sdk: flutter
@@ -66,10 +66,10 @@ dependency_overrides:
     path: ../convenient_test_manager_dart
 
 dev_dependencies:
-  analyzer: ^5.4.0
-  build_runner: ^2.3.0
-  lint: ">=1.8.2 <3.0.0"
-  mobx_codegen: ^2.0.6
+  analyzer: '>=6.5.0 <8.0.0'
+  build_runner: '>=2.4.15 <2.5.0'
+  lint: '>=2.7.0 <3.0.0'
+  mobx_codegen: ^2.7.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

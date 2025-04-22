@@ -1,6 +1,6 @@
 name: convenient_test_manager_dart
 description: Write and debug tests easily, with full action history, time travel, screenshots, rapid re-execution, video records, interactivity, isolation and more
-version: 1.5.2
+version: 1.6.0
 repository: https://github.com/fzyzcjy/flutter_convenient_test
 
 environment:
@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   args: ^2.7.0
-  collection: ^1.19.0
+  collection: '>=1.19.0 <1.20.0'
   convenient_test_common_dart: ^1.0.0
   fixnum: ^1.1.1
   freezed_annotation: ^3.0.0
@@ -16,7 +16,7 @@ dependencies:
   grpc: 4.0.4
   intl: ^0.20.2
   json_annotation: ^4.9.0
-  meta: ^1.15.0
+  meta: ^1.16.0
   mobx: ^2.5.0
   protobuf: '>=3.0.0 <5.0.0'
   recase: ^4.1.0
@@ -25,19 +25,19 @@ dependencies:
   vm_service: '>=11.3.0 <15.0.0'
 
 dependency_overrides:
-  analyzer: ">=6.9.0 <8.0.0"
+  analyzer: '>=6.9.0 <8.0.0'
   convenient_test_common_dart:
     path: ../convenient_test_common_dart
 
 dev_dependencies:
   build_runner: '>=2.3.0 <2.5.0'
-  dart_code_metrics: ">=4.15.0 <6.0.0"
+  dart_code_metrics: '>=4.15.0 <6.0.0'
   freezed: ^3.0.6
-  json_serializable: ^6.2.0
-  lint: ">=1.8.2 <3.0.0"
+  json_serializable: '>=6.9.1 <7.0.0'
+  lint: '>=1.8.2 <3.0.0'
   mobx_codegen:
     git:
       url: https://github.com/sunbromarko/mobx.dart
       ref: FEAT--Bump-source_get-version
       path: mobx_codegen # https://github.com/mobxjs/mobx.dart/pull/1038
-  test: ^1.20.1
+  test: ^1.25.15
