@@ -1,6 +1,3 @@
-## 1.6.0
-* Update all packages to be aligned with each other and compatible with the supported sdk/flutter version
-
 ## 1.5.2
 
 * Update intl and file_picker packages #410 (thanks @lehmannk)
