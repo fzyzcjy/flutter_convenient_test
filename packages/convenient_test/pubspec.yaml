@@ -8,11 +8,11 @@ environment:
   flutter: ">=3.0.0"
 
 dependencies:
-  collection: ^1.15.0
+  collection: ^1.19.0
   flutter:
     sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lint: ^2.1.2
+  lint: ">=2.8.0 <3.0.0"
