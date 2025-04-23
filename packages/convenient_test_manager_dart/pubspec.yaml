@@ -1,6 +1,6 @@
 name: convenient_test_manager_dart
 description: Write and debug tests easily, with full action history, time travel, screenshots, rapid re-execution, video records, interactivity, isolation and more
-version: 1.6.0
+version: 1.5.2
 repository: https://github.com/fzyzcjy/flutter_convenient_test
 
 environment:
@@ -14,7 +14,7 @@ dependencies:
   freezed_annotation: ^3.0.0
   get_it: '>=7.0.0 <9.0.0'
   grpc: 4.0.4
-  intl: ^0.20.2
+  intl: '>=0.19.0 <0.21.0'
   json_annotation: ^4.9.0
   meta: ^1.16.0
   mobx: ^2.5.0
