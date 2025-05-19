@@ -1,3 +1,7 @@
+## 1.5.3
+
+* Update package versions #411 #413 (thanks @Malnen and @Knupper)
+
 ## 1.5.2
 
 * Update intl and file_picker packages #410 (thanks @lehmannk)
