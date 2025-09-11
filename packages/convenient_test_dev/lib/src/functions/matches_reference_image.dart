@@ -15,8 +15,7 @@ import 'package:matcher/src/expect/async_matcher.dart';
 AsyncMatcher matchesEnhancedReferenceImage(
   ui.Image image,
   GoldenConfig config,
-) =>
-    _MatchesEnhancedReferenceImage(image, config);
+) => _MatchesEnhancedReferenceImage(image, config);
 
 // NOTE MODIFIED from [_MatchesReferenceImage]
 class _MatchesEnhancedReferenceImage extends AsyncMatcher {
@@ -83,10 +82,12 @@ class _MatchesEnhancedReferenceImage extends AsyncMatcher {
             'pixelDiffHistogram=${result.pixelDiffHistogram}';
       }
       if (!result.passed) {
-        debugPrint('A tolerable difference of '
-            'diffPercent=${result.diffPercent * 100}% '
-            'with pixelDiffHistogram=${result.pixelDiffHistogram} '
-            'was found when comparing golden.');
+        debugPrint(
+          'A tolerable difference of '
+          'diffPercent=${result.diffPercent * 100}% '
+          'with pixelDiffHistogram=${result.pixelDiffHistogram} '
+          'was found when comparing golden.',
+        );
       }
       return null;
     });

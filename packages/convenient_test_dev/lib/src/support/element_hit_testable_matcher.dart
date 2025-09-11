@@ -19,7 +19,8 @@ class ElementHitTestableMatcher extends Matcher {
       // ignore: avoid_catching_errors
     } on FlutterError catch (e) {
       if (e.toString().contains(
-          'Finder specifies a widget that would not receive pointer events.')) {
+        'Finder specifies a widget that would not receive pointer events.',
+      )) {
         matchState[_kMatchStateKeyError] = e;
         return false;
       }
@@ -28,8 +29,12 @@ class ElementHitTestableMatcher extends Matcher {
   }
 
   @override
-  Description describeMismatch(dynamic item, Description mismatchDescription,
-      Map<dynamic, dynamic> matchState, bool verbose) {
+  Description describeMismatch(
+    dynamic item,
+    Description mismatchDescription,
+    Map<dynamic, dynamic> matchState,
+    bool verbose,
+  ) {
     final e = matchState[_kMatchStateKeyError] as FlutterError;
     return mismatchDescription.add('is not hit-testable (error=$e)');
   }

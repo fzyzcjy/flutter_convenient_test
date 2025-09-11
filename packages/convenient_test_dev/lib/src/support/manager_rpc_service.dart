@@ -10,8 +10,10 @@ class ConvenientTestManagerRpcService {
       port: kConvenientTestManagerPort,
       options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
-    final client = ConvenientTestManagerClient(channel,
-        options: CallOptions(timeout: null));
+    final client = ConvenientTestManagerClient(
+      channel,
+      options: CallOptions(timeout: null),
+    );
     return ConvenientTestManagerRpcService._(client);
   }
 

@@ -18,11 +18,14 @@ import 'package:path/path.dart' as path;
 
 @internal
 Future<void> convenientTestEntrypointWhenEnvDevice(
-    FutureOr<void> Function() testBody) async {
+  FutureOr<void> Function() testBody,
+) async {
   myGetIt.registerSingleton<ConvenientTestManagerRpcService>(
-      ConvenientTestManagerRpcService());
+    ConvenientTestManagerRpcService(),
+  );
   myGetIt.registerSingleton<WorkerReportSaverService>(
-      WorkerReportSaverServiceSendToManager());
+    WorkerReportSaverServiceSendToManager(),
+  );
 
   final currentRunConfig = await myGetIt
       .get<ConvenientTestManagerRpcService>()
@@ -32,96 +35,112 @@ Future<void> convenientTestEntrypointWhenEnvDevice(
       return _runModeInteractiveApp();
     case WorkerCurrentRunConfig_SubType.integrationTest:
       return _runModeIntegrationTest(
-          testBody, currentRunConfig.integrationTest);
+        testBody,
+        currentRunConfig.integrationTest,
+      );
     case WorkerCurrentRunConfig_SubType.notSet:
       throw Exception(
-          'Unknown WorkerCurrentRunConfig_SubType: $currentRunConfig');
+        'Unknown WorkerCurrentRunConfig_SubType: $currentRunConfig',
+      );
   }
 }
 
 Future<void> _runModeInteractiveApp() async {
-  await myGetIt
-      .get<ConvenientTestSlot>()
-      .appMain(AppMainExecuteMode.interactiveApp);
+  await myGetIt.get<ConvenientTestSlot>().appMain(
+    AppMainExecuteMode.interactiveApp,
+  );
 }
 
 Future<void> _runModeIntegrationTest(
   FutureOr<void> Function() testBody,
   WorkerCurrentRunConfig_IntegrationTest currentRunConfig,
 ) async {
-  runZonedGuarded(() {
-    _configureGoldens(currentRunConfig);
+  runZonedGuarded(
+    () {
+      _configureGoldens(currentRunConfig);
 
-    late final SpyDeclarerGroup spyDeclarerGroup;
-    final declarer = collectIntoDeclarer(
-      defaultRetry: currentRunConfig.defaultRetryCount,
-      body: () {
-        spyDeclarerGroup = SpyDeclarer.withSpy(() {
-          // put this tearDownAll *before* everything else (including
-          // `IntegrationTestWidgetsFlutterBinding.ensureInitialized` which adds another tearDownAll)
-          // thus it should be run lastly
-          tearDownAll(_lastTearDownAll);
+      late final SpyDeclarerGroup spyDeclarerGroup;
+      final declarer = collectIntoDeclarer(
+        defaultRetry: currentRunConfig.defaultRetryCount,
+        body: () {
+          spyDeclarerGroup = SpyDeclarer.withSpy(() {
+            // put this tearDownAll *before* everything else (including
+            // `IntegrationTestWidgetsFlutterBinding.ensureInitialized` which adds another tearDownAll)
+            // thus it should be run lastly
+            tearDownAll(_lastTearDownAll);
 
-          try {
-            // use *constructor* instead of `ensureInitialized`, such that if it is already initialized it will throw
-            // (TODO add tests)
-            MyIntegrationTestWidgetsFlutterBinding(); // initialize it
-          } catch (e) {
-            // This is because:
-            // (1) Must call [runZonedGuarded] *outside* [ensureInitialized], otherwise no errors will be captured.
-            //     See https://docs.flutter.dev/testing/errors#errors-not-caught-by-flutter for details.
-            // (2) [IntegrationTestWidgetsFlutterBinding] must be called *inside* `collectIntoDeclarer`,
-            //     because it calls some logic inside it.
-            // ignore: avoid_print
-            print(
-                'Please do *not* initialize `WidgetsBinding.instance` outside `convenientTestMain`.');
-            rethrow;
-          }
+            try {
+              // use *constructor* instead of `ensureInitialized`, such that if it is already initialized it will throw
+              // (TODO add tests)
+              MyIntegrationTestWidgetsFlutterBinding(); // initialize it
+            } catch (e) {
+              // This is because:
+              // (1) Must call [runZonedGuarded] *outside* [ensureInitialized], otherwise no errors will be captured.
+              //     See https://docs.flutter.dev/testing/errors#errors-not-caught-by-flutter for details.
+              // (2) [IntegrationTestWidgetsFlutterBinding] must be called *inside* `collectIntoDeclarer`,
+              //     because it calls some logic inside it.
+              // ignore: avoid_print
+              print(
+                'Please do *not* initialize `WidgetsBinding.instance` outside `convenientTestMain`.',
+              );
+              rethrow;
+            }
 
-          unawaited(WorkerReportSaverService.I
-              ?.report(ReportItem(setUpAll: SetUpAll())));
+            unawaited(
+              WorkerReportSaverService.I?.report(
+                ReportItem(setUpAll: SetUpAll()),
+              ),
+            );
 
-          setup();
+            setup();
 
-          // https://github.com/fzyzcjy/yplusplus/issues/8554#issuecomment-1530977507
-          // setUpLogTestStartAndEnd();
+            // https://github.com/fzyzcjy/yplusplus/issues/8554#issuecomment-1530977507
+            // setUpLogTestStartAndEnd();
 
-          testBody();
-        }).item2;
-      },
-    );
+            testBody();
+          }).item2;
+        },
+      );
 
-    if (currentRunConfig.reportSuiteInfo) {
-      WorkerReportSaverService.I?.reportSuiteInfo(spyDeclarerGroup);
-    }
+      if (currentRunConfig.reportSuiteInfo) {
+        WorkerReportSaverService.I?.reportSuiteInfo(spyDeclarerGroup);
+      }
 
-    myGetIt.get<ConvenientTestExecutor>()
-      ..input = ConvenientTestExecutorInput(
-        declarer: declarer,
-        executionFilter: currentRunConfig.executionFilter,
-      )
-      ..execute();
-  }, (e, s) {
-    Log.w('ConvenientTestMain',
-        'ConvenientTest captured error (via runZonedGuarded). type(e)=${e.runtimeType} exception=$e stackTrace=$s');
-  });
+      myGetIt.get<ConvenientTestExecutor>()
+        ..input = ConvenientTestExecutorInput(
+          declarer: declarer,
+          executionFilter: currentRunConfig.executionFilter,
+        )
+        ..execute();
+    },
+    (e, s) {
+      Log.w(
+        'ConvenientTestMain',
+        'ConvenientTest captured error (via runZonedGuarded). type(e)=${e.runtimeType} exception=$e stackTrace=$s',
+      );
+    },
+  );
 }
 
 void _configureGoldens(
-    WorkerCurrentRunConfig_IntegrationTest currentRunConfig) {
+  WorkerCurrentRunConfig_IntegrationTest currentRunConfig,
+) {
   const _kTag = 'ConfigureGoldens';
 
   goldenFileComparator = EnhancedLocalFileComparator(
-      Uri.file(
-          path.join(StaticConfig.kAppCodeDir, 'integration_test/dummy.dart')),
-      captureFailure: true);
+    Uri.file(
+      path.join(StaticConfig.kAppCodeDir, 'integration_test/dummy.dart'),
+    ),
+    captureFailure: true,
+  );
   autoUpdateGoldenFiles = currentRunConfig.autoUpdateGoldenFiles;
 
   Log.d(
-      _kTag,
-      'configure '
-      'autoUpdateGoldenFiles=$autoUpdateGoldenFiles '
-      'comparator.basedir=${(goldenFileComparator as LocalFileComparator).basedir}');
+    _kTag,
+    'configure '
+    'autoUpdateGoldenFiles=$autoUpdateGoldenFiles '
+    'comparator.basedir=${(goldenFileComparator as LocalFileComparator).basedir}',
+  );
 }
 
 Future<void> _lastTearDownAll() async {
@@ -130,14 +149,16 @@ Future<void> _lastTearDownAll() async {
   final reporterService = WorkerReportSaverService.I;
   if (reporterService != null) {
     // need to `await` to ensure it is sent
-    await reporterService.report(ReportItem(
-      tearDownAll: TearDownAll(
-        resolvedExecutionFilter: myGetIt
-            .get<ConvenientTestExecutor>()
-            .resolvedExecutionFilter
-            .toProto(),
+    await reporterService.report(
+      ReportItem(
+        tearDownAll: TearDownAll(
+          resolvedExecutionFilter: myGetIt
+              .get<ConvenientTestExecutor>()
+              .resolvedExecutionFilter
+              .toProto(),
+        ),
       ),
-    ));
+    );
   }
 
   // TODO

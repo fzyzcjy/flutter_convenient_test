@@ -40,9 +40,9 @@ class Descriptor {
   ];
 
   static String? _substituteReplacer(String raw) => const {
-        'exactly one matching node in the widget tree': 'findsOneWidget',
-        'no matching nodes in the widget tree': 'findsNothing',
-      }[raw];
+    'exactly one matching node in the widget tree': 'findsOneWidget',
+    'no matching nodes in the widget tree': 'findsNothing',
+  }[raw];
 
   static final _kIconRegExp = RegExp(r'^icon "IconData\(U\+([0-9A-F]+)\)"$');
 

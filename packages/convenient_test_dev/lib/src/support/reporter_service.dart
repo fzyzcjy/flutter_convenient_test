@@ -14,8 +14,8 @@ abstract class WorkerReportSaverService {
   /// Nullable - e.g. null when in widget test mode since there is no manager
   static WorkerReportSaverService? get I =>
       myGetIt.isRegistered<WorkerReportSaverService>()
-          ? myGetIt.get<WorkerReportSaverService>()
-          : null;
+      ? myGetIt.get<WorkerReportSaverService>()
+      : null;
 
   Future<void> report(ReportItem item);
 }

@@ -16,13 +16,19 @@ class SpyDeclarer implements Declarer {
 
   SpyDeclarer(this.inner, this.info);
 
-  static Tuple2<T, SpyDeclarerGroup> withSpy<T>(T Function() body,
-      {SpyDeclarerGroup? info}) {
+  static Tuple2<T, SpyDeclarerGroup> withSpy<T>(
+    T Function() body, {
+    SpyDeclarerGroup? info,
+  }) {
     final originalDeclarer = Declarer.current!;
-    final spyDeclarer =
-        SpyDeclarer(originalDeclarer, info ?? SpyDeclarerGroup(name: null));
-    final bodyResult =
-        runZoned(body, zoneValues: {#test.declarer: spyDeclarer});
+    final spyDeclarer = SpyDeclarer(
+      originalDeclarer,
+      info ?? SpyDeclarerGroup(name: null),
+    );
+    final bodyResult = runZoned(
+      body,
+      zoneValues: {#test.declarer: spyDeclarer},
+    );
     return Tuple2(bodyResult, spyDeclarer.info);
   }
 

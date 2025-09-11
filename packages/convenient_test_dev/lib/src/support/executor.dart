@@ -35,9 +35,11 @@ class ConvenientTestExecutor {
   static void _ensureNoDuplicateTestNames(Group group) {
     final allNames = group.traverse().map((e) => e.name).toList();
     if (allNames.toSet().length != allNames.length) {
-      throw Exception('Should not have any duplicated test names, '
-          'because convenient_test rely on test names to identify and distinguish them. '
-          'However, this is violated.');
+      throw Exception(
+        'Should not have any duplicated test names, '
+        'because convenient_test rely on test names to identify and distinguish them. '
+        'However, this is violated.',
+      );
     }
   }
 }
@@ -67,8 +69,8 @@ class ResolvedExecutionFilter {
   }
 
   ResolvedExecutionFilterProto toProto() => ResolvedExecutionFilterProto(
-        allowExecuteTestNames: allowExecuteTestNames,
-      );
+    allowExecuteTestNames: allowExecuteTestNames,
+  );
 }
 
 class _ExecutionFilterResolver {
@@ -92,15 +94,17 @@ class _ExecutionFilterResolver {
       case ExecutionFilter_Strategy_SubType.nextMatch:
         final info = strategy.nextMatch;
 
-        final prevTestIndex = flattenedTestsMatchingFilter
-            .indexWhere((e) => e.name == info.prevTestName);
+        final prevTestIndex = flattenedTestsMatchingFilter.indexWhere(
+          (e) => e.name == info.prevTestName,
+        );
         if (prevTestIndex == -1) throw Exception;
 
         final nextTestIndex = prevTestIndex + 1;
         return _createOutput(
-            nextTestIndex == flattenedTestsMatchingFilter.length
-                ? []
-                : [flattenedTestsMatchingFilter[nextTestIndex]]);
+          nextTestIndex == flattenedTestsMatchingFilter.length
+              ? []
+              : [flattenedTestsMatchingFilter[nextTestIndex]],
+        );
       case ExecutionFilter_Strategy_SubType.allMatch:
         return _createOutput(flattenedTestsMatchingFilter);
       case ExecutionFilter_Strategy_SubType.notSet:
@@ -119,7 +123,8 @@ class _ExecutionFilterResolver {
 
   static ResolvedExecutionFilter _createOutput(List<Test> allowExecuteTests) =>
       ResolvedExecutionFilter(
-          allowExecuteTestNames: allowExecuteTests.map((e) => e.name).toList());
+        allowExecuteTestNames: allowExecuteTests.map((e) => e.name).toList(),
+      );
 }
 
 extension ExtGroupEntry on GroupEntry {

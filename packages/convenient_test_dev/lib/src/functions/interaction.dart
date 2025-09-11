@@ -7,13 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 extension ConvenientTestInteraction on ConvenientTest {
-  Future<void> visit(String routeName,
-      {Object? arguments, bool? settle, bool replace = false}) async {
+  Future<void> visit(
+    String routeName, {
+    Object? arguments,
+    bool? settle,
+    bool replace = false,
+  }) async {
     final log = this.log(
-        'VISIT',
-        routeName +
-            (arguments != null ? ' arg=${jsonEncode(arguments)}' : '') +
-            (replace ? ' , replace' : ''));
+      'VISIT',
+      routeName +
+          (arguments != null ? ' arg=${jsonEncode(arguments)}' : '') +
+          (replace ? ' , replace' : ''),
+    );
 
     await pump();
     await log.snapshot(name: 'before');
@@ -22,8 +27,13 @@ extension ConvenientTestInteraction on ConvenientTest {
     final context = myGetIt.get<ConvenientTestSlot>().getNavContext(this)!;
     if (replace) {
       // ignore: use_build_context_synchronously
-      unawaited(Navigator.pushReplacementNamed(context, routeName,
-          arguments: arguments));
+      unawaited(
+        Navigator.pushReplacementNamed(
+          context,
+          routeName,
+          arguments: arguments,
+        ),
+      );
     } else {
       // ignore: use_build_context_synchronously
       unawaited(Navigator.pushNamed(context, routeName, arguments: arguments));

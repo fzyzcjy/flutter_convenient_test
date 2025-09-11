@@ -45,18 +45,17 @@ extension ExtTCommand on TCommand {
     required LogSnapshot logSnapshot,
     required bool snapshotWhenSuccess,
     bool? settle,
-  }) =>
-      _expectWithRetry(
-        t,
-        getCurrentActual,
-        matcher,
-        overrideActualDescription: overrideActualDescription,
-        reason: reason,
-        logUpdate: logUpdate,
-        logSnapshot: logSnapshot,
-        snapshotWhenSuccess: snapshotWhenSuccess,
-        settle: settle,
-      );
+  }) => _expectWithRetry(
+    t,
+    getCurrentActual,
+    matcher,
+    overrideActualDescription: overrideActualDescription,
+    reason: reason,
+    logUpdate: logUpdate,
+    logSnapshot: logSnapshot,
+    snapshotWhenSuccess: snapshotWhenSuccess,
+    settle: settle,
+  );
 
   // syntax sugar
   Future<void> shouldEquals(dynamic expected, {String? reason}) =>
@@ -82,8 +81,10 @@ Future<void> _expectWithRetry(
   while (true) {
     // Why need log "update": Because `actualGetter` can change
     final logMessage = Descriptor().formatLogOfExpect(
-        await actualGetter(), matcher,
-        overrideActualDescription: overrideActualDescription);
+      await actualGetter(),
+      matcher,
+      overrideActualDescription: overrideActualDescription,
+    );
     logUpdate('ASSERT', logMessage, type: LogSubEntryType.ASSERT);
 
     final actual = await actualGetter();
@@ -105,8 +106,12 @@ Future<void> _expectWithRetry(
       }
 
       if (snapshotWhenSuccess) await logSnapshot(name: 'after');
-      logUpdate('ASSERT', logMessage,
-          type: LogSubEntryType.ASSERT, printing: true); // #8484
+      logUpdate(
+        'ASSERT',
+        logMessage,
+        type: LogSubEntryType.ASSERT,
+        printing: true,
+      ); // #8484
       return;
     } on TestFailure catch (e, s) {
       Future<void> _logFailure(String message, {String? extraError}) async {
@@ -128,7 +133,8 @@ Future<void> _expectWithRetry(
       final duration = DateTime.now().difference(startTime);
       if (duration >= timeout) {
         await _logFailure(
-            'after $failedCount retries with ${duration.inMilliseconds} milliseconds, when $logMessage');
+          'after $failedCount retries with ${duration.inMilliseconds} milliseconds, when $logMessage',
+        );
         rethrow;
       }
 
@@ -155,18 +161,21 @@ String _getTestFailureErrorExtraInfo(dynamic actual) {
           return renderBox.localToGlobal(Offset.zero) & renderBox.size;
         })
         .mapIndexed(
-            (index, bbox) => '📦 Bounding box of element #$index: $bbox')
+          (index, bbox) => '📦 Bounding box of element #$index: $bbox',
+        )
         .join('\n\n');
 
-    final ancestorInfos = elements.mapIndexed((index, element) {
-      final reversedAncestors = [element];
-      element.visitAncestorElements((ancestorElement) {
-        reversedAncestors.add(ancestorElement);
-        return true;
-      });
-      return '🌳 Ancestors of element #$index:\n'
-          '${reversedAncestors.reversed.map((e) => '-> $e').join('\n')}';
-    }).join('\n\n');
+    final ancestorInfos = elements
+        .mapIndexed((index, element) {
+          final reversedAncestors = [element];
+          element.visitAncestorElements((ancestorElement) {
+            reversedAncestors.add(ancestorElement);
+            return true;
+          });
+          return '🌳 Ancestors of element #$index:\n'
+              '${reversedAncestors.reversed.map((e) => '-> $e').join('\n')}';
+        })
+        .join('\n\n');
 
     return 'Extra info for matched elements: \n$bboxInfos\n$ancestorInfos';
   }
