@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:test_api/backend.dart';
 import 'package:test_api/src/backend/declarer.dart';
 import 'package:test_api/src/backend/group.dart';
 import 'package:test_api/src/backend/group_entry.dart';
@@ -39,13 +40,15 @@ class SpyDeclarer implements Declarer {
   void setUp(dynamic Function() callback) => inner.setUp(callback);
 
   @override
-  void setUpAll(dynamic Function() callback) => inner.setUpAll(callback);
+  void setUpAll(dynamic Function() callback, {TestLocation? location}) =>
+      inner.setUpAll(callback, location: location);
 
   @override
   void tearDown(dynamic Function() callback) => inner.tearDown(callback);
 
   @override
-  void tearDownAll(dynamic Function() callback) => inner.tearDownAll(callback);
+  void tearDownAll(dynamic Function() callback, {TestLocation? location}) =>
+      inner.tearDownAll(callback, location: location);
 
   @override
   void group(
@@ -56,6 +59,7 @@ class SpyDeclarer implements Declarer {
     dynamic skip,
     Map<String, dynamic>? onPlatform,
     dynamic tags,
+    TestLocation? location,
     int? retry,
     bool solo = false,
   }) {
@@ -70,6 +74,7 @@ class SpyDeclarer implements Declarer {
       skip: skip,
       onPlatform: onPlatform,
       tags: tags,
+      location: location,
       retry: retry,
       solo: solo,
     );
@@ -84,6 +89,7 @@ class SpyDeclarer implements Declarer {
     dynamic skip,
     Map<String, dynamic>? onPlatform,
     dynamic tags,
+    TestLocation? location,
     int? retry,
     bool solo = false,
   }) {
@@ -96,6 +102,7 @@ class SpyDeclarer implements Declarer {
       skip: skip,
       onPlatform: onPlatform,
       tags: tags,
+      location: location,
       retry: retry,
       solo: solo,
     );
