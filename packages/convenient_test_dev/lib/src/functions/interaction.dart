@@ -26,9 +26,9 @@ extension ConvenientTestInteraction on ConvenientTest {
     // If await, will wait forever until the page is popped - surely we do not want that
     final context = myGetIt.get<ConvenientTestSlot>().getNavContext(this)!;
     if (replace) {
-      // ignore: use_build_context_synchronously
       unawaited(
         Navigator.pushReplacementNamed(
+          // ignore: use_build_context_synchronously
           context,
           routeName,
           arguments: arguments,
