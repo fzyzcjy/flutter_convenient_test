@@ -15,15 +15,18 @@ class ConvenientTest {
   static set activeInstance(ConvenientTest? value) {
     if (!((value != null) ^ (_activeInstance != null))) {
       throw Exception(
-          'Cannot set activeInstance, either overwrite existing instance or removing non-existing instance. '
-          'old=$_activeInstance new=$value');
+        'Cannot set activeInstance, either overwrite existing instance or removing non-existing instance. '
+        'old=$_activeInstance new=$value',
+      );
     }
     _activeInstance = value;
   }
 
   @internal
   static Future<void> withActiveInstance(
-      WidgetTester tester, Future<void> Function(ConvenientTest) body) async {
+    WidgetTester tester,
+    Future<void> Function(ConvenientTest) body,
+  ) async {
     final t = ConvenientTest._(tester);
     activeInstance = t;
     try {

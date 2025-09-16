@@ -46,12 +46,14 @@ extension ExtFinder on Finder {
       TFinderCommand.auto(this).tap(warnIfMissed: warnIfMissed, settle: settle);
 
   Future<void> longPress({bool warnIfMissed = true, bool? settle}) =>
-      TFinderCommand.auto(this)
-          .longPress(warnIfMissed: warnIfMissed, settle: settle);
+      TFinderCommand.auto(
+        this,
+      ).longPress(warnIfMissed: warnIfMissed, settle: settle);
 
   Future<void> drag(Offset offset, {bool warnIfMissed = true, bool? settle}) =>
-      TFinderCommand.auto(this)
-          .drag(offset, warnIfMissed: warnIfMissed, settle: settle);
+      TFinderCommand.auto(
+        this,
+      ).drag(offset, warnIfMissed: warnIfMissed, settle: settle);
 
   Future<void> multiDrag({
     required Offset firstDownOffset,
@@ -59,14 +61,13 @@ extension ExtFinder on Finder {
     required List<Offset> firstFingerOffsets,
     required List<Offset> secondFingerOffsets,
     bool? logMove,
-  }) =>
-      TFinderCommand.auto(this).multiDrag(
-        firstDownOffset: firstDownOffset,
-        secondDownOffset: secondDownOffset,
-        firstFingerOffsets: firstFingerOffsets,
-        secondFingerOffsets: secondFingerOffsets,
-        logMove: logMove,
-      );
+  }) => TFinderCommand.auto(this).multiDrag(
+    firstDownOffset: firstDownOffset,
+    secondDownOffset: secondDownOffset,
+    firstFingerOffsets: firstFingerOffsets,
+    secondFingerOffsets: secondFingerOffsets,
+    logMove: logMove,
+  );
 }
 
 typedef ConvenientTestGetFinder = Finder Function(Object arg);
@@ -92,14 +93,18 @@ extension ExtCommonFinders on CommonFinders {
   // ref
   // 1. cypress-realworld-app command: getBySel
   // 2. [CommonFinders.byTooltip]
-  Finder bySel(Object name,
-      {bool skipOffstage = true, bool Function(Object? markData)? predicate}) {
+  Finder bySel(
+    Object name, {
+    bool skipOffstage = true,
+    bool Function(Object? markData)? predicate,
+  }) {
     var description = '$name';
     // hacky beautify things like [LoginMark.username]; only useful when code is not obfuscated
     if (name is Enum && name.runtimeType.toString().endsWith('Mark')) {
       final cls = name.toString().split('.')[0];
-      final modifiedCls =
-          ReCase(cls.substring(0, cls.length - 'Mark'.length)).camelCase;
+      final modifiedCls = ReCase(
+        cls.substring(0, cls.length - 'Mark'.length),
+      ).camelCase;
       description = '$modifiedCls#${name.name}';
     }
 
@@ -153,22 +158,15 @@ class TFinderCommand extends TCommand {
   @override
   Future<Object?> getCurrentActual() async => finder;
 
-  Future<void> replaceText(
-    String text, {
-    bool? settle,
-  }) =>
-      act(
-        act: (log) => t.tester.enterText(finder, text),
-        preCondition: null,
-        logTitle: 'REPLACE TYPE',
-        logMessage: '"$text" to ${finder.describeMatch(Plurality.one)}',
-        settle: settle,
-      );
+  Future<void> replaceText(String text, {bool? settle}) => act(
+    act: (log) => t.tester.enterText(finder, text),
+    preCondition: null,
+    logTitle: 'REPLACE TYPE',
+    logMessage: '"$text" to ${finder.describeMatch(Plurality.one)}',
+    settle: settle,
+  );
 
-  Future<void> enterTextWithoutReplace(
-    String text, {
-    bool? settle,
-  }) {
+  Future<void> enterTextWithoutReplace(String text, {bool? settle}) {
     const logTitle = 'TYPE';
     final basicLogMessage = '"$text" to ${finder.describeMatch(Plurality.one)}';
 
@@ -178,7 +176,9 @@ class TFinderCommand extends TCommand {
         text,
         logCallback: (oldValue, newValue) {
           log.update(
-              logTitle, '$basicLogMessage (old text: "${oldValue.text}")');
+            logTitle,
+            '$basicLogMessage (old text: "${oldValue.text}")',
+          );
         },
       ),
       preCondition: null,
@@ -188,49 +188,36 @@ class TFinderCommand extends TCommand {
     );
   }
 
-  Future<void> tap({
-    bool warnIfMissed = true,
-    bool? settle,
-  }) =>
-      act(
-        act: (log) => t.tester.tap(finder, warnIfMissed: warnIfMissed),
-        preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
-        logTitle: 'TAP',
-        logMessage: finder.describeMatch(Plurality.one),
-        settle: settle,
-      );
+  Future<void> tap({bool warnIfMissed = true, bool? settle}) => act(
+    act: (log) => t.tester.tap(finder, warnIfMissed: warnIfMissed),
+    preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
+    logTitle: 'TAP',
+    logMessage: finder.describeMatch(Plurality.one),
+    settle: settle,
+  );
 
   Future<void> tapAtAlignment(
     Alignment alignment, {
     bool warnIfMissed = true,
     bool? settle,
-  }) =>
-      act(
-        act: (log) =>
-            t.tester.tapAt(alignment.withinRect(t.tester.getRect(finder))),
-        preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
-        logTitle: 'TAP',
-        logMessage: finder.describeMatch(Plurality.one),
-        settle: settle,
-      );
+  }) => act(
+    act: (log) =>
+        t.tester.tapAt(alignment.withinRect(t.tester.getRect(finder))),
+    preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
+    logTitle: 'TAP',
+    logMessage: finder.describeMatch(Plurality.one),
+    settle: settle,
+  );
 
-  Future<void> longPress({
-    bool warnIfMissed = true,
-    bool? settle,
-  }) =>
-      act(
-        act: (log) => t.tester.longPress(finder, warnIfMissed: warnIfMissed),
-        preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
-        logTitle: 'LONG PRESS',
-        logMessage: finder.describeMatch(Plurality.one),
-        settle: settle,
-      );
+  Future<void> longPress({bool warnIfMissed = true, bool? settle}) => act(
+    act: (log) => t.tester.longPress(finder, warnIfMissed: warnIfMissed),
+    preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
+    logTitle: 'LONG PRESS',
+    logMessage: finder.describeMatch(Plurality.one),
+    settle: settle,
+  );
 
-  Future<void> drag(
-    Offset offset, {
-    bool warnIfMissed = true,
-    bool? settle,
-  }) =>
+  Future<void> drag(Offset offset, {bool warnIfMissed = true, bool? settle}) =>
       act(
         act: (log) => t.tester.drag(finder, offset, warnIfMissed: warnIfMissed),
         preCondition: warnIfMissed ? ElementHitTestableMatcher(t.tester) : null,
@@ -246,22 +233,22 @@ class TFinderCommand extends TCommand {
     required List<Offset> secondFingerOffsets,
     bool? logMove,
     bool? settle,
-  }) =>
-      act(
-        act: (log) => t.tester.multiDrag(
-          finder,
-          firstDownOffset: firstDownOffset,
-          secondDownOffset: secondDownOffset,
-          firstFingerOffsets: firstFingerOffsets,
-          secondFingerOffsets: secondFingerOffsets,
-          afterMove:
-              (logMove ?? false) ? (i) => log.snapshot(name: 'move #$i') : null,
-        ),
-        preCondition: null,
-        logTitle: 'MULTI DRAG',
-        logMessage: finder.describeMatch(Plurality.one),
-        settle: settle,
-      );
+  }) => act(
+    act: (log) => t.tester.multiDrag(
+      finder,
+      firstDownOffset: firstDownOffset,
+      secondDownOffset: secondDownOffset,
+      firstFingerOffsets: firstFingerOffsets,
+      secondFingerOffsets: secondFingerOffsets,
+      afterMove: (logMove ?? false)
+          ? (i) => log.snapshot(name: 'move #$i')
+          : null,
+    ),
+    preCondition: null,
+    logTitle: 'MULTI DRAG',
+    logMessage: finder.describeMatch(Plurality.one),
+    settle: settle,
+  );
 
   Future<void> act({
     required Future<void> Function(LogHandle log) act,
@@ -279,32 +266,45 @@ class TFinderCommand extends TCommand {
     // ref https://docs.cypress.io/guides/core-concepts/retry-ability#Built-in-assertions
     await shouldRaw(
       allOf(findsOneWidget, preCondition),
-      logUpdate: (title, message,
-              {error, stackTrace, required type, printing = false}) =>
-          log.update('$logTitle ASSERT', message,
-              type: type,
-              error: error,
-              stackTrace: stackTrace,
-              printing: printing),
+      logUpdate:
+          (
+            title,
+            message, {
+            error,
+            stackTrace,
+            required type,
+            printing = false,
+          }) => log.update(
+            '$logTitle ASSERT',
+            message,
+            type: type,
+            error: error,
+            stackTrace: stackTrace,
+            printing: printing,
+          ),
       logSnapshot: log.snapshot,
       // do not take snapshot if success - since we will do it later
       snapshotWhenSuccess: false,
       settle: settle,
     );
     // update log, since [should] will change logs
-    unawaited(log.update(logTitle, logMessage,
-        type: LogSubEntryType.GENERAL_MESSAGE));
+    unawaited(
+      log.update(logTitle, logMessage, type: LogSubEntryType.GENERAL_MESSAGE),
+    );
 
     await act(log);
 
     try {
       await t.tester.pumpAndMaybeSettleWithRunAsync(settle: settle);
     } catch (e, s) {
-      await log.update(logTitle, 'doing pump, when $logMessage',
-          type: LogSubEntryType.ASSERT_FAIL,
-          error: '$e',
-          stackTrace: '$s',
-          printing: true);
+      await log.update(
+        logTitle,
+        'doing pump, when $logMessage',
+        type: LogSubEntryType.ASSERT_FAIL,
+        error: '$e',
+        stackTrace: '$s',
+        printing: true,
+      );
       await log.snapshot(name: 'failed');
       rethrow;
     }

@@ -8,37 +8,48 @@ class SuiteInfoConverter {
 
   static SuiteInfoProto convert(SpyDeclarerGroup root) {
     final target = SuiteInfoProto();
-    target.groupId =
-        SuiteInfoConverter._()._convertGroup(root, target, -1).toInt64();
+    target.groupId = SuiteInfoConverter._()
+        ._convertGroup(root, target, -1)
+        .toInt64();
     return target;
   }
 
   int _convertGroup(
-      SpyDeclarerGroup entry, SuiteInfoProto target, int parentId) {
+    SpyDeclarerGroup entry,
+    SuiteInfoProto target,
+    int parentId,
+  ) {
     final id = _idStableGenerator.generate(entry.name ?? '');
-    target.groups.add(GroupInfoProto(
-      id: id.toInt64(),
-      name: entry.name,
-      parentId: parentId.toInt64(),
-      entryIds: entry.entries
-          .map((child) => _convertGroupEntry(child, target, id).toInt64())
-          .toList(),
-    ));
+    target.groups.add(
+      GroupInfoProto(
+        id: id.toInt64(),
+        name: entry.name,
+        parentId: parentId.toInt64(),
+        entryIds: entry.entries
+            .map((child) => _convertGroupEntry(child, target, id).toInt64())
+            .toList(),
+      ),
+    );
     return id;
   }
 
   int _convertTest(SpyDeclarerTest entry, SuiteInfoProto target, int parentId) {
     final id = _idStableGenerator.generate(entry.name ?? '');
-    target.tests.add(TestInfoProto(
-      id: id.toInt64(),
-      name: entry.name,
-      parentId: parentId.toInt64(),
-    ));
+    target.tests.add(
+      TestInfoProto(
+        id: id.toInt64(),
+        name: entry.name,
+        parentId: parentId.toInt64(),
+      ),
+    );
     return id;
   }
 
   int _convertGroupEntry(
-      SpyDeclarerGroupEntry entry, SuiteInfoProto target, int parentId) {
+    SpyDeclarerGroupEntry entry,
+    SuiteInfoProto target,
+    int parentId,
+  ) {
     if (entry is SpyDeclarerGroup) {
       return _convertGroup(entry, target, parentId);
     }

@@ -47,18 +47,16 @@ LogHandle convenientTestLog(
   return log;
 }
 
-typedef LogUpdate = void Function(
-  String title,
-  String message, {
-  String? error,
-  String? stackTrace,
-  required LogSubEntryType type,
-  bool printing,
-});
-typedef LogSnapshot = Future<void> Function({
-  String name,
-  List<int>? image,
-});
+typedef LogUpdate =
+    void Function(
+      String title,
+      String message, {
+      String? error,
+      String? stackTrace,
+      required LogSubEntryType type,
+      bool printing,
+    });
+typedef LogSnapshot = Future<void> Function({String name, List<int>? image});
 
 class LogHandle {
   static const _kTag = 'LogHandle';
@@ -68,9 +66,7 @@ class LogHandle {
 
   LogHandle._(this._id, this._testName);
 
-  factory LogHandle.create({
-    LiveTest? liveTest,
-  }) {
+  factory LogHandle.create({LiveTest? liveTest}) {
     return LogHandle._(
       IdGenerator.instance.nextId(),
       (liveTest ?? Invoker.current!.liveTest).test.name,
@@ -87,28 +83,33 @@ class LogHandle {
     bool initial = false,
   }) async {
     if (printing) {
-      Log.i(_kTag,
-          '${_typeToLeading(type)} (#$_id, ${initial ? "create" : "update"}) $title $message $error $stackTrace');
+      Log.i(
+        _kTag,
+        '${_typeToLeading(type)} (#$_id, ${initial ? "create" : "update"}) $title $message $error $stackTrace',
+      );
     }
 
     final reporterService = WorkerReportSaverService.I;
     if (reporterService != null) {
-      await reporterService.report(ReportItem(
+      await reporterService.report(
+        ReportItem(
           logEntry: LogEntry(
-        id: _id.toInt64(),
-        testName: _testName,
-        subEntries: [
-          LogSubEntry(
-            id: IdGenerator.instance.nextId().toInt64(),
-            type: type,
-            time: Int64(DateTime.now().microsecondsSinceEpoch),
-            title: title,
-            message: message,
-            error: error,
-            stackTrace: stackTrace,
+            id: _id.toInt64(),
+            testName: _testName,
+            subEntries: [
+              LogSubEntry(
+                id: IdGenerator.instance.nextId().toInt64(),
+                type: type,
+                time: Int64(DateTime.now().microsecondsSinceEpoch),
+                title: title,
+                message: message,
+                error: error,
+                stackTrace: stackTrace,
+              ),
+            ],
           ),
-        ],
-      )));
+        ),
+      );
     }
   }
 
@@ -117,17 +118,22 @@ class LogHandle {
       final tester = ConvenientTest.maybeActiveInstance?.tester;
       return image ??
           await _maybeRunAsync(
-              tester, () => takeSnapshot(pumper: tester?.pump));
+            tester,
+            () => takeSnapshot(pumper: tester?.pump),
+          );
     }
 
     final reporterService = WorkerReportSaverService.I;
     if (reporterService != null) {
-      await reporterService.report(ReportItem(
+      await reporterService.report(
+        ReportItem(
           snapshot: Snapshot(
-        logEntryId: _id.toInt64(),
-        name: name,
-        image: await computeImage(),
-      )));
+            logEntryId: _id.toInt64(),
+            name: name,
+            image: await computeImage(),
+          ),
+        ),
+      );
     } else {
       if (StaticConfig.kVerbose) {
         final briefTime = DateTime.now()
@@ -141,15 +147,19 @@ class LogHandle {
         File(filename).writeAsBytesSync(await computeImage());
         Log.i(_kTag, 'snapshot() saved file to disk at: $filename');
       } else {
-        Log.i(_kTag,
-            'snapshot() is no-op; specify `${StaticConfig.kVerboseKey}` to save screenshots to disk.');
+        Log.i(
+          _kTag,
+          'snapshot() is no-op; specify `${StaticConfig.kVerboseKey}` to save screenshots to disk.',
+        );
       }
     }
   }
 }
 
 Future<T> _maybeRunAsync<T extends Object>(
-    WidgetTester? tester, Future<T> Function() f) async {
+  WidgetTester? tester,
+  Future<T> Function() f,
+) async {
   if (tester == null) return await f();
   return (await tester.runAsync(f))!;
 }

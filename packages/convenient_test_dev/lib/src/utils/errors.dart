@@ -23,10 +23,14 @@ void setUpFlutterOnError() {
 /// edited from flutter's `_defaultTestExceptionReporter`
 /// https://github.com/flutter/flutter/blob/e7b7ebc066c1b2a5aa5c19f8961307427e0142a6/packages/flutter_test/lib/src/test_exception_reporter.dart#L31
 void _convenientTestTestExceptionReporter(
-    FlutterErrorDetails errorDetails, String testDescription) {
+  FlutterErrorDetails errorDetails,
+  String testDescription,
+) {
   FlutterError.dumpErrorToConsole(errorDetails, forceReport: true);
   test_package.registerException(
-      _dumpErrorToString(errorDetails), errorDetails.stack ?? StackTrace.empty);
+    _dumpErrorToString(errorDetails),
+    errorDetails.stack ?? StackTrace.empty,
+  );
 }
 
 /// ref [FlutterError.dumpErrorToConsole], but output to String not console
@@ -34,10 +38,10 @@ String _dumpErrorToString(FlutterErrorDetails details) {
   // NOTE According to comments of [dumpErrorToConsole], can *only* used in `dev` mode, not `profile/release` mode.
   //      Thus, if want it in profile/release, need to copy other code in [dumpErrorToConsole]. (Not copied yet)
   return TextTreeRenderer(
-    wrapWidth: FlutterError.wrapWidth,
-    wrapWidthProperties: FlutterError.wrapWidth,
-    maxDescendentsTruncatableNode: 5,
-  )
+        wrapWidth: FlutterError.wrapWidth,
+        wrapWidthProperties: FlutterError.wrapWidth,
+        maxDescendentsTruncatableNode: 5,
+      )
       .render(details.toDiagnosticsNode(style: DiagnosticsTreeStyle.error))
       .trimRight();
 }

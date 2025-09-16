@@ -19,8 +19,10 @@ import 'package:test_api/src/backend/suite.dart';
 import 'package:test_api/src/backend/suite_platform.dart';
 import 'package:test_api/src/backend/test.dart';
 
-Declarer collectIntoDeclarer(
-    {required void Function() body, required int? defaultRetry}) {
+Declarer collectIntoDeclarer({
+  required void Function() body,
+  required int? defaultRetry,
+}) {
   // NOTE use MyDeclarer instead of Declarer
   return DeclarerWithDefault(defaultRetry: defaultRetry)..declare(body);
 }
@@ -32,8 +34,9 @@ void runTestsInDeclarer(
   required void Function(Group) onGroupBuilt,
 }) {
   Invoker.guard<Future<void>>(() async {
-    final _Reporter reporter =
-        _Reporter(color: false); // disable color when run directly.
+    final _Reporter reporter = _Reporter(
+      color: false,
+    ); // disable color when run directly.
     final Group group = declarer.build();
     onGroupBuilt(group);
     final Suite suite = Suite(group, SuitePlatform(Runtime.vm));
@@ -58,8 +61,10 @@ Future<void> _runGroup(
     final bool skipGroup = group.metadata.skip;
     bool setUpAllSucceeded = true;
     if (!skipGroup && group.setUpAll != null) {
-      final LiveTest liveTest =
-          group.setUpAll!.load(suiteConfig, groups: parents);
+      final LiveTest liveTest = group.setUpAll!.load(
+        suiteConfig,
+        groups: parents,
+      );
       await _runLiveTest(suiteConfig, liveTest, reporter, countSuccess: false);
       setUpAllSucceeded = liveTest.state.result.isPassing;
     }
@@ -73,15 +78,20 @@ Future<void> _runGroup(
         } else {
           final Test test = entry as Test;
           await _runLiveTest(
-              suiteConfig, test.load(suiteConfig, groups: parents), reporter);
+            suiteConfig,
+            test.load(suiteConfig, groups: parents),
+            reporter,
+          );
         }
       }
     }
     // Even if we're closed or setUpAll failed, we want to run all the
     // teardowns to ensure that any state is properly cleaned up.
     if (!skipGroup && group.tearDownAll != null) {
-      final LiveTest liveTest =
-          group.tearDownAll!.load(suiteConfig, groups: parents);
+      final LiveTest liveTest = group.tearDownAll!.load(
+        suiteConfig,
+        groups: parents,
+      );
       await _runLiveTest(suiteConfig, liveTest, reporter, countSuccess: false);
     }
   } finally {
@@ -91,8 +101,11 @@ Future<void> _runGroup(
 
 /// NOTE XXX ref: [flutter_test :: test_compat.dart]
 Future<void> _runLiveTest(
-    Suite suiteConfig, LiveTest liveTest, _Reporter reporter,
-    {bool countSuccess = true}) async {
+  Suite suiteConfig,
+  LiveTest liveTest,
+  _Reporter reporter, {
+  bool countSuccess = true,
+}) async {
   reporter._onTestStarted(liveTest);
   // Schedule a microtask to ensure that [onTestStarted] fires before the
   // first [LiveTest.onStateChange] event.
@@ -109,10 +122,18 @@ Future<void> _runLiveTest(
 }
 
 /// NOTE XXX ref: [flutter_test :: test_compat.dart]
-Future<void> _runSkippedTest(Suite suiteConfig, Test test, List<Group> parents,
-    _Reporter reporter) async {
-  final LocalTest skipped =
-      LocalTest(test.name, test.metadata, () {}, trace: test.trace);
+Future<void> _runSkippedTest(
+  Suite suiteConfig,
+  Test test,
+  List<Group> parents,
+  _Reporter reporter,
+) async {
+  final LocalTest skipped = LocalTest(
+    test.name,
+    test.metadata,
+    () {},
+    trace: test.trace,
+  );
   if (skipped.metadata.skipReason != null) {
     print('Skip: ${skipped.metadata.skipReason}');
   }
@@ -130,12 +151,12 @@ Future<void> _runSkippedTest(Suite suiteConfig, Test test, List<Group> parents,
 /// fixed, this must not import `dart:io`.
 class _Reporter {
   _Reporter({bool color = true, bool printPath = true})
-      : _printPath = printPath,
-        _green = color ? '\u001b[32m' : '',
-        _red = color ? '\u001b[31m' : '',
-        _yellow = color ? '\u001b[33m' : '',
-        _bold = color ? '\u001b[1m' : '',
-        _noColor = color ? '\u001b[0m' : '';
+    : _printPath = printPath,
+      _green = color ? '\u001b[32m' : '',
+      _red = color ? '\u001b[31m' : '',
+      _yellow = color ? '\u001b[33m' : '',
+      _bold = color ? '\u001b[1m' : '',
+      _noColor = color ? '\u001b[0m' : '';
 
   final List<LiveTest> passed = <LiveTest>[];
   final List<LiveTest> failed = <LiveTest>[];
@@ -196,35 +217,49 @@ class _Reporter {
     }
 
     _progressLine(_description(liveTest));
-    _subscriptions.add(liveTest.onStateChange
-        .listen((State state) => _onStateChange(liveTest, state)));
-    _subscriptions.add(liveTest.onError.listen((AsyncError error) =>
-        _onError(liveTest, error.error, error.stackTrace)));
-    _subscriptions.add(liveTest.onMessage.listen((Message message) {
-      _progressLine(_description(liveTest));
-      String text = message.text;
-      if (message.type == MessageType.skip) {
-        text = '  $_yellow$text$_noColor';
-      }
-      print(text);
+    _subscriptions.add(
+      liveTest.onStateChange.listen(
+        (State state) => _onStateChange(liveTest, state),
+      ),
+    );
+    _subscriptions.add(
+      liveTest.onError.listen(
+        (AsyncError error) => _onError(liveTest, error.error, error.stackTrace),
+      ),
+    );
+    _subscriptions.add(
+      liveTest.onMessage.listen((Message message) {
+        _progressLine(_description(liveTest));
+        String text = message.text;
+        if (message.type == MessageType.skip) {
+          text = '  $_yellow$text$_noColor';
+        }
+        print(text);
 
-      // NOTE XXX add
-      WorkerReportSaverService.I?.report(ReportItem(
-          runnerMessage: RunnerMessage(
-        testName: liveTest.test.name,
-        message: message.text,
-      )));
-    }));
+        // NOTE XXX add
+        WorkerReportSaverService.I?.report(
+          ReportItem(
+            runnerMessage: RunnerMessage(
+              testName: liveTest.test.name,
+              message: message.text,
+            ),
+          ),
+        );
+      }),
+    );
   }
 
   /// A callback called when [liveTest]'s state becomes [state].
   void _onStateChange(LiveTest liveTest, State state) {
     // NOTE XXX add
-    WorkerReportSaverService.I?.report(ReportItem(
+    WorkerReportSaverService.I?.report(
+      ReportItem(
         runnerStateChange: RunnerStateChange(
-      testName: liveTest.test.name,
-      state: state.toProto(),
-    )));
+          testName: liveTest.test.name,
+          state: state.toProto(),
+        ),
+      ),
+    );
 
     if (state.status != Status.complete) {
       return;
@@ -234,12 +269,15 @@ class _Reporter {
   /// A callback called when [liveTest] throws [error].
   void _onError(LiveTest liveTest, Object error, StackTrace stackTrace) {
     // NOTE XXX add
-    WorkerReportSaverService.I?.report(ReportItem(
+    WorkerReportSaverService.I?.report(
+      ReportItem(
         runnerError: RunnerError(
-      testName: liveTest.test.name,
-      error: error.toString(),
-      stackTrace: '$stackTrace',
-    )));
+          testName: liveTest.test.name,
+          error: error.toString(),
+          stackTrace: '$stackTrace',
+        ),
+      ),
+    );
     // print('hi _onError e.type=${error.runtimeType} error=$error');
     // print('hi _onError errors=${liveTest.errors}');
     convenientTestLog(
@@ -352,8 +390,13 @@ String _indent(String string, {int? size, String? first}) {
   return _prefixLines(string, ' ' * size, first: first);
 }
 
-String _prefixLines(String text, String prefix,
-    {String? first, String? last, String? single}) {
+String _prefixLines(
+  String text,
+  String prefix, {
+  String? first,
+  String? last,
+  String? single,
+}) {
   first ??= prefix;
   last ??= prefix;
   single ??= first;
