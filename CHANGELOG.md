@@ -1,3 +1,7 @@
+## 1.5.4
+
+* Update package APIs #426 (thanks @ahmdt)
+
 ## 1.5.3
 
 * Update package versions #411 #413 (thanks @Malnen and @Knupper)
