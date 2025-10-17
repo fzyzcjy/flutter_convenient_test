@@ -67,7 +67,7 @@ dependency_overrides:
 
 dev_dependencies:
   analyzer: '>=6.5.0 <8.0.0'
-  build_runner: '>=2.4.15 <2.5.0'
+  build_runner: ^2.7.1
   lint: '>=2.7.0 <3.0.0'
   mobx_codegen: ^2.7.0
 
