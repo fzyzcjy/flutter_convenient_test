@@ -5,10 +5,9 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
-
 import 'package:mobx/mobx.dart';
-import 'package:vm_service/vm_service.dart' hide Log;
 import 'package:vm_service/vm_service.dart' as vm_service;
+import 'package:vm_service/vm_service.dart' hide Log;
 import 'package:vm_service/vm_service_io.dart';
 
 part 'real_vm_service_wrapper_service.g.dart';
@@ -160,7 +159,7 @@ abstract class _ServiceConnectionManager with Store {
       }
       if (e.kind == EventKind.kServiceUnregistered) {
         _registeredMethodsForService.remove(
-          e.service!,
+          e.service,
         ); // ignore: unnecessary_null_checks
       }
     }
