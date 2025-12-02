@@ -158,9 +158,7 @@ abstract class _ServiceConnectionManager with Store {
             .add(e.method!);
       }
       if (e.kind == EventKind.kServiceUnregistered) {
-        _registeredMethodsForService.remove(
-          e.service,
-        ); // ignore: unnecessary_null_checks
+        _registeredMethodsForService.remove(e.service);
       }
     }
 
