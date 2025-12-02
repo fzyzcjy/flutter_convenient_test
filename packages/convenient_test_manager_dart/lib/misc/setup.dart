@@ -41,13 +41,16 @@ Future<void> setup({
   getIt.registerSingleton<WorkerSuperRunStore>(WorkerSuperRunStore());
   getIt.registerSingleton<VideoRecorderStore>(VideoRecorderStore());
   getIt.registerSingleton<ConvenientTestManagerService>(
-      ConvenientTestManagerService());
+    ConvenientTestManagerService(),
+  );
 
   getIt.registerSingleton<ReportHandlerService>(ReportHandlerService());
   getIt.registerSingleton<ManagerReportSaverService>(
-      ManagerReportSaverService());
+    ManagerReportSaverService(),
+  );
   getIt.registerSingleton<ScreenVideoRecorderService>(
-      ScreenVideoRecorderService.create());
+    ScreenVideoRecorderService.create(),
+  );
 
   if (registerMiscDartService) {
     getIt.registerSingleton<MiscDartService>(MiscDartService());
@@ -61,7 +64,8 @@ Future<void> setup({
   }
   if (registerVmServiceWrapper) {
     getIt.registerSingleton<VmServiceWrapperService>(
-        RealVmServiceWrapperService());
+      RealVmServiceWrapperService(),
+    );
   }
 
   GetIt.I.get<ConvenientTestManagerService>().serve();

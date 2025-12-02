@@ -6,23 +6,25 @@ class StateIndicatorWidget extends StatelessWidget {
   final SimplifiedStateEnum state;
   final bool enableAnimation;
 
-  const StateIndicatorWidget(
-      {super.key, required this.state, this.enableAnimation = false});
+  const StateIndicatorWidget({
+    super.key,
+    required this.state,
+    this.enableAnimation = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 16,
-      height: 16,
-      child: _buildCore(context),
-    );
+    return SizedBox(width: 16, height: 16, child: _buildCore(context));
   }
 
   Widget _buildCore(BuildContext context) {
     switch (state) {
       case SimplifiedStateEnum.pending:
-        return Icon(Icons.hourglass_empty,
-            color: Theme.of(context).colorScheme.onSurface, size: 14);
+        return Icon(
+          Icons.hourglass_empty,
+          color: Theme.of(context).colorScheme.onSurface,
+          size: 14,
+        );
       // return Center(
       //   child: SizedBox(
       //     width: 12,
@@ -56,8 +58,11 @@ class StateIndicatorWidget extends StatelessWidget {
         }
         return result;
       case SimplifiedStateEnum.completeSuccess:
-        return const Icon(Icons.check_circle_rounded,
-            color: Colors.green, size: 16);
+        return const Icon(
+          Icons.check_circle_rounded,
+          color: Colors.green,
+          size: 16,
+        );
       case SimplifiedStateEnum.completeSuccessButFlaky:
         return const Icon(Icons.flaky_outlined, color: Colors.orange, size: 16);
       case SimplifiedStateEnum.completeSkipped:

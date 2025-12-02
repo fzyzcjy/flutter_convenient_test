@@ -20,9 +20,7 @@ class HomePageSecondaryPanel extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8.0),
             child: _SecondaryPanelTabBar(),
           ),
-          Expanded(
-            child: _buildTab(),
-          ),
+          Expanded(child: _buildTab()),
         ],
       ),
     );

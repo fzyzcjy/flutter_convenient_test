@@ -6,8 +6,11 @@ class RotateAnimation extends StatefulWidget {
   final Widget child;
   final Duration duration;
 
-  const RotateAnimation(
-      {super.key, required this.child, required this.duration});
+  const RotateAnimation({
+    super.key,
+    required this.child,
+    required this.duration,
+  });
 
   @override
   _RotateAnimationState createState() => _RotateAnimationState();
@@ -34,10 +37,8 @@ class _RotateAnimationState extends State<RotateAnimation>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _controller,
-      builder: (_, child) => Transform.rotate(
-        angle: _controller.value * 2 * pi,
-        child: child,
-      ),
+      builder: (_, child) =>
+          Transform.rotate(angle: _controller.value * 2 * pi, child: child),
       child: widget.child,
     );
   }

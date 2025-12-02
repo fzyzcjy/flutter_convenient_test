@@ -38,7 +38,8 @@ Future<void> setup({
   getIt.registerSingleton<MiscFlutterService>(MiscFlutterService());
 
   getIt.registerSingleton<HighlightStoreBase>(GetIt.I.get<HighlightStore>());
-  getIt
-      .registerSingleton<VideoPlayerStoreBase>(GetIt.I.get<VideoPlayerStore>());
+  getIt.registerSingleton<VideoPlayerStoreBase>(
+    GetIt.I.get<VideoPlayerStore>(),
+  );
   getIt.registerSingleton<MiscDartService>(GetIt.I.get<MiscFlutterService>());
 }

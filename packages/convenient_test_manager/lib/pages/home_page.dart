@@ -17,9 +17,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: _Body(),
-    );
+    return const Scaffold(body: _Body());
   }
 }
 
@@ -28,28 +26,29 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      return Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const HomePageHeaderPanel(),
-              Divider(
+    return Observer(
+      builder: (_) {
+        return Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const HomePageHeaderPanel(),
+                Divider(
                   height: 1,
                   thickness: 1,
-                  color: Theme.of(context).colorScheme.outline),
-              Expanded(
-                child: _buildBody(context),
-              ),
-              // temporarily disable because of #25
-              // const HomePageInputKeyHandler(),
-            ],
-          ),
-          _buildHotRestartHint(context),
-        ],
-      );
-    });
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+                Expanded(child: _buildBody(context)),
+                // temporarily disable because of #25
+                // const HomePageInputKeyHandler(),
+              ],
+            ),
+            _buildHotRestartHint(context),
+          ],
+        );
+      },
+    );
   }
 
   Widget _buildBody(BuildContext context) {
@@ -64,8 +63,10 @@ class _Body extends StatelessWidget {
         context: context,
         onTap: vmServiceWrapperService.connect,
         tapHint: const Text('Tap here to reconnect'),
-        child: const Text('VMService not connected. '
-            'This may be because the Worker is not running, or network has problem. '),
+        child: const Text(
+          'VMService not connected. '
+          'This may be because the Worker is not running, or network has problem. ',
+        ),
       );
     }
 
@@ -98,17 +99,11 @@ class _Body extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(
-              flex: 1,
-              child: HomePageCommandInfoPanel(),
-            ),
+            const Expanded(flex: 1, child: HomePageCommandInfoPanel()),
             if (homePageStore.expandSecondaryPanel) ...[
               Container(width: 8),
               Container(width: 1, color: Theme.of(context).colorScheme.outline),
-              const Expanded(
-                flex: 1,
-                child: HomePageSecondaryPanel(),
-              ),
+              const Expanded(flex: 1, child: HomePageSecondaryPanel()),
             ],
           ],
         ),
@@ -147,16 +142,14 @@ class _Body extends StatelessWidget {
             children: [
               DefaultTextStyle(
                 style: TextStyle(
-                    fontSize: 15,
-                    height: 1.8,
-                    color: Theme.of(context).colorScheme.onSurface),
+                  fontSize: 15,
+                  height: 1.8,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
                 child: child,
               ),
               const SizedBox(height: 20),
-              TextButton(
-                onPressed: onTap,
-                child: tapHint,
-              ),
+              TextButton(onPressed: onTap, child: tapHint),
             ],
           ),
         ),
@@ -175,8 +168,10 @@ class _Body extends StatelessWidget {
         child: Observer(
           builder: (_) => vmServiceWrapperService.hotRestartActing
               ? Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(4),

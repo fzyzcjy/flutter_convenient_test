@@ -13,88 +13,102 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
-    return Observer(builder: (_) {
-      final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
-      if (gitFolderInfo == null) {
-        return const Center(child: Text('Please choose a folder first'));
-      }
+    return Observer(
+      builder: (_) {
+        final gitFolderInfo = goldenDiffPageStore.gitFolderInfo;
+        if (gitFolderInfo == null) {
+          return const Center(child: Text('Please choose a folder first'));
+        }
 
-      final highlightInfo = gitFolderInfo.diffFileInfos.singleWhereOrNull(
-          (info) => info.path == goldenDiffPageStore.highlightPath);
-      if (highlightInfo == null) {
-        return const Center(
-            child: Text('Please choose an item from left panel'));
-      }
+        final highlightInfo = gitFolderInfo.diffFileInfos.singleWhereOrNull(
+          (info) => info.path == goldenDiffPageStore.highlightPath,
+        );
+        if (highlightInfo == null) {
+          return const Center(
+            child: Text('Please choose an item from left panel'),
+          );
+        }
 
-      final maskedDiff = highlightInfo.comparisonResult.diffs?['maskedDiff'];
-      final isolatedDiff =
-          highlightInfo.comparisonResult.diffs?['isolatedDiff'];
+        final maskedDiff = highlightInfo.comparisonResult.diffs?['maskedDiff'];
+        final isolatedDiff =
+            highlightInfo.comparisonResult.diffs?['isolatedDiff'];
 
-      final imageSize = maskedDiff == null
-          ? null
-          : Size(maskedDiff.width.toDouble(), maskedDiff.height.toDouble());
+        final imageSize = maskedDiff == null
+            ? null
+            : Size(maskedDiff.width.toDouble(), maskedDiff.height.toDouble());
 
-      return _HotKeyHandlerWidget(
-        onMove: (delta) => _handleMove(gitFolderInfo, delta),
-        child: GestureDetector(
-          onPanUpdate: (d) => goldenDiffPageStore.highlightTransform =
-              Matrix4.translationValues(d.delta.dx, d.delta.dy, 0)
-                  .multiplied(goldenDiffPageStore.highlightTransform),
-          child: Column(
-            children: [
-              const SizedBox(height: 24),
-              _buildHeader(highlightInfo),
-              const SizedBox(height: 24),
-              Expanded(
-                child: Row(
-                  children: [
-                    _buildImage(
-                      name: 'Original',
-                      imageSize: imageSize,
-                      builder: (filterQuality) => Image(
+        return _HotKeyHandlerWidget(
+          onMove: (delta) => _handleMove(gitFolderInfo, delta),
+          child: GestureDetector(
+            onPanUpdate: (d) => goldenDiffPageStore.highlightTransform =
+                Matrix4.translationValues(
+                  d.delta.dx,
+                  d.delta.dy,
+                  0,
+                ).multiplied(goldenDiffPageStore.highlightTransform),
+            child: Column(
+              children: [
+                const SizedBox(height: 24),
+                _buildHeader(highlightInfo),
+                const SizedBox(height: 24),
+                Expanded(
+                  child: Row(
+                    children: [
+                      _buildImage(
+                        name: 'Original',
+                        imageSize: imageSize,
+                        builder: (filterQuality) => Image(
                           image: MemoryImage(highlightInfo.originalContent),
-                          filterQuality: filterQuality),
-                    ),
-                    _buildImage(
-                      name: 'New',
-                      imageSize: imageSize,
-                      builder: (filterQuality) => Image(
+                          filterQuality: filterQuality,
+                        ),
+                      ),
+                      _buildImage(
+                        name: 'New',
+                        imageSize: imageSize,
+                        builder: (filterQuality) => Image(
                           image: MemoryImage(highlightInfo.newContent),
-                          filterQuality: filterQuality),
-                    ),
-                  ],
+                          filterQuality: filterQuality,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              Expanded(
-                child: Row(
-                  children: [
-                    _buildImage(
-                      name: 'Masked Diff',
-                      imageSize: imageSize,
-                      builder: (filterQuality) => maskedDiff == null //
-                          ? Container()
-                          : RawImage(
-                              image: maskedDiff, filterQuality: filterQuality),
-                    ),
-                    _buildImage(
-                      name: 'Isolated Diff',
-                      imageSize: imageSize,
-                      builder: (filterQuality) => isolatedDiff == null
-                          ? Container()
-                          : RawImage(
-                              image: isolatedDiff,
-                              filterQuality: filterQuality),
-                    ),
-                  ],
+                const SizedBox(height: 24),
+                Expanded(
+                  child: Row(
+                    children: [
+                      _buildImage(
+                        name: 'Masked Diff',
+                        imageSize: imageSize,
+                        builder: (filterQuality) =>
+                            maskedDiff ==
+                                null //
+                            ? Container()
+                            : RawImage(
+                                image: maskedDiff,
+                                filterQuality: filterQuality,
+                              ),
+                      ),
+                      _buildImage(
+                        name: 'Isolated Diff',
+                        imageSize: imageSize,
+                        builder: (filterQuality) => isolatedDiff == null
+                            ? Container()
+                            : RawImage(
+                                image: isolatedDiff,
+                                filterQuality: filterQuality,
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-            ],
+                const SizedBox(height: 24),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget _buildImage({
@@ -105,70 +119,84 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
     return Expanded(
-      child: LayoutBuilder(builder: (_, constraints) {
-        return Observer(builder: (context) {
-          final isLargeScale = imageSize != null &&
-              constraints.maxWidth /
-                      imageSize.width *
-                      goldenDiffPageStore.highlightTransform[0] >
-                  1.5;
-          final filterQuality =
-              isLargeScale ? FilterQuality.none : FilterQuality.medium;
-          // print('hi $isLargeScale');
+      child: LayoutBuilder(
+        builder: (_, constraints) {
+          return Observer(
+            builder: (context) {
+              final isLargeScale =
+                  imageSize != null &&
+                  constraints.maxWidth /
+                          imageSize.width *
+                          goldenDiffPageStore.highlightTransform[0] >
+                      1.5;
+              final filterQuality = isLargeScale
+                  ? FilterQuality.none
+                  : FilterQuality.medium;
+              // print('hi $isLargeScale');
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: Material(
-              color: Theme.of(context).colorScheme.outline,
-              child: ClipRect(
-                child: Column(
-                  children: [
-                    Text(
-                      name,
-                      style: const TextStyle(
-                          fontSize: 12, fontWeight: FontWeight.w600),
-                    ),
-                    Expanded(
-                      child: Observer(
-                        builder: (_) => Transform(
-                          transform: goldenDiffPageStore.highlightTransform,
-                          child: Listener(
-                            onPointerSignal: (signal) {
-                              if (signal is PointerScrollEvent) {
-                                const kScaleRatio = 1.5;
-                                final scale = signal.scrollDelta.dy > 0
-                                    ? kScaleRatio
-                                    : (1 / kScaleRatio);
-
-                                goldenDiffPageStore.highlightTransform =
-                                    _matrixScale(scale, signal.localPosition)
-                                        .multiplied(goldenDiffPageStore
-                                            .highlightTransform);
-                              }
-                            },
-                            child: builder(filterQuality),
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                child: Material(
+                  color: Theme.of(context).colorScheme.outline,
+                  child: ClipRect(
+                    child: Column(
+                      children: [
+                        Text(
+                          name,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
+                        Expanded(
+                          child: Observer(
+                            builder: (_) => Transform(
+                              transform: goldenDiffPageStore.highlightTransform,
+                              child: Listener(
+                                onPointerSignal: (signal) {
+                                  if (signal is PointerScrollEvent) {
+                                    const kScaleRatio = 1.5;
+                                    final scale = signal.scrollDelta.dy > 0
+                                        ? kScaleRatio
+                                        : (1 / kScaleRatio);
+
+                                    goldenDiffPageStore.highlightTransform =
+                                        _matrixScale(
+                                          scale,
+                                          signal.localPosition,
+                                        ).multiplied(
+                                          goldenDiffPageStore
+                                              .highlightTransform,
+                                        );
+                                  }
+                                },
+                                child: builder(filterQuality),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           );
-        });
-      }),
+        },
+      ),
     );
   }
 
   void _handleMove(GitFolderInfo gitFolderInfo, int delta) {
     final goldenDiffPageStore = GetIt.I.get<GoldenDiffPageStore>();
 
-    final oldIndex = gitFolderInfo.diffFileInfos
-        .indexWhere((info) => info.path == goldenDiffPageStore.highlightPath);
+    final oldIndex = gitFolderInfo.diffFileInfos.indexWhere(
+      (info) => info.path == goldenDiffPageStore.highlightPath,
+    );
     if (oldIndex == -1) return;
 
-    final newIndex = (oldIndex + delta + gitFolderInfo.diffFileInfos.length) %
+    final newIndex =
+        (oldIndex + delta + gitFolderInfo.diffFileInfos.length) %
         gitFolderInfo.diffFileInfos.length;
     goldenDiffPageStore.highlightPath =
         gitFolderInfo.diffFileInfos[newIndex].path;
@@ -180,7 +208,8 @@ class GoldenDiffPageDetailDiffPanel extends StatelessWidget {
       child: Row(
         children: [
           Text(
-              'Diff: ${(highlightInfo.comparisonResult.diffPercent * 100).toStringAsFixed(2)}%'),
+            'Diff: ${(highlightInfo.comparisonResult.diffPercent * 100).toStringAsFixed(2)}%',
+          ),
           const SizedBox(width: 16),
           Text('Path: ${highlightInfo.path}'),
         ],
@@ -206,10 +235,7 @@ class _HotKeyHandlerWidget extends StatelessWidget {
   final void Function(int delta) onMove;
   final Widget child;
 
-  const _HotKeyHandlerWidget({
-    required this.onMove,
-    required this.child,
-  });
+  const _HotKeyHandlerWidget({required this.onMove, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -221,12 +247,10 @@ class _HotKeyHandlerWidget extends StatelessWidget {
       child: Actions(
         actions: {
           _MoveIntent: CallbackAction<_MoveIntent>(
-              onInvoke: (intent) => onMove(intent.delta)),
+            onInvoke: (intent) => onMove(intent.delta),
+          ),
         },
-        child: Focus(
-          autofocus: true,
-          child: child,
-        ),
+        child: Focus(autofocus: true, child: child),
       ),
     );
   }

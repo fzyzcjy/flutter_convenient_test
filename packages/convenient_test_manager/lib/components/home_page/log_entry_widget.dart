@@ -35,27 +35,27 @@ class HomePageLogEntryWidget extends StatelessWidget {
     const kScreenshotPeriod = 8;
     final screenshotIndexModPeriod = order % kScreenshotPeriod;
 
-    return Observer(builder: (context) {
-      return Row(
-        children: [
-          Expanded(
-            flex: kScreenshotPeriod,
-            child: _buildCore(context),
-          ),
-          if (!homePageStore.expandSecondaryPanel) ...[
-            _buildSpacer(flex: screenshotIndexModPeriod),
-            Expanded(
-              flex: 1,
-              child: _HomePageLogEntryScreenshotPreview(
-                logEntryId: logEntryId,
+    return Observer(
+      builder: (context) {
+        return Row(
+          children: [
+            Expanded(flex: kScreenshotPeriod, child: _buildCore(context)),
+            if (!homePageStore.expandSecondaryPanel) ...[
+              _buildSpacer(flex: screenshotIndexModPeriod),
+              Expanded(
+                flex: 1,
+                child: _HomePageLogEntryScreenshotPreview(
+                  logEntryId: logEntryId,
+                ),
               ),
-            ),
-            _buildSpacer(
-                flex: kScreenshotPeriod - 1 - screenshotIndexModPeriod),
-          ]
-        ],
-      );
-    });
+              _buildSpacer(
+                flex: kScreenshotPeriod - 1 - screenshotIndexModPeriod,
+              ),
+            ],
+          ],
+        );
+      },
+    );
   }
 
   Widget _buildSpacer({required int flex}) =>
@@ -91,16 +91,22 @@ class HomePageLogEntryWidget extends StatelessWidget {
               _handleTapOrHover(interestLogSubEntry, targetState: !active),
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            margin: isSection //
+            margin:
+                isSection //
                 ? const EdgeInsets.only(left: 32, top: 16)
                 : const EdgeInsets.only(left: 32),
             decoration: BoxDecoration(
-              color: _calcDecorationColor(context,
-                  isSection: isSection, active: active),
+              color: _calcDecorationColor(
+                context,
+                isSection: isSection,
+                active: active,
+              ),
               border: Border(
                 left: running
                     ? BorderSide(
-                        color: Theme.of(context).colorScheme.primary, width: 2)
+                        color: Theme.of(context).colorScheme.primary,
+                        width: 2,
+                      )
                     : BorderSide.none,
                 // top: isSection ? BorderSide(color: Theme.of(context).primaryColor, width: 2) : BorderSide.none,
               ),
@@ -112,7 +118,8 @@ class HomePageLogEntryWidget extends StatelessWidget {
                   width: 24,
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: running //
+                    child:
+                        running //
                         ? const RotateAnimation(
                             duration: Duration(seconds: 2),
                             child: Icon(
@@ -127,9 +134,11 @@ class HomePageLogEntryWidget extends StatelessWidget {
                               child: Text(
                                 '$order',
                                 style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.onSurface,
-                                    fontSize: 9),
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
+                                  fontSize: 9,
+                                ),
                               ),
                             ),
                           ),
@@ -153,24 +162,32 @@ class HomePageLogEntryWidget extends StatelessWidget {
           ),
         ),
         if (interestLogSubEntry.error.isNotEmpty)
-          _buildError(context, interestLogSubEntry)
+          _buildError(context, interestLogSubEntry),
       ],
     );
   }
 
-  Color _calcDecorationColor(BuildContext context,
-      {required bool isSection, required bool active}) {
+  Color _calcDecorationColor(
+    BuildContext context, {
+    required bool isSection,
+    required bool active,
+  }) {
     double elevation = 1;
     if (isSection) elevation = 2;
 
     if (active) elevation = 3;
     final colorScheme = Theme.of(context).colorScheme;
     return ElevationOverlay.applySurfaceTint(
-        colorScheme.surface, colorScheme.surfaceTint, elevation);
+      colorScheme.surface,
+      colorScheme.surfaceTint,
+      elevation,
+    );
   }
 
-  void _handleTapOrHover(LogSubEntry interestLogSubEntry,
-      {required bool targetState}) {
+  void _handleTapOrHover(
+    LogSubEntry interestLogSubEntry, {
+    required bool targetState,
+  }) {
     final highlightStore = GetIt.I.get<HighlightStore>();
     final videoPlayerStore = GetIt.I.get<VideoPlayerStore>();
 
@@ -181,7 +198,8 @@ class HomePageLogEntryWidget extends StatelessWidget {
       final activeVideo = videoPlayerStore.activeVideo;
       if (activeVideo != null) {
         videoPlayerStore.mainPlayerController.seek(
-            activeVideo.absoluteToVideoTime(interestLogSubEntry.timeTyped));
+          activeVideo.absoluteToVideoTime(interestLogSubEntry.timeTyped),
+        );
       }
     }
   }
@@ -212,15 +230,10 @@ class HomePageLogEntryWidget extends StatelessWidget {
           padding: backgroundColor == null
               ? null
               : const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-          decoration: BoxDecoration(
-            color: backgroundColor,
-          ),
+          decoration: BoxDecoration(color: backgroundColor),
           child: Text(
             interestLogSubEntry.title,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: textColor,
-            ),
+            style: TextStyle(fontWeight: FontWeight.w600, color: textColor),
           ),
         ),
       ),
@@ -230,62 +243,71 @@ class HomePageLogEntryWidget extends StatelessWidget {
   Widget _buildError(BuildContext context, LogSubEntry interestLogSubEntry) {
     final homePageStore = GetIt.I.get<HomePageStore>();
 
-    return Observer(builder: (_) {
-      final expand = homePageStore.logEntryExpandErrorInfoMap[logEntryId];
+    return Observer(
+      builder: (_) {
+        final expand = homePageStore.logEntryExpandErrorInfoMap[logEntryId];
 
-      final text =
-          '${interestLogSubEntry.error}\n${interestLogSubEntry.stackTrace}';
+        final text =
+            '${interestLogSubEntry.error}\n${interestLogSubEntry.stackTrace}';
 
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        margin: const EdgeInsets.only(left: 32),
-        decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.light //
-              ? Colors.red.shade50
-              : const Color(0xFF6C2827),
-          border: Border(left: BorderSide(color: Colors.red[200]!, width: 2)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: expand ? double.infinity : 100,
-              ),
-              child: SizedBox(
-                width: double.infinity,
-                child: EnhancedSelectableText(
-                  text,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontFamily: 'RobotoMono',
-                    overflow: TextOverflow.ellipsis,
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          margin: const EdgeInsets.only(left: 32),
+          decoration: BoxDecoration(
+            color:
+                Theme.of(context).brightness ==
+                    Brightness
+                        .light //
+                ? Colors.red.shade50
+                : const Color(0xFF6C2827),
+            border: Border(left: BorderSide(color: Colors.red[200]!, width: 2)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: expand ? double.infinity : 100,
+                ),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: EnhancedSelectableText(
+                    text,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontFamily: 'RobotoMono',
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () => homePageStore
-                    .logEntryExpandErrorInfoMap[logEntryId] = !expand,
-                child: Text(
-                  '[${expand ? "Collapse" : "Expand"}]',
-                  style: TextStyle(
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () =>
+                      homePageStore.logEntryExpandErrorInfoMap[logEntryId] =
+                          !expand,
+                  child: Text(
+                    '[${expand ? "Collapse" : "Expand"}]',
+                    style: TextStyle(
                       fontSize: 12,
-                      color: Theme.of(context).colorScheme.onSurface),
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      );
-    });
+            ],
+          ),
+        );
+      },
+    );
   }
 
-  Widget _buildTime(
-      {required List<int> logSubEntryIds, required BuildContext context}) {
+  Widget _buildTime({
+    required List<int> logSubEntryIds,
+    required BuildContext context,
+  }) {
     final logStore = GetIt.I.get<LogStore>();
 
     final testStartTime = logStore
@@ -296,14 +318,16 @@ class HomePageLogEntryWidget extends StatelessWidget {
     final logEntryEndTime =
         logStore.logSubEntryMap[logSubEntryIds.last]!.timeTyped;
 
-    final logEntryStartDisplay =
-        _formatDuration(logEntryStartTime.difference(testStartTime));
-    final logEntryEndDisplay =
-        _formatDuration(logEntryEndTime.difference(testStartTime));
+    final logEntryStartDisplay = _formatDuration(
+      logEntryStartTime.difference(testStartTime),
+    );
+    final logEntryEndDisplay = _formatDuration(
+      logEntryEndTime.difference(testStartTime),
+    );
 
     final shouldShowLogEndDisplay =
         logEntryEndTime.difference(logEntryStartTime) >
-            const Duration(milliseconds: 300);
+        const Duration(milliseconds: 300);
 
     return Text(
       '$logEntryStartDisplay${shouldShowLogEndDisplay ? '-$logEntryEndDisplay' : ''}s',
@@ -332,8 +356,10 @@ class _HomePageLogEntryScreenshotPreview extends StatelessWidget {
           follower: Alignment.topCenter,
           target: Alignment.topCenter,
         ),
-        portalFollower:
-            _buildPortalFollower(context, width: constraints.maxWidth),
+        portalFollower: _buildPortalFollower(
+          context,
+          width: constraints.maxWidth,
+        ),
         child: const SizedBox(),
       ),
     );
@@ -350,7 +376,8 @@ class _HomePageLogEntryScreenshotPreview extends StatelessWidget {
       width: width,
       child: Container(
         decoration: BoxDecoration(
-          border: highlight //
+          border:
+              highlight //
               ? Border.all(color: Theme.of(context).primaryColor, width: 2)
               : Border.all(color: Colors.grey),
         ),

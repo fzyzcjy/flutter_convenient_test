@@ -22,16 +22,12 @@ abstract class _HomePageStore with Store {
   /// key: testId; value: ListView index of *first* log entry of that test
   final rdtListViewIndexOfFirstLogEntryOfTestIdMap = ObservableMap<int, int>();
 
-  final logEntryExpandErrorInfoMap =
-      ObservableDefaultMap<int, bool>(createDefaultValue: (_) => false);
+  final logEntryExpandErrorInfoMap = ObservableDefaultMap<int, bool>(
+    createDefaultValue: (_) => false,
+  );
 }
 
-enum HomePageSecondaryPanelTab {
-  screenshot,
-  video,
-  rawLog,
-  none,
-}
+enum HomePageSecondaryPanelTab { screenshot, video, rawLog, none }
 
 extension ExtHomePageSecondaryPanelTab on HomePageSecondaryPanelTab {
   String get title {

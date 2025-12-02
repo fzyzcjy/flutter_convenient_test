@@ -39,7 +39,8 @@ abstract class _WorkerSuperRunStore with Store {
   @observable
   WorkerSuperRunController currSuperRunController =
       _WorkerSuperRunControllerIntegrationTestClassicalMode(
-          filterNameRegex: RegexUtils.kMatchNothing);
+        filterNameRegex: RegexUtils.kMatchNothing,
+      );
 
   void setControllerInteractiveApp() =>
       currSuperRunController = _WorkerSuperRunControllerInteractiveApp();
@@ -48,11 +49,13 @@ abstract class _WorkerSuperRunStore with Store {
     if (isolationMode) {
       currSuperRunController =
           _WorkerSuperRunControllerIntegrationTestIsolationMode(
-              filterNameRegex: filterNameRegex);
+            filterNameRegex: filterNameRegex,
+          );
     } else {
       currSuperRunController =
           _WorkerSuperRunControllerIntegrationTestClassicalMode(
-              filterNameRegex: filterNameRegex);
+            filterNameRegex: filterNameRegex,
+          );
     }
   }
 
@@ -79,22 +82,22 @@ abstract class _WorkerSuperRunStore with Store {
   }
 
   void _handleIsolationModeChange(bool isolationMode) {
-    Log.d(_kTag,
-        'see isolationMode($isolationMode) changed, thus reloadInfo to make currSuperRunController updated');
+    Log.d(
+      _kTag,
+      'see isolationMode($isolationMode) changed, thus reloadInfo to make currSuperRunController updated',
+    );
     GetIt.I.get<MiscDartService>().reloadInfo();
-    assert(isolationMode
-        ? currSuperRunController
-            is _WorkerSuperRunControllerIntegrationTestIsolationMode
-        : currSuperRunController
-            is _WorkerSuperRunControllerIntegrationTestClassicalMode);
+    assert(
+      isolationMode
+          ? currSuperRunController
+                is _WorkerSuperRunControllerIntegrationTestIsolationMode
+          : currSuperRunController
+                is _WorkerSuperRunControllerIntegrationTestClassicalMode,
+    );
   }
 }
 
-enum WorkerSuperRunStatus {
-  runningTest,
-  testAllDone,
-  na,
-}
+enum WorkerSuperRunStatus { runningTest, testAllDone, na }
 
 enum WorkerRunMode { interactiveApp, integrationTest }
 
@@ -121,23 +124,25 @@ class _WorkerSuperRunControllerHalt extends WorkerSuperRunController {
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() => WorkerCurrentRunConfig(
-        integrationTest: WorkerCurrentRunConfig_IntegrationTest(
-          reportSuiteInfo: false,
-          defaultRetryCount: 0,
-          executionFilter: ExecutionFilter(
-            filterNameRegex: RegexUtils.kMatchNothing,
-            strategy: ExecutionFilter_Strategy(
-              allMatch: ExecutionFilter_Strategy_AllMatch(),
-            ),
-          ),
-          autoUpdateGoldenFiles:
-              GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
+    integrationTest: WorkerCurrentRunConfig_IntegrationTest(
+      reportSuiteInfo: false,
+      defaultRetryCount: 0,
+      executionFilter: ExecutionFilter(
+        filterNameRegex: RegexUtils.kMatchNothing,
+        strategy: ExecutionFilter_Strategy(
+          allMatch: ExecutionFilter_Strategy_AllMatch(),
         ),
-      );
+      ),
+      autoUpdateGoldenFiles: GetIt.I
+          .get<WorkerSuperRunStore>()
+          .autoUpdateGoldenFiles,
+    ),
+  );
 
   @override
   void handleTearDownAll(
-      ResolvedExecutionFilterProto resolvedExecutionFilter) {}
+    ResolvedExecutionFilterProto resolvedExecutionFilter,
+  ) {}
 
   @override
   WorkerSuperRunStatus get superRunStatus => WorkerSuperRunStatus.na;
@@ -152,12 +157,14 @@ class _WorkerSuperRunControllerInteractiveApp extends WorkerSuperRunController {
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
     return WorkerCurrentRunConfig(
-        interactiveApp: WorkerCurrentRunConfig_InteractiveApp());
+      interactiveApp: WorkerCurrentRunConfig_InteractiveApp(),
+    );
   }
 
   @override
   void handleTearDownAll(
-      ResolvedExecutionFilterProto resolvedExecutionFilter) {}
+    ResolvedExecutionFilterProto resolvedExecutionFilter,
+  ) {}
 
   @override
   WorkerSuperRunStatus get superRunStatus => WorkerSuperRunStatus.na;
@@ -171,12 +178,13 @@ class _WorkerSuperRunControllerIntegrationTestClassicalMode = __WorkerSuperRunCo
     with _$_WorkerSuperRunControllerIntegrationTestClassicalMode;
 
 abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode
-    extends WorkerSuperRunController with Store {
+    extends WorkerSuperRunController
+    with Store {
   final String filterNameRegex;
 
-  __WorkerSuperRunControllerIntegrationTestClassicalMode(
-      {required this.filterNameRegex})
-      : super._();
+  __WorkerSuperRunControllerIntegrationTestClassicalMode({
+    required this.filterNameRegex,
+  }) : super._();
 
   @observable
   bool seenTearDownAll = false;
@@ -193,10 +201,12 @@ abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode
         executionFilter: ExecutionFilter(
           filterNameRegex: filterNameRegex,
           strategy: ExecutionFilter_Strategy(
-              allMatch: ExecutionFilter_Strategy_AllMatch()),
+            allMatch: ExecutionFilter_Strategy_AllMatch(),
+          ),
         ),
-        autoUpdateGoldenFiles:
-            GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
+        autoUpdateGoldenFiles: GetIt.I
+            .get<WorkerSuperRunStore>()
+            .autoUpdateGoldenFiles,
       ),
     );
   }
@@ -212,7 +222,8 @@ abstract class __WorkerSuperRunControllerIntegrationTestClassicalMode
       : WorkerSuperRunStatus.runningTest;
 
   @override
-  String toString() => 'WorkerSuperRunControllerIntegrationTestClassicalMode{'
+  String toString() =>
+      'WorkerSuperRunControllerIntegrationTestClassicalMode{'
       'filterNameRegex: $filterNameRegex, '
       'seenTearDownAll: $seenTearDownAll'
       '}';
@@ -223,7 +234,8 @@ class _WorkerSuperRunControllerIntegrationTestIsolationMode = __WorkerSuperRunCo
     with _$_WorkerSuperRunControllerIntegrationTestIsolationMode;
 
 abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
-    extends WorkerSuperRunController with Store {
+    extends WorkerSuperRunController
+    with Store {
   static const _kTag = '_WorkerSuperRunControllerIntegrationTestIsolationMode';
 
   final String filterNameRegex;
@@ -231,9 +243,9 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
   @observable
   var state = const _ITIMState.initial();
 
-  __WorkerSuperRunControllerIntegrationTestIsolationMode(
-      {required this.filterNameRegex})
-      : super._();
+  __WorkerSuperRunControllerIntegrationTestIsolationMode({
+    required this.filterNameRegex,
+  }) : super._();
 
   @override
   WorkerCurrentRunConfig _calcCurrentRunConfig() {
@@ -243,41 +255,42 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
         // do *not* handle flaky tests at worker level; instead, handle it at manager level
         defaultRetryCount: 0,
         executionFilter: _calcExecutionFilter(),
-        autoUpdateGoldenFiles:
-            GetIt.I.get<WorkerSuperRunStore>().autoUpdateGoldenFiles,
+        autoUpdateGoldenFiles: GetIt.I
+            .get<WorkerSuperRunStore>()
+            .autoUpdateGoldenFiles,
       ),
     );
   }
 
   ExecutionFilter _calcExecutionFilter() => switch (state) {
-        ITIMStateInitial _ => ExecutionFilter(
-            filterNameRegex: filterNameRegex,
-            strategy: ExecutionFilter_Strategy(
-              firstMatch: ExecutionFilter_Strategy_FirstMatch(),
-            ),
-          ),
-        final ITIMStateGoOn s => ExecutionFilter(
-            filterNameRegex: filterNameRegex,
-            strategy: ExecutionFilter_Strategy(
-              nextMatch: ExecutionFilter_Strategy_NextMatch(
-                prevTestName: s.lastExecutedTestName,
-              ),
-            ),
-          ),
-        final ITIMStateRetryLast s => ExecutionFilter(
-            filterNameRegex: RegexUtils.matchFull(s.lastExecutedTestName),
-            strategy: ExecutionFilter_Strategy(
-              allMatch: ExecutionFilter_Strategy_AllMatch(),
-            ),
-          ),
-        ITIMStateFinished _ => ExecutionFilter(
-            filterNameRegex: RegexUtils.kMatchNothing,
-            strategy: ExecutionFilter_Strategy(
-              allMatch: ExecutionFilter_Strategy_AllMatch(),
-            ),
-          ),
-        _ITIMState() => throw UnimplementedError(),
-      };
+    ITIMStateInitial _ => ExecutionFilter(
+      filterNameRegex: filterNameRegex,
+      strategy: ExecutionFilter_Strategy(
+        firstMatch: ExecutionFilter_Strategy_FirstMatch(),
+      ),
+    ),
+    final ITIMStateGoOn s => ExecutionFilter(
+      filterNameRegex: filterNameRegex,
+      strategy: ExecutionFilter_Strategy(
+        nextMatch: ExecutionFilter_Strategy_NextMatch(
+          prevTestName: s.lastExecutedTestName,
+        ),
+      ),
+    ),
+    final ITIMStateRetryLast s => ExecutionFilter(
+      filterNameRegex: RegexUtils.matchFull(s.lastExecutedTestName),
+      strategy: ExecutionFilter_Strategy(
+        allMatch: ExecutionFilter_Strategy_AllMatch(),
+      ),
+    ),
+    ITIMStateFinished _ => ExecutionFilter(
+      filterNameRegex: RegexUtils.kMatchNothing,
+      strategy: ExecutionFilter_Strategy(
+        allMatch: ExecutionFilter_Strategy_AllMatch(),
+      ),
+    ),
+    _ITIMState() => throw UnimplementedError(),
+  };
 
   @override
   void handleTearDownAll(ResolvedExecutionFilterProto resolvedExecutionFilter) {
@@ -288,19 +301,21 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
 
     if (allowExecuteTestNames.length > 1) {
       throw Exception(
-          '$_kTag expect allowExecuteTestNames to have 0 or 1 entries, '
-          'since in this mode, a worker run only executes 0 or 1 tests. '
-          'However, currently it is allowExecuteTestNames=$allowExecuteTestNames.');
+        '$_kTag expect allowExecuteTestNames to have 0 or 1 entries, '
+        'since in this mode, a worker run only executes 0 or 1 tests. '
+        'However, currently it is allowExecuteTestNames=$allowExecuteTestNames.',
+      );
     }
 
     final executedTestName = allowExecuteTestNames.firstOrNull;
     final executedTestSucceeded = () {
       if (executedTestName == null) return null;
 
-      final executedTestId =
-          suiteInfoStore.suiteInfo!.getEntryIdFromName(executedTestName)!;
-      final executedTestState =
-          suiteInfoStore.testEntryStateMap[executedTestId].toState();
+      final executedTestId = suiteInfoStore.suiteInfo!.getEntryIdFromName(
+        executedTestName,
+      )!;
+      final executedTestState = suiteInfoStore.testEntryStateMap[executedTestId]
+          .toState();
       if (executedTestState.status != Status.complete) throw AssertionError;
 
       return executedTestState.result == Result.success;
@@ -313,9 +328,10 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
     );
 
     Log.d(
-        _kTag,
-        'handleTearDownAll end oldState=$oldState newState=$state '
-        'allowExecuteTestNames=$allowExecuteTestNames executedTestSucceeded=$executedTestSucceeded');
+      _kTag,
+      'handleTearDownAll end oldState=$oldState newState=$state '
+      'allowExecuteTestNames=$allowExecuteTestNames executedTestSucceeded=$executedTestSucceeded',
+    );
 
     if (state is! ITIMStateFinished) {
       Log.d(_kTag, 'call hot restart');
@@ -345,7 +361,8 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
       final lastExecutedTestFailCount = oldState is ITIMStateRetryLast
           ? (oldState.lastExecutedTestFailCount + 1)
           : 1;
-      final shouldRetry = lastExecutedTestFailCount <
+      final shouldRetry =
+          lastExecutedTestFailCount <
           GetIt.I.get<WorkerSuperRunStore>().flakyTestTotalAttemptCount;
 
       if (shouldRetry) {
@@ -360,7 +377,8 @@ abstract class __WorkerSuperRunControllerIntegrationTestIsolationMode
   }
 
   @override
-  String toString() => 'WorkerSuperRunControllerIntegrationTestIsolationMode{'
+  String toString() =>
+      'WorkerSuperRunControllerIntegrationTestIsolationMode{'
       'filterNameRegex: $filterNameRegex, '
       'state: $state'
       '}';
@@ -372,9 +390,8 @@ class _ITIMState with _$ITIMState {
   /// Before first test finished
   const factory _ITIMState.initial() = ITIMStateInitial;
 
-  const factory _ITIMState.goOn({
-    required String lastExecutedTestName,
-  }) = ITIMStateGoOn;
+  const factory _ITIMState.goOn({required String lastExecutedTestName}) =
+      ITIMStateGoOn;
 
   const factory _ITIMState.retryLast({
     required String lastExecutedTestName,

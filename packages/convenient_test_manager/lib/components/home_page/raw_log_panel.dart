@@ -13,26 +13,28 @@ class HomePageRawLogPanel extends StatelessWidget {
     final highlightStore = GetIt.I.get<HighlightStore>();
     final rawLogStore = GetIt.I.get<RawLogStore>();
 
-    return Observer(builder: (_) {
-      final highlightTestEntryId = highlightStore.highlightTestEntryId;
-      if (highlightTestEntryId == null) {
-        return const Center(
-          child: Text('Tap log entries on the left to view screenshots'),
-        );
-      }
+    return Observer(
+      builder: (_) {
+        final highlightTestEntryId = highlightStore.highlightTestEntryId;
+        if (highlightTestEntryId == null) {
+          return const Center(
+            child: Text('Tap log entries on the left to view screenshots'),
+          );
+        }
 
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: ListView(
-          primary: false,
-          children: [
-            EnhancedSelectableText(
-              rawLogStore.rawLogInTest[highlightTestEntryId],
-              style: const TextStyle(fontSize: 13, fontFamily: 'RobotoMono'),
-            ),
-          ],
-        ),
-      );
-    });
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: ListView(
+            primary: false,
+            children: [
+              EnhancedSelectableText(
+                rawLogStore.rawLogInTest[highlightTestEntryId],
+                style: const TextStyle(fontSize: 13, fontFamily: 'RobotoMono'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

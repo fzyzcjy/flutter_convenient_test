@@ -19,10 +19,7 @@ class EnhancedSelectableText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SelectableText(
-          data,
-          style: style,
-        ),
+        SelectableText(data, style: style),
         if (enableCopyAllButton)
           Positioned(
             top: 0,
@@ -30,11 +27,7 @@ class EnhancedSelectableText extends StatelessWidget {
             child: InkWell(
               onTap: () async =>
                   await Clipboard.setData(ClipboardData(text: data)),
-              child: const Icon(
-                Icons.copy,
-                color: Colors.blue,
-                size: 16,
-              ),
+              child: const Icon(Icons.copy, color: Colors.blue, size: 16),
             ),
           ),
       ],

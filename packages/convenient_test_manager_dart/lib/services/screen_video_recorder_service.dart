@@ -5,7 +5,8 @@ import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 abstract class ScreenVideoRecorderService {
   static ScreenVideoRecorderService create() {
     // TODO add Android support
-    final inner = _ScreenVideoRecorderServiceIosSimulator.maybeCreate() ??
+    final inner =
+        _ScreenVideoRecorderServiceIosSimulator.maybeCreate() ??
         _ScreenVideoRecorderServiceNoOp();
     return _ScreenVideoRecorderServiceIsolateExceptionDecorator(inner);
   }
@@ -58,14 +59,21 @@ class _ScreenVideoRecorderServiceIosSimulator
 
     if (_process != null) await stopRecord();
 
-    final process = await Process.start(
-        'xcrun', ['simctl', 'io', 'booted', 'recordVideo', targetPath]);
+    final process = await Process.start('xcrun', [
+      'simctl',
+      'io',
+      'booted',
+      'recordVideo',
+      targetPath,
+    ]);
     _process = process;
 
-    process.stdout
-        .listen((e) => Log.d(_kTag, '[STDOUT] ${String.fromCharCodes(e)}'));
-    process.stderr
-        .listen((e) => Log.d(_kTag, '[STDERR] ${String.fromCharCodes(e)}'));
+    process.stdout.listen(
+      (e) => Log.d(_kTag, '[STDOUT] ${String.fromCharCodes(e)}'),
+    );
+    process.stderr.listen(
+      (e) => Log.d(_kTag, '[STDERR] ${String.fromCharCodes(e)}'),
+    );
   }
 
   @override

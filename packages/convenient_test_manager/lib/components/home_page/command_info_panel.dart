@@ -15,35 +15,41 @@ class HomePageCommandInfoPanel extends StatelessWidget {
     final homePageStore = GetIt.I.get<HomePageStore>();
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
-    return Observer(builder: (_) {
-      final adapter = StaticSectionListViewAdapter();
+    return Observer(
+      builder: (_) {
+        final adapter = StaticSectionListViewAdapter();
 
-      adapter.add(StaticSection.single(child: const SizedBox(height: 8)));
-      adapter.addAll(HomePageGroupEntryInfoSectionBuilder(
-        groupEntryId: suiteInfoStore.suiteInfo?.rootGroupId,
-        depth: -1,
-        showHeader: false,
-      ).build());
-      adapter.add(StaticSection.single(child: const SizedBox(height: 8)));
+        adapter.add(StaticSection.single(child: const SizedBox(height: 8)));
+        adapter.addAll(
+          HomePageGroupEntryInfoSectionBuilder(
+            groupEntryId: suiteInfoStore.suiteInfo?.rootGroupId,
+            depth: -1,
+            showHeader: false,
+          ).build(),
+        );
+        adapter.add(StaticSection.single(child: const SizedBox(height: 8)));
 
-      homePageStore.rdtListViewIndexOfFirstLogEntryOfTestIdMap
-        ..clear()
-        ..addEntries(_calcListViewIndexOfFirstLogEntryOfTestIdMap(adapter));
+        homePageStore.rdtListViewIndexOfFirstLogEntryOfTestIdMap
+          ..clear()
+          ..addEntries(_calcListViewIndexOfFirstLogEntryOfTestIdMap(adapter));
 
-      return ScrollablePositionedList.builder(
-        itemScrollController: homePageStore.itemScrollController,
-        itemPositionsListener: homePageStore.itemPositionsListener,
-        // #89
-        physics: const NonBallisticClampingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
-        itemBuilder: adapter.itemBuilder,
-        itemCount: adapter.itemCount,
-      );
-    });
+        return ScrollablePositionedList.builder(
+          itemScrollController: homePageStore.itemScrollController,
+          itemPositionsListener: homePageStore.itemPositionsListener,
+          // #89
+          physics: const NonBallisticClampingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          itemBuilder: adapter.itemBuilder,
+          itemCount: adapter.itemCount,
+        );
+      },
+    );
   }
 
   Iterable<MapEntry<int, int>> _calcListViewIndexOfFirstLogEntryOfTestIdMap(
-      StaticSectionListViewAdapter adapter) sync* {
+    StaticSectionListViewAdapter adapter,
+  ) sync* {
     var currCount = 0;
     for (final section in adapter.sections) {
       final metadata = section.metadata;

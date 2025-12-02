@@ -4,8 +4,11 @@ class RulerDecoration extends StatelessWidget {
   final Size? rulerSize;
   final Widget child;
 
-  const RulerDecoration(
-      {super.key, required this.rulerSize, required this.child});
+  const RulerDecoration({
+    super.key,
+    required this.rulerSize,
+    required this.child,
+  });
 
   static const _kRulerThickness = 20.0;
 
@@ -17,7 +20,9 @@ class RulerDecoration extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-              left: _kRulerThickness, top: _kRulerThickness),
+            left: _kRulerThickness,
+            top: _kRulerThickness,
+          ),
           child: child,
         ),
         if (rulerSize != null) ...[
@@ -44,41 +49,43 @@ class RulerDecoration extends StatelessWidget {
   }
 
   Widget _buildRuler({required double rulerLength}) {
-    return LayoutBuilder(builder: (_, constraints) {
-      final rulerToWidgetSizeMultiplier = constraints.maxWidth / rulerLength;
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        final rulerToWidgetSizeMultiplier = constraints.maxWidth / rulerLength;
 
-      return Stack(
-        children: [
-          for (var rulerValue = 0; rulerValue < rulerLength; rulerValue += 100)
-            ..._buildTick(
+        return Stack(
+          children: [
+            for (
+              var rulerValue = 0;
+              rulerValue < rulerLength;
+              rulerValue += 100
+            )
+              ..._buildTick(
                 rulerValue: rulerValue,
-                rulerToWidgetSizeMultiplier: rulerToWidgetSizeMultiplier),
-          ..._buildTick(
+                rulerToWidgetSizeMultiplier: rulerToWidgetSizeMultiplier,
+              ),
+            ..._buildTick(
               rulerValue: rulerLength.round(),
-              rulerToWidgetSizeMultiplier: rulerToWidgetSizeMultiplier),
-        ],
-      );
-    });
+              rulerToWidgetSizeMultiplier: rulerToWidgetSizeMultiplier,
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  List<Widget> _buildTick(
-      {required int rulerValue, required double rulerToWidgetSizeMultiplier}) {
+  List<Widget> _buildTick({
+    required int rulerValue,
+    required double rulerToWidgetSizeMultiplier,
+  }) {
     final left = rulerToWidgetSizeMultiplier * rulerValue;
     return [
-      Positioned(
-        top: 0,
-        bottom: 0,
-        left: left + 2,
-        child: Text('$rulerValue'),
-      ),
+      Positioned(top: 0, bottom: 0, left: left + 2, child: Text('$rulerValue')),
       Positioned(
         top: 0,
         bottom: 0,
         left: left,
-        child: Container(
-          width: 1,
-          color: Colors.grey,
-        ),
+        child: Container(width: 1, color: Colors.grey),
       ),
     ];
   }
