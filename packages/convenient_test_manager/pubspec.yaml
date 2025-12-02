@@ -41,7 +41,7 @@ dependencies:
   flutter_portal: ^1.1.4
   flutter_test:
     sdk: flutter
-  get_it: '>=7.0.0 <9.0.0'
+  get_it: '>=8.0.0 <9.0.0'
   git: ^2.3.2
   grpc: ^5.0.0
   intl: '>=0.19.1 <0.21.0'
@@ -50,7 +50,7 @@ dependencies:
   path_provider: ^2.1.5
   protobuf: '>=5.0.0 <7.0.0'
   scrollable_positioned_list: ^0.3.8
-  test_api: '>=0.5.1 <0.8.0'
+  test_api: '>=0.7.0 <0.8.0'
   tuple: ^2.0.2
 
 dependency_overrides:

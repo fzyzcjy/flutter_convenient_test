@@ -12,7 +12,7 @@ dependencies:
   convenient_test_common_dart: '>=1.5.0 <1.6.0'
   fixnum: ^1.1.1
   freezed_annotation: ^3.1.0
-  get_it: '>=7.0.0 <9.0.0'
+  get_it: '>=8.0.0 <9.0.0'
   grpc: ^5.0.0
   intl: '>=0.19.0 <0.21.0'
   json_annotation: ^4.9.0
@@ -21,8 +21,8 @@ dependencies:
   protobuf: '>=5.0.0 <7.0.0'
   recase: ^4.1.0
   synchronized: '>=3.0.0 <4.0.0'
-  test_api: '>=0.5.1 <0.8.0'
-  vm_service: '>=11.3.0 <15.0.0'
+  test_api: '>=0.7.0 <0.8.0'
+  vm_service: '>=14.0.0 <15.0.0'
 
 dependency_overrides:
   analyzer: '>=8.0.0 <10.0.0'
