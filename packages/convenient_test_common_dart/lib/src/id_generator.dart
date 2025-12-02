@@ -28,8 +28,7 @@ class IdGenerator {
     var timestamp = currentTimeSupplier();
 
     if (timestamp < lastTimestamp) {
-      throw Exception(
-          'Clock moved backwards (timestamp=$timestamp lastTimestamp=$lastTimestamp)');
+      throw Exception('Clock moved backwards (timestamp=$timestamp lastTimestamp=$lastTimestamp)');
     }
 
     if (lastTimestamp == timestamp) {
@@ -67,8 +66,7 @@ class IdGenerator {
     required int sequence,
   }) {
     if (timestamp < config.twEpoch) {
-      throw Exception(
-          'timestamp=$timestamp smaller than twEpoch=${config.twEpoch}');
+      throw Exception('timestamp=$timestamp smaller than twEpoch=${config.twEpoch}');
     }
 
     assert(workerId >= 0);
@@ -83,12 +81,7 @@ class IdGenerator {
 
 int _realCurrentTimeSupplier() => DateTime.now().millisecondsSinceEpoch;
 
-const _kDefaultConfig = SnowflakeConfig(
-  twEpoch: 1640995200000,
-  workerIdBits: 10,
-  dataCenterIdBits: 0,
-  sequenceBits: 5,
-);
+const _kDefaultConfig = SnowflakeConfig(twEpoch: 1640995200000, workerIdBits: 10, dataCenterIdBits: 0, sequenceBits: 5);
 
 @immutable
 class SnowflakeConfig {

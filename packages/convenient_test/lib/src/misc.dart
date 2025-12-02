@@ -32,9 +32,7 @@ class ConvenientTestImageCaptureWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // take snapshot needs a [RepaintBoundary]
-    return RepaintBoundary(
-      child: child,
-    );
+    return RepaintBoundary(child: child);
   }
 }
 
@@ -44,12 +42,7 @@ class MarkCore extends StatelessWidget {
   final Object? data;
   final Widget child;
 
-  const MarkCore({
-    super.key,
-    required this.name,
-    this.data,
-    required this.child,
-  });
+  const MarkCore({super.key, required this.name, this.data, required this.child});
 
   @override
   Widget build(BuildContext context) => child;
@@ -86,11 +79,7 @@ class Mark extends StatelessWidget {
 
     final color = kColorList['$name'.hashCode % kColorList.length];
 
-    Widget wrappedChild = MarkCore(
-      name: name,
-      data: data,
-      child: child,
-    );
+    Widget wrappedChild = MarkCore(name: name, data: data, child: child);
 
     // useful when want this [Mark] to be used in golden tests, since golden test will take screenshot at
     // the nearest ancestor RepaintBoundary.
@@ -108,9 +97,7 @@ class Mark extends StatelessWidget {
           child: IgnorePointer(
             // ignore: use_decorated_box
             child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: color, width: 1.0),
-              ),
+              decoration: BoxDecoration(border: Border.all(color: color, width: 1.0)),
             ),
           ),
         ),
@@ -121,11 +108,7 @@ class Mark extends StatelessWidget {
           child: IgnorePointer(
             child: Text(
               _nameBrief,
-              style: TextStyle(
-                fontSize: 9,
-                color: color,
-                fontWeight: FontWeight.w600,
-              ),
+              style: TextStyle(fontSize: 9, color: color, fontWeight: FontWeight.w600),
             ),
           ),
         ),
@@ -140,10 +123,7 @@ class Mark extends StatelessWidget {
   }
 
   String _onlyUpperOrFirstLetter(String s) {
-    return s
-        .split('')
-        .whereIndexed((i, ch) => i == 0 || ch.toUpperCase() == ch)
-        .join('');
+    return s.split('').whereIndexed((i, ch) => i == 0 || ch.toUpperCase() == ch).join('');
   }
 }
 

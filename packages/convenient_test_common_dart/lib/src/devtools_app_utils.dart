@@ -30,10 +30,7 @@ class Disposer {
 
   /// Add a listener to a Listenable object that is automatically removed when
   /// cancel is called.
-  void addAutoDisposeListener(
-    Listenable? listenable, [
-    VoidCallback? listener,
-  ]) {
+  void addAutoDisposeListener(Listenable? listenable, [VoidCallback? listener]) {
     if (listenable == null || listener == null) return;
     _listenables.add(listenable);
     _listeners.add(listener);
@@ -62,15 +59,15 @@ class Disposer {
     _listeners.clear();
   }
 
-// /// Cancel all focus nodes added.
-// ///
-// /// It is fine to call this method and then add additional focus nodes.
-// void cancelFocusNodes() {
-//   for (FocusNode focusNode in _focusNodes) {
-//     focusNode.dispose();
-//   }
-//   _focusNodes.clear();
-// }
+  // /// Cancel all focus nodes added.
+  // ///
+  // /// It is fine to call this method and then add additional focus nodes.
+  // void cancelFocusNodes() {
+  //   for (FocusNode focusNode in _focusNodes) {
+  //     focusNode.dispose();
+  //   }
+  //   _focusNodes.clear();
+  // }
 }
 
 // copied from: devtools_app utils.dart
@@ -94,8 +91,7 @@ Future<T> whenValueNonNull<T>(ValueListenable<T> listenable) {
 /// This class also exposes methods to interact with the data. By default,
 /// listeners are notified whenever the data is modified, but notifying can be
 /// optionally disabled.
-class ListValueNotifier<T> extends ChangeNotifier
-    implements ValueListenable<List<T>> {
+class ListValueNotifier<T> extends ChangeNotifier implements ValueListenable<List<T>> {
   /// Creates a [ListValueNotifier] that wraps this value [_rawList].
   ListValueNotifier(List<T> rawList) : _rawList = List<T>.from(rawList) {
     _currentList = ImmutableList(_rawList);

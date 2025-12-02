@@ -11,8 +11,7 @@ mixin _ExhaustiveMapMixin<K, V> {
 
   Iterable<V> get values => _map.values;
 
-  void addEntries(Iterable<MapEntry<K, V>> newEntries) =>
-      _map.addEntries(newEntries);
+  void addEntries(Iterable<MapEntry<K, V>> newEntries) => _map.addEntries(newEntries);
 }
 
 class ExhaustiveMap<K, V> with _ExhaustiveMapMixin<K, V> {
@@ -20,12 +19,11 @@ class ExhaustiveMap<K, V> with _ExhaustiveMapMixin<K, V> {
   final Map<K, V> _map;
 
   ExhaustiveMap(Iterable<K> keys, V Function(K) initialValue)
-      : this._(Map.fromEntries(keys.map((k) => MapEntry(k, initialValue(k)))));
+    : this._(Map.fromEntries(keys.map((k) => MapEntry(k, initialValue(k)))));
 
   ExhaustiveMap.of(Iterable<K> keys, Map<K, V> src)
-      :
-        // 这么操作，主要是验证[src]真的包含所有的[keys]
-        this._(Map.fromEntries(keys.map((k) => MapEntry(k, src[k] as V))));
+    : // 这么操作，主要是验证[src]真的包含所有的[keys]
+      this._(Map.fromEntries(keys.map((k) => MapEntry(k, src[k] as V))));
 
   ExhaustiveMap._(this._map);
 }
