@@ -3,16 +3,16 @@ description: Write and debug tests easily, with full action history, time travel
 version: 1.5.4
 repository: https://github.com/fzyzcjy/flutter_convenient_test
 environment:
-  sdk: ">=3.6.0 <4.0.0"
+  sdk: ">=3.9.0 <4.0.0"
 dependencies:
   collection: '>=1.19.0 <1.20.0'
   fixnum: ^1.1.1
-  grpc: ^4.0.4
-  meta: ^1.16.0
+  grpc: ^5.0.0
+  meta: ^1.17.0
   mobx: ^2.5.0
-  protobuf: '>=3.0.0 <5.0.0'
+  protobuf: '>=5.0.0 <7.0.0'
   quiver: ^3.2.2
   tuple: ^2.0.2
 dev_dependencies:
   lint: ">=2.8.0 <3.0.0"
-  test: ^1.25.15
+  test: ^1.28.0
