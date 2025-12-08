@@ -33,8 +33,10 @@ class HomePageGroupEntryInfoSectionBuilder extends StaticSectionBuilder {
 
     if (info is GroupInfo) {
       return _GroupInfoSectionBuilder(
-              info: info, depth: depth, showHeader: showHeader)
-          .build();
+        info: info,
+        depth: depth,
+        showHeader: showHeader,
+      ).build();
     }
     if (info is TestInfo) {
       return _TestInfoSectionBuilder(info: info, depth: depth).build();
@@ -71,48 +73,52 @@ class _GroupInfoSectionBuilder extends StaticSectionBuilder {
   }
 
   Widget _buildHeader() {
-    return Observer(builder: (_) {
-      final highlightStore = GetIt.I.get<HighlightStore>();
-      final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
+    return Observer(
+      builder: (_) {
+        final highlightStore = GetIt.I.get<HighlightStore>();
+        final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
-      return InkWell(
-        onTap: () {
-          highlightStore
-            ..enableAutoExpand = false
-            ..expandGroupEntryMap[info.id] = !expanding;
-        },
-        child: SizedBox(
-          width: double.infinity,
-          height: 48,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8) +
-                EdgeInsets.only(left: depth * 12),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 24,
-                  height: 12,
-                  child: Icon(
-                    expanding ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                    size: 16,
+        return InkWell(
+          onTap: () {
+            highlightStore
+              ..enableAutoExpand = false
+              ..expandGroupEntryMap[info.id] = !expanding;
+          },
+          child: SizedBox(
+            width: double.infinity,
+            height: 48,
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 8) +
+                  EdgeInsets.only(left: depth * 12),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 24,
+                    height: 12,
+                    child: Icon(
+                      expanding ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                      size: 16,
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Text(
-                    info.calcBriefName(suiteInfoStore.suiteInfo!),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: Text(
+                      info.calcBriefName(suiteInfoStore.suiteInfo!),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                ..._buildGroupStat(),
-                _RunTestButton(
-                    filterNameRegex: RegexUtils.matchPrefix(info.name)),
-              ],
+                  ..._buildGroupStat(),
+                  _RunTestButton(
+                    filterNameRegex: RegexUtils.matchPrefix(info.name),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   List<Widget> _buildGroupStat() {
@@ -142,10 +148,7 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
   final TestInfo info;
   final int depth;
 
-  const _TestInfoSectionBuilder({
-    required this.info,
-    required this.depth,
-  });
+  const _TestInfoSectionBuilder({required this.info, required this.depth});
 
   @override
   Iterable<StaticSection> build() sync* {
@@ -164,39 +167,40 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     final highlightStore = GetIt.I.get<HighlightStore>();
     final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
-    return Observer(builder: (context) {
-      return InkWell(
-        onTap: () {
-          highlightStore
-            ..enableAutoExpand = false
-            ..expandGroupEntryMap[info.id] = !expanding
-            ..highlightTestEntryId = info.id;
-        },
-        child: SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4) +
-                EdgeInsets.only(left: 16 + depth * 12),
-            child: Row(
-              children: [
-                StateIndicatorWidget(
-                  state: state,
-                  enableAnimation: true,
-                ),
-                Text(
-                  info.calcBriefName(suiteInfoStore.suiteInfo!),
-                  style: const TextStyle(),
-                ),
-                Expanded(child: Container()),
-                _buildPlayVideoButton(context),
-                _RunTestButton(
-                    filterNameRegex: RegexUtils.matchFull(info.name)),
-              ],
+    return Observer(
+      builder: (context) {
+        return InkWell(
+          onTap: () {
+            highlightStore
+              ..enableAutoExpand = false
+              ..expandGroupEntryMap[info.id] = !expanding
+              ..highlightTestEntryId = info.id;
+          },
+          child: SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4) +
+                  EdgeInsets.only(left: 16 + depth * 12),
+              child: Row(
+                children: [
+                  StateIndicatorWidget(state: state, enableAnimation: true),
+                  Text(
+                    info.calcBriefName(suiteInfoStore.suiteInfo!),
+                    style: const TextStyle(),
+                  ),
+                  Expanded(child: Container()),
+                  _buildPlayVideoButton(context),
+                  _RunTestButton(
+                    filterNameRegex: RegexUtils.matchFull(info.name),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget _buildPlayVideoButton(BuildContext context) {
@@ -206,11 +210,7 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
       visualDensity: VisualDensity.compact,
       onPressed: () => _handleTapPlayVideoButton(context),
       tooltip: 'Play video recording',
-      icon: const Icon(
-        Icons.movie,
-        color: Colors.teal,
-        size: 16,
-      ),
+      icon: const Icon(Icons.movie, color: Colors.teal, size: 16),
     );
   }
 
@@ -223,21 +223,26 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
     if (logSubEntryIds.isEmpty) return;
 
     final logSubEntryTimes = logSubEntryIds
-        .map((logSubEntryId) =>
-            logStore.logSubEntryMap[logSubEntryId]!.timeTyped)
+        .map(
+          (logSubEntryId) => logStore.logSubEntryMap[logSubEntryId]!.timeTyped,
+        )
         .toList();
 
     final startTime = logSubEntryTimes.reduce((a, b) => a.isBefore(b) ? a : b);
     final endTime = logSubEntryTimes.reduce((a, b) => a.isAfter(b) ? a : b);
     final duration = endTime.difference(startTime);
-    Log.d(_kTag,
-        'handleTapPlayVideoButton startTime=$startTime endTime=$endTime');
+    Log.d(
+      _kTag,
+      'handleTapPlayVideoButton startTime=$startTime endTime=$endTime',
+    );
 
     // to avoid minor time shifting causing wrong videos be included
     final searchStartTime = startTime.add(duration ~/ 10);
     final searchEndTime = endTime.subtract(duration ~/ 10);
-    final candidateVideoIds = videoPlayerStore.videoMap
-        .findVideosAtTimeRange(searchStartTime, searchEndTime);
+    final candidateVideoIds = videoPlayerStore.videoMap.findVideosAtTimeRange(
+      searchStartTime,
+      searchEndTime,
+    );
     if (candidateVideoIds.isEmpty) return;
 
     final interestVideoId = candidateVideoIds.length == 1
@@ -254,21 +259,26 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
                   return SimpleDialogOption(
                     onPressed: () => Navigator.pop(context, candidateVideoId),
                     child: Text(
-                        'Video at ${candidateVideo.startTime} ~ ${candidateVideo.endTime}'),
+                      'Video at ${candidateVideo.startTime} ~ ${candidateVideo.endTime}',
+                    ),
                   );
-                })
+                }),
               ],
             ),
           );
     if (interestVideoId == null) return;
 
-    Log.d(_kTag,
-        'handleTapPlayVideoButton interestVideoId=$interestVideoId videoInfos=${videoPlayerStore.videoMap}');
+    Log.d(
+      _kTag,
+      'handleTapPlayVideoButton interestVideoId=$interestVideoId videoInfos=${videoPlayerStore.videoMap}',
+    );
     final interestVideo = videoPlayerStore.videoMap[interestVideoId]!;
     videoPlayerStore
       ..activeVideoId = interestVideoId
-      ..displayRange = Tuple2(interestVideo.absoluteToVideoTime(startTime),
-          interestVideo.absoluteToVideoTime(endTime));
+      ..displayRange = Tuple2(
+        interestVideo.absoluteToVideoTime(startTime),
+        interestVideo.absoluteToVideoTime(endTime),
+      );
 
     homePageStore.activeSecondaryPanelTab = HomePageSecondaryPanelTab.video;
   }
@@ -284,25 +294,26 @@ class _TestInfoSectionBuilder extends StaticSectionBuilder {
         child: Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
           child: Builder(
-              builder: (context) => Text(
-                    'No log entries for this test. This is usually because the test is not executed.',
-                    style: TextStyle(
-                        fontSize: 11,
-                        color: Theme.of(context).colorScheme.outline),
-                  )),
+            builder: (context) => Text(
+              'No log entries for this test. This is usually because the test is not executed.',
+              style: TextStyle(
+                fontSize: 11,
+                color: Theme.of(context).colorScheme.outline,
+              ),
+            ),
+          ),
         ),
       );
     } else {
       yield StaticSection(
-        metadata: TestInfoLogEntrySectionMetadata(
-          testInfoId: info.id,
-        ),
+        metadata: TestInfoLogEntrySectionMetadata(testInfoId: info.id),
         count: logEntryIds.length,
         builder: (_, i) => HomePageLogEntryWidget(
           order: i,
           testEntryId: info.id,
           logEntryId: logEntryIds[i],
-          running: state == SimplifiedStateEnum.running &&
+          running:
+              state == SimplifiedStateEnum.running &&
               i == logEntryIds.length - 1,
         ),
       );
@@ -331,16 +342,12 @@ class _RunTestButton extends StatelessWidget {
       visualDensity: VisualDensity.compact,
       onPressed: () {
         GetIt.I.get<HighlightStore>().enableAutoExpand = true;
-        GetIt.I
-            .get<MiscFlutterService>()
-            .hotRestartAndRunTests(filterNameRegex: filterNameRegex);
+        GetIt.I.get<MiscFlutterService>().hotRestartAndRunTests(
+          filterNameRegex: filterNameRegex,
+        );
       },
       tooltip: 'Run this test',
-      icon: const Icon(
-        Icons.play_arrow,
-        color: Colors.blue,
-        size: 16,
-      ),
+      icon: const Icon(Icons.play_arrow, color: Colors.blue, size: 16),
     );
   }
 }

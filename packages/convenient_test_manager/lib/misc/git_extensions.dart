@@ -7,10 +7,10 @@ class SimpleGit {
   SimpleGit(this.directory);
 
   Future<List<String>> getDiff() async {
-    final pr = await myRunGit(
-      ['diff', '--name-only'],
-      processWorkingDir: directory,
-    );
+    final pr = await myRunGit([
+      'diff',
+      '--name-only',
+    ], processWorkingDir: directory);
 
     return (pr.stdout as String)
         .split('\n')
@@ -18,8 +18,10 @@ class SimpleGit {
         .toList();
   }
 
-  Future<List<int>> show(
-      {required String ref, required String filePath}) async {
+  Future<List<int>> show({
+    required String ref,
+    required String filePath,
+  }) async {
     final pr = await myRunGit(
       ['show', '$ref:$filePath'],
       processWorkingDir: directory,
@@ -56,11 +58,14 @@ Future<ProcessResult> myRunGit(
 }
 
 void _throwIfProcessFailed(
-    ProcessResult pr, String process, List<String> args) {
+  ProcessResult pr,
+  String process,
+  List<String> args,
+) {
   if (pr.exitCode != 0) {
     final values = {
       'Standard out': pr.stdout.toString().trim(),
-      'Standard error': pr.stderr.toString().trim()
+      'Standard error': pr.stderr.toString().trim(),
     }..removeWhere((k, v) => v.isEmpty);
 
     String message;

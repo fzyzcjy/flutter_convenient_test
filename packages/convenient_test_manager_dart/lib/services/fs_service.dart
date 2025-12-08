@@ -9,10 +9,13 @@ abstract class FsService {
       GlobalConfigStore.config.reportSavePath ??
       '${await getTemporaryDirectory()}/ConvenientTest';
 
-  Future<String> getActiveSuperRunDataSubDirectory(
-      {required String category}) async {
-    final superRunId =
-        GetIt.I.get<WorkerSuperRunStore>().currSuperRunController.superRunId;
+  Future<String> getActiveSuperRunDataSubDirectory({
+    required String category,
+  }) async {
+    final superRunId = GetIt.I
+        .get<WorkerSuperRunStore>()
+        .currSuperRunController
+        .superRunId;
     final ans = '${await getBaseDataDirectory()}/$superRunId/$category/';
     Directory(ans).createSync(recursive: true);
     return ans;

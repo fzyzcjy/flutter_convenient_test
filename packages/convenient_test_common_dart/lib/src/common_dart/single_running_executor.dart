@@ -15,7 +15,8 @@ class SingleRunningExecutor<Arg> {
   SingleRunningExecutor(this._runner);
 
   void trigger({required Arg arg, required String reason}) => _trigger(
-      _TriggerPack(arg: arg, reason: reason, triggerTime: DateTime.now()));
+    _TriggerPack(arg: arg, reason: reason, triggerTime: DateTime.now()),
+  );
 
   void _trigger(_TriggerPack<Arg> pack) {
     if (_running) {
@@ -25,8 +26,10 @@ class SingleRunningExecutor<Arg> {
       _running = true;
 
       () async {
-        Log.d(_kTag,
-            'call runner() reason=${pack.reason} triggerTime=${pack.triggerTime} arg=${pack.arg}');
+        Log.d(
+          _kTag,
+          'call runner() reason=${pack.reason} triggerTime=${pack.triggerTime} arg=${pack.arg}',
+        );
         try {
           await _runner(pack.arg);
         } finally {
@@ -46,6 +49,9 @@ class _TriggerPack<Arg> {
   final String reason;
   final DateTime triggerTime;
 
-  const _TriggerPack(
-      {required this.arg, required this.reason, required this.triggerTime});
+  const _TriggerPack({
+    required this.arg,
+    required this.reason,
+    required this.triggerTime,
+  });
 }

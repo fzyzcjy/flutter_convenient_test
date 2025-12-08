@@ -78,10 +78,11 @@ Future<void> _monitorWorkerAvailable() async {
     Log.i(_kTag, 'monitorWorkerAvailable check');
     if (!vmServiceWrapperService.hotRestartAvailable) {
       Log.e(
-          _kTag,
-          'monitorWorkerAvailable see hot restart not available, thus exit with code=$kExitCodeWorkerDisappeared '
-          '(vmServiceWrapperService.hotRestartAvailable=${vmServiceWrapperService.hotRestartAvailable}, '
-          'vmServiceWrapperService.connected=${vmServiceWrapperService.connected})');
+        _kTag,
+        'monitorWorkerAvailable see hot restart not available, thus exit with code=$kExitCodeWorkerDisappeared '
+        '(vmServiceWrapperService.hotRestartAvailable=${vmServiceWrapperService.hotRestartAvailable}, '
+        'vmServiceWrapperService.connected=${vmServiceWrapperService.connected})',
+      );
       exit(kExitCodeWorkerDisappeared);
     }
 
@@ -96,7 +97,9 @@ Future<void> _awaitSuiteInfoNonEmpty() async {
     final suiteInfo = suiteInfoStore.suiteInfo;
     final numGroupEntries = suiteInfo?.entryMap.length ?? 0;
     Log.i(
-        _kTag, 'awaitSuiteInfoNonEmpty check numGroupEntries=$numGroupEntries');
+      _kTag,
+      'awaitSuiteInfoNonEmpty check numGroupEntries=$numGroupEntries',
+    );
 
     if (numGroupEntries > 0) return;
 
@@ -112,16 +115,19 @@ Future<void> _awaitSuperRunStatusTestAllDone() async {
     throw AssertionError;
   }
 
-  await asyncWhen((_) =>
-      workerSuperRunStore.currSuperRunController.superRunStatus ==
-      WorkerSuperRunStatus.testAllDone);
+  await asyncWhen(
+    (_) =>
+        workerSuperRunStore.currSuperRunController.superRunStatus ==
+        WorkerSuperRunStatus.testAllDone,
+  );
 }
 
 int _calcExitCode() {
   final suiteInfoStore = GetIt.I.get<SuiteInfoStore>();
 
-  final stateCountMap =
-      suiteInfoStore.calcStateCountMap(suiteInfoStore.suiteInfo!.rootGroup);
+  final stateCountMap = suiteInfoStore.calcStateCountMap(
+    suiteInfoStore.suiteInfo!.rootGroup,
+  );
 
   if (stateCountMap[SimplifiedStateEnum.pending] > 0) throw AssertionError;
 

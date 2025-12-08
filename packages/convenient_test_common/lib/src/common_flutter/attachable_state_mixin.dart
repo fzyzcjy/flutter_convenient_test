@@ -3,8 +3,10 @@ import 'package:mobx/mobx.dart';
 
 mixin AttachableStateMixin<T> {
   T get state {
-    assert(isStateSingle,
-        'Want to get this.state but wrong number of _states. $attachableStateMixinInfo');
+    assert(
+      isStateSingle,
+      'Want to get this.state but wrong number of _states. $attachableStateMixinInfo',
+    );
     return _states.single;
   }
 
@@ -21,16 +23,20 @@ mixin AttachableStateMixin<T> {
 
   void attach(T state) {
     // print('hi attach self=$hashCode _states=${_states.map((s) => s.hashCode).toList()} state=${state.hashCode}');
-    assert(!_states.contains(state),
-        'want to attach() but it already exists _states=${_states.map((s) => s.hashCode).toList()} state=${state.hashCode}');
+    assert(
+      !_states.contains(state),
+      'want to attach() but it already exists _states=${_states.map((s) => s.hashCode).toList()} state=${state.hashCode}',
+    );
     _states.add(state);
   }
 
   void detach(T state) {
     // print('hi detach self=$hashCode _states=${_states.map((s) => s.hashCode).toList()} state=${state.hashCode}');
     final removed = _states.remove(state);
-    assert(removed,
-        'want to detach() but it did not even exist _states=${_states.map((s) => s.hashCode).toList()} state=${state.hashCode}');
+    assert(
+      removed,
+      'want to detach() but it did not even exist _states=${_states.map((s) => s.hashCode).toList()} state=${state.hashCode}',
+    );
   }
 }
 
@@ -62,7 +68,8 @@ class _AttachableStateAttacherWidgetState<T extends AttachableStateMixin<S>, S>
 
   @override
   void didUpdateWidget(
-      covariant AttachableStateAttacherWidget<T, S> oldWidget) {
+    covariant AttachableStateAttacherWidget<T, S> oldWidget,
+  ) {
     super.didUpdateWidget(oldWidget);
     if (!identical(oldWidget.target, widget.target) ||
         !identical(oldWidget.state, widget.state)) {

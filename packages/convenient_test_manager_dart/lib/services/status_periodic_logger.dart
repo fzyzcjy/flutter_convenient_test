@@ -24,7 +24,8 @@ class StatusPeriodicLogger {
     final stateCountMap = suiteInfo == null
         ? null
         : suiteInfoStore.calcStateCountMap(suiteInfo.rootGroup);
-    final stateCountHint = stateCountMap?.entries //
+    final stateCountHint = stateCountMap
+        ?.entries //
         .where((e) => e.value > 0)
         .map((e) => '${e.value}x ${e.key.name}')
         .join(', ');

@@ -60,8 +60,9 @@ class _RenderGestureVisualizer extends RenderProxyBox {
         markNeedsPaint();
       });
     } else {
-      _recordedPointerInfoMap[event.pointer] =
-          _RecordedPointerInfo(event.localPosition);
+      _recordedPointerInfoMap[event.pointer] = _RecordedPointerInfo(
+        event.localPosition,
+      );
       markNeedsPaint();
     }
   }
@@ -74,7 +75,8 @@ class _RenderGestureVisualizer extends RenderProxyBox {
     for (final info in _recordedPointerInfoMap.values) {
       final path = Path()
         ..addOval(
-            Rect.fromCircle(center: info.localPosition, radius: _kTapRadius));
+          Rect.fromCircle(center: info.localPosition, radius: _kTapRadius),
+        );
 
       canvas.drawShadow(path, _kShadowColor, _kShadowElevation, true);
       canvas.drawPath(path, Paint()..color = _kTapColor);

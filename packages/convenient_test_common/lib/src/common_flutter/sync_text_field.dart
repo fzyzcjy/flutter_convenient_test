@@ -126,8 +126,10 @@ class _SyncTextFieldState extends State<SyncTextField> {
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.gs.getter());
-    _disposer =
-        reaction<String>((_) => widget.gs.getter(), _handleGsChange).call;
+    _disposer = reaction<String>(
+      (_) => widget.gs.getter(),
+      _handleGsChange,
+    ).call;
   }
 
   @override

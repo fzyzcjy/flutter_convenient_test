@@ -4,8 +4,8 @@ version: 1.5.4
 repository: https://github.com/fzyzcjy/flutter_convenient_test
 
 environment:
-  sdk: ">=3.6.0 <4.0.0"
-  flutter: ">=3.27.0"
+  sdk: ">=3.9.0 <4.0.0"
+  flutter: ">=3.35.0"
 
 dependencies:
   collection: '>=1.19.0 <1.20.0'

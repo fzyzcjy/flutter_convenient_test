@@ -16,7 +16,7 @@ class ObservableDefaultMap<K, V> extends ObservableMap<K, V> {
   ObservableDefaultMap({required this.createDefaultValue});
 
   ObservableDefaultMap.defaultValue(V defaultValue)
-      : createDefaultValue = ((_) => defaultValue);
+    : createDefaultValue = ((_) => defaultValue);
 
   @override
   V operator [](Object? key) {

@@ -13,12 +13,14 @@ abstract class _SuiteInfoStore with Store {
   SuiteInfo? suiteInfo;
 
   final testEntryStateMap = ObservableDefaultMap<int, TestEntryState>(
-      createDefaultValue: (_) =>
-          TestEntryState(status: 'pending', result: 'success'));
+    createDefaultValue: (_) =>
+        TestEntryState(status: 'pending', result: 'success'),
+  );
 
   SimplifiedStateEnum getSimplifiedState(int testInfoId) =>
       testEntryStateMap[testInfoId].toSimplifiedStateEnum(
-          isFlaky: GetIt.I.get<LogStore>().isTestFlaky(testInfoId));
+        isFlaky: GetIt.I.get<LogStore>().isTestFlaky(testInfoId),
+      );
 
   void clear() {
     suiteInfo = null;

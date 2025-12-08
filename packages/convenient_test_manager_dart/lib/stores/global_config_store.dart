@@ -92,7 +92,8 @@ sealed class GlobalConfigNullable with _$GlobalConfigNullable {
 
       final configText = await File(configFilePath).readAsString();
       return GlobalConfigNullable.fromJson(
-          jsonDecode(configText) as Map<String, Object?>);
+        jsonDecode(configText) as Map<String, Object?>,
+      );
     } catch (e, s) {
       Log.w(_kTag, 'parseConfigFile error e=$e s=$s');
       return GlobalConfigNullable();
@@ -103,27 +104,33 @@ sealed class GlobalConfigNullable with _$GlobalConfigNullable {
   static GlobalConfigNullable parseEnvironment() {
     return GlobalConfigNullable(
       isolationMode: _stringToNullableBool(
-          const String.fromEnvironment('CONVENIENT_TEST_ISOLATION_MODE')),
+        const String.fromEnvironment('CONVENIENT_TEST_ISOLATION_MODE'),
+      ),
       enableReportSaver: _stringToNullableBool(
-          const String.fromEnvironment('CONVENIENT_TEST_ENABLE_REPORT_SAVER')),
+        const String.fromEnvironment('CONVENIENT_TEST_ENABLE_REPORT_SAVER'),
+      ),
       goldenDiffGitRepo: _emptyToNull(
-          const String.fromEnvironment('CONVENIENT_TEST_GOLDEN_DIFF_GIT_REPO')),
+        const String.fromEnvironment('CONVENIENT_TEST_GOLDEN_DIFF_GIT_REPO'),
+      ),
       runOnly: _emptyToNull(
-          const String.fromEnvironment('CONVENIENT_TEST_RUN_ONLY')),
+        const String.fromEnvironment('CONVENIENT_TEST_RUN_ONLY'),
+      ),
       reportSavePath: _emptyToNull(
-          const String.fromEnvironment('CONVENIENT_TEST_REPORT_SAVE_PATH')),
+        const String.fromEnvironment('CONVENIENT_TEST_REPORT_SAVE_PATH'),
+      ),
     );
   }
 
   // ignore: prefer_constructors_over_static_methods
   static GlobalConfigNullable parseArgs(List<String> args) {
-    final results = (ArgParser()
-          ..addFlag('isolation-mode', defaultsTo: null)
-          ..addFlag('enable-report-saver', defaultsTo: null)
-          ..addOption('run-only', defaultsTo: null)
-          ..addOption('golden-diff-git-repo', defaultsTo: null)
-          ..addOption('report-save-path', defaultsTo: null))
-        .parse(args);
+    final results =
+        (ArgParser()
+              ..addFlag('isolation-mode', defaultsTo: null)
+              ..addFlag('enable-report-saver', defaultsTo: null)
+              ..addOption('run-only', defaultsTo: null)
+              ..addOption('golden-diff-git-repo', defaultsTo: null)
+              ..addOption('report-save-path', defaultsTo: null))
+            .parse(args);
 
     return GlobalConfigNullable(
       isolationMode: results['isolation-mode'] as bool?,
@@ -155,12 +162,12 @@ extension ExtGlobalConfigNullable on GlobalConfigNullable {
       );
 
   GlobalConfig toConfig() => GlobalConfig(
-        isolationMode: isolationMode ?? false,
-        enableReportSaver: enableReportSaver ?? false,
-        goldenDiffGitRepo: goldenDiffGitRepo,
-        runOnly: runOnly,
-        reportSavePath: reportSavePath,
-      );
+    isolationMode: isolationMode ?? false,
+    enableReportSaver: enableReportSaver ?? false,
+    goldenDiffGitRepo: goldenDiffGitRepo,
+    runOnly: runOnly,
+    reportSavePath: reportSavePath,
+  );
 }
 
 bool? _stringToNullableBool(String s) {

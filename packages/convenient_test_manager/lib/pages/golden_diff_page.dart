@@ -10,9 +10,7 @@ class GoldenDiffPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: _Body(),
-    );
+    return const Scaffold(body: _Body());
   }
 }
 
@@ -26,12 +24,11 @@ class _Body extends StatelessWidget {
       children: [
         const GoldenDiffPageHeaderPanel(),
         Divider(
-            height: 1,
-            thickness: 1,
-            color: Theme.of(context).colorScheme.outline),
-        Expanded(
-          child: _buildBody(context),
+          height: 1,
+          thickness: 1,
+          color: Theme.of(context).colorScheme.outline,
         ),
+        Expanded(child: _buildBody(context)),
       ],
     );
   }
@@ -39,16 +36,10 @@ class _Body extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return Row(
       children: [
-        const Expanded(
-          flex: 1,
-          child: GoldenDiffPageFileInfoPanel(),
-        ),
+        const Expanded(flex: 1, child: GoldenDiffPageFileInfoPanel()),
         Container(width: 8),
         Container(width: 1, color: Theme.of(context).colorScheme.outline),
-        const Expanded(
-          flex: 2,
-          child: GoldenDiffPageDetailDiffPanel(),
-        ),
+        const Expanded(flex: 2, child: GoldenDiffPageDetailDiffPanel()),
       ],
     );
   }

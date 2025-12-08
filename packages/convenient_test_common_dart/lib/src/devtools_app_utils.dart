@@ -62,15 +62,15 @@ class Disposer {
     _listeners.clear();
   }
 
-// /// Cancel all focus nodes added.
-// ///
-// /// It is fine to call this method and then add additional focus nodes.
-// void cancelFocusNodes() {
-//   for (FocusNode focusNode in _focusNodes) {
-//     focusNode.dispose();
-//   }
-//   _focusNodes.clear();
-// }
+  // /// Cancel all focus nodes added.
+  // ///
+  // /// It is fine to call this method and then add additional focus nodes.
+  // void cancelFocusNodes() {
+  //   for (FocusNode focusNode in _focusNodes) {
+  //     focusNode.dispose();
+  //   }
+  //   _focusNodes.clear();
+  // }
 }
 
 // copied from: devtools_app utils.dart

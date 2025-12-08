@@ -10,8 +10,9 @@ part of 'worker_super_run_store.dart';
 
 mixin _$WorkerSuperRunStore on _WorkerSuperRunStore, Store {
   late final _$flakyTestTotalAttemptCountAtom = Atom(
-      name: '_WorkerSuperRunStore.flakyTestTotalAttemptCount',
-      context: context);
+    name: '_WorkerSuperRunStore.flakyTestTotalAttemptCount',
+    context: context,
+  );
 
   @override
   int get flakyTestTotalAttemptCount {
@@ -21,14 +22,19 @@ mixin _$WorkerSuperRunStore on _WorkerSuperRunStore, Store {
 
   @override
   set flakyTestTotalAttemptCount(int value) {
-    _$flakyTestTotalAttemptCountAtom
-        .reportWrite(value, super.flakyTestTotalAttemptCount, () {
-      super.flakyTestTotalAttemptCount = value;
-    });
+    _$flakyTestTotalAttemptCountAtom.reportWrite(
+      value,
+      super.flakyTestTotalAttemptCount,
+      () {
+        super.flakyTestTotalAttemptCount = value;
+      },
+    );
   }
 
   late final _$autoUpdateGoldenFilesAtom = Atom(
-      name: '_WorkerSuperRunStore.autoUpdateGoldenFiles', context: context);
+    name: '_WorkerSuperRunStore.autoUpdateGoldenFiles',
+    context: context,
+  );
 
   @override
   bool get autoUpdateGoldenFiles {
@@ -38,14 +44,19 @@ mixin _$WorkerSuperRunStore on _WorkerSuperRunStore, Store {
 
   @override
   set autoUpdateGoldenFiles(bool value) {
-    _$autoUpdateGoldenFilesAtom.reportWrite(value, super.autoUpdateGoldenFiles,
-        () {
-      super.autoUpdateGoldenFiles = value;
-    });
+    _$autoUpdateGoldenFilesAtom.reportWrite(
+      value,
+      super.autoUpdateGoldenFiles,
+      () {
+        super.autoUpdateGoldenFiles = value;
+      },
+    );
   }
 
   late final _$currSuperRunControllerAtom = Atom(
-      name: '_WorkerSuperRunStore.currSuperRunController', context: context);
+    name: '_WorkerSuperRunStore.currSuperRunController',
+    context: context,
+  );
 
   @override
   WorkerSuperRunController get currSuperRunController {
@@ -55,10 +66,13 @@ mixin _$WorkerSuperRunStore on _WorkerSuperRunStore, Store {
 
   @override
   set currSuperRunController(WorkerSuperRunController value) {
-    _$currSuperRunControllerAtom
-        .reportWrite(value, super.currSuperRunController, () {
-      super.currSuperRunController = value;
-    });
+    _$currSuperRunControllerAtom.reportWrite(
+      value,
+      super.currSuperRunController,
+      () {
+        super.currSuperRunController = value;
+      },
+    );
   }
 
   @override
@@ -74,9 +88,10 @@ currSuperRunController: ${currSuperRunController}
 mixin _$_WorkerSuperRunControllerIntegrationTestClassicalMode
     on __WorkerSuperRunControllerIntegrationTestClassicalMode, Store {
   late final _$seenTearDownAllAtom = Atom(
-      name:
-          '__WorkerSuperRunControllerIntegrationTestClassicalMode.seenTearDownAll',
-      context: context);
+    name:
+        '__WorkerSuperRunControllerIntegrationTestClassicalMode.seenTearDownAll',
+    context: context,
+  );
 
   @override
   bool get seenTearDownAll {
@@ -102,8 +117,9 @@ seenTearDownAll: ${seenTearDownAll}
 mixin _$_WorkerSuperRunControllerIntegrationTestIsolationMode
     on __WorkerSuperRunControllerIntegrationTestIsolationMode, Store {
   late final _$stateAtom = Atom(
-      name: '__WorkerSuperRunControllerIntegrationTestIsolationMode.state',
-      context: context);
+    name: '__WorkerSuperRunControllerIntegrationTestIsolationMode.state',
+    context: context,
+  );
 
   @override
   _ITIMState get state {

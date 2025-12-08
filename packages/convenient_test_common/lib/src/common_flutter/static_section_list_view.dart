@@ -14,8 +14,9 @@ class StaticSectionListViewAdapter {
   int get itemCount => _countedSectionArrayView.length();
 
   Widget itemBuilder(BuildContext context, int index) {
-    final info =
-        _countedSectionArrayView.absoluteToRelativeIndex(absoluteIndex: index);
+    final info = _countedSectionArrayView.absoluteToRelativeIndex(
+      absoluteIndex: index,
+    );
     return info.item1.builder(context, info.item2);
   }
 
@@ -31,11 +32,11 @@ class StaticSection {
   StaticSection({required this.count, required this.builder, this.metadata});
 
   StaticSection.single({required Widget child})
-      : this(count: 1, builder: (context, index) => child);
+    : this(count: 1, builder: (context, index) => child);
 }
 
-typedef SeparatedSectionBuilder<T extends Enum> = Widget Function(
-    BuildContext context, int relativeIndex, T sectionId);
+typedef SeparatedSectionBuilder<T extends Enum> =
+    Widget Function(BuildContext context, int relativeIndex, T sectionId);
 
 class SeparatedSectionListViewAdapter<T extends Enum> {
   final List<T> sectionIds;
@@ -47,8 +48,10 @@ class SeparatedSectionListViewAdapter<T extends Enum> {
   });
 
   int relativeToAbsoluteIndex(T sectionId, {required int relativeIndex}) {
-    return _countedSectionArrayView.relativeToAbsoluteIndex(sectionId,
-        relativeIndex: relativeIndex);
+    return _countedSectionArrayView.relativeToAbsoluteIndex(
+      sectionId,
+      relativeIndex: relativeIndex,
+    );
   }
 
   int get itemCount => _countedSectionArrayView.length();
@@ -56,7 +59,8 @@ class SeparatedSectionListViewAdapter<T extends Enum> {
   IndexedWidgetBuilder createItemBuilder(SeparatedSectionBuilder<T> builder) {
     return (context, index) {
       final info = _countedSectionArrayView.absoluteToRelativeIndex(
-          absoluteIndex: index);
+        absoluteIndex: index,
+      );
       return builder(context, info.item2, info.item1);
     };
   }
@@ -82,7 +86,8 @@ class CountedArrayView<T> {
       currSectionBeginIndex += getCount(arr[i]);
     }
     throw Exception(
-        'indexCountedList see invalid index=$absoluteIndex (itemCount=${length()})');
+      'indexCountedList see invalid index=$absoluteIndex (itemCount=${length()})',
+    );
   }
 
   int relativeToAbsoluteIndex(T section, {required int relativeIndex}) =>
@@ -95,7 +100,8 @@ class CountedArrayView<T> {
       currSectionBeginIndex += getCount(section);
     }
     throw Exception(
-        'sectionStartIndex fail to find targetSection=$targetSection');
+      'sectionStartIndex fail to find targetSection=$targetSection',
+    );
   }
 
   int length() => arr.map(getCount).fold(0, (a, b) => a + b);

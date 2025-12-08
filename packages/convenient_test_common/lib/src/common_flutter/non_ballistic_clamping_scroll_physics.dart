@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 // ignore: unnecessary_import
 import 'package:flutter/physics.dart';
 
@@ -26,18 +25,24 @@ class NonBallisticClampingScrollPhysics extends ScrollPhysics {
       if (value == position.pixels) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary(
-              '$runtimeType.applyBoundaryConditions() was called redundantly.'),
+            '$runtimeType.applyBoundaryConditions() was called redundantly.',
+          ),
           ErrorDescription(
-              'The proposed new position, $value, is exactly equal to the current position of the '
-              'given ${position.runtimeType}, ${position.pixels}.\n'
-              'The applyBoundaryConditions method should only be called when the value is '
-              'going to actually change the pixels, otherwise it is redundant.'),
+            'The proposed new position, $value, is exactly equal to the current position of the '
+            'given ${position.runtimeType}, ${position.pixels}.\n'
+            'The applyBoundaryConditions method should only be called when the value is '
+            'going to actually change the pixels, otherwise it is redundant.',
+          ),
           DiagnosticsProperty<ScrollPhysics>(
-              'The physics object in question was', this,
-              style: DiagnosticsTreeStyle.errorProperty),
+            'The physics object in question was',
+            this,
+            style: DiagnosticsTreeStyle.errorProperty,
+          ),
           DiagnosticsProperty<ScrollMetrics>(
-              'The position object in question was', position,
-              style: DiagnosticsTreeStyle.errorProperty)
+            'The position object in question was',
+            position,
+            style: DiagnosticsTreeStyle.errorProperty,
+          ),
         ]);
       }
       return true;
@@ -59,7 +64,9 @@ class NonBallisticClampingScrollPhysics extends ScrollPhysics {
 
   @override
   Simulation? createBallisticSimulation(
-      ScrollMetrics position, double velocity) {
+    ScrollMetrics position,
+    double velocity,
+  ) {
     // Log.i(_kTag, 'createBallisticSimulation position=$position outOfRange=${position.outOfRange} velocity=$velocity');
 
     final tolerance = toleranceFor(position);
@@ -73,8 +80,10 @@ class NonBallisticClampingScrollPhysics extends ScrollPhysics {
       assert(end != null);
 
       // NOTE XXX modified
-      Log.i(_kTag,
-          'hack outOfRange end=$end position=$position velocity=$velocity');
+      Log.i(
+        _kTag,
+        'hack outOfRange end=$end position=$position velocity=$velocity',
+      );
 
       // V2
       return ScrollSpringSimulation(

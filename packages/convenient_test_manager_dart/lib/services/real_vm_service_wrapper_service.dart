@@ -5,10 +5,9 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:convenient_test_common_dart/convenient_test_common_dart.dart';
 import 'package:convenient_test_manager_dart/services/vm_service_wrapper_service.dart';
-
 import 'package:mobx/mobx.dart';
-import 'package:vm_service/vm_service.dart' hide Log;
 import 'package:vm_service/vm_service.dart' as vm_service;
+import 'package:vm_service/vm_service.dart' hide Log;
 import 'package:vm_service/vm_service_io.dart';
 
 part 'real_vm_service_wrapper_service.g.dart';
@@ -28,8 +27,10 @@ class RealVmServiceWrapperService extends VmServiceWrapperService {
   @override
   Future<void> connect() async {
     const uri = 'ws://$kWorkerVmServiceHost:$kWorkerVmServicePort/ws';
-    Log.i(_kTag,
-        'Connecting to vm service at $uri. Please ensure your Flutter app has port=$kWorkerVmServicePort');
+    Log.i(
+      _kTag,
+      'Connecting to vm service at $uri. Please ensure your Flutter app has port=$kWorkerVmServicePort',
+    );
 
     try {
       final vmService = await vmServiceConnectUri(uri, log: _MyLog());
@@ -47,8 +48,9 @@ class RealVmServiceWrapperService extends VmServiceWrapperService {
   @computed
   bool get hotRestartAvailable =>
       _manager.connected &&
-      _manager.registeredMethodsForService.keys
-          .contains(_ServiceConnectionManager._kHotRestartServiceName);
+      _manager.registeredMethodsForService.keys.contains(
+        _ServiceConnectionManager._kHotRestartServiceName,
+      );
 
   // ref devtools/packages/devtools_app :: HotRestartButton
   @override
@@ -58,8 +60,9 @@ class RealVmServiceWrapperService extends VmServiceWrapperService {
     });
   }
 
-  late final _hotRestartThrottledExecutor =
-      SingleRunningExecutor<void>((_) async {
+  late final _hotRestartThrottledExecutor = SingleRunningExecutor<void>((
+    _,
+  ) async {
     await hotRestartRaw();
 
     // NOTE deliberately wait a few extra seconds to fix #188
@@ -144,8 +147,10 @@ abstract class _ServiceConnectionManager with Store {
     isolateManager.vmServiceOpened(service);
 
     void handleServiceEvent(Event e) {
-      Log.i(_kTag,
-          'handleServiceEvent kind=${e.kind} service=${e.service} method=${e.method}');
+      Log.i(
+        _kTag,
+        'handleServiceEvent kind=${e.kind} service=${e.service} method=${e.method}',
+      );
 
       if (e.kind == EventKind.kServiceRegistered) {
         _registeredMethodsForService
@@ -153,24 +158,23 @@ abstract class _ServiceConnectionManager with Store {
             .add(e.method!);
       }
       if (e.kind == EventKind.kServiceUnregistered) {
-        _registeredMethodsForService
-            .remove(e.service!); // ignore: unnecessary_null_checks
+        _registeredMethodsForService.remove(e.service);
       }
     }
 
     service.onEvent(EventStreams.kService).listen(handleServiceEvent);
     unawaited(service.streamListen(EventStreams.kService));
 
-    unawaited(service.onDone.then((Object? _) {
-      Log.i(_kTag, 'VMService.onDone called');
-      this.service = null;
-    }));
+    unawaited(
+      service.onDone.then((Object? _) {
+        Log.i(_kTag, 'VMService.onDone called');
+        this.service = null;
+      }),
+    );
 
     vm = await service.getVM();
 
-    final isolates = <IsolateRef>[
-      ...vm?.isolates ?? [],
-    ];
+    final isolates = <IsolateRef>[...vm?.isolates ?? []];
 
     await isolateManager.init(isolates);
     if (service != this.service) {
@@ -331,8 +335,9 @@ class IsolateManager extends Disposer {
         _mainIsolate.value = null;
       }
       if (_selectedIsolate.value == event.isolate) {
-        _selectedIsolate.value =
-            _isolateStates.isEmpty ? null : _isolateStates.keys.first;
+        _selectedIsolate.value = _isolateStates.isEmpty
+            ? null
+            : _isolateStates.keys.first;
       }
       _isolateRunnableCompleters.remove(event.isolate!.id);
     }
@@ -376,8 +381,9 @@ class IsolateManager extends Disposer {
       }
     }
 
-    final IsolateRef? ref =
-        _isolateStates.keys.firstWhereOrNull((IsolateRef ref) {
+    final IsolateRef? ref = _isolateStates.keys.firstWhereOrNull((
+      IsolateRef ref,
+    ) {
       // 'foo.dart:main()'
       return ref.name!.contains(':main(');
     });
@@ -428,8 +434,10 @@ class IsolateManager extends Disposer {
   }
 
   Future<Isolate?> getIsolateCached(IsolateRef isolateRef) {
-    final isolateState =
-        _isolateStates.putIfAbsent(isolateRef, () => IsolateState(isolateRef));
+    final isolateState = _isolateStates.putIfAbsent(
+      isolateRef,
+      () => IsolateState(isolateRef),
+    );
     return isolateState.isolate;
   }
 

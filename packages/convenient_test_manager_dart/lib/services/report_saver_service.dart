@@ -18,8 +18,9 @@ class ManagerReportSaverService {
     if (!enable) return;
 
     // need to be sync, otherwise when two reports come together they may conflict
-    File(await _getReportPath())
-        .writeAsBytesSync(request.writeToBuffer(), mode: FileMode.append);
+    File(
+      await _getReportPath(),
+    ).writeAsBytesSync(request.writeToBuffer(), mode: FileMode.append);
   }
 
   Future<void> clear() async {
@@ -31,10 +32,10 @@ class ManagerReportSaverService {
 
   static Future<String> _getReportPath() async {
     return
-        // ignore: prefer_interpolation_to_compose_strings
-        await GetIt.I
-                .get<FsService>()
-                .getActiveSuperRunDataSubDirectory(category: 'Report') +
-            'report.$kReportFileExtension';
+    // ignore: prefer_interpolation_to_compose_strings
+    await GetIt.I.get<FsService>().getActiveSuperRunDataSubDirectory(
+          category: 'Report',
+        ) +
+        'report.$kReportFileExtension';
   }
 }

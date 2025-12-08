@@ -32,9 +32,7 @@ class ConvenientTestImageCaptureWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // take snapshot needs a [RepaintBoundary]
-    return RepaintBoundary(
-      child: child,
-    );
+    return RepaintBoundary(child: child);
   }
 }
 
@@ -86,11 +84,7 @@ class Mark extends StatelessWidget {
 
     final color = kColorList['$name'.hashCode % kColorList.length];
 
-    Widget wrappedChild = MarkCore(
-      name: name,
-      data: data,
-      child: child,
-    );
+    Widget wrappedChild = MarkCore(name: name, data: data, child: child);
 
     // useful when want this [Mark] to be used in golden tests, since golden test will take screenshot at
     // the nearest ancestor RepaintBoundary.

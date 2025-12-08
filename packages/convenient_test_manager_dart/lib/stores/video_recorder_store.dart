@@ -25,7 +25,10 @@ abstract class _VideoRecorderStore with Store {
   Future<void> startRecord() async {
     final path = await _createVideoPath();
     recordingVideoInfo = VideoInfo(
-        path: path, startTime: DateTime.now(), endTime: _kInvalidTime);
+      path: path,
+      startTime: DateTime.now(),
+      endTime: _kInvalidTime,
+    );
 
     Log.d(_kTag, 'startRecord call ScreenVideoRecorderService begin');
     await GetIt.I.get<ScreenVideoRecorderService>().startRecord(path);
@@ -43,12 +46,14 @@ abstract class _VideoRecorderStore with Store {
     await GetIt.I.get<ScreenVideoRecorderService>().stopRecord();
     Log.d(_kTag, 'stopRecord call ScreenVideoRecorderService end');
 
-    GetIt.I.get<VideoPlayerStoreBase>().handleRecorderFinished(VideoInfo(
-          path: recordingVideoInfo!.path,
-          startTime: recordingVideoInfo!.startTime,
-          // the [recordingVideoInfo!.endTime] is dummy value
-          endTime: DateTime.now(),
-        ));
+    GetIt.I.get<VideoPlayerStoreBase>().handleRecorderFinished(
+      VideoInfo(
+        path: recordingVideoInfo!.path,
+        startTime: recordingVideoInfo!.startTime,
+        // the [recordingVideoInfo!.endTime] is dummy value
+        endTime: DateTime.now(),
+      ),
+    );
 
     recordingVideoInfo = null;
   }
@@ -56,11 +61,11 @@ abstract class _VideoRecorderStore with Store {
   Future<String> _createVideoPath() async {
     final stem = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
     return
-        // ignore: prefer_interpolation_to_compose_strings
-        await GetIt.I
-                .get<FsService>()
-                .getActiveSuperRunDataSubDirectory(category: 'Video') +
-            '$stem.mov';
+    // ignore: prefer_interpolation_to_compose_strings
+    await GetIt.I.get<FsService>().getActiveSuperRunDataSubDirectory(
+          category: 'Video',
+        ) +
+        '$stem.mov';
   }
 }
 

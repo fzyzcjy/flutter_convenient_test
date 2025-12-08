@@ -29,7 +29,8 @@ class IdGenerator {
 
     if (timestamp < lastTimestamp) {
       throw Exception(
-          'Clock moved backwards (timestamp=$timestamp lastTimestamp=$lastTimestamp)');
+        'Clock moved backwards (timestamp=$timestamp lastTimestamp=$lastTimestamp)',
+      );
     }
 
     if (lastTimestamp == timestamp) {
@@ -68,7 +69,8 @@ class IdGenerator {
   }) {
     if (timestamp < config.twEpoch) {
       throw Exception(
-          'timestamp=$timestamp smaller than twEpoch=${config.twEpoch}');
+        'timestamp=$timestamp smaller than twEpoch=${config.twEpoch}',
+      );
     }
 
     assert(workerId >= 0);

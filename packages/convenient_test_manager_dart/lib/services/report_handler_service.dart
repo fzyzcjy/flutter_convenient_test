@@ -29,8 +29,11 @@ class ReportHandlerService {
     }
   }
 
-  Future<void> _handleItem(ReportItem item,
-      {required bool offlineFile, required bool doClear}) {
+  Future<void> _handleItem(
+    ReportItem item, {
+    required bool offlineFile,
+    required bool doClear,
+  }) {
     switch (item.whichSubType()) {
       case ReportItem_SubType.setUpAll:
         return _handleSetUpAll(item.setUpAll, offlineFile: offlineFile);
@@ -53,52 +56,61 @@ class ReportHandlerService {
     }
   }
 
-  Future<void> _handleSetUpAll(SetUpAll request,
-      {required bool offlineFile}) async {
+  Future<void> _handleSetUpAll(
+    SetUpAll request, {
+    required bool offlineFile,
+  }) async {
     Log.d(_kTag, 'SetUpAll $request');
 
     if (!offlineFile) await GetIt.I.get<VideoRecorderStore>().startRecord();
   }
 
-  Future<void> _handleTearDownAll(TearDownAll request,
-      {required bool offlineFile}) async {
+  Future<void> _handleTearDownAll(
+    TearDownAll request, {
+    required bool offlineFile,
+  }) async {
     Log.d(_kTag, 'TearDownAll $request');
 
     if (!offlineFile) await GetIt.I.get<VideoRecorderStore>().stopRecord();
 
-    GetIt.I
-        .get<WorkerSuperRunStore>()
-        .currSuperRunController
-        .handleTearDownAll(request.resolvedExecutionFilter);
+    GetIt.I.get<WorkerSuperRunStore>().currSuperRunController.handleTearDownAll(
+      request.resolvedExecutionFilter,
+    );
   }
 
   Future<void> _handleLogEntry(LogEntry request) async {
     Log.d(_kTag, 'handleReportLogEntry called');
 
-    final testEntryId =
-        _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(
+      request.testName,
+    );
     if (testEntryId == null) {
-      Log.i(_kTag,
-          'handleReportLogEntry skipped since getEntryIdFromName failed');
+      Log.i(
+        _kTag,
+        'handleReportLogEntry skipped since getEntryIdFromName failed',
+      );
       return;
     }
 
     final requestId = request.id.toInt();
     _logStore.addLogEntry(
-        testEntryId: testEntryId,
-        logEntryId: requestId,
-        subEntries: request.subEntries);
+      testEntryId: testEntryId,
+      logEntryId: requestId,
+      subEntries: request.subEntries,
+    );
 
-    GetIt.I
-        .get<HighlightStoreBase>()
-        .handleLogEntry(testEntryId: testEntryId, logEntryId: requestId);
+    GetIt.I.get<HighlightStoreBase>().handleLogEntry(
+      testEntryId: testEntryId,
+      logEntryId: requestId,
+    );
   }
 
   Future<void> _handleRunnerError(RunnerError request) async {
     Log.d(_kTag, 'Error: ${request.error} stack=${request.stackTrace}');
 
-    final testEntryId =
-        _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(
+      request.testName,
+    );
     if (testEntryId == null) return;
 
     _rawLogStore.rawLogInTest[testEntryId] +=
@@ -108,19 +120,23 @@ class ReportHandlerService {
   Future<void> _handleRunnerMessage(RunnerMessage request) async {
     Log.d(_kTag, 'Message: ${request.message}');
 
-    final testEntryId =
-        _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(
+      request.testName,
+    );
     if (testEntryId == null) return;
 
     _rawLogStore.rawLogInTest[testEntryId] += '${request.message}\n';
   }
 
   Future<void> _handleRunnerStateChange(RunnerStateChange request) async {
-    Log.d(_kTag,
-        'StateChange: testName=${request.testName} state=${request.state}');
+    Log.d(
+      _kTag,
+      'StateChange: testName=${request.testName} state=${request.state}',
+    );
 
-    final testEntryId =
-        _suiteInfoStore.suiteInfo?.getEntryIdFromName(request.testName);
+    final testEntryId = _suiteInfoStore.suiteInfo?.getEntryIdFromName(
+      request.testName,
+    );
     if (testEntryId == null) return;
 
     _suiteInfoStore.testEntryStateMap[testEntryId] = request.state;
@@ -135,8 +151,10 @@ class ReportHandlerService {
         request.image as Uint8List;
   }
 
-  Future<void> _handleSuiteInfoProto(SuiteInfoProto request,
-      {required bool doClear}) async {
+  Future<void> _handleSuiteInfoProto(
+    SuiteInfoProto request, {
+    required bool doClear,
+  }) async {
     Log.d(_kTag, 'handleReportSuiteInfo called $request');
 
     Log.d(_kTag, 'handleReportSuiteInfo thus MiscDartService.clearAll');

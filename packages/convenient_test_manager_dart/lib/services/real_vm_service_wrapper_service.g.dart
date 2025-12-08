@@ -12,13 +12,15 @@ mixin _$ServiceConnectionManager on _ServiceConnectionManager, Store {
   Computed<bool>? _$connectedComputed;
 
   @override
-  bool get connected =>
-      (_$connectedComputed ??= Computed<bool>(() => super.connected,
-              name: '_ServiceConnectionManager.connected'))
-          .value;
+  bool get connected => (_$connectedComputed ??= Computed<bool>(
+    () => super.connected,
+    name: '_ServiceConnectionManager.connected',
+  )).value;
 
-  late final _$serviceAtom =
-      Atom(name: '_ServiceConnectionManager.service', context: context);
+  late final _$serviceAtom = Atom(
+    name: '_ServiceConnectionManager.service',
+    context: context,
+  );
 
   @override
   vm_service.VmService? get service {
