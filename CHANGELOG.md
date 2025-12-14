@@ -1,3 +1,7 @@
+## 1.5.5
+
+* Update versions for packages and increase flutter version to 3.35 #437 (thanks @Knupper)
+
 ## 1.5.4
 
 * Update package APIs #426 (thanks @ahmdt)
