@@ -1,3 +1,7 @@
+## 1.5.6
+
+* Lock protobuf dependency #441 (thanks @ahmdt)
+
 ## 1.5.5
 
 * Update versions for packages and increase flutter version to 3.35 #437 (thanks @Knupper)
