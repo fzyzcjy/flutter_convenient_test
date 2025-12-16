@@ -10,7 +10,7 @@ dependencies:
   grpc: ^5.0.0
   meta: ^1.17.0
   mobx: ^2.5.0
-  protobuf: '>=5.0.0 <7.0.0'
+  protobuf: '>=5.0.0 <6.0.0'
   quiver: ^3.2.2
   tuple: ^2.0.2
 dev_dependencies:
