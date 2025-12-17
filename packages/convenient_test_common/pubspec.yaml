@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   grpc: ^5.0.0
   mobx: ^2.5.0
-  protobuf: '>=5.0.0 <6.0.0'
+  protobuf: ">=5.0.0 <7.0.0"
   quiver: ^3.2.2
   tuple: ^2.0.2
 
