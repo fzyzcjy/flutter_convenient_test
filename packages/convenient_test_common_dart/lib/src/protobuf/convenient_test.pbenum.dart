@@ -15,14 +15,22 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class LogSubEntryType extends $pb.ProtobufEnum {
-  static const LogSubEntryType INVALID = LogSubEntryType._(0, _omitEnumNames ? '' : 'INVALID');
-  static const LogSubEntryType GENERAL_MESSAGE = LogSubEntryType._(1, _omitEnumNames ? '' : 'GENERAL_MESSAGE');
-  static const LogSubEntryType TEST_START = LogSubEntryType._(2, _omitEnumNames ? '' : 'TEST_START');
-  static const LogSubEntryType TEST_BODY = LogSubEntryType._(3, _omitEnumNames ? '' : 'TEST_BODY');
-  static const LogSubEntryType TEST_END = LogSubEntryType._(4, _omitEnumNames ? '' : 'TEST_END');
-  static const LogSubEntryType ASSERT = LogSubEntryType._(5, _omitEnumNames ? '' : 'ASSERT');
-  static const LogSubEntryType ASSERT_FAIL = LogSubEntryType._(6, _omitEnumNames ? '' : 'ASSERT_FAIL');
-  static const LogSubEntryType SECTION = LogSubEntryType._(7, _omitEnumNames ? '' : 'SECTION');
+  static const LogSubEntryType INVALID =
+      LogSubEntryType._(0, _omitEnumNames ? '' : 'INVALID');
+  static const LogSubEntryType GENERAL_MESSAGE =
+      LogSubEntryType._(1, _omitEnumNames ? '' : 'GENERAL_MESSAGE');
+  static const LogSubEntryType TEST_START =
+      LogSubEntryType._(2, _omitEnumNames ? '' : 'TEST_START');
+  static const LogSubEntryType TEST_BODY =
+      LogSubEntryType._(3, _omitEnumNames ? '' : 'TEST_BODY');
+  static const LogSubEntryType TEST_END =
+      LogSubEntryType._(4, _omitEnumNames ? '' : 'TEST_END');
+  static const LogSubEntryType ASSERT =
+      LogSubEntryType._(5, _omitEnumNames ? '' : 'ASSERT');
+  static const LogSubEntryType ASSERT_FAIL =
+      LogSubEntryType._(6, _omitEnumNames ? '' : 'ASSERT_FAIL');
+  static const LogSubEntryType SECTION =
+      LogSubEntryType._(7, _omitEnumNames ? '' : 'SECTION');
 
   static const $core.List<LogSubEntryType> values = <LogSubEntryType>[
     INVALID,
@@ -35,10 +43,13 @@ class LogSubEntryType extends $pb.ProtobufEnum {
     SECTION,
   ];
 
-  static final $core.List<LogSubEntryType?> _byValue = $pb.ProtobufEnum.$_initByValueList(values, 7);
-  static LogSubEntryType? valueOf($core.int value) => value < 0 || value >= _byValue.length ? null : _byValue[value];
+  static final $core.List<LogSubEntryType?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 7);
+  static LogSubEntryType? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
   const LogSubEntryType._(super.value, super.name);
 }
 
-const $core.bool _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');
+const $core.bool _omitEnumNames =
+    $core.bool.fromEnvironment('protobuf.omit_enum_names');

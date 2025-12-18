@@ -39,16 +39,19 @@ class ReportCollection extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'ReportCollection', createEmptyInstance: create)
-        ..pPM<ReportItem>(1, _omitFieldNames ? '' : 'items', subBuilder: ReportItem.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ReportCollection',
+      createEmptyInstance: create)
+    ..pPM<ReportItem>(1, _omitFieldNames ? '' : 'items',
+        subBuilder: ReportItem.create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ReportCollection clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ReportCollection copyWith(void Function(ReportCollection) updates) =>
-      super.copyWith((message) => updates(message as ReportCollection)) as ReportCollection;
+      super.copyWith((message) => updates(message as ReportCollection))
+          as ReportCollection;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -58,8 +61,8 @@ class ReportCollection extends $pb.GeneratedMessage {
   @$core.override
   ReportCollection createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static ReportCollection getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReportCollection>(create);
+  static ReportCollection getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ReportCollection>(create);
   static ReportCollection? _defaultInstance;
 
   /// use "repeated" + single-field, thus can concat multiple ReportCollection together
@@ -107,10 +110,12 @@ class ReportItem extends $pb.GeneratedMessage {
   factory ReportItem.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory ReportItem.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory ReportItem.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static const $core.Map<$core.int, ReportItem_SubType> _ReportItem_SubTypeByTag = {
+  static const $core.Map<$core.int, ReportItem_SubType>
+      _ReportItem_SubTypeByTag = {
     1: ReportItem_SubType.suiteInfoProto,
     2: ReportItem_SubType.logEntry,
     3: ReportItem_SubType.runnerStateChange,
@@ -121,16 +126,26 @@ class ReportItem extends $pb.GeneratedMessage {
     8: ReportItem_SubType.tearDownAll,
     0: ReportItem_SubType.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReportItem', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ReportItem',
+      createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8])
-    ..aOM<SuiteInfoProto>(1, _omitFieldNames ? '' : 'suiteInfoProto', subBuilder: SuiteInfoProto.create)
-    ..aOM<LogEntry>(2, _omitFieldNames ? '' : 'logEntry', subBuilder: LogEntry.create)
-    ..aOM<RunnerStateChange>(3, _omitFieldNames ? '' : 'runnerStateChange', subBuilder: RunnerStateChange.create)
-    ..aOM<RunnerError>(4, _omitFieldNames ? '' : 'runnerError', subBuilder: RunnerError.create)
-    ..aOM<RunnerMessage>(5, _omitFieldNames ? '' : 'runnerMessage', subBuilder: RunnerMessage.create)
-    ..aOM<Snapshot>(6, _omitFieldNames ? '' : 'snapshot', subBuilder: Snapshot.create)
-    ..aOM<SetUpAll>(7, _omitFieldNames ? '' : 'setUpAll', subBuilder: SetUpAll.create)
-    ..aOM<TearDownAll>(8, _omitFieldNames ? '' : 'tearDownAll', subBuilder: TearDownAll.create)
+    ..aOM<SuiteInfoProto>(1, _omitFieldNames ? '' : 'suiteInfoProto',
+        subBuilder: SuiteInfoProto.create)
+    ..aOM<LogEntry>(2, _omitFieldNames ? '' : 'logEntry',
+        subBuilder: LogEntry.create)
+    ..aOM<RunnerStateChange>(3, _omitFieldNames ? '' : 'runnerStateChange',
+        subBuilder: RunnerStateChange.create)
+    ..aOM<RunnerError>(4, _omitFieldNames ? '' : 'runnerError',
+        subBuilder: RunnerError.create)
+    ..aOM<RunnerMessage>(5, _omitFieldNames ? '' : 'runnerMessage',
+        subBuilder: RunnerMessage.create)
+    ..aOM<Snapshot>(6, _omitFieldNames ? '' : 'snapshot',
+        subBuilder: Snapshot.create)
+    ..aOM<SetUpAll>(7, _omitFieldNames ? '' : 'setUpAll',
+        subBuilder: SetUpAll.create)
+    ..aOM<TearDownAll>(8, _omitFieldNames ? '' : 'tearDownAll',
+        subBuilder: TearDownAll.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -147,7 +162,8 @@ class ReportItem extends $pb.GeneratedMessage {
   @$core.override
   ReportItem createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static ReportItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReportItem>(create);
+  static ReportItem getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ReportItem>(create);
   static ReportItem? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -158,7 +174,8 @@ class ReportItem extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   @$pb.TagNumber(7)
   @$pb.TagNumber(8)
-  ReportItem_SubType whichSubType() => _ReportItem_SubTypeByTag[$_whichOneof(0)]!;
+  ReportItem_SubType whichSubType() =>
+      _ReportItem_SubTypeByTag[$_whichOneof(0)]!;
   @$pb.TagNumber(1)
   @$pb.TagNumber(2)
   @$pb.TagNumber(3)
@@ -266,10 +283,13 @@ class SetUpAll extends $pb.GeneratedMessage {
   factory SetUpAll.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory SetUpAll.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory SetUpAll.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetUpAll', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SetUpAll',
+      createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -286,7 +306,8 @@ class SetUpAll extends $pb.GeneratedMessage {
   @$core.override
   SetUpAll createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static SetUpAll getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetUpAll>(create);
+  static SetUpAll getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetUpAll>(create);
   static SetUpAll? _defaultInstance;
 }
 
@@ -295,7 +316,8 @@ class TearDownAll extends $pb.GeneratedMessage {
     ResolvedExecutionFilterProto? resolvedExecutionFilter,
   }) {
     final result = create();
-    if (resolvedExecutionFilter != null) result.resolvedExecutionFilter = resolvedExecutionFilter;
+    if (resolvedExecutionFilter != null)
+      result.resolvedExecutionFilter = resolvedExecutionFilter;
     return result;
   }
 
@@ -304,11 +326,15 @@ class TearDownAll extends $pb.GeneratedMessage {
   factory TearDownAll.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory TearDownAll.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory TearDownAll.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TearDownAll', createEmptyInstance: create)
-    ..aOM<ResolvedExecutionFilterProto>(1, _omitFieldNames ? '' : 'resolvedExecutionFilter',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'TearDownAll',
+      createEmptyInstance: create)
+    ..aOM<ResolvedExecutionFilterProto>(
+        1, _omitFieldNames ? '' : 'resolvedExecutionFilter',
         subBuilder: ResolvedExecutionFilterProto.create)
     ..hasRequiredFields = false;
 
@@ -316,7 +342,8 @@ class TearDownAll extends $pb.GeneratedMessage {
   TearDownAll clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TearDownAll copyWith(void Function(TearDownAll) updates) =>
-      super.copyWith((message) => updates(message as TearDownAll)) as TearDownAll;
+      super.copyWith((message) => updates(message as TearDownAll))
+          as TearDownAll;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -326,13 +353,15 @@ class TearDownAll extends $pb.GeneratedMessage {
   @$core.override
   TearDownAll createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static TearDownAll getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TearDownAll>(create);
+  static TearDownAll getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<TearDownAll>(create);
   static TearDownAll? _defaultInstance;
 
   @$pb.TagNumber(1)
   ResolvedExecutionFilterProto get resolvedExecutionFilter => $_getN(0);
   @$pb.TagNumber(1)
-  set resolvedExecutionFilter(ResolvedExecutionFilterProto value) => $_setField(1, value);
+  set resolvedExecutionFilter(ResolvedExecutionFilterProto value) =>
+      $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasResolvedExecutionFilter() => $_has(0);
   @$pb.TagNumber(1)
@@ -359,13 +388,17 @@ class LogEntry extends $pb.GeneratedMessage {
   factory LogEntry.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory LogEntry.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory LogEntry.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogEntry', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'LogEntry',
+      createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'testName')
-    ..pPM<LogSubEntry>(3, _omitFieldNames ? '' : 'subEntries', subBuilder: LogSubEntry.create)
+    ..pPM<LogSubEntry>(3, _omitFieldNames ? '' : 'subEntries',
+        subBuilder: LogSubEntry.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -382,7 +415,8 @@ class LogEntry extends $pb.GeneratedMessage {
   @$core.override
   LogEntry createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static LogEntry getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogEntry>(create);
+  static LogEntry getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogEntry>(create);
   static LogEntry? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -433,13 +467,17 @@ class LogSubEntry extends $pb.GeneratedMessage {
   factory LogSubEntry.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory LogSubEntry.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory LogSubEntry.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogSubEntry', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'LogSubEntry',
+      createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'id')
     ..aInt64(2, _omitFieldNames ? '' : 'time')
-    ..aE<LogSubEntryType>(3, _omitFieldNames ? '' : 'type', enumValues: LogSubEntryType.values)
+    ..aE<LogSubEntryType>(3, _omitFieldNames ? '' : 'type',
+        enumValues: LogSubEntryType.values)
     ..aOS(4, _omitFieldNames ? '' : 'title')
     ..aOS(5, _omitFieldNames ? '' : 'message')
     ..aOS(6, _omitFieldNames ? '' : 'error')
@@ -450,7 +488,8 @@ class LogSubEntry extends $pb.GeneratedMessage {
   LogSubEntry clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   LogSubEntry copyWith(void Function(LogSubEntry) updates) =>
-      super.copyWith((message) => updates(message as LogSubEntry)) as LogSubEntry;
+      super.copyWith((message) => updates(message as LogSubEntry))
+          as LogSubEntry;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -460,7 +499,8 @@ class LogSubEntry extends $pb.GeneratedMessage {
   @$core.override
   LogSubEntry createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static LogSubEntry getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogSubEntry>(create);
+  static LogSubEntry getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<LogSubEntry>(create);
   static LogSubEntry? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -546,21 +586,26 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
   factory SuiteInfoProto.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory SuiteInfoProto.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory SuiteInfoProto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'SuiteInfoProto', createEmptyInstance: create)
-        ..aInt64(1, _omitFieldNames ? '' : 'groupId')
-        ..pPM<GroupInfoProto>(2, _omitFieldNames ? '' : 'groups', subBuilder: GroupInfoProto.create)
-        ..pPM<TestInfoProto>(3, _omitFieldNames ? '' : 'tests', subBuilder: TestInfoProto.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SuiteInfoProto',
+      createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'groupId')
+    ..pPM<GroupInfoProto>(2, _omitFieldNames ? '' : 'groups',
+        subBuilder: GroupInfoProto.create)
+    ..pPM<TestInfoProto>(3, _omitFieldNames ? '' : 'tests',
+        subBuilder: TestInfoProto.create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SuiteInfoProto clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SuiteInfoProto copyWith(void Function(SuiteInfoProto) updates) =>
-      super.copyWith((message) => updates(message as SuiteInfoProto)) as SuiteInfoProto;
+      super.copyWith((message) => updates(message as SuiteInfoProto))
+          as SuiteInfoProto;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -570,7 +615,8 @@ class SuiteInfoProto extends $pb.GeneratedMessage {
   @$core.override
   SuiteInfoProto createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static SuiteInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SuiteInfoProto>(create);
+  static SuiteInfoProto getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SuiteInfoProto>(create);
   static SuiteInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -610,22 +656,25 @@ class GroupInfoProto extends $pb.GeneratedMessage {
   factory GroupInfoProto.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory GroupInfoProto.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory GroupInfoProto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'GroupInfoProto', createEmptyInstance: create)
-        ..aInt64(1, _omitFieldNames ? '' : 'id')
-        ..aOS(2, _omitFieldNames ? '' : 'name')
-        ..aInt64(3, _omitFieldNames ? '' : 'parentId')
-        ..p<$fixnum.Int64>(4, _omitFieldNames ? '' : 'entryIds', $pb.PbFieldType.K6)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'GroupInfoProto',
+      createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..aInt64(3, _omitFieldNames ? '' : 'parentId')
+    ..p<$fixnum.Int64>(4, _omitFieldNames ? '' : 'entryIds', $pb.PbFieldType.K6)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GroupInfoProto clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GroupInfoProto copyWith(void Function(GroupInfoProto) updates) =>
-      super.copyWith((message) => updates(message as GroupInfoProto)) as GroupInfoProto;
+      super.copyWith((message) => updates(message as GroupInfoProto))
+          as GroupInfoProto;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -635,7 +684,8 @@ class GroupInfoProto extends $pb.GeneratedMessage {
   @$core.override
   GroupInfoProto createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static GroupInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupInfoProto>(create);
+  static GroupInfoProto getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<GroupInfoProto>(create);
   static GroupInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -688,21 +738,24 @@ class TestInfoProto extends $pb.GeneratedMessage {
   factory TestInfoProto.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory TestInfoProto.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory TestInfoProto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'TestInfoProto', createEmptyInstance: create)
-        ..aInt64(1, _omitFieldNames ? '' : 'id')
-        ..aOS(2, _omitFieldNames ? '' : 'name')
-        ..aInt64(3, _omitFieldNames ? '' : 'parentId')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'TestInfoProto',
+      createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..aInt64(3, _omitFieldNames ? '' : 'parentId')
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TestInfoProto clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TestInfoProto copyWith(void Function(TestInfoProto) updates) =>
-      super.copyWith((message) => updates(message as TestInfoProto)) as TestInfoProto;
+      super.copyWith((message) => updates(message as TestInfoProto))
+          as TestInfoProto;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -712,7 +765,8 @@ class TestInfoProto extends $pb.GeneratedMessage {
   @$core.override
   TestInfoProto createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static TestInfoProto getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestInfoProto>(create);
+  static TestInfoProto getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<TestInfoProto>(create);
   static TestInfoProto? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -763,17 +817,20 @@ class RunnerStateChange extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'RunnerStateChange', createEmptyInstance: create)
-        ..aOS(1, _omitFieldNames ? '' : 'testName')
-        ..aOM<TestEntryState>(2, _omitFieldNames ? '' : 'state', subBuilder: TestEntryState.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RunnerStateChange',
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'testName')
+    ..aOM<TestEntryState>(2, _omitFieldNames ? '' : 'state',
+        subBuilder: TestEntryState.create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   RunnerStateChange clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   RunnerStateChange copyWith(void Function(RunnerStateChange) updates) =>
-      super.copyWith((message) => updates(message as RunnerStateChange)) as RunnerStateChange;
+      super.copyWith((message) => updates(message as RunnerStateChange))
+          as RunnerStateChange;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -783,8 +840,8 @@ class RunnerStateChange extends $pb.GeneratedMessage {
   @$core.override
   RunnerStateChange createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static RunnerStateChange getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RunnerStateChange>(create);
+  static RunnerStateChange getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<RunnerStateChange>(create);
   static RunnerStateChange? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -824,20 +881,23 @@ class TestEntryState extends $pb.GeneratedMessage {
   factory TestEntryState.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory TestEntryState.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory TestEntryState.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'TestEntryState', createEmptyInstance: create)
-        ..aOS(1, _omitFieldNames ? '' : 'status')
-        ..aOS(2, _omitFieldNames ? '' : 'result')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'TestEntryState',
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'status')
+    ..aOS(2, _omitFieldNames ? '' : 'result')
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TestEntryState clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TestEntryState copyWith(void Function(TestEntryState) updates) =>
-      super.copyWith((message) => updates(message as TestEntryState)) as TestEntryState;
+      super.copyWith((message) => updates(message as TestEntryState))
+          as TestEntryState;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -847,7 +907,8 @@ class TestEntryState extends $pb.GeneratedMessage {
   @$core.override
   TestEntryState createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static TestEntryState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TestEntryState>(create);
+  static TestEntryState getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<TestEntryState>(create);
   static TestEntryState? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -887,10 +948,13 @@ class RunnerError extends $pb.GeneratedMessage {
   factory RunnerError.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory RunnerError.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory RunnerError.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RunnerError', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RunnerError',
+      createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'testName')
     ..aOS(2, _omitFieldNames ? '' : 'error')
     ..aOS(3, _omitFieldNames ? '' : 'stackTrace')
@@ -900,7 +964,8 @@ class RunnerError extends $pb.GeneratedMessage {
   RunnerError clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   RunnerError copyWith(void Function(RunnerError) updates) =>
-      super.copyWith((message) => updates(message as RunnerError)) as RunnerError;
+      super.copyWith((message) => updates(message as RunnerError))
+          as RunnerError;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -910,7 +975,8 @@ class RunnerError extends $pb.GeneratedMessage {
   @$core.override
   RunnerError createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static RunnerError getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RunnerError>(create);
+  static RunnerError getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<RunnerError>(create);
   static RunnerError? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -957,20 +1023,23 @@ class RunnerMessage extends $pb.GeneratedMessage {
   factory RunnerMessage.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory RunnerMessage.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory RunnerMessage.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'RunnerMessage', createEmptyInstance: create)
-        ..aOS(1, _omitFieldNames ? '' : 'testName')
-        ..aOS(2, _omitFieldNames ? '' : 'message')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RunnerMessage',
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'testName')
+    ..aOS(2, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   RunnerMessage clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   RunnerMessage copyWith(void Function(RunnerMessage) updates) =>
-      super.copyWith((message) => updates(message as RunnerMessage)) as RunnerMessage;
+      super.copyWith((message) => updates(message as RunnerMessage))
+          as RunnerMessage;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -980,7 +1049,8 @@ class RunnerMessage extends $pb.GeneratedMessage {
   @$core.override
   RunnerMessage createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static RunnerMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RunnerMessage>(create);
+  static RunnerMessage getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<RunnerMessage>(create);
   static RunnerMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1020,13 +1090,17 @@ class Snapshot extends $pb.GeneratedMessage {
   factory Snapshot.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory Snapshot.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory Snapshot.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Snapshot', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'Snapshot',
+      createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'logEntryId')
     ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'image', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(
+        3, _omitFieldNames ? '' : 'image', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1043,7 +1117,8 @@ class Snapshot extends $pb.GeneratedMessage {
   @$core.override
   Snapshot createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static Snapshot getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Snapshot>(create);
+  static Snapshot getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Snapshot>(create);
   static Snapshot? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1079,34 +1154,40 @@ class WorkerCurrentRunConfig_InteractiveApp extends $pb.GeneratedMessage {
 
   WorkerCurrentRunConfig_InteractiveApp._();
 
-  factory WorkerCurrentRunConfig_InteractiveApp.fromBuffer($core.List<$core.int> data,
+  factory WorkerCurrentRunConfig_InteractiveApp.fromBuffer(
+          $core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
   factory WorkerCurrentRunConfig_InteractiveApp.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'WorkerCurrentRunConfig.InteractiveApp', createEmptyInstance: create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'WorkerCurrentRunConfig.InteractiveApp',
+      createEmptyInstance: create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   WorkerCurrentRunConfig_InteractiveApp clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  WorkerCurrentRunConfig_InteractiveApp copyWith(void Function(WorkerCurrentRunConfig_InteractiveApp) updates) =>
-      super.copyWith((message) => updates(message as WorkerCurrentRunConfig_InteractiveApp))
+  WorkerCurrentRunConfig_InteractiveApp copyWith(
+          void Function(WorkerCurrentRunConfig_InteractiveApp) updates) =>
+      super.copyWith((message) =>
+              updates(message as WorkerCurrentRunConfig_InteractiveApp))
           as WorkerCurrentRunConfig_InteractiveApp;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static WorkerCurrentRunConfig_InteractiveApp create() => WorkerCurrentRunConfig_InteractiveApp._();
+  static WorkerCurrentRunConfig_InteractiveApp create() =>
+      WorkerCurrentRunConfig_InteractiveApp._();
   @$core.override
   WorkerCurrentRunConfig_InteractiveApp createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
   static WorkerCurrentRunConfig_InteractiveApp getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerCurrentRunConfig_InteractiveApp>(create);
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
+          WorkerCurrentRunConfig_InteractiveApp>(create);
   static WorkerCurrentRunConfig_InteractiveApp? _defaultInstance;
 }
 
@@ -1121,44 +1202,52 @@ class WorkerCurrentRunConfig_IntegrationTest extends $pb.GeneratedMessage {
     if (reportSuiteInfo != null) result.reportSuiteInfo = reportSuiteInfo;
     if (executionFilter != null) result.executionFilter = executionFilter;
     if (defaultRetryCount != null) result.defaultRetryCount = defaultRetryCount;
-    if (autoUpdateGoldenFiles != null) result.autoUpdateGoldenFiles = autoUpdateGoldenFiles;
+    if (autoUpdateGoldenFiles != null)
+      result.autoUpdateGoldenFiles = autoUpdateGoldenFiles;
     return result;
   }
 
   WorkerCurrentRunConfig_IntegrationTest._();
 
-  factory WorkerCurrentRunConfig_IntegrationTest.fromBuffer($core.List<$core.int> data,
+  factory WorkerCurrentRunConfig_IntegrationTest.fromBuffer(
+          $core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
   factory WorkerCurrentRunConfig_IntegrationTest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'WorkerCurrentRunConfig.IntegrationTest', createEmptyInstance: create)
-        ..aOB(1, _omitFieldNames ? '' : 'reportSuiteInfo')
-        ..aOM<ExecutionFilter>(2, _omitFieldNames ? '' : 'executionFilter', subBuilder: ExecutionFilter.create)
-        ..aI(3, _omitFieldNames ? '' : 'defaultRetryCount')
-        ..aOB(4, _omitFieldNames ? '' : 'autoUpdateGoldenFiles')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'WorkerCurrentRunConfig.IntegrationTest',
+      createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'reportSuiteInfo')
+    ..aOM<ExecutionFilter>(2, _omitFieldNames ? '' : 'executionFilter',
+        subBuilder: ExecutionFilter.create)
+    ..aI(3, _omitFieldNames ? '' : 'defaultRetryCount')
+    ..aOB(4, _omitFieldNames ? '' : 'autoUpdateGoldenFiles')
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   WorkerCurrentRunConfig_IntegrationTest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  WorkerCurrentRunConfig_IntegrationTest copyWith(void Function(WorkerCurrentRunConfig_IntegrationTest) updates) =>
-      super.copyWith((message) => updates(message as WorkerCurrentRunConfig_IntegrationTest))
+  WorkerCurrentRunConfig_IntegrationTest copyWith(
+          void Function(WorkerCurrentRunConfig_IntegrationTest) updates) =>
+      super.copyWith((message) =>
+              updates(message as WorkerCurrentRunConfig_IntegrationTest))
           as WorkerCurrentRunConfig_IntegrationTest;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static WorkerCurrentRunConfig_IntegrationTest create() => WorkerCurrentRunConfig_IntegrationTest._();
+  static WorkerCurrentRunConfig_IntegrationTest create() =>
+      WorkerCurrentRunConfig_IntegrationTest._();
   @$core.override
   WorkerCurrentRunConfig_IntegrationTest createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
   static WorkerCurrentRunConfig_IntegrationTest getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerCurrentRunConfig_IntegrationTest>(create);
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
+          WorkerCurrentRunConfig_IntegrationTest>(create);
   static WorkerCurrentRunConfig_IntegrationTest? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1223,25 +1312,31 @@ class WorkerCurrentRunConfig extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static const $core.Map<$core.int, WorkerCurrentRunConfig_SubType> _WorkerCurrentRunConfig_SubTypeByTag = {
+  static const $core.Map<$core.int, WorkerCurrentRunConfig_SubType>
+      _WorkerCurrentRunConfig_SubTypeByTag = {
     1: WorkerCurrentRunConfig_SubType.interactiveApp,
     2: WorkerCurrentRunConfig_SubType.integrationTest,
     0: WorkerCurrentRunConfig_SubType.notSet
   };
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'WorkerCurrentRunConfig', createEmptyInstance: create)
-        ..oo(0, [1, 2])
-        ..aOM<WorkerCurrentRunConfig_InteractiveApp>(1, _omitFieldNames ? '' : 'interactiveApp',
-            subBuilder: WorkerCurrentRunConfig_InteractiveApp.create)
-        ..aOM<WorkerCurrentRunConfig_IntegrationTest>(2, _omitFieldNames ? '' : 'integrationTest',
-            subBuilder: WorkerCurrentRunConfig_IntegrationTest.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'WorkerCurrentRunConfig',
+      createEmptyInstance: create)
+    ..oo(0, [1, 2])
+    ..aOM<WorkerCurrentRunConfig_InteractiveApp>(
+        1, _omitFieldNames ? '' : 'interactiveApp',
+        subBuilder: WorkerCurrentRunConfig_InteractiveApp.create)
+    ..aOM<WorkerCurrentRunConfig_IntegrationTest>(
+        2, _omitFieldNames ? '' : 'integrationTest',
+        subBuilder: WorkerCurrentRunConfig_IntegrationTest.create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   WorkerCurrentRunConfig clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  WorkerCurrentRunConfig copyWith(void Function(WorkerCurrentRunConfig) updates) =>
-      super.copyWith((message) => updates(message as WorkerCurrentRunConfig)) as WorkerCurrentRunConfig;
+  WorkerCurrentRunConfig copyWith(
+          void Function(WorkerCurrentRunConfig) updates) =>
+      super.copyWith((message) => updates(message as WorkerCurrentRunConfig))
+          as WorkerCurrentRunConfig;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -1251,13 +1346,14 @@ class WorkerCurrentRunConfig extends $pb.GeneratedMessage {
   @$core.override
   WorkerCurrentRunConfig createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static WorkerCurrentRunConfig getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkerCurrentRunConfig>(create);
+  static WorkerCurrentRunConfig getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<WorkerCurrentRunConfig>(create);
   static WorkerCurrentRunConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   @$pb.TagNumber(2)
-  WorkerCurrentRunConfig_SubType whichSubType() => _WorkerCurrentRunConfig_SubTypeByTag[$_whichOneof(0)]!;
+  WorkerCurrentRunConfig_SubType whichSubType() =>
+      _WorkerCurrentRunConfig_SubTypeByTag[$_whichOneof(0)]!;
   @$pb.TagNumber(1)
   @$pb.TagNumber(2)
   void clearSubType() => $_clearField($_whichOneof(0));
@@ -1265,7 +1361,8 @@ class WorkerCurrentRunConfig extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   WorkerCurrentRunConfig_InteractiveApp get interactiveApp => $_getN(0);
   @$pb.TagNumber(1)
-  set interactiveApp(WorkerCurrentRunConfig_InteractiveApp value) => $_setField(1, value);
+  set interactiveApp(WorkerCurrentRunConfig_InteractiveApp value) =>
+      $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasInteractiveApp() => $_has(0);
   @$pb.TagNumber(1)
@@ -1276,7 +1373,8 @@ class WorkerCurrentRunConfig extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   WorkerCurrentRunConfig_IntegrationTest get integrationTest => $_getN(1);
   @$pb.TagNumber(2)
-  set integrationTest(WorkerCurrentRunConfig_IntegrationTest value) => $_setField(2, value);
+  set integrationTest(WorkerCurrentRunConfig_IntegrationTest value) =>
+      $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasIntegrationTest() => $_has(1);
   @$pb.TagNumber(2)
@@ -1290,34 +1388,40 @@ class ExecutionFilter_Strategy_FirstMatch extends $pb.GeneratedMessage {
 
   ExecutionFilter_Strategy_FirstMatch._();
 
-  factory ExecutionFilter_Strategy_FirstMatch.fromBuffer($core.List<$core.int> data,
+  factory ExecutionFilter_Strategy_FirstMatch.fromBuffer(
+          $core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
   factory ExecutionFilter_Strategy_FirstMatch.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'ExecutionFilter.Strategy.FirstMatch', createEmptyInstance: create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ExecutionFilter.Strategy.FirstMatch',
+      createEmptyInstance: create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExecutionFilter_Strategy_FirstMatch clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ExecutionFilter_Strategy_FirstMatch copyWith(void Function(ExecutionFilter_Strategy_FirstMatch) updates) =>
-      super.copyWith((message) => updates(message as ExecutionFilter_Strategy_FirstMatch))
+  ExecutionFilter_Strategy_FirstMatch copyWith(
+          void Function(ExecutionFilter_Strategy_FirstMatch) updates) =>
+      super.copyWith((message) =>
+              updates(message as ExecutionFilter_Strategy_FirstMatch))
           as ExecutionFilter_Strategy_FirstMatch;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ExecutionFilter_Strategy_FirstMatch create() => ExecutionFilter_Strategy_FirstMatch._();
+  static ExecutionFilter_Strategy_FirstMatch create() =>
+      ExecutionFilter_Strategy_FirstMatch._();
   @$core.override
   ExecutionFilter_Strategy_FirstMatch createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
   static ExecutionFilter_Strategy_FirstMatch getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionFilter_Strategy_FirstMatch>(create);
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
+          ExecutionFilter_Strategy_FirstMatch>(create);
   static ExecutionFilter_Strategy_FirstMatch? _defaultInstance;
 }
 
@@ -1332,35 +1436,41 @@ class ExecutionFilter_Strategy_NextMatch extends $pb.GeneratedMessage {
 
   ExecutionFilter_Strategy_NextMatch._();
 
-  factory ExecutionFilter_Strategy_NextMatch.fromBuffer($core.List<$core.int> data,
+  factory ExecutionFilter_Strategy_NextMatch.fromBuffer(
+          $core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
   factory ExecutionFilter_Strategy_NextMatch.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'ExecutionFilter.Strategy.NextMatch', createEmptyInstance: create)
-        ..aOS(1, _omitFieldNames ? '' : 'prevTestName')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ExecutionFilter.Strategy.NextMatch',
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'prevTestName')
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExecutionFilter_Strategy_NextMatch clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ExecutionFilter_Strategy_NextMatch copyWith(void Function(ExecutionFilter_Strategy_NextMatch) updates) =>
-      super.copyWith((message) => updates(message as ExecutionFilter_Strategy_NextMatch))
+  ExecutionFilter_Strategy_NextMatch copyWith(
+          void Function(ExecutionFilter_Strategy_NextMatch) updates) =>
+      super.copyWith((message) =>
+              updates(message as ExecutionFilter_Strategy_NextMatch))
           as ExecutionFilter_Strategy_NextMatch;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ExecutionFilter_Strategy_NextMatch create() => ExecutionFilter_Strategy_NextMatch._();
+  static ExecutionFilter_Strategy_NextMatch create() =>
+      ExecutionFilter_Strategy_NextMatch._();
   @$core.override
   ExecutionFilter_Strategy_NextMatch createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static ExecutionFilter_Strategy_NextMatch getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionFilter_Strategy_NextMatch>(create);
+  static ExecutionFilter_Strategy_NextMatch getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ExecutionFilter_Strategy_NextMatch>(
+          create);
   static ExecutionFilter_Strategy_NextMatch? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1378,38 +1488,49 @@ class ExecutionFilter_Strategy_AllMatch extends $pb.GeneratedMessage {
 
   ExecutionFilter_Strategy_AllMatch._();
 
-  factory ExecutionFilter_Strategy_AllMatch.fromBuffer($core.List<$core.int> data,
+  factory ExecutionFilter_Strategy_AllMatch.fromBuffer(
+          $core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
   factory ExecutionFilter_Strategy_AllMatch.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'ExecutionFilter.Strategy.AllMatch', createEmptyInstance: create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ExecutionFilter.Strategy.AllMatch',
+      createEmptyInstance: create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExecutionFilter_Strategy_AllMatch clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ExecutionFilter_Strategy_AllMatch copyWith(void Function(ExecutionFilter_Strategy_AllMatch) updates) =>
-      super.copyWith((message) => updates(message as ExecutionFilter_Strategy_AllMatch))
+  ExecutionFilter_Strategy_AllMatch copyWith(
+          void Function(ExecutionFilter_Strategy_AllMatch) updates) =>
+      super.copyWith((message) =>
+              updates(message as ExecutionFilter_Strategy_AllMatch))
           as ExecutionFilter_Strategy_AllMatch;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ExecutionFilter_Strategy_AllMatch create() => ExecutionFilter_Strategy_AllMatch._();
+  static ExecutionFilter_Strategy_AllMatch create() =>
+      ExecutionFilter_Strategy_AllMatch._();
   @$core.override
   ExecutionFilter_Strategy_AllMatch createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static ExecutionFilter_Strategy_AllMatch getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionFilter_Strategy_AllMatch>(create);
+  static ExecutionFilter_Strategy_AllMatch getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ExecutionFilter_Strategy_AllMatch>(
+          create);
   static ExecutionFilter_Strategy_AllMatch? _defaultInstance;
 }
 
-enum ExecutionFilter_Strategy_SubType { firstMatch, nextMatch, allMatch, notSet }
+enum ExecutionFilter_Strategy_SubType {
+  firstMatch,
+  nextMatch,
+  allMatch,
+  notSet
+}
 
 class ExecutionFilter_Strategy extends $pb.GeneratedMessage {
   factory ExecutionFilter_Strategy({
@@ -1433,28 +1554,35 @@ class ExecutionFilter_Strategy extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static const $core.Map<$core.int, ExecutionFilter_Strategy_SubType> _ExecutionFilter_Strategy_SubTypeByTag = {
+  static const $core.Map<$core.int, ExecutionFilter_Strategy_SubType>
+      _ExecutionFilter_Strategy_SubTypeByTag = {
     1: ExecutionFilter_Strategy_SubType.firstMatch,
     2: ExecutionFilter_Strategy_SubType.nextMatch,
     3: ExecutionFilter_Strategy_SubType.allMatch,
     0: ExecutionFilter_Strategy_SubType.notSet
   };
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'ExecutionFilter.Strategy', createEmptyInstance: create)
-        ..oo(0, [1, 2, 3])
-        ..aOM<ExecutionFilter_Strategy_FirstMatch>(1, _omitFieldNames ? '' : 'firstMatch',
-            subBuilder: ExecutionFilter_Strategy_FirstMatch.create)
-        ..aOM<ExecutionFilter_Strategy_NextMatch>(2, _omitFieldNames ? '' : 'nextMatch',
-            subBuilder: ExecutionFilter_Strategy_NextMatch.create)
-        ..aOM<ExecutionFilter_Strategy_AllMatch>(3, _omitFieldNames ? '' : 'allMatch',
-            subBuilder: ExecutionFilter_Strategy_AllMatch.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ExecutionFilter.Strategy',
+      createEmptyInstance: create)
+    ..oo(0, [1, 2, 3])
+    ..aOM<ExecutionFilter_Strategy_FirstMatch>(
+        1, _omitFieldNames ? '' : 'firstMatch',
+        subBuilder: ExecutionFilter_Strategy_FirstMatch.create)
+    ..aOM<ExecutionFilter_Strategy_NextMatch>(
+        2, _omitFieldNames ? '' : 'nextMatch',
+        subBuilder: ExecutionFilter_Strategy_NextMatch.create)
+    ..aOM<ExecutionFilter_Strategy_AllMatch>(
+        3, _omitFieldNames ? '' : 'allMatch',
+        subBuilder: ExecutionFilter_Strategy_AllMatch.create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExecutionFilter_Strategy clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ExecutionFilter_Strategy copyWith(void Function(ExecutionFilter_Strategy) updates) =>
-      super.copyWith((message) => updates(message as ExecutionFilter_Strategy)) as ExecutionFilter_Strategy;
+  ExecutionFilter_Strategy copyWith(
+          void Function(ExecutionFilter_Strategy) updates) =>
+      super.copyWith((message) => updates(message as ExecutionFilter_Strategy))
+          as ExecutionFilter_Strategy;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -1464,14 +1592,15 @@ class ExecutionFilter_Strategy extends $pb.GeneratedMessage {
   @$core.override
   ExecutionFilter_Strategy createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static ExecutionFilter_Strategy getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionFilter_Strategy>(create);
+  static ExecutionFilter_Strategy getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ExecutionFilter_Strategy>(create);
   static ExecutionFilter_Strategy? _defaultInstance;
 
   @$pb.TagNumber(1)
   @$pb.TagNumber(2)
   @$pb.TagNumber(3)
-  ExecutionFilter_Strategy_SubType whichSubType() => _ExecutionFilter_Strategy_SubTypeByTag[$_whichOneof(0)]!;
+  ExecutionFilter_Strategy_SubType whichSubType() =>
+      _ExecutionFilter_Strategy_SubTypeByTag[$_whichOneof(0)]!;
   @$pb.TagNumber(1)
   @$pb.TagNumber(2)
   @$pb.TagNumber(3)
@@ -1480,7 +1609,8 @@ class ExecutionFilter_Strategy extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   ExecutionFilter_Strategy_FirstMatch get firstMatch => $_getN(0);
   @$pb.TagNumber(1)
-  set firstMatch(ExecutionFilter_Strategy_FirstMatch value) => $_setField(1, value);
+  set firstMatch(ExecutionFilter_Strategy_FirstMatch value) =>
+      $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasFirstMatch() => $_has(0);
   @$pb.TagNumber(1)
@@ -1491,7 +1621,8 @@ class ExecutionFilter_Strategy extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   ExecutionFilter_Strategy_NextMatch get nextMatch => $_getN(1);
   @$pb.TagNumber(2)
-  set nextMatch(ExecutionFilter_Strategy_NextMatch value) => $_setField(2, value);
+  set nextMatch(ExecutionFilter_Strategy_NextMatch value) =>
+      $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasNextMatch() => $_has(1);
   @$pb.TagNumber(2)
@@ -1527,20 +1658,24 @@ class ExecutionFilter extends $pb.GeneratedMessage {
   factory ExecutionFilter.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory ExecutionFilter.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory ExecutionFilter.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ExecutionFilter',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ExecutionFilter',
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'filterNameRegex')
-    ..aOM<ExecutionFilter_Strategy>(2, _omitFieldNames ? '' : 'strategy', subBuilder: ExecutionFilter_Strategy.create)
+    ..aOM<ExecutionFilter_Strategy>(2, _omitFieldNames ? '' : 'strategy',
+        subBuilder: ExecutionFilter_Strategy.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExecutionFilter clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExecutionFilter copyWith(void Function(ExecutionFilter) updates) =>
-      super.copyWith((message) => updates(message as ExecutionFilter)) as ExecutionFilter;
+      super.copyWith((message) => updates(message as ExecutionFilter))
+          as ExecutionFilter;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -1550,8 +1685,8 @@ class ExecutionFilter extends $pb.GeneratedMessage {
   @$core.override
   ExecutionFilter createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static ExecutionFilter getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExecutionFilter>(create);
+  static ExecutionFilter getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ExecutionFilter>(create);
   static ExecutionFilter? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1581,7 +1716,8 @@ class ResolvedExecutionFilterProto extends $pb.GeneratedMessage {
     $core.Iterable<$core.String>? allowExecuteTestNames,
   }) {
     final result = create();
-    if (allowExecuteTestNames != null) result.allowExecuteTestNames.addAll(allowExecuteTestNames);
+    if (allowExecuteTestNames != null)
+      result.allowExecuteTestNames.addAll(allowExecuteTestNames);
     return result;
   }
 
@@ -1594,27 +1730,32 @@ class ResolvedExecutionFilterProto extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(_omitMessageNames ? '' : 'ResolvedExecutionFilterProto', createEmptyInstance: create)
-        ..pPS(1, _omitFieldNames ? '' : 'allowExecuteTestNames')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ResolvedExecutionFilterProto',
+      createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'allowExecuteTestNames')
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ResolvedExecutionFilterProto clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ResolvedExecutionFilterProto copyWith(void Function(ResolvedExecutionFilterProto) updates) =>
-      super.copyWith((message) => updates(message as ResolvedExecutionFilterProto)) as ResolvedExecutionFilterProto;
+  ResolvedExecutionFilterProto copyWith(
+          void Function(ResolvedExecutionFilterProto) updates) =>
+      super.copyWith(
+              (message) => updates(message as ResolvedExecutionFilterProto))
+          as ResolvedExecutionFilterProto;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ResolvedExecutionFilterProto create() => ResolvedExecutionFilterProto._();
+  static ResolvedExecutionFilterProto create() =>
+      ResolvedExecutionFilterProto._();
   @$core.override
   ResolvedExecutionFilterProto createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static ResolvedExecutionFilterProto getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResolvedExecutionFilterProto>(create);
+  static ResolvedExecutionFilterProto getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ResolvedExecutionFilterProto>(create);
   static ResolvedExecutionFilterProto? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1630,16 +1771,20 @@ class Empty extends $pb.GeneratedMessage {
   factory Empty.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory Empty.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+  factory Empty.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Empty', createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'Empty',
+      createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Empty clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Empty copyWith(void Function(Empty) updates) => super.copyWith((message) => updates(message as Empty)) as Empty;
+  Empty copyWith(void Function(Empty) updates) =>
+      super.copyWith((message) => updates(message as Empty)) as Empty;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -1649,9 +1794,12 @@ class Empty extends $pb.GeneratedMessage {
   @$core.override
   Empty createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static Empty getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Empty>(create);
+  static Empty getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Empty>(create);
   static Empty? _defaultInstance;
 }
 
-const $core.bool _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const $core.bool _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
+    $core.bool.fromEnvironment('protobuf.omit_message_names');

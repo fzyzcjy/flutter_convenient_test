@@ -30,7 +30,8 @@ class ConvenientTestManagerClient extends $grpc.Client {
     '',
   ];
 
-  ConvenientTestManagerClient(super.channel, {super.options, super.interceptors});
+  ConvenientTestManagerClient(super.channel,
+      {super.options, super.interceptors});
 
   $grpc.ResponseFuture<$0.Empty> report(
     $0.ReportCollection request, {
@@ -43,17 +44,21 @@ class ConvenientTestManagerClient extends $grpc.Client {
     $0.Empty request, {
     $grpc.CallOptions? options,
   }) {
-    return $createUnaryCall(_$getWorkerCurrentRunConfig, request, options: options);
+    return $createUnaryCall(_$getWorkerCurrentRunConfig, request,
+        options: options);
   }
 
   // method descriptors
 
   static final _$report = $grpc.ClientMethod<$0.ReportCollection, $0.Empty>(
-      '/ConvenientTestManager/Report', ($0.ReportCollection value) => value.writeToBuffer(), $0.Empty.fromBuffer);
-  static final _$getWorkerCurrentRunConfig = $grpc.ClientMethod<$0.Empty, $0.WorkerCurrentRunConfig>(
-      '/ConvenientTestManager/GetWorkerCurrentRunConfig',
-      ($0.Empty value) => value.writeToBuffer(),
-      $0.WorkerCurrentRunConfig.fromBuffer);
+      '/ConvenientTestManager/Report',
+      ($0.ReportCollection value) => value.writeToBuffer(),
+      $0.Empty.fromBuffer);
+  static final _$getWorkerCurrentRunConfig =
+      $grpc.ClientMethod<$0.Empty, $0.WorkerCurrentRunConfig>(
+          '/ConvenientTestManager/GetWorkerCurrentRunConfig',
+          ($0.Empty value) => value.writeToBuffer(),
+          $0.WorkerCurrentRunConfig.fromBuffer);
 }
 
 @$pb.GrpcServiceName('ConvenientTestManager')
@@ -77,16 +82,19 @@ abstract class ConvenientTestManagerServiceBase extends $grpc.Service {
         ($0.WorkerCurrentRunConfig value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.Empty> report_Pre($grpc.ServiceCall $call, $async.Future<$0.ReportCollection> $request) async {
+  $async.Future<$0.Empty> report_Pre($grpc.ServiceCall $call,
+      $async.Future<$0.ReportCollection> $request) async {
     return report($call, await $request);
   }
 
-  $async.Future<$0.Empty> report($grpc.ServiceCall call, $0.ReportCollection request);
+  $async.Future<$0.Empty> report(
+      $grpc.ServiceCall call, $0.ReportCollection request);
 
   $async.Future<$0.WorkerCurrentRunConfig> getWorkerCurrentRunConfig_Pre(
       $grpc.ServiceCall $call, $async.Future<$0.Empty> $request) async {
     return getWorkerCurrentRunConfig($call, await $request);
   }
 
-  $async.Future<$0.WorkerCurrentRunConfig> getWorkerCurrentRunConfig($grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$0.WorkerCurrentRunConfig> getWorkerCurrentRunConfig(
+      $grpc.ServiceCall call, $0.Empty request);
 }
