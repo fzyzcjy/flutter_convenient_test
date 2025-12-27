@@ -1,3 +1,7 @@
+## 1.6.0
+
+* Update protobuf to 6 #445 (thanks @Knupper)
+
 ## 1.5.6
 
 * Lock protobuf dependency #441 (thanks @ahmdt)
