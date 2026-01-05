@@ -17,7 +17,7 @@ dependencies:
   intl: '>=0.19.0 <0.21.0'
   json_annotation: ^4.9.0
   meta: ^1.17.0
-  mobx: ^2.6.0
+  mobx: ^2.5.0
   protobuf: '>=6.0.0 <7.0.0'
   recase: ^4.1.0
   synchronized: '>=3.0.0 <4.0.0'
@@ -34,5 +34,5 @@ dev_dependencies:
   freezed: ^3.2.4
   json_serializable: '>=6.9.1 <7.0.0'
   lint: '>=1.8.2 <3.0.0'
-  mobx_codegen: ^2.7.5
+  mobx_codegen: ^2.7.4
   test: ^1.28.0
