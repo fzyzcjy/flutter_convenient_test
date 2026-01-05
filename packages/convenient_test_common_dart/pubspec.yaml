@@ -9,7 +9,7 @@ dependencies:
   fixnum: ^1.1.1
   grpc: ^5.1.0
   meta: ^1.17.0
-  mobx: ^2.5.0
+  mobx: ^2.6.0
   protobuf: '>=6.0.0 <7.0.0'
   quiver: ^3.2.2
   tuple: ^2.0.2

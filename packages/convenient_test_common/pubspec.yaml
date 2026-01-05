@@ -7,12 +7,12 @@ environment:
   flutter: ">=3.35.0"
 dependencies:
   collection: '>=1.19.0 <1.20.0'
-  convenient_test_common_dart: '>=1.5.0 <1.6.0'
+  convenient_test_common_dart: '>=1.6.0 <1.7.0'
   fixnum: ^1.1.1
   flutter:
     sdk: flutter
   grpc: ^5.1.0
-  mobx: ^2.5.0
+  mobx: ^2.6.0
   protobuf: '>=6.0.0 <7.0.0'
   quiver: ^3.2.2
   tuple: ^2.0.2

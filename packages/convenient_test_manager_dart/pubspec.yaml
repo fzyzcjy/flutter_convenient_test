@@ -9,7 +9,7 @@ environment:
 dependencies:
   args: ^2.7.0
   collection: '>=1.19.0 <1.20.0'
-  convenient_test_common_dart: '>=1.5.0 <1.6.0'
+  convenient_test_common_dart: '>=1.6.0 <1.7.0'
   fixnum: ^1.1.1
   freezed_annotation: ^3.1.0
   get_it: '>=8.0.0 <9.0.0'
@@ -17,7 +17,7 @@ dependencies:
   intl: '>=0.19.0 <0.21.0'
   json_annotation: ^4.9.0
   meta: ^1.17.0
-  mobx: ^2.5.0
+  mobx: ^2.6.0
   protobuf: '>=6.0.0 <7.0.0'
   recase: ^4.1.0
   synchronized: '>=3.0.0 <4.0.0'
@@ -31,8 +31,8 @@ dependency_overrides:
 
 dev_dependencies:
   build_runner: '>=2.10.0 <2.11.0'
-  freezed: ^3.2.3
+  freezed: ^3.2.4
   json_serializable: '>=6.9.1 <7.0.0'
   lint: '>=1.8.2 <3.0.0'
-  mobx_codegen: ^2.7.4
+  mobx_codegen: ^2.7.5
   test: ^1.28.0
