@@ -1,3 +1,7 @@
+## 1.6.1
+
+* Update package contraints #446 (thanks @Knupper)
+
 ## 1.6.0
 
 * Update protobuf to 6 #445 (thanks @Knupper)
