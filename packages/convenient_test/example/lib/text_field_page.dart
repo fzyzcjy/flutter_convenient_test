@@ -14,11 +14,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('TextFieldPage')),
-      body: Center(
-        child: TextField(
-          controller: _controller,
-        ),
-      ),
+      body: Center(child: TextField(controller: _controller)),
     );
   }
 }

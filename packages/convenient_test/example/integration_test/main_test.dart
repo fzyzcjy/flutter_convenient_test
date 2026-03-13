@@ -80,8 +80,11 @@ void main() {
         await t.visit('/random');
         await find.text('RandomPage').should(findsOneWidget);
 
-        await find.get(RandomPageMark.randomText).should(
-            matchesGoldenFile('goldens/deliberately_failed_golden.png'));
+        await find
+            .get(RandomPageMark.randomText)
+            .should(
+              matchesGoldenFile('goldens/deliberately_failed_golden.png'),
+            );
 
         // let's assert something else
         await find.textContaining('Random Height').should(findsOneWidget);
@@ -177,18 +180,20 @@ void main() {
               .get(ZoomPageMark.palette)
               .should(matchesGoldenFile('goldens/zoom_page_zoom_before.png'));
 
-          await find.get(ZoomPageMark.palette).multiDrag(
+          await find
+              .get(ZoomPageMark.palette)
+              .multiDrag(
                 firstDownOffset: const Offset(0, -30),
                 secondDownOffset: const Offset(0, 30),
                 firstFingerOffsets: const [
                   Offset(0, -20),
                   Offset(0, -20),
-                  Offset(0, -10)
+                  Offset(0, -10),
                 ],
                 secondFingerOffsets: const [
                   Offset(0, 20),
                   Offset(0, 20),
-                  Offset(0, 10)
+                  Offset(0, 10),
                 ],
                 logMove: true,
               );
