@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextFieldPage extends StatefulWidget {
-  const TextFieldPage({Key? key}) : super(key: key);
+  const TextFieldPage({super.key});
 
   @override
   State<TextFieldPage> createState() => _TextFieldPageState();

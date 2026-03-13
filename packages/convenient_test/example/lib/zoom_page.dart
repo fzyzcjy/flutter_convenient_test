@@ -4,7 +4,7 @@ import 'package:convenient_test/convenient_test.dart';
 import 'package:flutter/material.dart';
 
 class ZoomPage extends StatefulWidget {
-  const ZoomPage({Key? key}) : super(key: key);
+  const ZoomPage({super.key});
 
   @override
   State<ZoomPage> createState() => _ZoomPageState();

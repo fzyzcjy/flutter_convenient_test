@@ -3,10 +3,7 @@ import 'package:mobx/mobx.dart';
 
 mixin AttachableStateMixin<T> {
   T get state {
-    assert(
-      isStateSingle,
-      'Want to get this.state but wrong number of _states. $attachableStateMixinInfo',
-    );
+    assert(isStateSingle, 'Want to get this.state but wrong number of _states. $attachableStateMixinInfo');
     return _states.single;
   }
 
@@ -40,22 +37,15 @@ mixin AttachableStateMixin<T> {
   }
 }
 
-class AttachableStateAttacherWidget<T extends AttachableStateMixin<S>, S>
-    extends StatefulWidget {
+class AttachableStateAttacherWidget<T extends AttachableStateMixin<S>, S> extends StatefulWidget {
   final T target;
   final S state;
   final Widget child;
 
-  const AttachableStateAttacherWidget({
-    super.key,
-    required this.target,
-    required this.state,
-    required this.child,
-  });
+  const AttachableStateAttacherWidget({super.key, required this.target, required this.state, required this.child});
 
   @override
-  _AttachableStateAttacherWidgetState<T, S> createState() =>
-      _AttachableStateAttacherWidgetState<T, S>();
+  _AttachableStateAttacherWidgetState<T, S> createState() => _AttachableStateAttacherWidgetState<T, S>();
 }
 
 class _AttachableStateAttacherWidgetState<T extends AttachableStateMixin<S>, S>
@@ -67,12 +57,9 @@ class _AttachableStateAttacherWidgetState<T extends AttachableStateMixin<S>, S>
   }
 
   @override
-  void didUpdateWidget(
-    covariant AttachableStateAttacherWidget<T, S> oldWidget,
-  ) {
+  void didUpdateWidget(covariant AttachableStateAttacherWidget<T, S> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!identical(oldWidget.target, widget.target) ||
-        !identical(oldWidget.state, widget.state)) {
+    if (!identical(oldWidget.target, widget.target) || !identical(oldWidget.state, widget.state)) {
       oldWidget.target.detach(oldWidget.state);
       widget.target.attach(widget.state);
     }
