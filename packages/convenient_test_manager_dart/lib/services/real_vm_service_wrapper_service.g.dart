@@ -23,13 +23,13 @@ mixin _$ServiceConnectionManager on _ServiceConnectionManager, Store {
   );
 
   @override
-  vm_service.VmService? get service {
+  VmService? get service {
     _$serviceAtom.reportRead();
     return super.service;
   }
 
   @override
-  set service(vm_service.VmService? value) {
+  set service(VmService? value) {
     _$serviceAtom.reportWrite(value, super.service, () {
       super.service = value;
     });

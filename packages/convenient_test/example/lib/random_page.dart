@@ -4,7 +4,7 @@ import 'package:convenient_test/convenient_test.dart';
 import 'package:flutter/material.dart';
 
 class RandomPage extends StatefulWidget {
-  const RandomPage({Key? key}) : super(key: key);
+  const RandomPage({super.key});
 
   @override
   State<RandomPage> createState() => _RandomPageState();

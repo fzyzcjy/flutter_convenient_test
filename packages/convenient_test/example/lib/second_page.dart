@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SecondPage extends StatelessWidget {
-  const SecondPage({Key? key}) : super(key: key);
+  const SecondPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +21,18 @@ class SecondPage extends StatelessWidget {
                 style: const TextStyle(fontSize: 18, height: 1.5),
               ),
             ),
-            const SizedBox(
-              height: 24,
-            ),
+            const SizedBox(height: 24),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextButton(
-                    onPressed: () => Navigator.pushNamed(context, '/timer'),
-                    child: const Text('GoTimerPage')),
+                  onPressed: () => Navigator.pushNamed(context, '/timer'),
+                  child: const Text('GoTimerPage'),
+                ),
                 TextButton(
-                    onPressed: () => Navigator.pushNamed(context, '/zoom'),
-                    child: const Text('GoZoomPage')),
+                  onPressed: () => Navigator.pushNamed(context, '/zoom'),
+                  child: const Text('GoZoomPage'),
+                ),
               ],
             ),
           ],

@@ -4,7 +4,7 @@ import 'package:convenient_test/convenient_test.dart';
 import 'package:flutter/material.dart';
 
 class ZoomPage extends StatefulWidget {
-  const ZoomPage({Key? key}) : super(key: key);
+  const ZoomPage({super.key});
 
   @override
   State<ZoomPage> createState() => _ZoomPageState();
@@ -48,15 +48,15 @@ class _ZoomPageState extends State<ZoomPage> {
                                 child: Container(
                                   width: 50,
                                   height: 50,
-                                  color: _getColor(Point(x, y),
-                                      invert: _chosenPoint == Point(x, y)),
-                                  child: Center(
-                                    child: Text('$x#$y'),
+                                  color: _getColor(
+                                    Point(x, y),
+                                    invert: _chosenPoint == Point(x, y),
                                   ),
+                                  child: Center(child: Text('$x#$y')),
                                 ),
-                              )
+                              ),
                           ],
-                        )
+                        ),
                     ],
                   ),
                 ),
@@ -78,6 +78,4 @@ extension on Color {
   Color invert() => Color.from(alpha: a, red: 1 - r, green: 1 - g, blue: 1 - b);
 }
 
-enum ZoomPageMark {
-  palette,
-}
+enum ZoomPageMark { palette }

@@ -3,7 +3,7 @@ import 'package:convenient_test_example/fruit_store.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -52,8 +52,12 @@ class _HomePageState extends State<HomePage> {
     return Column(
       children: [
         Padding(
-          padding:
-              const EdgeInsets.only(top: 16, bottom: 4, left: 16, right: 16),
+          padding: const EdgeInsets.only(
+            top: 16,
+            bottom: 4,
+            left: 16,
+            right: 16,
+          ),
           child: Text(
             chosenFruits.isEmpty
                 ? 'You chose nothing'
@@ -93,10 +97,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-enum HomePageMark {
-  fetchFruits,
-  fab,
-}
+enum HomePageMark { fetchFruits, fab }
 
 extension<T> on List<T> {
   void toggle(T value) {

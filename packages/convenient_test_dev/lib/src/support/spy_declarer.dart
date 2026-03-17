@@ -40,7 +40,8 @@ class SpyDeclarer implements Declarer {
   Group build() => inner.build();
 
   @override
-  T declare<T>(T Function() body) => inner.declare(body);
+  T declare<T>(T Function() body, {Map<Symbol, Object?>? zoneValues}) =>
+      inner.declare(body, zoneValues: zoneValues);
 
   @override
   void setUp(dynamic Function() callback) => inner.setUp(callback);
