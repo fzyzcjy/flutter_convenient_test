@@ -1,3 +1,7 @@
+## 1.6.2
+
+* Update packages to fix spy declarer #453 (thanks @Knupper)
+
 ## 1.6.1
 
 * Update package contraints #446 (thanks @Knupper)
