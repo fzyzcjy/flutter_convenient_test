@@ -1,21 +1,21 @@
 pub-get:
-    cd packages/convenient_test && flutter pub get
-    cd packages/convenient_test/example && flutter pub get
-    cd packages/convenient_test_common && flutter pub get
-    cd packages/convenient_test_common_dart && flutter pub get
-    cd packages/convenient_test_dev && flutter pub get
-    cd packages/convenient_test_manager && flutter pub get
-    cd packages/convenient_test_manager_dart && flutter pub get
+    cd packages/convenient_test && fvm flutter pub get
+    cd packages/convenient_test/example && fvm flutter pub get
+    cd packages/convenient_test_common && fvm flutter pub get
+    cd packages/convenient_test_common_dart && fvm flutter pub get
+    cd packages/convenient_test_dev && fvm flutter pub get
+    cd packages/convenient_test_manager && fvm flutter pub get
+    cd packages/convenient_test_manager_dart && fvm flutter pub get
 
 build-runner:
-    cd packages/convenient_test_manager_dart && flutter pub run build_runner build --delete-conflicting-outputs
-    cd packages/convenient_test_manager && flutter pub run build_runner build --delete-conflicting-outputs
+    cd packages/convenient_test_manager_dart && fvm flutter pub run build_runner build --delete-conflicting-outputs
+    cd packages/convenient_test_manager && fvm flutter pub run build_runner build --delete-conflicting-outputs
 
 format:
     dart format . --line-length 120
 
 analyze:
-    flutter analyze
+    fvm flutter analyze
 
 generate_gif_args := '-vf "fps=10,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"'
 
@@ -36,10 +36,10 @@ publish_all:
     cp README.md README.md.bak
     sed -i '' 's,<!--README_VIDEO_REPLACEMENT_PLACEHOLDER_ONE-->,Click to watch it in [YouTube](https://www.youtube.com/watch?v=z-Hr_TSOpUQ):,g' README.md
     sed -i '' 's,<!--README_VIDEO_REPLACEMENT_PLACEHOLDER_TWO-->,[![](https://raw.githubusercontent.com/fzyzcjy/flutter_convenient_test/master/doc/images/youtube_screenshot.png)](https://www.youtube.com/watch?v=z-Hr_TSOpUQ),g' README.md
-    (cd packages/convenient_test_common_dart && flutter pub publish --force --server=https://pub.dartlang.org)
-    (cd packages/convenient_test_common && flutter pub publish --force --server=https://pub.dartlang.org)
-    (cd packages/convenient_test && flutter pub publish --force --server=https://pub.dartlang.org)
-    (cd packages/convenient_test_dev && flutter pub publish --force --server=https://pub.dartlang.org)
+    (cd packages/convenient_test_common_dart && fvm flutter pub publish --force --server=https://pub.dartlang.org)
+    (cd packages/convenient_test_common && fvm flutter pub publish --force --server=https://pub.dartlang.org)
+    (cd packages/convenient_test && fvm flutter pub publish --force --server=https://pub.dartlang.org)
+    (cd packages/convenient_test_dev && fvm flutter pub publish --force --server=https://pub.dartlang.org)
     cp README.md.bak README.md && rm README.md.bak
 
 release old_version new_version:
