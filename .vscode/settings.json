@@ -1,1 +1,4 @@
-{ "dart.lineLength": 120 }
+{
+  "dart.lineLength": 120,
+  "dart.flutterSdkPath": ".fvm/versions/3.41.6"
+}
